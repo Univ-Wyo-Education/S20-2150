@@ -1,0 +1,7 @@
+	Load X
+	Add Y
+	Store Z
+	Halt
+X,	DEC 35
+Y,	DEC -23
+Z,	HEX	0000
