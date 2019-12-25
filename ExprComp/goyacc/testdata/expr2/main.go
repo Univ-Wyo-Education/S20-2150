@@ -37,3 +37,6 @@ const (
 func NewAst(op int, l, r *SyntaxTree, lno int) *SyntaxTree {
 	return &SyntaxTree{Op: op, Left: l, Right: r, LineNo: lno}
 }
+
+func ValidateLValue(xx *SyntaxTree) {
+}

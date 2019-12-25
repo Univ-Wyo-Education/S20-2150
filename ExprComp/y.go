@@ -9,20 +9,11 @@ import __yyfmt__ "fmt"
 //line expr.y:5
 
 import (
-	"bufio"
-	"bytes"
 	"fmt"
-	"io"
-	"log"
-	"os"
-	"unicode/utf8"
-
 	"github.com/pschlump/godebug"
 )
 
-// "math/big"
-
-//line expr.y:23
+//line expr.y:14
 type exprSymType struct {
 	yys  int
 	tree *SyntaxTree
@@ -45,6 +36,8 @@ var exprToknames = [...]string{
 	"'='",
 	"'i'",
 	"'d'",
+	"'I'",
+	"'P'",
 	"NUM",
 	"ID",
 }
@@ -54,144 +47,7 @@ const exprEofCode = 1
 const exprErrCode = 2
 const exprInitialStackSize = 16
 
-//line expr.y:100
-
-// The parser expects the lexer to return 0 on EOF.  Give it a name
-// for clarity.
-const eof = 0
-
-var line_no = 1
-
-// The parser uses the type <prefix>Lex as a lexer. It must provide
-// the methods Lex(*<prefix>SymType) int and Error(string).
-type exprLex struct {
-	line []byte
-	peek rune
-}
-
-// The parser calls this method to get each new token. This
-// implementation returns operators and NUM.
-func (x *exprLex) Lex(yylval *exprSymType) int {
-	for {
-		c := x.next()
-		switch c {
-		case eof:
-			return eof
-		case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
-			return x.num(c, yylval)
-		case 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j':
-			return x.id(c, yylval)
-		case '+', '-', '*', '/', '(', ')', ';', '=':
-			return int(c)
-
-		// Recognize Unicode multiplication and division
-		// symbols, returning what the parser expects.
-		case '×':
-			return '*'
-		case '÷':
-			return '/'
-
-		case ' ', '\t', '\r':
-		case '\n':
-			line_no++
-
-		default:
-			log.Printf("unrecognized character %q", c)
-		}
-	}
-}
-
-// Lex a number.
-func (x *exprLex) num(c rune, yylval *exprSymType) int {
-	add := func(b *bytes.Buffer, c rune) {
-		if _, err := b.WriteRune(c); err != nil {
-			log.Fatalf("WriteRune: %s", err)
-		}
-	}
-	var b bytes.Buffer
-	add(&b, c)
-L:
-	for {
-		c = x.next()
-		switch c {
-		case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', 'e', 'E':
-			add(&b, c)
-		default:
-			break L
-		}
-	}
-	if c != eof {
-		x.peek = c
-	}
-	yylval.tree = NewAst(OpNum, nil, nil, line_no)
-	yylval.tree.SValue = b.String()
-	// xyzzy - convert to int for other things
-
-	//	yylval.num = &big.Rat{}
-	//	_, ok := yylval.num.SetString(b.String())
-	//	if !ok {
-	//		log.Printf("bad number %q", b.String())
-	//		return eof
-	//	}
-
-	return NUM
-}
-
-// Lex an ID
-func (x *exprLex) id(c rune, yylval *exprSymType) int {
-	add := func(b *bytes.Buffer, c rune) {
-		if _, err := b.WriteRune(c); err != nil {
-			log.Fatalf("WriteRune: %s", err)
-		}
-	}
-	var b bytes.Buffer
-	add(&b, c)
-	yylval.tree = NewAst(OpID, nil, nil, line_no)
-	yylval.tree.SValue = b.String()
-	return ID
-}
-
-// Return the next rune for the lexer.
-func (x *exprLex) next() rune {
-	if x.peek != eof {
-		r := x.peek
-		x.peek = eof
-		return r
-	}
-	if len(x.line) == 0 {
-		return eof
-	}
-	c, size := utf8.DecodeRune(x.line)
-	x.line = x.line[size:]
-	if c == utf8.RuneError && size == 1 {
-		log.Print("invalid utf8")
-		return x.next()
-	}
-	return c
-}
-
-// The parser calls this method on a parse error.
-func (x *exprLex) Error(s string) {
-	log.Printf("parse error: %s", s)
-}
-
-func main() {
-	in := bufio.NewReader(os.Stdin)
-	for {
-		if _, err := os.Stdout.WriteString("> "); err != nil {
-			log.Fatalf("WriteString: %s", err)
-		}
-		line, err := in.ReadBytes('\n')
-		if err == io.EOF {
-			return
-		}
-		if err != nil {
-			log.Fatalf("ReadBytes: %s", err)
-		}
-
-		exprParse(&exprLex{line: line})
-	}
-}
+//line expr.y:99
 
 //line yacctab:1
 var exprExca = [...]int{
@@ -202,50 +58,50 @@ var exprExca = [...]int{
 
 const exprPrivate = 57344
 
-const exprLast = 41
+const exprLast = 47
 
 var exprAct = [...]int{
 
-	11, 8, 9, 17, 16, 13, 3, 14, 32, 5,
-	6, 12, 21, 10, 15, 20, 22, 31, 8, 9,
-	25, 26, 13, 1, 29, 30, 5, 6, 12, 2,
-	13, 7, 27, 28, 23, 24, 12, 21, 18, 19,
-	4,
+	13, 10, 11, 21, 20, 15, 19, 18, 3, 5,
+	6, 7, 8, 14, 25, 12, 16, 36, 17, 24,
+	26, 35, 10, 11, 29, 30, 15, 1, 33, 34,
+	5, 6, 7, 8, 14, 2, 15, 9, 31, 32,
+	27, 28, 22, 23, 14, 25, 4,
 }
 var exprPact = [...]int{
 
-	14, -1000, -4, 4, -1000, -11, -12, 34, -3, -3,
-	28, -1000, -1000, -3, -3, -1000, -1000, -1000, 22, 22,
-	-1000, -1000, -1000, 22, 22, 8, -2, 28, 28, -1000,
-	-1000, -1000, -1000,
+	18, -1000, 5, 8, -1000, -10, -11, -13, -14, 38,
+	-3, -3, 34, -1000, -1000, -3, -3, -1000, -1000, -1000,
+	-1000, -1000, 28, 28, -1000, -1000, -1000, 28, 28, 12,
+	7, 34, 34, -1000, -1000, -1000, -1000,
 }
 var exprPgo = [...]int{
 
-	0, 6, 40, 31, 13, 0, 23,
+	0, 8, 46, 37, 15, 0, 27,
 }
 var exprR1 = [...]int{
 
-	0, 6, 6, 1, 1, 1, 2, 2, 2, 3,
-	3, 3, 4, 4, 4, 5, 5, 5,
+	0, 6, 6, 1, 1, 1, 1, 1, 2, 2,
+	2, 3, 3, 3, 4, 4, 4, 5, 5, 5,
 }
 var exprR2 = [...]int{
 
-	0, 4, 2, 1, 2, 2, 1, 2, 2, 1,
-	3, 3, 1, 3, 3, 1, 1, 3,
+	0, 4, 2, 1, 2, 2, 2, 2, 1, 2,
+	2, 1, 3, 3, 1, 3, 3, 1, 1, 3,
 }
 var exprChk = [...]int{
 
-	-1000, -6, 15, -1, -2, 12, 13, -3, 4, 5,
-	-4, -5, 14, 8, 11, 10, 15, 15, 4, 5,
-	-1, 15, -1, 6, 7, -1, -1, -4, -4, -5,
-	-5, 9, 10,
+	-1000, -6, 17, -1, -2, 12, 13, 14, 15, -3,
+	4, 5, -4, -5, 16, 8, 11, 10, 17, 17,
+	17, 17, 4, 5, -1, 17, -1, 6, 7, -1,
+	-1, -4, -4, -5, -5, 9, 10,
 }
 var exprDef = [...]int{
 
-	0, -2, 16, 0, 3, 0, 0, 6, 0, 0,
-	9, 12, 15, 0, 0, 2, 4, 5, 0, 0,
-	7, 16, 8, 0, 0, 0, 0, 10, 11, 13,
-	14, 17, 1,
+	0, -2, 18, 0, 3, 0, 0, 0, 0, 8,
+	0, 0, 11, 14, 17, 0, 0, 2, 4, 5,
+	6, 7, 0, 0, 9, 18, 10, 0, 0, 0,
+	0, 12, 13, 15, 16, 19, 1,
 }
 var exprTok1 = [...]int{
 
@@ -256,14 +112,14 @@ var exprTok1 = [...]int{
 	8, 9, 6, 4, 3, 5, 3, 7, 3, 3,
 	3, 3, 3, 3, 3, 3, 3, 3, 3, 10,
 	3, 11, 3, 3, 3, 3, 3, 3, 3, 3,
-	3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-	3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+	3, 3, 3, 14, 3, 3, 3, 3, 3, 3,
+	15, 3, 3, 3, 3, 3, 3, 3, 3, 3,
 	3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
 	13, 3, 3, 3, 3, 12,
 }
 var exprTok2 = [...]int{
 
-	2, 3, 14, 15,
+	2, 3, 16, 17,
 }
 var exprTok3 = [...]int{
 	0,
@@ -608,7 +464,7 @@ exprdefault:
 
 	case 1:
 		exprDollar = exprS[exprpt-4 : exprpt+1]
-//line expr.y:38
+//line expr.y:29
 		{
 			ValidateLValue(exprDollar[1].tree)
 			tmp := NewAst(OpAssign, exprDollar[1].tree, exprDollar[3].tree, line_no)
@@ -616,57 +472,69 @@ exprdefault:
 		}
 	case 4:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
-//line expr.y:48
+//line expr.y:39
 		{
 			ValidateLValue(exprDollar[2].tree)
 			exprVAL.tree = NewAst(OpIncr, exprDollar[2].tree, nil, line_no)
 		}
 	case 5:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
-//line expr.y:53
+//line expr.y:44
 		{
 			ValidateLValue(exprDollar[2].tree)
 			exprVAL.tree = NewAst(OpDecr, exprDollar[2].tree, nil, line_no)
 		}
+	case 6:
+		exprDollar = exprS[exprpt-2 : exprpt+1]
+//line expr.y:49
+		{
+			exprVAL.tree = NewAst(OpDecr, exprDollar[2].tree, nil, line_no)
+		}
 	case 7:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
-//line expr.y:61
+//line expr.y:53
+		{
+			exprVAL.tree = NewAst(OpDecr, exprDollar[2].tree, nil, line_no)
+		}
+	case 9:
+		exprDollar = exprS[exprpt-2 : exprpt+1]
+//line expr.y:60
 		{
 			exprVAL.tree = exprDollar[2].tree
 		}
-	case 8:
+	case 10:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
-//line expr.y:65
+//line expr.y:64
 		{
 			exprVAL.tree = NewAst(OpUMinus, exprDollar[2].tree, nil, line_no)
 		}
-	case 10:
+	case 12:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
-//line expr.y:72
+//line expr.y:71
 		{
 			exprVAL.tree = NewAst(OpAdd, exprDollar[1].tree, exprDollar[3].tree, line_no)
 		}
-	case 11:
+	case 13:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
-//line expr.y:76
+//line expr.y:75
 		{
 			exprVAL.tree = NewAst(OpSub, exprDollar[1].tree, exprDollar[3].tree, line_no)
 		}
-	case 13:
+	case 15:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
-//line expr.y:83
+//line expr.y:82
 		{
 			exprVAL.tree = NewAst(OpMul, exprDollar[1].tree, exprDollar[3].tree, line_no)
 		}
-	case 14:
+	case 16:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
-//line expr.y:87
+//line expr.y:86
 		{
 			exprVAL.tree = NewAst(OpDiv, exprDollar[1].tree, exprDollar[3].tree, line_no)
 		}
-	case 17:
+	case 19:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
-//line expr.y:95
+//line expr.y:94
 		{
 			exprVAL.tree = exprDollar[2].tree
 		}

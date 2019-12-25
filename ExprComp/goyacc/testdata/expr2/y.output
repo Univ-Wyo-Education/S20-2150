@@ -30,7 +30,7 @@ state 2
 	expr3:  ID.    (16)
 
 	'='  shift 14
-	.  reduce 16 (src line 90)
+	.  reduce 16 (src line 93)
 
 
 state 3
@@ -43,7 +43,7 @@ state 3
 state 4
 	expr:  expr0.    (3)
 
-	.  reduce 3 (src line 44)
+	.  reduce 3 (src line 45)
 
 
 state 5
@@ -67,7 +67,7 @@ state 7
 
 	'+'  shift 18
 	'-'  shift 19
-	.  reduce 6 (src line 55)
+	.  reduce 6 (src line 58)
 
 
 state 8
@@ -113,19 +113,19 @@ state 10
 
 	'*'  shift 23
 	'/'  shift 24
-	.  reduce 9 (src line 66)
+	.  reduce 9 (src line 69)
 
 
 state 11
 	expr2:  expr3.    (12)
 
-	.  reduce 12 (src line 77)
+	.  reduce 12 (src line 80)
 
 
 state 12
 	expr3:  NUM.    (15)
 
-	.  reduce 15 (src line 88)
+	.  reduce 15 (src line 91)
 
 
 state 13
@@ -167,19 +167,19 @@ state 14
 state 15
 	top:  expr ';'.    (2)
 
-	.  reduce 2 (src line 42)
+	.  reduce 2 (src line 43)
 
 
 state 16
 	expr:  'i' ID.    (4)
 
-	.  reduce 4 (src line 46)
+	.  reduce 4 (src line 47)
 
 
 state 17
 	expr:  'd' ID.    (5)
 
-	.  reduce 5 (src line 50)
+	.  reduce 5 (src line 52)
 
 
 state 18
@@ -207,19 +207,19 @@ state 19
 state 20
 	expr0:  '+' expr.    (7)
 
-	.  reduce 7 (src line 57)
+	.  reduce 7 (src line 60)
 
 
 state 21
 	expr3:  ID.    (16)
 
-	.  reduce 16 (src line 90)
+	.  reduce 16 (src line 93)
 
 
 state 22
 	expr0:  '-' expr.    (8)
 
-	.  reduce 8 (src line 61)
+	.  reduce 8 (src line 64)
 
 
 state 23
@@ -263,7 +263,7 @@ state 27
 
 	'*'  shift 23
 	'/'  shift 24
-	.  reduce 10 (src line 68)
+	.  reduce 10 (src line 71)
 
 
 state 28
@@ -273,25 +273,25 @@ state 28
 
 	'*'  shift 23
 	'/'  shift 24
-	.  reduce 11 (src line 72)
+	.  reduce 11 (src line 75)
 
 
 state 29
 	expr2:  expr2 '*' expr3.    (13)
 
-	.  reduce 13 (src line 79)
+	.  reduce 13 (src line 82)
 
 
 state 30
 	expr2:  expr2 '/' expr3.    (14)
 
-	.  reduce 14 (src line 83)
+	.  reduce 14 (src line 86)
 
 
 state 31
 	expr3:  '(' expr ')'.    (17)
 
-	.  reduce 17 (src line 91)
+	.  reduce 17 (src line 94)
 
 
 state 32

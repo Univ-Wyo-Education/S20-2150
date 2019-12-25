@@ -36,6 +36,7 @@ import (
 top:
 	ID '=' expr ';'
 	{
+		ValidateLValue($1)
 		tmp := NewAst ( OpAssign, $1, $3, line_no )
 		fmt.Printf ( "Tree: %s\n", godebug.SVarI(tmp) )
 	}
@@ -45,10 +46,12 @@ expr:
  	expr0
 |	'i' ID
 	{
+		ValidateLValue($2)
 		$$ = NewAst ( OpIncr, $2, nil, line_no )
 	}
 |	'd' ID
 	{
+		ValidateLValue($2)
 		$$ = NewAst ( OpDecr, $2, nil, line_no )
 	}
 
