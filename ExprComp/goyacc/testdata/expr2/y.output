@@ -1,0 +1,314 @@
+
+state 0
+	$accept: .top $end 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 13
+	'i'  shift 5
+	'd'  shift 6
+	NUM  shift 12
+	ID  shift 2
+	.  error
+
+	expr  goto 3
+	expr0  goto 4
+	expr1  goto 7
+	expr2  goto 10
+	expr3  goto 11
+	top  goto 1
+
+state 1
+	$accept:  top.$end 
+
+	$end  accept
+	.  error
+
+
+state 2
+	top:  ID.'=' expr ';' 
+	expr3:  ID.    (16)
+
+	'='  shift 14
+	.  reduce 16 (src line 90)
+
+
+state 3
+	top:  expr.';' 
+
+	';'  shift 15
+	.  error
+
+
+state 4
+	expr:  expr0.    (3)
+
+	.  reduce 3 (src line 44)
+
+
+state 5
+	expr:  'i'.ID 
+
+	ID  shift 16
+	.  error
+
+
+state 6
+	expr:  'd'.ID 
+
+	ID  shift 17
+	.  error
+
+
+state 7
+	expr0:  expr1.    (6)
+	expr1:  expr1.'+' expr2 
+	expr1:  expr1.'-' expr2 
+
+	'+'  shift 18
+	'-'  shift 19
+	.  reduce 6 (src line 55)
+
+
+state 8
+	expr0:  '+'.expr 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 13
+	'i'  shift 5
+	'd'  shift 6
+	NUM  shift 12
+	ID  shift 21
+	.  error
+
+	expr  goto 20
+	expr0  goto 4
+	expr1  goto 7
+	expr2  goto 10
+	expr3  goto 11
+
+state 9
+	expr0:  '-'.expr 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 13
+	'i'  shift 5
+	'd'  shift 6
+	NUM  shift 12
+	ID  shift 21
+	.  error
+
+	expr  goto 22
+	expr0  goto 4
+	expr1  goto 7
+	expr2  goto 10
+	expr3  goto 11
+
+state 10
+	expr1:  expr2.    (9)
+	expr2:  expr2.'*' expr3 
+	expr2:  expr2.'/' expr3 
+
+	'*'  shift 23
+	'/'  shift 24
+	.  reduce 9 (src line 66)
+
+
+state 11
+	expr2:  expr3.    (12)
+
+	.  reduce 12 (src line 77)
+
+
+state 12
+	expr3:  NUM.    (15)
+
+	.  reduce 15 (src line 88)
+
+
+state 13
+	expr3:  '('.expr ')' 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 13
+	'i'  shift 5
+	'd'  shift 6
+	NUM  shift 12
+	ID  shift 21
+	.  error
+
+	expr  goto 25
+	expr0  goto 4
+	expr1  goto 7
+	expr2  goto 10
+	expr3  goto 11
+
+state 14
+	top:  ID '='.expr ';' 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 13
+	'i'  shift 5
+	'd'  shift 6
+	NUM  shift 12
+	ID  shift 21
+	.  error
+
+	expr  goto 26
+	expr0  goto 4
+	expr1  goto 7
+	expr2  goto 10
+	expr3  goto 11
+
+state 15
+	top:  expr ';'.    (2)
+
+	.  reduce 2 (src line 42)
+
+
+state 16
+	expr:  'i' ID.    (4)
+
+	.  reduce 4 (src line 46)
+
+
+state 17
+	expr:  'd' ID.    (5)
+
+	.  reduce 5 (src line 50)
+
+
+state 18
+	expr1:  expr1 '+'.expr2 
+
+	'('  shift 13
+	NUM  shift 12
+	ID  shift 21
+	.  error
+
+	expr2  goto 27
+	expr3  goto 11
+
+state 19
+	expr1:  expr1 '-'.expr2 
+
+	'('  shift 13
+	NUM  shift 12
+	ID  shift 21
+	.  error
+
+	expr2  goto 28
+	expr3  goto 11
+
+state 20
+	expr0:  '+' expr.    (7)
+
+	.  reduce 7 (src line 57)
+
+
+state 21
+	expr3:  ID.    (16)
+
+	.  reduce 16 (src line 90)
+
+
+state 22
+	expr0:  '-' expr.    (8)
+
+	.  reduce 8 (src line 61)
+
+
+state 23
+	expr2:  expr2 '*'.expr3 
+
+	'('  shift 13
+	NUM  shift 12
+	ID  shift 21
+	.  error
+
+	expr3  goto 29
+
+state 24
+	expr2:  expr2 '/'.expr3 
+
+	'('  shift 13
+	NUM  shift 12
+	ID  shift 21
+	.  error
+
+	expr3  goto 30
+
+state 25
+	expr3:  '(' expr.')' 
+
+	')'  shift 31
+	.  error
+
+
+state 26
+	top:  ID '=' expr.';' 
+
+	';'  shift 32
+	.  error
+
+
+state 27
+	expr1:  expr1 '+' expr2.    (10)
+	expr2:  expr2.'*' expr3 
+	expr2:  expr2.'/' expr3 
+
+	'*'  shift 23
+	'/'  shift 24
+	.  reduce 10 (src line 68)
+
+
+state 28
+	expr1:  expr1 '-' expr2.    (11)
+	expr2:  expr2.'*' expr3 
+	expr2:  expr2.'/' expr3 
+
+	'*'  shift 23
+	'/'  shift 24
+	.  reduce 11 (src line 72)
+
+
+state 29
+	expr2:  expr2 '*' expr3.    (13)
+
+	.  reduce 13 (src line 79)
+
+
+state 30
+	expr2:  expr2 '/' expr3.    (14)
+
+	.  reduce 14 (src line 83)
+
+
+state 31
+	expr3:  '(' expr ')'.    (17)
+
+	.  reduce 17 (src line 91)
+
+
+state 32
+	top:  ID '=' expr ';'.    (1)
+
+	.  reduce 1 (src line 36)
+
+
+15 terminals, 7 nonterminals
+18 grammar rules, 33/8000 states
+0 shift/reduce, 0 reduce/reduce conflicts reported
+56 working sets used
+memory: parser 31/120000
+24 extra closures
+61 shift entries, 1 exceptions
+14 goto entries
+18 entries saved by goto default
+Optimizer space used: output 41/120000
+41 table entries, 0 zero
+maximum spread: 15, maximum offset: 24
