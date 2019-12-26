@@ -158,7 +158,6 @@ func Test_Parser01(t *testing.T) {
 			fmt.Printf("Tokens that have been scanned: %s\n", godebug.SVarI(tk))
 		}
 
-		astList := make([]*SyntaxTree, 0, 10)
 		pd := ParseData{
 			FileName: test.Fn,
 			LineNo:   1,
@@ -166,23 +165,18 @@ func Test_Parser01(t *testing.T) {
 			tokens:   tk,
 			errList:  []string{},
 		}
-		for {
-			lexx = &exprLex{Tokens: tk, Pd: pd}
-			exprParse(lexx)
-			if lexx.Pd.ast == nil {
-				break
-			}
+		lexx = &exprLex{Tokens: tk, Pd: pd}
 
-			if len(pd.errList) > 0 {
-				fmt.Printf("error list = %s\n", lexx.Pd.errList)
-			}
+		for rv := 1; rv != LEX_EOF; {
+			rv = exprParse(lexx)
+			fmt.Printf("%srv= %T / %v at:%s%s\n", MiscLib.ColorRed, rv, rv, godebug.LF(), MiscLib.ColorReset)
+		}
 
-			astList = append(astList, lexx.Pd.ast)
-
-			if db1 {
-				fmt.Printf("%sparse (ast) = %s at:%s%s\n", MiscLib.ColorYellow, godebug.SVarI(lexx.Pd.ast), godebug.LF(), MiscLib.ColorReset)
-			}
-
+		if len(pd.errList) > 0 {
+			fmt.Printf("error list = %s\n", lexx.Pd.errList)
+		}
+		if db1 {
+			fmt.Printf("%sparse (ast) = %s at:%s%s\n", MiscLib.ColorYellow, godebug.SVarI(astList), godebug.LF(), MiscLib.ColorReset)
 		}
 		have := godebug.SVarI(astList)
 		have2 := fmt.Sprintf(`{"x":%s}`, have)

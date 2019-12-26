@@ -228,7 +228,7 @@ func (x *exprLex) Lex(yylval *exprSymType) int {
 	x.Pd.curPos++
 	if dbScanner02 {
 		nc++
-		if nc > 25 {
+		if nc > 7 {
 			os.Exit(1)
 		}
 	}

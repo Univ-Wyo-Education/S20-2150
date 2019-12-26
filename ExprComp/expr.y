@@ -10,7 +10,7 @@ import (
 	"github.com/pschlump/godebug"
 )
 
-var ast *ParseTree;
+var astList = make([]*SyntaxTree, 0, 10)
 
 %}
 
@@ -18,12 +18,16 @@ var ast *ParseTree;
 	tree *SyntaxTree
 }
 
-%type	<tree>	expr expr0 expr1 expr2 expr3
+%type	<tree>	top expr expr0 expr1 expr2 expr3
 
-%token '+' '-' '*' '/' '(' ')' ';' '=' 'i' 'd' 'I' 'P'
+%token '+' '-' '*' '/' '(' ')' ';' '=' 
 
 %token	<tree>	NUM
 %token	<tree>	ID
+%token	<tree>	INCR
+%token	<tree>	DECR
+%token	<tree>	GET
+%token	<tree>	PUT
 
 %%
 
@@ -31,37 +35,41 @@ top:
 	ID '=' expr ';'
 	{
 		ValidateLValue($1)
-		lexx.Pd.ast = NewAst ( OpAssign, $1, $3, lexx.Pd.LineNo )
-		fmt.Printf ( "AT: %s Tree: %s\n", godebug.LF(), godebug.SVarI(lexx.Pd.ast) )
+		ast := NewAst ( OpAssign, $1, $3, lexx.Pd.LineNo )
+		astList = append(astList, ast)
+		fmt.Printf ( "AT: %s Tree: %s\n", godebug.LF(), godebug.SVarI(ast) )
+		$$ = ast 
 	}
 |	expr ';'
 	{
-		lexx.Pd.ast = NewAst ( OpAssign, nil, $1, lexx.Pd.LineNo )
-		fmt.Printf ( "AT: %s Tree: %s\n", godebug.LF(), godebug.SVarI(lexx.Pd.ast) )
+		ast := NewAst ( OpAssign, nil, $1, lexx.Pd.LineNo )
+		fmt.Printf ( "AT: %s Tree: %s\n", godebug.LF(), godebug.SVarI(ast) )
+		astList = append(astList, ast)
+		$$ = ast 
+	}
+|	GET ID
+	{
+		fmt.Printf ( "AT:%s\n", godebug.LF())
+		$$ = NewAst ( OpDecr, $2, nil, lexx.Pd.LineNo )
+	}
+|	PUT ID
+	{
+		fmt.Printf ( "AT:%s\n", godebug.LF())
+		$$ = NewAst ( OpDecr, $2, nil, lexx.Pd.LineNo )
 	}
 
 expr:
  	expr0
-|	'i' ID
+|	INCR ID
 	{
 		fmt.Printf ( "AT:%s\n", godebug.LF())
 		ValidateLValue($2)
 		$$ = NewAst ( OpIncr, $2, nil, lexx.Pd.LineNo )
 	}
-|	'd' ID
+|	DECR ID
 	{
 		fmt.Printf ( "AT:%s\n", godebug.LF())
 		ValidateLValue($2)
-		$$ = NewAst ( OpDecr, $2, nil, lexx.Pd.LineNo )
-	}
-|	'I' ID
-	{
-		fmt.Printf ( "AT:%s\n", godebug.LF())
-		$$ = NewAst ( OpDecr, $2, nil, lexx.Pd.LineNo )
-	}
-|	'P' ID
-	{
-		fmt.Printf ( "AT:%s\n", godebug.LF())
 		$$ = NewAst ( OpDecr, $2, nil, lexx.Pd.LineNo )
 	}
 

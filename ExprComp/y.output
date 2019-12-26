@@ -5,20 +5,20 @@ state 0
 	'+'  shift 10
 	'-'  shift 11
 	'('  shift 15
-	'i'  shift 5
-	'd'  shift 6
-	'I'  shift 7
-	'P'  shift 8
 	NUM  shift 14
 	ID  shift 2
+	INCR  shift 7
+	DECR  shift 8
+	GET  shift 4
+	PUT  shift 5
 	.  error
 
+	top  goto 1
 	expr  goto 3
-	expr0  goto 4
+	expr0  goto 6
 	expr1  goto 9
 	expr2  goto 12
 	expr3  goto 13
-	top  goto 1
 
 state 1
 	$accept:  top.$end 
@@ -32,7 +32,7 @@ state 2
 	expr3:  ID.    (18)
 
 	'='  shift 16
-	.  reduce 18 (src line 109)
+	.  reduce 18 (src line 117)
 
 
 state 3
@@ -43,34 +43,34 @@ state 3
 
 
 state 4
-	expr:  expr0.    (3)
-
-	.  reduce 3 (src line 43)
-
-
-state 5
-	expr:  'i'.ID 
+	top:  GET.ID 
 
 	ID  shift 18
 	.  error
 
 
-state 6
-	expr:  'd'.ID 
+state 5
+	top:  PUT.ID 
 
 	ID  shift 19
 	.  error
 
 
+state 6
+	expr:  expr0.    (5)
+
+	.  reduce 5 (src line 61)
+
+
 state 7
-	expr:  'I'.ID 
+	expr:  INCR.ID 
 
 	ID  shift 20
 	.  error
 
 
 state 8
-	expr:  'P'.ID 
+	expr:  DECR.ID 
 
 	ID  shift 21
 	.  error
@@ -83,7 +83,7 @@ state 9
 
 	'+'  shift 22
 	'-'  shift 23
-	.  reduce 8 (src line 68)
+	.  reduce 8 (src line 76)
 
 
 state 10
@@ -92,16 +92,14 @@ state 10
 	'+'  shift 10
 	'-'  shift 11
 	'('  shift 15
-	'i'  shift 5
-	'd'  shift 6
-	'I'  shift 7
-	'P'  shift 8
 	NUM  shift 14
 	ID  shift 25
+	INCR  shift 7
+	DECR  shift 8
 	.  error
 
 	expr  goto 24
-	expr0  goto 4
+	expr0  goto 6
 	expr1  goto 9
 	expr2  goto 12
 	expr3  goto 13
@@ -112,16 +110,14 @@ state 11
 	'+'  shift 10
 	'-'  shift 11
 	'('  shift 15
-	'i'  shift 5
-	'd'  shift 6
-	'I'  shift 7
-	'P'  shift 8
 	NUM  shift 14
 	ID  shift 25
+	INCR  shift 7
+	DECR  shift 8
 	.  error
 
 	expr  goto 26
-	expr0  goto 4
+	expr0  goto 6
 	expr1  goto 9
 	expr2  goto 12
 	expr3  goto 13
@@ -133,19 +129,19 @@ state 12
 
 	'*'  shift 27
 	'/'  shift 28
-	.  reduce 11 (src line 81)
+	.  reduce 11 (src line 89)
 
 
 state 13
 	expr2:  expr3.    (14)
 
-	.  reduce 14 (src line 94)
+	.  reduce 14 (src line 102)
 
 
 state 14
 	expr3:  NUM.    (17)
 
-	.  reduce 17 (src line 107)
+	.  reduce 17 (src line 115)
 
 
 state 15
@@ -154,16 +150,14 @@ state 15
 	'+'  shift 10
 	'-'  shift 11
 	'('  shift 15
-	'i'  shift 5
-	'd'  shift 6
-	'I'  shift 7
-	'P'  shift 8
 	NUM  shift 14
 	ID  shift 25
+	INCR  shift 7
+	DECR  shift 8
 	.  error
 
 	expr  goto 29
-	expr0  goto 4
+	expr0  goto 6
 	expr1  goto 9
 	expr2  goto 12
 	expr3  goto 13
@@ -174,16 +168,14 @@ state 16
 	'+'  shift 10
 	'-'  shift 11
 	'('  shift 15
-	'i'  shift 5
-	'd'  shift 6
-	'I'  shift 7
-	'P'  shift 8
 	NUM  shift 14
 	ID  shift 25
+	INCR  shift 7
+	DECR  shift 8
 	.  error
 
 	expr  goto 30
-	expr0  goto 4
+	expr0  goto 6
 	expr1  goto 9
 	expr2  goto 12
 	expr3  goto 13
@@ -191,31 +183,31 @@ state 16
 state 17
 	top:  expr ';'.    (2)
 
-	.  reduce 2 (src line 37)
+	.  reduce 2 (src line 43)
 
 
 state 18
-	expr:  'i' ID.    (4)
+	top:  GET ID.    (3)
 
-	.  reduce 4 (src line 45)
+	.  reduce 3 (src line 50)
 
 
 state 19
-	expr:  'd' ID.    (5)
+	top:  PUT ID.    (4)
 
-	.  reduce 5 (src line 51)
+	.  reduce 4 (src line 55)
 
 
 state 20
-	expr:  'I' ID.    (6)
+	expr:  INCR ID.    (6)
 
-	.  reduce 6 (src line 57)
+	.  reduce 6 (src line 63)
 
 
 state 21
-	expr:  'P' ID.    (7)
+	expr:  DECR ID.    (7)
 
-	.  reduce 7 (src line 62)
+	.  reduce 7 (src line 69)
 
 
 state 22
@@ -243,19 +235,19 @@ state 23
 state 24
 	expr0:  '+' expr.    (9)
 
-	.  reduce 9 (src line 70)
+	.  reduce 9 (src line 78)
 
 
 state 25
 	expr3:  ID.    (18)
 
-	.  reduce 18 (src line 109)
+	.  reduce 18 (src line 117)
 
 
 state 26
 	expr0:  '-' expr.    (10)
 
-	.  reduce 10 (src line 75)
+	.  reduce 10 (src line 83)
 
 
 state 27
@@ -299,7 +291,7 @@ state 31
 
 	'*'  shift 27
 	'/'  shift 28
-	.  reduce 12 (src line 83)
+	.  reduce 12 (src line 91)
 
 
 state 32
@@ -309,31 +301,31 @@ state 32
 
 	'*'  shift 27
 	'/'  shift 28
-	.  reduce 13 (src line 88)
+	.  reduce 13 (src line 96)
 
 
 state 33
 	expr2:  expr2 '*' expr3.    (15)
 
-	.  reduce 15 (src line 96)
+	.  reduce 15 (src line 104)
 
 
 state 34
 	expr2:  expr2 '/' expr3.    (16)
 
-	.  reduce 16 (src line 101)
+	.  reduce 16 (src line 109)
 
 
 state 35
 	expr3:  '(' expr ')'.    (19)
 
-	.  reduce 19 (src line 110)
+	.  reduce 19 (src line 118)
 
 
 state 36
 	top:  ID '=' expr ';'.    (1)
 
-	.  reduce 1 (src line 30)
+	.  reduce 1 (src line 34)
 
 
 17 terminals, 7 nonterminals
@@ -341,10 +333,10 @@ state 36
 0 shift/reduce, 0 reduce/reduce conflicts reported
 56 working sets used
 memory: parser 31/120000
-28 extra closures
-73 shift entries, 1 exceptions
+24 extra closures
+65 shift entries, 1 exceptions
 14 goto entries
 18 entries saved by goto default
-Optimizer space used: output 47/120000
-47 table entries, 0 zero
+Optimizer space used: output 45/120000
+45 table entries, 0 zero
 maximum spread: 17, maximum offset: 28

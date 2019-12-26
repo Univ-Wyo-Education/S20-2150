@@ -1,1 +1,23 @@
-{"x":[]}
+{"x":[
+	{
+		"Op": 408,
+		"OpName": "OpAssign",
+		"SValue": "",
+		"IValue": 0,
+		"Left": {
+			"Op": 57347,
+			"OpName": "TokID",
+			"SValue": "aa",
+			"IValue": 0,
+			"LineNo": 1
+		},
+		"Right": {
+			"Op": 57346,
+			"OpName": "TokNUM",
+			"SValue": "3",
+			"IValue": 3,
+			"LineNo": 1
+		},
+		"LineNo": 1
+	}
+]}

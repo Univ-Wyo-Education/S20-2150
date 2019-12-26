@@ -64,6 +64,8 @@ func main() {
 	//		GenerateCode(ast, out)
 
 	//	// GenerateCode(lexx.Pd.ast, out)
-	GenerateCode(lexx.Pd.ast, out)
+	for _, ast := range astList {
+		GenerateCode(ast, out)
+	}
 	return
 }

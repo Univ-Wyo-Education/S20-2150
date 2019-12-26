@@ -61,7 +61,7 @@ type ParseData struct {
 	curPos   int
 	tokens   []ScanTokType
 	errList  []string
-	ast      *SyntaxTree // Completed Parse Tree
+	// ast      *SyntaxTree // Completed Parse Tree
 }
 
 // still used in cg.go - to be depricated for SyntaxTree

@@ -14,7 +14,9 @@ import (
 	"github.com/pschlump/godebug"
 )
 
-//line expr.y:15
+var astList = make([]*SyntaxTree, 0, 10)
+
+//line expr.y:17
 type exprSymType struct {
 	yys  int
 	tree *SyntaxTree
@@ -52,7 +54,7 @@ const exprEofCode = 1
 const exprErrCode = 2
 const exprInitialStackSize = 16
 
-//line expr.y:121
+//line expr.y:125
 
 //line yacctab:1
 var exprExca = [...]int{
@@ -465,38 +467,40 @@ exprdefault:
 
 	case 1:
 		exprDollar = exprS[exprpt-4 : exprpt+1]
-//line expr.y:34
+//line expr.y:36
 		{
 			ValidateLValue(exprDollar[1].tree)
-			lexx.Pd.ast = NewAst(OpAssign, exprDollar[1].tree, exprDollar[3].tree, lexx.Pd.LineNo)
-			fmt.Printf("AT: %s Tree: %s\n", godebug.LF(), godebug.SVarI(lexx.Pd.ast))
-			exprVAL.tree = lexx.Pd.ast
+			ast := NewAst(OpAssign, exprDollar[1].tree, exprDollar[3].tree, lexx.Pd.LineNo)
+			astList = append(astList, ast)
+			fmt.Printf("AT: %s Tree: %s\n", godebug.LF(), godebug.SVarI(ast))
+			exprVAL.tree = ast
 		}
 	case 2:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
-//line expr.y:41
+//line expr.y:44
 		{
-			lexx.Pd.ast = NewAst(OpAssign, nil, exprDollar[1].tree, lexx.Pd.LineNo)
-			fmt.Printf("AT: %s Tree: %s\n", godebug.LF(), godebug.SVarI(lexx.Pd.ast))
-			exprVAL.tree = exprDollar[1].tree
+			ast := NewAst(OpAssign, nil, exprDollar[1].tree, lexx.Pd.LineNo)
+			fmt.Printf("AT: %s Tree: %s\n", godebug.LF(), godebug.SVarI(ast))
+			astList = append(astList, ast)
+			exprVAL.tree = ast
 		}
 	case 3:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
-//line expr.y:47
+//line expr.y:51
 		{
 			fmt.Printf("AT:%s\n", godebug.LF())
 			exprVAL.tree = NewAst(OpDecr, exprDollar[2].tree, nil, lexx.Pd.LineNo)
 		}
 	case 4:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
-//line expr.y:52
+//line expr.y:56
 		{
 			fmt.Printf("AT:%s\n", godebug.LF())
 			exprVAL.tree = NewAst(OpDecr, exprDollar[2].tree, nil, lexx.Pd.LineNo)
 		}
 	case 6:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
-//line expr.y:60
+//line expr.y:64
 		{
 			fmt.Printf("AT:%s\n", godebug.LF())
 			ValidateLValue(exprDollar[2].tree)
@@ -504,7 +508,7 @@ exprdefault:
 		}
 	case 7:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
-//line expr.y:66
+//line expr.y:70
 		{
 			fmt.Printf("AT:%s\n", godebug.LF())
 			ValidateLValue(exprDollar[2].tree)
@@ -512,49 +516,49 @@ exprdefault:
 		}
 	case 9:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
-//line expr.y:75
+//line expr.y:79
 		{
 			fmt.Printf("AT:%s\n", godebug.LF())
 			exprVAL.tree = exprDollar[2].tree
 		}
 	case 10:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
-//line expr.y:80
+//line expr.y:84
 		{
 			fmt.Printf("AT:%s\n", godebug.LF())
 			exprVAL.tree = NewAst(OpUMinus, exprDollar[2].tree, nil, lexx.Pd.LineNo)
 		}
 	case 12:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
-//line expr.y:88
+//line expr.y:92
 		{
 			fmt.Printf("AT:%s\n", godebug.LF())
 			exprVAL.tree = NewAst(OpAdd, exprDollar[1].tree, exprDollar[3].tree, lexx.Pd.LineNo)
 		}
 	case 13:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
-//line expr.y:93
+//line expr.y:97
 		{
 			fmt.Printf("AT:%s\n", godebug.LF())
 			exprVAL.tree = NewAst(OpSub, exprDollar[1].tree, exprDollar[3].tree, lexx.Pd.LineNo)
 		}
 	case 15:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
-//line expr.y:101
+//line expr.y:105
 		{
 			fmt.Printf("AT:%s\n", godebug.LF())
 			exprVAL.tree = NewAst(OpMul, exprDollar[1].tree, exprDollar[3].tree, lexx.Pd.LineNo)
 		}
 	case 16:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
-//line expr.y:106
+//line expr.y:110
 		{
 			fmt.Printf("AT:%s\n", godebug.LF())
 			exprVAL.tree = NewAst(OpDiv, exprDollar[1].tree, exprDollar[3].tree, lexx.Pd.LineNo)
 		}
 	case 19:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
-//line expr.y:115
+//line expr.y:119
 		{
 			fmt.Printf("AT:%s\n", godebug.LF())
 			exprVAL.tree = exprDollar[2].tree
