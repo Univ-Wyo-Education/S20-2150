@@ -1,3 +1,0 @@
-package main
-
-// misc stuff
