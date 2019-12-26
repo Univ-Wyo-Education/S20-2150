@@ -1,85 +1,51 @@
 {"x":[
 	{
-		"Op": 113,
-		"OpName": "PtStore",
-		"St": {
-			"LineNo": 0,
-			"Value": 0
-		},
-		"Value": 0,
+		"Op": 408,
+		"OpName": "OpAssign",
+		"SValue": "",
+		"IValue": 0,
 		"Left": {
-			"Op": 105,
-			"OpName": "PtID",
-			"St": {
-				"Name": "A",
-				"LineNo": 1,
-				"Value": 0
-			},
-			"Name": "A",
-			"Value": 0,
-			"LineNo": 1,
-			"InAcc": false
+			"Op": 57347,
+			"OpName": "TokID",
+			"SValue": "A",
+			"IValue": 0,
+			"LineNo": 1
 		},
 		"Right": {
-			"Op": 104,
-			"OpName": "PtNum",
-			"St": {
-				"LineNo": 0,
-				"Value": 0
-			},
-			"Value": 5,
-			"LineNo": 1,
-			"InAcc": false
+			"Op": 57346,
+			"OpName": "TokNUM",
+			"SValue": "5",
+			"IValue": 5,
+			"LineNo": 1
 		},
-		"LineNo": 1,
-		"InAcc": false
+		"LineNo": 1
 	},
 	{
-		"Op": 113,
-		"OpName": "PtStore",
-		"St": {
-			"LineNo": 0,
-			"Value": 0
-		},
-		"Value": 0,
+		"Op": 408,
+		"OpName": "OpAssign",
+		"SValue": "",
+		"IValue": 0,
 		"Left": {
-			"Op": 105,
-			"OpName": "PtID",
-			"St": {
-				"Name": "B",
-				"LineNo": 2,
-				"Value": 0
-			},
-			"Name": "B",
-			"Value": 0,
-			"LineNo": 1,
-			"InAcc": false
+			"Op": 57347,
+			"OpName": "TokID",
+			"SValue": "B",
+			"IValue": 0,
+			"LineNo": 2
 		},
 		"Right": {
-			"Op": 110,
-			"OpName": "PtIncr",
-			"St": {
-				"LineNo": 0,
-				"Value": 0
-			},
-			"Value": 0,
+			"Op": 409,
+			"OpName": "OpIncr",
+			"SValue": "",
+			"IValue": 0,
 			"Left": {
-				"Op": 105,
-				"OpName": "PtID",
-				"St": {
-					"Name": "A",
-					"LineNo": 1,
-					"Value": 0
-				},
-				"Name": "A",
-				"Value": 0,
-				"LineNo": 1,
-				"InAcc": false
+				"Op": 57347,
+				"OpName": "TokID",
+				"SValue": "A",
+				"IValue": 0,
+				"LineNo": 2
 			},
-			"LineNo": 1,
-			"InAcc": false
+			"LineNo": 1
 		},
-		"LineNo": 1,
-		"InAcc": false
+		"LineNo": 1
 	}
 ]}

@@ -65,50 +65,55 @@ var exprExca = [...]int{
 
 const exprPrivate = 57344
 
-const exprLast = 45
+const exprLast = 49
 
 var exprAct = [...]int{
 
-	13, 10, 11, 12, 3, 15, 21, 20, 19, 14,
-	2, 7, 8, 4, 5, 24, 26, 18, 15, 16,
-	29, 30, 14, 25, 36, 17, 31, 32, 33, 34,
-	10, 11, 35, 9, 15, 27, 28, 6, 14, 25,
-	7, 8, 22, 23, 1,
+	14, 13, 11, 12, 4, 23, 16, 22, 21, 20,
+	15, 3, 8, 9, 5, 6, 26, 28, 18, 40,
+	34, 31, 33, 32, 11, 12, 35, 36, 16, 19,
+	37, 38, 15, 27, 8, 9, 16, 2, 39, 17,
+	15, 27, 29, 30, 24, 25, 1, 10, 7,
 }
 var exprPact = [...]int{
 
-	-3, -1000, 8, 15, 4, -5, -1000, -6, -7, 38,
-	26, 26, 29, -1000, -1000, 26, 26, -1000, -1000, -1000,
-	-1000, -1000, 10, 10, -1000, -1000, -1000, 10, 10, 23,
-	14, 29, 29, -1000, -1000, -1000, -1000,
+	-2, -2, -1000, 7, 19, -4, -5, -1000, -6, -8,
+	40, 20, 20, 36, -1000, -1000, 20, -1000, 20, -1000,
+	12, 10, -1000, -1000, 28, 28, -1000, -1000, -1000, 28,
+	28, 29, 9, -1000, -1000, 36, 36, -1000, -1000, -1000,
+	-1000,
 }
 var exprPgo = [...]int{
 
-	0, 44, 4, 37, 33, 3, 0,
+	0, 37, 4, 48, 47, 1, 0, 46,
 }
 var exprR1 = [...]int{
 
-	0, 1, 1, 1, 1, 2, 2, 2, 3, 3,
-	3, 4, 4, 4, 5, 5, 5, 6, 6, 6,
+	0, 7, 7, 1, 1, 1, 1, 2, 2, 2,
+	3, 3, 3, 4, 4, 4, 5, 5, 5, 6,
+	6, 6,
 }
 var exprR2 = [...]int{
 
-	0, 4, 2, 2, 2, 1, 2, 2, 1, 2,
-	2, 1, 3, 3, 1, 3, 3, 1, 1, 3,
+	0, 1, 2, 4, 2, 3, 3, 1, 2, 2,
+	1, 2, 2, 1, 3, 3, 1, 3, 3, 1,
+	1, 3,
 }
 var exprChk = [...]int{
 
-	-1000, -1, 13, -2, 16, 17, -3, 14, 15, -4,
-	4, 5, -5, -6, 12, 8, 11, 10, 13, 13,
-	13, 13, 4, 5, -2, 13, -2, 6, 7, -2,
-	-2, -5, -5, -6, -6, 9, 10,
+	-1000, -7, -1, 13, -2, 16, 17, -3, 14, 15,
+	-4, 4, 5, -5, -6, 12, 8, -1, 11, 10,
+	13, 13, 13, 13, 4, 5, -2, 13, -2, 6,
+	7, -2, -2, 10, 10, -5, -5, -6, -6, 9,
+	10,
 }
 var exprDef = [...]int{
 
-	0, -2, 18, 0, 0, 0, 5, 0, 0, 8,
-	0, 0, 11, 14, 17, 0, 0, 2, 3, 4,
-	6, 7, 0, 0, 9, 18, 10, 0, 0, 0,
-	0, 12, 13, 15, 16, 19, 1,
+	0, -2, 1, 20, 0, 0, 0, 7, 0, 0,
+	10, 0, 0, 13, 16, 19, 0, 2, 0, 4,
+	0, 0, 8, 9, 0, 0, 11, 20, 12, 0,
+	0, 0, 0, 5, 6, 14, 15, 17, 18, 21,
+	3,
 }
 var exprTok1 = [...]int{
 
@@ -465,9 +470,9 @@ exprdefault:
 	// dummy call; replaced with literal code
 	switch exprnt {
 
-	case 1:
+	case 3:
 		exprDollar = exprS[exprpt-4 : exprpt+1]
-//line expr.y:36
+//line expr.y:34
 		{
 			ValidateLValue(exprDollar[1].tree)
 			ast := NewAst(OpAssign, exprDollar[1].tree, exprDollar[3].tree, lexx.Pd.LineNo)
@@ -475,92 +480,94 @@ exprdefault:
 			fmt.Printf("AT: %s Tree: %s\n", godebug.LF(), godebug.SVarI(ast))
 			exprVAL.tree = ast
 		}
-	case 2:
+	case 4:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
-//line expr.y:44
+//line expr.y:42
 		{
 			ast := NewAst(OpAssign, nil, exprDollar[1].tree, lexx.Pd.LineNo)
 			fmt.Printf("AT: %s Tree: %s\n", godebug.LF(), godebug.SVarI(ast))
 			astList = append(astList, ast)
 			exprVAL.tree = ast
 		}
-	case 3:
-		exprDollar = exprS[exprpt-2 : exprpt+1]
-//line expr.y:51
+	case 5:
+		exprDollar = exprS[exprpt-3 : exprpt+1]
+//line expr.y:49
 		{
-			fmt.Printf("AT:%s\n", godebug.LF())
-			exprVAL.tree = NewAst(OpDecr, exprDollar[2].tree, nil, lexx.Pd.LineNo)
-		}
-	case 4:
-		exprDollar = exprS[exprpt-2 : exprpt+1]
-//line expr.y:56
-		{
-			fmt.Printf("AT:%s\n", godebug.LF())
+			ValidateLValue(exprDollar[2].tree)
+			// fmt.Printf ( "AT:%s\n", godebug.LF())
 			exprVAL.tree = NewAst(OpDecr, exprDollar[2].tree, nil, lexx.Pd.LineNo)
 		}
 	case 6:
+		exprDollar = exprS[exprpt-3 : exprpt+1]
+//line expr.y:55
+		{
+			ValidateLValue(exprDollar[2].tree)
+			// fmt.Printf ( "AT:%s\n", godebug.LF())
+			exprVAL.tree = NewAst(OpDecr, exprDollar[2].tree, nil, lexx.Pd.LineNo)
+		}
+	case 8:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
 //line expr.y:64
 		{
-			fmt.Printf("AT:%s\n", godebug.LF())
+			// fmt.Printf ( "AT:%s\n", godebug.LF())
 			ValidateLValue(exprDollar[2].tree)
 			exprVAL.tree = NewAst(OpIncr, exprDollar[2].tree, nil, lexx.Pd.LineNo)
 		}
-	case 7:
+	case 9:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
 //line expr.y:70
 		{
-			fmt.Printf("AT:%s\n", godebug.LF())
+			// fmt.Printf ( "AT:%s\n", godebug.LF())
 			ValidateLValue(exprDollar[2].tree)
 			exprVAL.tree = NewAst(OpDecr, exprDollar[2].tree, nil, lexx.Pd.LineNo)
 		}
-	case 9:
+	case 11:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
 //line expr.y:79
 		{
-			fmt.Printf("AT:%s\n", godebug.LF())
+			// fmt.Printf ( "AT:%s\n", godebug.LF())
 			exprVAL.tree = exprDollar[2].tree
 		}
-	case 10:
+	case 12:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
 //line expr.y:84
 		{
-			fmt.Printf("AT:%s\n", godebug.LF())
+			// fmt.Printf ( "AT:%s\n", godebug.LF())
 			exprVAL.tree = NewAst(OpUMinus, exprDollar[2].tree, nil, lexx.Pd.LineNo)
 		}
-	case 12:
+	case 14:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
 //line expr.y:92
 		{
-			fmt.Printf("AT:%s\n", godebug.LF())
+			// fmt.Printf ( "AT:%s\n", godebug.LF())
 			exprVAL.tree = NewAst(OpAdd, exprDollar[1].tree, exprDollar[3].tree, lexx.Pd.LineNo)
-		}
-	case 13:
-		exprDollar = exprS[exprpt-3 : exprpt+1]
-//line expr.y:97
-		{
-			fmt.Printf("AT:%s\n", godebug.LF())
-			exprVAL.tree = NewAst(OpSub, exprDollar[1].tree, exprDollar[3].tree, lexx.Pd.LineNo)
 		}
 	case 15:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
+//line expr.y:97
+		{
+			// fmt.Printf ( "AT:%s\n", godebug.LF())
+			exprVAL.tree = NewAst(OpSub, exprDollar[1].tree, exprDollar[3].tree, lexx.Pd.LineNo)
+		}
+	case 17:
+		exprDollar = exprS[exprpt-3 : exprpt+1]
 //line expr.y:105
 		{
-			fmt.Printf("AT:%s\n", godebug.LF())
+			// fmt.Printf ( "AT:%s\n", godebug.LF())
 			exprVAL.tree = NewAst(OpMul, exprDollar[1].tree, exprDollar[3].tree, lexx.Pd.LineNo)
 		}
-	case 16:
+	case 18:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
 //line expr.y:110
 		{
-			fmt.Printf("AT:%s\n", godebug.LF())
+			// fmt.Printf ( "AT:%s\n", godebug.LF())
 			exprVAL.tree = NewAst(OpDiv, exprDollar[1].tree, exprDollar[3].tree, lexx.Pd.LineNo)
 		}
-	case 19:
+	case 21:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
 //line expr.y:119
 		{
-			fmt.Printf("AT:%s\n", godebug.LF())
+			// fmt.Printf ( "AT:%s\n", godebug.LF())
 			exprVAL.tree = exprDollar[2].tree
 		}
 	}

@@ -1,174 +1,65 @@
 {"x":[
 	{
-		"Op": 113,
-		"OpName": "PtStore",
-		"St": {
-			"LineNo": 0,
-			"Value": 0
-		},
-		"Value": 0,
+		"Op": 408,
+		"OpName": "OpAssign",
+		"SValue": "",
+		"IValue": 0,
 		"Left": {
-			"Op": 105,
-			"OpName": "PtID",
-			"St": {
-				"Name": "A",
-				"LineNo": 1,
-				"Value": 0
-			},
-			"Name": "A",
-			"Value": 0,
-			"LineNo": 1,
-			"InAcc": false
+			"Op": 57347,
+			"OpName": "TokID",
+			"SValue": "A",
+			"IValue": 0,
+			"LineNo": 1
 		},
 		"Right": {
-			"Op": 107,
-			"OpName": "PtAdd",
-			"St": {
-				"LineNo": 0,
-				"Value": 0
-			},
-			"Value": 0,
+			"Op": 402,
+			"OpName": "OpAdd",
+			"SValue": "",
+			"IValue": 0,
 			"Left": {
-				"Op": 107,
-				"OpName": "PtAdd",
-				"St": {
-					"LineNo": 0,
-					"Value": 0
-				},
-				"Value": 0,
+				"Op": 402,
+				"OpName": "OpAdd",
+				"SValue": "",
+				"IValue": 0,
 				"Left": {
-					"Op": 107,
-					"OpName": "PtAdd",
-					"St": {
-						"LineNo": 0,
-						"Value": 0
-					},
-					"Value": 0,
-					"Left": {
-						"Op": 107,
-						"OpName": "PtAdd",
-						"St": {
-							"LineNo": 0,
-							"Value": 0
-						},
-						"Value": 0,
-						"Left": {
-							"Op": 107,
-							"OpName": "PtAdd",
-							"St": {
-								"LineNo": 0,
-								"Value": 0
-							},
-							"Value": 0,
-							"Left": {
-								"Op": 107,
-								"OpName": "PtAdd",
-								"St": {
-									"LineNo": 0,
-									"Value": 0
-								},
-								"Value": 0,
-								"Left": {
-									"Op": 104,
-									"OpName": "PtNum",
-									"St": {
-										"LineNo": 0,
-										"Value": 0
-									},
-									"Value": 2,
-									"LineNo": 1,
-									"InAcc": false
-								},
-								"Right": {
-									"Op": 104,
-									"OpName": "PtNum",
-									"St": {
-										"LineNo": 0,
-										"Value": 0
-									},
-									"Value": 3,
-									"LineNo": 1,
-									"InAcc": false
-								},
-								"LineNo": 1,
-								"InAcc": false
-							},
-							"Right": {
-								"Op": 106,
-								"OpName": "PtError",
-								"St": {
-									"LineNo": 0,
-									"Value": 0
-								},
-								"Value": 0,
-								"LineNo": 1,
-								"InAcc": false,
-								"Source": "File: /Users/pschlump/go/src/github.com/Univ-Wyo-Education/S20-2150/ExprComp/cmp.go LineNo:684"
-							},
-							"LineNo": 1,
-							"InAcc": false
-						},
-						"Right": {
-							"Op": 106,
-							"OpName": "PtError",
-							"St": {
-								"LineNo": 0,
-								"Value": 0
-							},
-							"Value": 0,
-							"LineNo": 1,
-							"InAcc": false,
-							"Source": "File: /Users/pschlump/go/src/github.com/Univ-Wyo-Education/S20-2150/ExprComp/cmp.go LineNo:623"
-						},
-						"LineNo": 1,
-						"InAcc": false
-					},
-					"Right": {
-						"Op": 106,
-						"OpName": "PtError",
-						"St": {
-							"LineNo": 0,
-							"Value": 0
-						},
-						"Value": 0,
-						"LineNo": 1,
-						"InAcc": false,
-						"Source": "File: /Users/pschlump/go/src/github.com/Univ-Wyo-Education/S20-2150/ExprComp/cmp.go LineNo:684"
-					},
-					"LineNo": 1,
-					"InAcc": false
+					"Op": 57346,
+					"OpName": "TokNUM",
+					"SValue": "2",
+					"IValue": 2,
+					"LineNo": 1
 				},
 				"Right": {
-					"Op": 106,
-					"OpName": "PtError",
-					"St": {
-						"LineNo": 0,
-						"Value": 0
-					},
-					"Value": 0,
-					"LineNo": 1,
-					"InAcc": false,
-					"Source": "File: /Users/pschlump/go/src/github.com/Univ-Wyo-Education/S20-2150/ExprComp/cmp.go LineNo:684"
+					"Op": 57346,
+					"OpName": "TokNUM",
+					"SValue": "3",
+					"IValue": 3,
+					"LineNo": 1
 				},
-				"LineNo": 1,
-				"InAcc": false
+				"LineNo": 1
 			},
 			"Right": {
-				"Op": 106,
-				"OpName": "PtError",
-				"St": {
-					"LineNo": 0,
-					"Value": 0
+				"Op": 402,
+				"OpName": "OpAdd",
+				"SValue": "",
+				"IValue": 0,
+				"Left": {
+					"Op": 57346,
+					"OpName": "TokNUM",
+					"SValue": "4",
+					"IValue": 4,
+					"LineNo": 1
 				},
-				"Value": 0,
-				"LineNo": 1,
-				"InAcc": false,
-				"Source": "File: /Users/pschlump/go/src/github.com/Univ-Wyo-Education/S20-2150/ExprComp/cmp.go LineNo:684"
+				"Right": {
+					"Op": 57346,
+					"OpName": "TokNUM",
+					"SValue": "5",
+					"IValue": 5,
+					"LineNo": 1
+				},
+				"LineNo": 1
 			},
-			"LineNo": 1,
-			"InAcc": false
+			"LineNo": 1
 		},
-		"LineNo": 1,
-		"InAcc": false
+		"LineNo": 1
 	}
 ]}

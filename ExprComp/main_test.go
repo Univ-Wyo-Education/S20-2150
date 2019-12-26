@@ -114,30 +114,36 @@ func Test_Parser01(t *testing.T) {
 			Ref:         "./ref/ast_000.json",
 		},
 		{ /* 1 */
-			Run:         false,
+			Run:         true,
 			Fn:          "./test/scan_004.txt",
 			ErrExpected: false,
 			Ref:         "./ref/ast_001.json",
 		},
 		{ /* 2 */
-			Run:         false,
+			Run:         true,
 			Comment:     `Test of increment.  Needs to check that the incremented value is a LValue in expression.  Note: All PtID's are LValues!  Value needs to be modified and saved.`,
 			Fn:          "./test/scan_005.txt",
 			ErrExpected: false,
 			Ref:         "./ref/ast_002.json",
 		},
 		{ /* 3 */
-			Run:         false,
+			Run:         true,
 			Comment:     `Test of decrement as an expression without assignment.  Value needs to be modified and saved.`,
 			Fn:          "./test/scan_006.txt",
 			ErrExpected: false,
 			Ref:         "./ref/ast_003.json",
 		},
 		{ /* 4 */
-			Run:         false,
+			Run:         true,
 			Fn:          "./test/scan_007.txt",
 			ErrExpected: false,
 			Ref:         "./ref/ast_004.json",
+		},
+		{ /* 4 */
+			Run:         true,
+			Fn:          "./test/parse_001.txt",
+			ErrExpected: false,
+			Ref:         "./ref/ast_005.json",
 		},
 	}
 
@@ -167,10 +173,11 @@ func Test_Parser01(t *testing.T) {
 		}
 		lexx = &exprLex{Tokens: tk, Pd: pd}
 
-		for rv := 1; rv != LEX_EOF; {
-			rv = exprParse(lexx)
-			fmt.Printf("%srv= %T / %v at:%s%s\n", MiscLib.ColorRed, rv, rv, godebug.LF(), MiscLib.ColorReset)
-		}
+		astList = make([]*SyntaxTree, 0, 10)
+		rv := exprParse(lexx)
+		fmt.Printf("%srv= %T / %v at:%s%s\n", MiscLib.ColorRed, rv, rv, godebug.LF(), MiscLib.ColorReset)
+
+		// xyzzy -should check tathat we are at TokEOF!
 
 		if len(pd.errList) > 0 {
 			fmt.Printf("error list = %s\n", lexx.Pd.errList)

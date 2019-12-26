@@ -32,10 +32,8 @@ func main() {
 
 	in := *In   // Language In
 	out := *Out // Assembler out
-	_ = out
 
 	// ---------------------------------- scan ----------------------------------
-
 	tk, _ /*raw*/, e0 := Scanner(in)
 	if e0 != nil {
 		fmt.Fprintf(os.Stderr, "Error(s):\n%s\nCompile error during scanning.  Compile aborted.", e0)
@@ -50,19 +48,10 @@ func main() {
 	}
 
 	// ---------------------------------- parse ----------------------------------
-
 	lexx = &exprLex{Tokens: tk, Pd: pd}
 	exprParse(lexx)
-	// global ast has tree -- now in Lexx
 
 	// ---------------------------------- code generate ----------------------------------
-	//		ast, e0 := ParseInput(&pd)
-	//		if e0 != nil {
-	//			fmt.Fprintf(os.Stderr, "Error(s):\n%s\nSyntax Error.  Compile aborted.\n", e0)
-	//			os.Exit(1)
-	//		}
-	//		GenerateCode(ast, out)
-
 	//	// GenerateCode(lexx.Pd.ast, out)
 	for _, ast := range astList {
 		GenerateCode(ast, out)

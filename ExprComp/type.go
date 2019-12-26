@@ -11,6 +11,7 @@ const (
 	TokPlus   = TokType('+')  // '+'
 	TokMinus  = TokType('-')  // '-'
 	TokMul    = TokType('*')  // '*'
+	TokDiv    = TokType('/')  // '/'
 	TokIncr   = TokType(INCR) // '++'
 	TokDecr   = TokType(DECR) // '--'
 	TokNUM    = TokType(NUM)  // Number / Constant

@@ -1,0 +1,107 @@
+{"x":[
+	{
+		"Op": 408,
+		"OpName": "OpAssign",
+		"SValue": "",
+		"IValue": 0,
+		"Left": {
+			"Op": 57347,
+			"OpName": "TokID",
+			"SValue": "A",
+			"IValue": 0,
+			"LineNo": 1
+		},
+		"Right": {
+			"Op": 57346,
+			"OpName": "TokNUM",
+			"SValue": "4",
+			"IValue": 4,
+			"LineNo": 1
+		},
+		"LineNo": 1
+	},
+	{
+		"Op": 408,
+		"OpName": "OpAssign",
+		"SValue": "",
+		"IValue": 0,
+		"Left": {
+			"Op": 57347,
+			"OpName": "TokID",
+			"SValue": "B",
+			"IValue": 0,
+			"LineNo": 2
+		},
+		"Right": {
+			"Op": 57346,
+			"OpName": "TokNUM",
+			"SValue": "12",
+			"IValue": 12,
+			"LineNo": 2
+		},
+		"LineNo": 1
+	},
+	{
+		"Op": 408,
+		"OpName": "OpAssign",
+		"SValue": "",
+		"IValue": 0,
+		"Left": {
+			"Op": 57347,
+			"OpName": "TokID",
+			"SValue": "C",
+			"IValue": 0,
+			"LineNo": 3
+		},
+		"Right": {
+			"Op": 402,
+			"OpName": "OpAdd",
+			"SValue": "",
+			"IValue": 0,
+			"Left": {
+				"Op": 57347,
+				"OpName": "TokID",
+				"SValue": "A",
+				"IValue": 0,
+				"LineNo": 3
+			},
+			"Right": {
+				"Op": 405,
+				"OpName": "OpDiv",
+				"SValue": "",
+				"IValue": 0,
+				"Left": {
+					"Op": 404,
+					"OpName": "OpMul",
+					"SValue": "",
+					"IValue": 0,
+					"Left": {
+						"Op": 57347,
+						"OpName": "TokID",
+						"SValue": "B",
+						"IValue": 0,
+						"LineNo": 3
+					},
+					"Right": {
+						"Op": 57346,
+						"OpName": "TokNUM",
+						"SValue": "3",
+						"IValue": 3,
+						"LineNo": 3
+					},
+					"LineNo": 1
+				},
+				"Right": {
+					"Op": 57346,
+					"OpName": "TokNUM",
+					"SValue": "2",
+					"IValue": 2,
+					"LineNo": 3
+				},
+				"LineNo": 1
+			},
+			"LineNo": 1
+		},
+		"LineNo": 1
+	}
+]}

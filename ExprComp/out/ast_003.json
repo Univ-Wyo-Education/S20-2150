@@ -14,8 +14,8 @@
 		"Right": {
 			"Op": 57346,
 			"OpName": "TokNUM",
-			"SValue": "5",
-			"IValue": 5,
+			"SValue": "7",
+			"IValue": 7,
 			"LineNo": 1
 		},
 		"LineNo": 1
@@ -25,16 +25,9 @@
 		"OpName": "OpAssign",
 		"SValue": "",
 		"IValue": 0,
-		"Left": {
-			"Op": 57347,
-			"OpName": "TokID",
-			"SValue": "B",
-			"IValue": 0,
-			"LineNo": 2
-		},
 		"Right": {
-			"Op": 409,
-			"OpName": "OpIncr",
+			"Op": 410,
+			"OpName": "OpDecr",
 			"SValue": "",
 			"IValue": 0,
 			"Left": {

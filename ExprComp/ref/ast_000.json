@@ -1,35 +1,23 @@
-{
-	"Op": 113,
-	"OpName": "PtStore",
-	"St": {
-		"LineNo": 0,
-		"Value": 0
-	},
-	"Value": 0,
-	"Left": {
-		"Op": 105,
-		"OpName": "PtID",
-		"St": {
-			"Name": "aa",
-			"LineNo": 1,
-			"Value": 0
+{"x":[
+	{
+		"Op": 408,
+		"OpName": "OpAssign",
+		"SValue": "",
+		"IValue": 0,
+		"Left": {
+			"Op": 57347,
+			"OpName": "TokID",
+			"SValue": "aa",
+			"IValue": 0,
+			"LineNo": 1
 		},
-		"Name": "aa",
-		"Value": 0,
-		"LineNo": 1,
-		"InAcc": false
-	},
-	"Right": {
-		"Op": 104,
-		"OpName": "PtNum",
-		"St": {
-			"LineNo": 0,
-			"Value": 0
+		"Right": {
+			"Op": 57346,
+			"OpName": "TokNUM",
+			"SValue": "3",
+			"IValue": 3,
+			"LineNo": 1
 		},
-		"Value": 3,
-		"LineNo": 1,
-		"InAcc": false
-	},
-	"LineNo": 1,
-	"InAcc": false
-}
+		"LineNo": 1
+	}
+]}

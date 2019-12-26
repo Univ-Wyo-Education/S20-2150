@@ -1,57 +1,30 @@
-{
-	"Op": 113,
-	"OpName": "PtStore",
-	"St": {
-		"LineNo": 0,
-		"Value": 0
-	},
-	"Value": 0,
-	"Left": {
-		"Op": 105,
-		"OpName": "PtID",
-		"St": {
-			"Name": "AaaAaa",
-			"LineNo": 1,
-			"Value": 0
-		},
-		"Name": "AaaAaa",
-		"Value": 0,
-		"LineNo": 1,
-		"InAcc": false
-	},
-	"Right": {
-		"Op": 103,
-		"OpName": "PtU_Minus",
-		"St": {
-			"LineNo": 0,
-			"Value": 0
-		},
-		"Value": 0,
+{"x":[
+	{
+		"Op": 408,
+		"OpName": "OpAssign",
+		"SValue": "",
+		"IValue": 0,
 		"Left": {
-			"Op": 104,
-			"OpName": "PtNum",
-			"St": {
-				"LineNo": 0,
-				"Value": 0
-			},
-			"Value": 0,
-			"LineNo": 0,
-			"InAcc": false
+			"Op": 57347,
+			"OpName": "TokID",
+			"SValue": "AaaAaa",
+			"IValue": 0,
+			"LineNo": 1
 		},
 		"Right": {
-			"Op": 104,
-			"OpName": "PtNum",
-			"St": {
-				"LineNo": 0,
-				"Value": 0
+			"Op": 401,
+			"OpName": "OpUMinus",
+			"SValue": "",
+			"IValue": 0,
+			"Left": {
+				"Op": 57346,
+				"OpName": "TokNUM",
+				"SValue": "3333",
+				"IValue": 3333,
+				"LineNo": 1
 			},
-			"Value": 3333,
-			"LineNo": 1,
-			"InAcc": false
+			"LineNo": 1
 		},
-		"LineNo": 1,
-		"InAcc": false
-	},
-	"LineNo": 1,
-	"InAcc": false
-}
+		"LineNo": 1
+	}
+]}

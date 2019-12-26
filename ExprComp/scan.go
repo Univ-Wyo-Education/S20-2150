@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"os"
 	"strconv"
 	"strings"
 
@@ -114,6 +113,8 @@ Loop:
 				rv = append(rv, ScanTokType{Tok: TokRP, LineNo: line_no, TokName: TokRP.String()})
 			case cc == '*':
 				rv = append(rv, ScanTokType{Tok: TokMul, LineNo: line_no, TokName: TokMul.String()})
+			case cc == '/':
+				rv = append(rv, ScanTokType{Tok: TokDiv, LineNo: line_no, TokName: TokMul.String()})
 			case cc == '+':
 				st = 1
 			case cc == '-':
@@ -219,29 +220,26 @@ Loop:
 // Interface between DFA scanner and goyacc.
 // ------------------------------------------------------------------------------------------------------------------
 
-var nc = 0
-
 // Lex is called by the parser to get each new token.
 func (x *exprLex) Lex(yylval *exprSymType) int {
 	ct := x.Tokens[x.Pd.curPos]
 	fmt.Printf("%s in .Lex - curPos=%d getting token %7d ->%s<->%s<-, at:%s \n%s", MiscLib.ColorYellow, x.Pd.curPos, ct.Tok, ct.SM, ct.TokName, godebug.LF(), MiscLib.ColorReset)
 	x.Pd.curPos++
-	if dbScanner02 {
-		nc++
-		if nc > 7 {
-			os.Exit(1)
-		}
-	}
 	if ct.Tok == TokNUM {
+		fmt.Printf("    %s\n", godebug.LF())
 		// yylval.tree = NewAst(OpNum, nil, nil, ct.LineNo)
 		// yylval.tree.SValue = ct.SM
 		// yylval.tree.IValue = ct.Value
 		yylval.tree = NewAstNUM(ct.SM, ct.Value, ct.LineNo)
 	} else if ct.Tok == TokID {
+		fmt.Printf("    %s\n", godebug.LF())
 		// yylval.tree = NewAst(OpID, nil, nil, ct.LineNo)
 		// yylval.tree.SValue = ct.SM
 		yylval.tree = NewAstID(ct.SM, ct.LineNo)
 	} else if ct.Tok == TokEOF {
+		fmt.Printf("    %s\n", godebug.LF())
+		yylval.tree = nil
+		x.Pd.curPos--
 		return LEX_EOF
 	}
 	return int(ct.Tok)
@@ -254,4 +252,3 @@ func (x *exprLex) Error(s string) {
 }
 
 var dbScanner01 = false
-var dbScanner02 = true
