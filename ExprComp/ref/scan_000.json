@@ -1,0 +1,53 @@
+[
+	{
+		"Tok": 57347,
+		"TokName": "TokID",
+		"SM": "aa",
+		"Name": "aa",
+		"Value": 0,
+		"LineNo": 1
+	},
+	{
+		"Tok": 61,
+		"TokName": "TokEq",
+		"Value": 0,
+		"LineNo": 1
+	},
+	{
+		"Tok": 57346,
+		"TokName": "TokNum",
+		"SM": "3",
+		"Value": 3,
+		"LineNo": 1
+	},
+	{
+		"Tok": 59,
+		"TokName": "TokSem",
+		"Value": 0,
+		"LineNo": 1
+	},
+	{
+		"Tok": 0,
+		"TokName": "TokEOF",
+		"Value": 0,
+		"LineNo": 2
+	},
+	{
+		"Tok": 0,
+		"TokName": "TokEOF",
+		"Value": 0,
+		"LineNo": 2
+	},
+	{
+		"Tok": 0,
+		"TokName": "TokEOF",
+		"Value": 0,
+		"LineNo": 2
+	},
+	{
+		"Tok": 0,
+		"TokName": "TokEOF",
+		"Value": 0,
+		"LineNo": 2
+	}
+]

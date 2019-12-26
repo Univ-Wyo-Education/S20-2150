@@ -9,6 +9,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/pschlump/MiscLib"
 	"github.com/pschlump/godebug"
 )
 
@@ -39,9 +40,9 @@ func Test_Scanner01(t *testing.T) {
 		},
 		{
 			Run:         false,
-			Fn:          "./test/scan_002.txt",
+			Fn:          "./test/scan_003.txt",
 			ErrExpected: false,
-			Ref:         "./ref/scan_002.json",
+			Ref:         "./ref/scan_003.json",
 		},
 	}
 
@@ -61,7 +62,7 @@ func Test_Scanner01(t *testing.T) {
 			continue
 		}
 		// func Scanner(fn string) (rv []ScanTokType, err error) {
-		pt, err := Scanner(test.Fn)
+		pt, _, err := Scanner(test.Fn)
 		if err != nil {
 			if !test.ErrExpected {
 				t.Errorf("[%d] Error not expected, got one:%s ", nn, err)
@@ -107,7 +108,7 @@ func Test_Parser01(t *testing.T) {
 		Ref         string
 	}{
 		{ /* 0 */
-			Run:         false,
+			Run:         true,
 			Fn:          "./test/scan_000.txt",
 			ErrExpected: false,
 			Ref:         "./ref/ast_000.json",
@@ -133,7 +134,7 @@ func Test_Parser01(t *testing.T) {
 			Ref:         "./ref/ast_003.json",
 		},
 		{ /* 4 */
-			Run:         true,
+			Run:         false,
 			Fn:          "./test/scan_007.txt",
 			ErrExpected: false,
 			Ref:         "./ref/ast_004.json",
@@ -145,7 +146,7 @@ func Test_Parser01(t *testing.T) {
 			fmt.Printf("Test skipped - run is false %d, at:%s\n", nn, godebug.LF())
 			continue
 		}
-		tk, err := Scanner(test.Fn)
+		tk, raw, err := Scanner(test.Fn)
 		if err != nil {
 			if !test.ErrExpected {
 				t.Errorf("[%d] Error not expected, got one:%s ", nn, err)
@@ -154,9 +155,10 @@ func Test_Parser01(t *testing.T) {
 		}
 
 		if db0a {
-			fmt.Printf("%s\n", godebug.SVarI(tk))
+			fmt.Printf("Tokens that have been scanned: %s\n", godebug.SVarI(tk))
 		}
 
+		astList := make([]*SyntaxTree, 0, 10)
 		pd := ParseData{
 			FileName: test.Fn,
 			LineNo:   1,
@@ -164,29 +166,21 @@ func Test_Parser01(t *testing.T) {
 			tokens:   tk,
 			errList:  []string{},
 		}
-
-		astList := make([]*ParseTree, 0, 10)
-
 		for {
-			// 	cmp.go: 584: func ParseInput(pd *ParseData) (pt *ParseTree, err error) {
-			ast, err := ParseInput(&pd)
-			if ast == nil {
+			lexx = &exprLex{line: raw, Tokens: tk, Pd: pd}
+			exprParse(lexx)
+			if lexx.Pd.ast == nil {
 				break
 			}
 
-			if err != nil {
-				// xyzzy - handle better
-				t.Errorf("[%d] Error on parse\n", nn)
-				// continue // xyzzy - handle better
-			}
 			if len(pd.errList) > 0 {
-				fmt.Printf("error list = %s\n", pd.errList)
+				fmt.Printf("error list = %s\n", lexx.Pd.errList)
 			}
 
-			astList = append(astList, ast)
+			astList = append(astList, lexx.Pd.ast)
 
 			if db1 {
-				fmt.Printf("parse (ast) = %s\n", godebug.SVarI(ast))
+				fmt.Printf("%sparse (ast) = %s at:%s%s\n", MiscLib.ColorYellow, godebug.SVarI(lexx.Pd.ast), godebug.LF(), MiscLib.ColorReset)
 			}
 
 		}
@@ -209,124 +203,124 @@ func Test_Parser01(t *testing.T) {
 
 }
 
-// Test ReWrite3_Incr_Decr(&a1)
-// Also tests: TypeCheck1_Incr_Decr(a1, &errList)
-func Test_TreeRewrite01(t *testing.T) {
-
-	Tests := []struct {
-		Run         bool
-		Comment     string
-		Pos         int
-		Fn          string
-		ErrExpected bool
-		Ref         string
-	}{
-		{ /* 0 */
-			Run:         false,
-			Comment:     `Test of increment.  Needs to check that the incremented value is a LValue in expression.  Note: All PtID's are LValues!  Value needs to be modified and saved.`,
-			Fn:          "./test/scan_005.txt",
-			Pos:         1,
-			ErrExpected: false,
-			Ref:         "./ref/rr0_000.json",
-		},
-	}
-
-	for nn, test := range Tests {
-		if !test.Run {
-			fmt.Printf("Test skipped - run is false %d, at:%s\n", nn, godebug.LF())
-			continue
-		}
-		tk, err := Scanner(test.Fn)
-		if err != nil {
-			if !test.ErrExpected {
-				t.Errorf("[%d] Error not expected, got one:%s ", nn, err)
-			}
-			continue
-		}
-
-		if db0a {
-			fmt.Printf("%s\n", godebug.SVarI(tk))
-		}
-
-		// Build the AST array - so we can look at rewrite
-		pd := ParseData{
-			FileName: test.Fn,
-			LineNo:   1,
-			curPos:   0, // Start at beginning
-			tokens:   tk,
-			errList:  []string{},
-		}
-		astList := make([]*ParseTree, 0, 10)
-		for {
-			// 	cmp.go: 584: func ParseInput(pd *ParseData) (pt *ParseTree, err error) {
-			ast, err := ParseInput(&pd)
-			if ast == nil {
-				break
-			}
-
-			if err != nil {
-				// xyzzy - handle better
-				t.Errorf("[%d] Error on parse\n", nn)
-				// continue // xyzzy - handle better
-			}
-			if len(pd.errList) > 0 {
-				fmt.Printf("error list = %s\n", pd.errList)
-			}
-
-			astList = append(astList, ast)
-
-			if db4 {
-				fmt.Printf("parse Before Rewrite (ast) = %s\n", godebug.SVarI(ast))
-			}
-
-		}
-
-		a1 := astList[test.Pos] // Pick out the corret tree to test on.
-		if db8 {
-			fmt.Printf("parse Before Rewrite (ast) = %s\n", godebug.SVarI(a1))
-		}
-		var errList []string
-		TypeCheck1_Incr_Decr(a1, &errList)
-		if len(errList) == 0 {
-			if test.ErrExpected == true {
-				t.Errorf("[%d] Expected Error - did not get one.", nn)
-			} else {
-				ReWrite3_Incr_Decr(&a1)
-				if db8 {
-					fmt.Printf("AST After Rewrite (ast) = %s\n", godebug.SVarI(a1))
-				}
-			}
-		} else {
-			if test.ErrExpected == true {
-			} else {
-				t.Errorf("[%d] (got type errors when not expected to have errors) Type Error:%s.", nn, errList)
-			}
-		}
-
-		have := godebug.SVarI(a1)
-		ioutil.WriteFile(fmt.Sprintf("./out/rr0_%03d.json", nn), []byte(have), 0644)
-
-		cmd0 := fmt.Sprintf("/Users/pschlump/bin/jd -q -c out/rr0_%03d.json ref/rr0_%03d.json", nn, nn)
-		cmdS := strings.Split(cmd0, " ")
-
-		out, err := exec.Command(cmdS[0], cmdS[1:]...).Output()
-		if err != nil {
-			t.Errorf("[%d] error on exec! err:%s.", nn, err)
-		}
-		if string(out) != "" {
-			t.Errorf("[%d] Failed ->%s<-\n", nn, out)
-			fmt.Fprintf(os.Stderr, "%s", out)
-		}
-	}
-
-}
-
-func Test_TemporaryGeneration01(t *testing.T) {
-	// func gen_AssignConstants(ast *ParseTree, kk *int) {
-}
-
-func Test_CodeGen_01_GenerateVariables(t *testing.T) {
-}
+//old//// Test ReWrite3_Incr_Decr(&a1)
+//old//// Also tests: TypeCheck1_Incr_Decr(a1, &errList)
+//old//func Test_TreeRewrite01(t *testing.T) {
+//old//
+//old//	Tests := []struct {
+//old//		Run         bool
+//old//		Comment     string
+//old//		Pos         int
+//old//		Fn          string
+//old//		ErrExpected bool
+//old//		Ref         string
+//old//	}{
+//old//		{ /* 0 */
+//old//			Run:         false,
+//old//			Comment:     `Test of increment.  Needs to check that the incremented value is a LValue in expression.  Note: All PtID's are LValues!  Value needs to be modified and saved.`,
+//old//			Fn:          "./test/scan_005.txt",
+//old//			Pos:         1,
+//old//			ErrExpected: false,
+//old//			Ref:         "./ref/rr0_000.json",
+//old//		},
+//old//	}
+//old//
+//old//	for nn, test := range Tests {
+//old//		if !test.Run {
+//old//			fmt.Printf("Test skipped - run is false %d, at:%s\n", nn, godebug.LF())
+//old//			continue
+//old//		}
+//old//		tk, _, err := Scanner(test.Fn)
+//old//		if err != nil {
+//old//			if !test.ErrExpected {
+//old//				t.Errorf("[%d] Error not expected, got one:%s ", nn, err)
+//old//			}
+//old//			continue
+//old//		}
+//old//
+//old//		if db0a {
+//old//			fmt.Printf("%s\n", godebug.SVarI(tk))
+//old//		}
+//old//
+//old//		// Build the AST array - so we can look at rewrite
+//old//		pd := ParseData{
+//old//			FileName: test.Fn,
+//old//			LineNo:   1,
+//old//			curPos:   0, // Start at beginning
+//old//			tokens:   tk,
+//old//			errList:  []string{},
+//old//		}
+//old//		astList := make([]*ParseTree, 0, 10)
+//old//		for {
+//old//			// 	cmp.go: 584: func ParseInput(pd *ParseData) (pt *ParseTree, err error) {
+//old//			ast, err := ParseInput(&pd)
+//old//			if ast == nil {
+//old//				break
+//old//			}
+//old//
+//old//			if err != nil {
+//old//				// xyzzy - handle better
+//old//				t.Errorf("[%d] Error on parse\n", nn)
+//old//				// continue // xyzzy - handle better
+//old//			}
+//old//			if len(pd.errList) > 0 {
+//old//				fmt.Printf("error list = %s\n", pd.errList)
+//old//			}
+//old//
+//old//			astList = append(astList, ast)
+//old//
+//old//			if db4 {
+//old//				fmt.Printf("parse Before Rewrite (ast) = %s\n", godebug.SVarI(ast))
+//old//			}
+//old//
+//old//		}
+//old//
+//old//		a1 := astList[test.Pos] // Pick out the corret tree to test on.
+//old//		if db8 {
+//old//			fmt.Printf("parse Before Rewrite (ast) = %s\n", godebug.SVarI(a1))
+//old//		}
+//old//		var errList []string
+//old//		TypeCheck1_Incr_Decr(a1, &errList)
+//old//		if len(errList) == 0 {
+//old//			if test.ErrExpected == true {
+//old//				t.Errorf("[%d] Expected Error - did not get one.", nn)
+//old//			} else {
+//old//				ReWrite3_Incr_Decr(&a1)
+//old//				if db8 {
+//old//					fmt.Printf("AST After Rewrite (ast) = %s\n", godebug.SVarI(a1))
+//old//				}
+//old//			}
+//old//		} else {
+//old//			if test.ErrExpected == true {
+//old//			} else {
+//old//				t.Errorf("[%d] (got type errors when not expected to have errors) Type Error:%s.", nn, errList)
+//old//			}
+//old//		}
+//old//
+//old//		have := godebug.SVarI(a1)
+//old//		ioutil.WriteFile(fmt.Sprintf("./out/rr0_%03d.json", nn), []byte(have), 0644)
+//old//
+//old//		cmd0 := fmt.Sprintf("/Users/pschlump/bin/jd -q -c out/rr0_%03d.json ref/rr0_%03d.json", nn, nn)
+//old//		cmdS := strings.Split(cmd0, " ")
+//old//
+//old//		out, err := exec.Command(cmdS[0], cmdS[1:]...).Output()
+//old//		if err != nil {
+//old//			t.Errorf("[%d] error on exec! err:%s.", nn, err)
+//old//		}
+//old//		if string(out) != "" {
+//old//			t.Errorf("[%d] Failed ->%s<-\n", nn, out)
+//old//			fmt.Fprintf(os.Stderr, "%s", out)
+//old//		}
+//old//	}
+//old//
+//old//}
+//old//
+//old//func Test_TemporaryGeneration01(t *testing.T) {
+//old//	// func gen_AssignConstants(ast *ParseTree, kk *int) {
+//old//}
+//old//
+//old//func Test_CodeGen_01_GenerateVariables(t *testing.T) {
+//old//}
 
 var db0 = false // Dump tokens in Scanner Test
 var db0a = true // Dump tokens in Parser Test (same as db0, but in Parser Test)

@@ -7,6 +7,9 @@ import (
 	"log"
 	"os"
 	"unicode/utf8"
+
+	"github.com/pschlump/MiscLib"
+	"github.com/pschlump/godebug"
 )
 
 type SyntaxTree struct {
@@ -123,13 +126,32 @@ type exprLex struct {
 	Pd     ParseData
 }
 
+var nc = 0
+
 // The parser calls this method to get each new token. This
 // implementation returns operators and NUM.
 func (x *exprLex) Lex(yylval *exprSymType) int {
-	cur := x.Tokens[x.Pd.curPos].Tok
+	ct := x.Tokens[x.Pd.curPos]
+	fmt.Printf("%s in .Lex - curPos=%d getting token %7d ->%s<->%s<-, at:%s \n%s", MiscLib.ColorYellow, x.Pd.curPos, ct.Tok, ct.SM, ct.TokName, godebug.LF(), MiscLib.ColorReset)
 	x.Pd.curPos++
+	nc++
+	if nc > 15 {
+		os.Exit(1)
+	}
+	if ct.Tok == TokNum {
+		yylval.tree = NewAst(OpNum, nil, nil, ct.LineNo)
+		yylval.tree.SValue = ct.SM
+		yylval.tree.IValue = ct.Value
+	}
+	if ct.Tok == TokID {
+		yylval.tree = NewAst(OpID, nil, nil, ct.LineNo)
+		yylval.tree.SValue = ct.SM
+	}
+	// yylval.tree = NewAst... Create the appropriate item!
+	// yylval.tree.SValue =
+	// yylval.tree.IValue =
 	x.peek = rune(x.Tokens[x.Pd.curPos].Tok)
-	return int(cur)
+	return int(ct.Tok)
 
 	//	for {
 	//		c := x.next()

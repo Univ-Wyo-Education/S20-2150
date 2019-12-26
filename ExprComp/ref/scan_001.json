@@ -1,0 +1,180 @@
+[
+	{
+		"Tok": 61,
+		"TokName": "TokEq",
+		"Value": 0,
+		"LineNo": 2
+	},
+	{
+		"Tok": 59,
+		"TokName": "TokSem",
+		"Value": 0,
+		"LineNo": 3
+	},
+	{
+		"Tok": 40,
+		"TokName": "TokLP",
+		"Value": 0,
+		"LineNo": 4
+	},
+	{
+		"Tok": 41,
+		"TokName": "TokRP",
+		"Value": 0,
+		"LineNo": 5
+	},
+	{
+		"Tok": 43,
+		"TokName": "TokPlus",
+		"Value": 0,
+		"LineNo": 6
+	},
+	{
+		"Tok": 45,
+		"TokName": "TokMinus",
+		"Value": 0,
+		"LineNo": 7
+	},
+	{
+		"Tok": 42,
+		"TokName": "TokMul",
+		"Value": 0,
+		"LineNo": 8
+	},
+	{
+		"Tok": 45,
+		"TokName": "TokMinus",
+		"Value": 0,
+		"LineNo": 9
+	},
+	{
+		"Tok": 105,
+		"TokName": "TokIncr",
+		"Value": 0,
+		"LineNo": 10
+	},
+	{
+		"Tok": 100,
+		"TokName": "TokDecr",
+		"Value": 0,
+		"LineNo": 11
+	},
+	{
+		"Tok": 57346,
+		"TokName": "TokNum",
+		"SM": "0",
+		"Value": 0,
+		"LineNo": 12
+	},
+	{
+		"Tok": 57346,
+		"TokName": "TokNum",
+		"SM": "00",
+		"Value": 0,
+		"LineNo": 13
+	},
+	{
+		"Tok": 57346,
+		"TokName": "TokNum",
+		"SM": "01",
+		"Value": 1,
+		"LineNo": 14
+	},
+	{
+		"Tok": 57346,
+		"TokName": "TokNum",
+		"SM": "0b1",
+		"Value": 1,
+		"LineNo": 15
+	},
+	{
+		"Tok": 57346,
+		"TokName": "TokNum",
+		"SM": "0x2",
+		"Value": 2,
+		"LineNo": 16
+	},
+	{
+		"Tok": 57346,
+		"TokName": "TokNum",
+		"SM": "0xf",
+		"Value": 15,
+		"LineNo": 17
+	},
+	{
+		"Tok": 57346,
+		"TokName": "TokNum",
+		"SM": "07",
+		"Value": 7,
+		"LineNo": 18
+	},
+	{
+		"Tok": 57346,
+		"TokName": "TokNum",
+		"SM": "7",
+		"Value": 7,
+		"LineNo": 19
+	},
+	{
+		"Tok": 57347,
+		"TokName": "TokID",
+		"SM": "ID",
+		"Name": "ID",
+		"Value": 0,
+		"LineNo": 20
+	},
+	{
+		"Tok": 57347,
+		"TokName": "TokID",
+		"SM": "id",
+		"Name": "id",
+		"Value": 0,
+		"LineNo": 21
+	},
+	{
+		"Tok": 57347,
+		"TokName": "TokID",
+		"SM": "a_id",
+		"Name": "a_id",
+		"Value": 0,
+		"LineNo": 22
+	},
+	{
+		"Tok": 73,
+		"TokName": "TokInput",
+		"SM": "in",
+		"Value": 0,
+		"LineNo": 24
+	},
+	{
+		"Tok": 80,
+		"TokName": "TokOutput",
+		"SM": "put",
+		"Value": 0,
+		"LineNo": 25
+	},
+	{
+		"Tok": 0,
+		"TokName": "TokEOF",
+		"Value": 0,
+		"LineNo": 26
+	},
+	{
+		"Tok": 0,
+		"TokName": "TokEOF",
+		"Value": 0,
+		"LineNo": 26
+	},
+	{
+		"Tok": 0,
+		"TokName": "TokEOF",
+		"Value": 0,
+		"LineNo": 26
+	},
+	{
+		"Tok": 0,
+		"TokName": "TokEOF",
+		"Value": 0,
+		"LineNo": 26
+	}
+]

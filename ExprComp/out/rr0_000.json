@@ -1,0 +1,74 @@
+{
+	"Op": 113,
+	"OpName": "PtStore",
+	"St": {
+		"LineNo": 0,
+		"Value": 0
+	},
+	"Value": 0,
+	"Left": {
+		"Op": 105,
+		"OpName": "PtID",
+		"St": {
+			"Name": "B",
+			"LineNo": 2,
+			"Value": 0
+		},
+		"Name": "B",
+		"Value": 0,
+		"LineNo": 1,
+		"InAcc": false
+	},
+	"Right": {
+		"Op": 113,
+		"OpName": "PtStore",
+		"St": {
+			"Name": "A",
+			"LineNo": 1,
+			"Value": 0
+		},
+		"Name": "A",
+		"Value": 0,
+		"Left": {
+			"Op": 107,
+			"OpName": "PtAdd",
+			"St": {
+				"LineNo": 0,
+				"Value": 0
+			},
+			"Value": 0,
+			"Left": {
+				"Op": 105,
+				"OpName": "PtID",
+				"St": {
+					"Name": "A",
+					"LineNo": 1,
+					"Value": 0
+				},
+				"Name": "A",
+				"Value": 0,
+				"LineNo": 1,
+				"InAcc": false
+			},
+			"Right": {
+				"Op": 104,
+				"OpName": "PtNum",
+				"St": {
+					"Name": "_1",
+					"LineNo": 1,
+					"Value": 1
+				},
+				"Name": "_1",
+				"Value": 1,
+				"LineNo": 1,
+				"InAcc": false
+			},
+			"LineNo": 1,
+			"InAcc": true
+		},
+		"LineNo": 1,
+		"InAcc": true
+	},
+	"LineNo": 1,
+	"InAcc": false
+}

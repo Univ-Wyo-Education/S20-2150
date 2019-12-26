@@ -1,0 +1,174 @@
+{"x":[
+	{
+		"Op": 113,
+		"OpName": "PtStore",
+		"St": {
+			"LineNo": 0,
+			"Value": 0
+		},
+		"Value": 0,
+		"Left": {
+			"Op": 105,
+			"OpName": "PtID",
+			"St": {
+				"Name": "A",
+				"LineNo": 1,
+				"Value": 0
+			},
+			"Name": "A",
+			"Value": 0,
+			"LineNo": 1,
+			"InAcc": false
+		},
+		"Right": {
+			"Op": 107,
+			"OpName": "PtAdd",
+			"St": {
+				"LineNo": 0,
+				"Value": 0
+			},
+			"Value": 0,
+			"Left": {
+				"Op": 107,
+				"OpName": "PtAdd",
+				"St": {
+					"LineNo": 0,
+					"Value": 0
+				},
+				"Value": 0,
+				"Left": {
+					"Op": 107,
+					"OpName": "PtAdd",
+					"St": {
+						"LineNo": 0,
+						"Value": 0
+					},
+					"Value": 0,
+					"Left": {
+						"Op": 107,
+						"OpName": "PtAdd",
+						"St": {
+							"LineNo": 0,
+							"Value": 0
+						},
+						"Value": 0,
+						"Left": {
+							"Op": 107,
+							"OpName": "PtAdd",
+							"St": {
+								"LineNo": 0,
+								"Value": 0
+							},
+							"Value": 0,
+							"Left": {
+								"Op": 107,
+								"OpName": "PtAdd",
+								"St": {
+									"LineNo": 0,
+									"Value": 0
+								},
+								"Value": 0,
+								"Left": {
+									"Op": 104,
+									"OpName": "PtNum",
+									"St": {
+										"LineNo": 0,
+										"Value": 0
+									},
+									"Value": 2,
+									"LineNo": 1,
+									"InAcc": false
+								},
+								"Right": {
+									"Op": 104,
+									"OpName": "PtNum",
+									"St": {
+										"LineNo": 0,
+										"Value": 0
+									},
+									"Value": 3,
+									"LineNo": 1,
+									"InAcc": false
+								},
+								"LineNo": 1,
+								"InAcc": false
+							},
+							"Right": {
+								"Op": 106,
+								"OpName": "PtError",
+								"St": {
+									"LineNo": 0,
+									"Value": 0
+								},
+								"Value": 0,
+								"LineNo": 1,
+								"InAcc": false,
+								"Source": "File: /Users/pschlump/go/src/github.com/Univ-Wyo-Education/S20-2150/ExprComp/cmp.go LineNo:684"
+							},
+							"LineNo": 1,
+							"InAcc": false
+						},
+						"Right": {
+							"Op": 106,
+							"OpName": "PtError",
+							"St": {
+								"LineNo": 0,
+								"Value": 0
+							},
+							"Value": 0,
+							"LineNo": 1,
+							"InAcc": false,
+							"Source": "File: /Users/pschlump/go/src/github.com/Univ-Wyo-Education/S20-2150/ExprComp/cmp.go LineNo:623"
+						},
+						"LineNo": 1,
+						"InAcc": false
+					},
+					"Right": {
+						"Op": 106,
+						"OpName": "PtError",
+						"St": {
+							"LineNo": 0,
+							"Value": 0
+						},
+						"Value": 0,
+						"LineNo": 1,
+						"InAcc": false,
+						"Source": "File: /Users/pschlump/go/src/github.com/Univ-Wyo-Education/S20-2150/ExprComp/cmp.go LineNo:684"
+					},
+					"LineNo": 1,
+					"InAcc": false
+				},
+				"Right": {
+					"Op": 106,
+					"OpName": "PtError",
+					"St": {
+						"LineNo": 0,
+						"Value": 0
+					},
+					"Value": 0,
+					"LineNo": 1,
+					"InAcc": false,
+					"Source": "File: /Users/pschlump/go/src/github.com/Univ-Wyo-Education/S20-2150/ExprComp/cmp.go LineNo:684"
+				},
+				"LineNo": 1,
+				"InAcc": false
+			},
+			"Right": {
+				"Op": 106,
+				"OpName": "PtError",
+				"St": {
+					"LineNo": 0,
+					"Value": 0
+				},
+				"Value": 0,
+				"LineNo": 1,
+				"InAcc": false,
+				"Source": "File: /Users/pschlump/go/src/github.com/Univ-Wyo-Education/S20-2150/ExprComp/cmp.go LineNo:684"
+			},
+			"LineNo": 1,
+			"InAcc": false
+		},
+		"LineNo": 1,
+		"InAcc": false
+	}
+]}

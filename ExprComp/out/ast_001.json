@@ -1,0 +1,57 @@
+{
+	"Op": 113,
+	"OpName": "PtStore",
+	"St": {
+		"LineNo": 0,
+		"Value": 0
+	},
+	"Value": 0,
+	"Left": {
+		"Op": 105,
+		"OpName": "PtID",
+		"St": {
+			"Name": "AaaAaa",
+			"LineNo": 1,
+			"Value": 0
+		},
+		"Name": "AaaAaa",
+		"Value": 0,
+		"LineNo": 1,
+		"InAcc": false
+	},
+	"Right": {
+		"Op": 103,
+		"OpName": "PtU_Minus",
+		"St": {
+			"LineNo": 0,
+			"Value": 0
+		},
+		"Value": 0,
+		"Left": {
+			"Op": 104,
+			"OpName": "PtNum",
+			"St": {
+				"LineNo": 0,
+				"Value": 0
+			},
+			"Value": 0,
+			"LineNo": 0,
+			"InAcc": false
+		},
+		"Right": {
+			"Op": 104,
+			"OpName": "PtNum",
+			"St": {
+				"LineNo": 0,
+				"Value": 0
+			},
+			"Value": 3333,
+			"LineNo": 1,
+			"InAcc": false
+		},
+		"LineNo": 1,
+		"InAcc": false
+	},
+	"LineNo": 1,
+	"InAcc": false
+}
