@@ -37,6 +37,8 @@ func NewAst(op int, l, r *SyntaxTree, lno int) *SyntaxTree {
 func ValidateLValue(xx *SyntaxTree) {
 }
 
+var lexx *exprLex
+
 // ------------------------------------------------------------------------------------------------------------------
 // Main
 // ------------------------------------------------------------------------------------------------------------------
@@ -82,8 +84,9 @@ func main() {
 
 	// ---------------------------------- parse ----------------------------------
 
-	exprParse(&exprLex{line: raw, Tokens: tk, Pd: pd})
-	// global ast has tree??
+	lexx = &exprLex{line: raw, Tokens: tk, Pd: pd}
+	exprParse(lexx)
+	// global ast has tree -- now in Lexx
 
 	//	if false {
 	//		ast, e0 := ParseInput(&pd)
@@ -95,7 +98,10 @@ func main() {
 	//	}
 
 	// ---------------------------------- code generate ----------------------------------
-	GenerateCode(nil, out)
+	if false {
+		// GenerateCode(lexx.Pd.ast, out)
+		GenerateCode(nil, out)
+	}
 	return
 }
 
@@ -106,7 +112,7 @@ func main() {
 // for clarity.
 const eof = 0
 
-var line_no = 1
+// var line_no = 1
 
 // The parser uses the type <prefix>Lex as a lexer. It must provide
 // the methods Lex(*<prefix>SymType) int and Error(string).
@@ -176,7 +182,7 @@ L:
 	if c != eof {
 		x.peek = c
 	}
-	yylval.tree = NewAst(OpNum, nil, nil, line_no)
+	yylval.tree = NewAst(OpNum, nil, nil, x.Pd.LineNo)
 	yylval.tree.SValue = b.String()
 	// xyzzy - convert to int for other things
 
@@ -199,7 +205,7 @@ func (x *exprLex) id(c rune, yylval *exprSymType) int {
 	}
 	var b bytes.Buffer
 	add(&b, c)
-	yylval.tree = NewAst(OpID, nil, nil, line_no)
+	yylval.tree = NewAst(OpID, nil, nil, x.Pd.LineNo)
 	yylval.tree.SValue = b.String()
 	return ID
 }

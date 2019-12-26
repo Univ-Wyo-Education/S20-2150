@@ -1,0 +1,26 @@
+
+//func ReWrite2_UMinus(ast *ParseTree) (rv *ParseTree) {
+//	if ast == nil {
+//		return nil
+//	}
+//	if ast.Left != nil {
+//		ast.Left = ReWrite2_UMinus(ast.Left)
+//	}
+//	if ast.Right != nil {
+//		ast.Right = ReWrite2_UMinus(ast.Right)
+//	}
+//	if ast.Op == PtU_Minus {
+//		ast.Op = PtSub
+//		ast.Right = ast.Left
+//		st, _ := LookupConst(0, ast.LineNo)
+//		ast.Left = &ParseTree{
+//			Op:     PtNum,
+//			OpName: "PtNum",
+//			LineNo: ast.LineNo,
+//			Name:   "_0",
+//			Value:  0,
+//			St:     st,
+//		}
+//	}
+//	return ast
+//}

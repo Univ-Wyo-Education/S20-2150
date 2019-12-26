@@ -65,6 +65,7 @@ type ParseData struct {
 	curPos   int
 	tokens   []ScanTokType
 	errList  []string
+	ast      *SyntaxTree // Completed Parse Tree
 }
 
 type ParseTree struct {
@@ -503,6 +504,7 @@ func genCode(ast *ParseTree, ofp *os.File) (err error) {
 	return
 }
 
+//ToBe! func GenerateCode(ast *SyntaxTree, out string) (err error) {
 func GenerateCode(ast *ParseTree, out string) (err error) {
 	ofp, e0 := filelib.Fopen(out, "w")
 	if e0 != nil {

@@ -1,0 +1,350 @@
+
+state 0
+	$accept: .top $end 
+
+	'+'  shift 10
+	'-'  shift 11
+	'('  shift 15
+	'i'  shift 5
+	'd'  shift 6
+	'I'  shift 7
+	'P'  shift 8
+	NUM  shift 14
+	ID  shift 2
+	.  error
+
+	expr  goto 3
+	expr0  goto 4
+	expr1  goto 9
+	expr2  goto 12
+	expr3  goto 13
+	top  goto 1
+
+state 1
+	$accept:  top.$end 
+
+	$end  accept
+	.  error
+
+
+state 2
+	top:  ID.'=' expr ';' 
+	expr3:  ID.    (18)
+
+	'='  shift 16
+	.  reduce 18 (src line 95)
+
+
+state 3
+	top:  expr.';' 
+
+	';'  shift 17
+	.  error
+
+
+state 4
+	expr:  expr0.    (3)
+
+	.  reduce 3 (src line 39)
+
+
+state 5
+	expr:  'i'.ID 
+
+	ID  shift 18
+	.  error
+
+
+state 6
+	expr:  'd'.ID 
+
+	ID  shift 19
+	.  error
+
+
+state 7
+	expr:  'I'.ID 
+
+	ID  shift 20
+	.  error
+
+
+state 8
+	expr:  'P'.ID 
+
+	ID  shift 21
+	.  error
+
+
+state 9
+	expr0:  expr1.    (8)
+	expr1:  expr1.'+' expr2 
+	expr1:  expr1.'-' expr2 
+
+	'+'  shift 22
+	'-'  shift 23
+	.  reduce 8 (src line 60)
+
+
+state 10
+	expr0:  '+'.expr 
+
+	'+'  shift 10
+	'-'  shift 11
+	'('  shift 15
+	'i'  shift 5
+	'd'  shift 6
+	'I'  shift 7
+	'P'  shift 8
+	NUM  shift 14
+	ID  shift 25
+	.  error
+
+	expr  goto 24
+	expr0  goto 4
+	expr1  goto 9
+	expr2  goto 12
+	expr3  goto 13
+
+state 11
+	expr0:  '-'.expr 
+
+	'+'  shift 10
+	'-'  shift 11
+	'('  shift 15
+	'i'  shift 5
+	'd'  shift 6
+	'I'  shift 7
+	'P'  shift 8
+	NUM  shift 14
+	ID  shift 25
+	.  error
+
+	expr  goto 26
+	expr0  goto 4
+	expr1  goto 9
+	expr2  goto 12
+	expr3  goto 13
+
+state 12
+	expr1:  expr2.    (11)
+	expr2:  expr2.'*' expr3 
+	expr2:  expr2.'/' expr3 
+
+	'*'  shift 27
+	'/'  shift 28
+	.  reduce 11 (src line 71)
+
+
+state 13
+	expr2:  expr3.    (14)
+
+	.  reduce 14 (src line 82)
+
+
+state 14
+	expr3:  NUM.    (17)
+
+	.  reduce 17 (src line 93)
+
+
+state 15
+	expr3:  '('.expr ')' 
+
+	'+'  shift 10
+	'-'  shift 11
+	'('  shift 15
+	'i'  shift 5
+	'd'  shift 6
+	'I'  shift 7
+	'P'  shift 8
+	NUM  shift 14
+	ID  shift 25
+	.  error
+
+	expr  goto 29
+	expr0  goto 4
+	expr1  goto 9
+	expr2  goto 12
+	expr3  goto 13
+
+state 16
+	top:  ID '='.expr ';' 
+
+	'+'  shift 10
+	'-'  shift 11
+	'('  shift 15
+	'i'  shift 5
+	'd'  shift 6
+	'I'  shift 7
+	'P'  shift 8
+	NUM  shift 14
+	ID  shift 25
+	.  error
+
+	expr  goto 30
+	expr0  goto 4
+	expr1  goto 9
+	expr2  goto 12
+	expr3  goto 13
+
+state 17
+	top:  expr ';'.    (2)
+
+	.  reduce 2 (src line 37)
+
+
+state 18
+	expr:  'i' ID.    (4)
+
+	.  reduce 4 (src line 41)
+
+
+state 19
+	expr:  'd' ID.    (5)
+
+	.  reduce 5 (src line 46)
+
+
+state 20
+	expr:  'I' ID.    (6)
+
+	.  reduce 6 (src line 51)
+
+
+state 21
+	expr:  'P' ID.    (7)
+
+	.  reduce 7 (src line 55)
+
+
+state 22
+	expr1:  expr1 '+'.expr2 
+
+	'('  shift 15
+	NUM  shift 14
+	ID  shift 25
+	.  error
+
+	expr2  goto 31
+	expr3  goto 13
+
+state 23
+	expr1:  expr1 '-'.expr2 
+
+	'('  shift 15
+	NUM  shift 14
+	ID  shift 25
+	.  error
+
+	expr2  goto 32
+	expr3  goto 13
+
+state 24
+	expr0:  '+' expr.    (9)
+
+	.  reduce 9 (src line 62)
+
+
+state 25
+	expr3:  ID.    (18)
+
+	.  reduce 18 (src line 95)
+
+
+state 26
+	expr0:  '-' expr.    (10)
+
+	.  reduce 10 (src line 66)
+
+
+state 27
+	expr2:  expr2 '*'.expr3 
+
+	'('  shift 15
+	NUM  shift 14
+	ID  shift 25
+	.  error
+
+	expr3  goto 33
+
+state 28
+	expr2:  expr2 '/'.expr3 
+
+	'('  shift 15
+	NUM  shift 14
+	ID  shift 25
+	.  error
+
+	expr3  goto 34
+
+state 29
+	expr3:  '(' expr.')' 
+
+	')'  shift 35
+	.  error
+
+
+state 30
+	top:  ID '=' expr.';' 
+
+	';'  shift 36
+	.  error
+
+
+state 31
+	expr1:  expr1 '+' expr2.    (12)
+	expr2:  expr2.'*' expr3 
+	expr2:  expr2.'/' expr3 
+
+	'*'  shift 27
+	'/'  shift 28
+	.  reduce 12 (src line 73)
+
+
+state 32
+	expr1:  expr1 '-' expr2.    (13)
+	expr2:  expr2.'*' expr3 
+	expr2:  expr2.'/' expr3 
+
+	'*'  shift 27
+	'/'  shift 28
+	.  reduce 13 (src line 77)
+
+
+state 33
+	expr2:  expr2 '*' expr3.    (15)
+
+	.  reduce 15 (src line 84)
+
+
+state 34
+	expr2:  expr2 '/' expr3.    (16)
+
+	.  reduce 16 (src line 88)
+
+
+state 35
+	expr3:  '(' expr ')'.    (19)
+
+	.  reduce 19 (src line 96)
+
+
+state 36
+	top:  ID '=' expr ';'.    (1)
+
+	.  reduce 1 (src line 30)
+
+
+17 terminals, 7 nonterminals
+20 grammar rules, 37/8000 states
+0 shift/reduce, 0 reduce/reduce conflicts reported
+56 working sets used
+memory: parser 31/120000
+28 extra closures
+73 shift entries, 1 exceptions
+14 goto entries
+18 entries saved by goto default
+Optimizer space used: output 47/120000
+47 table entries, 0 zero
+maximum spread: 17, maximum offset: 28

@@ -6,8 +6,11 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/pschlump/godebug"
 )
+
+var ast *ParseTree;
 
 %}
 
@@ -28,8 +31,8 @@ top:
 	ID '=' expr ';'
 	{
 		ValidateLValue($1)
-		tmp := NewAst ( OpAssign, $1, $3, line_no )
-		fmt.Printf ( "Tree: %s\n", godebug.SVarI(tmp) )
+		lexx.Pd.ast = NewAst ( OpAssign, $1, $3, lexx.Pd.LineNo )
+		fmt.Printf ( "Tree: %s\n", godebug.SVarI(ast) )
 	}
 |	expr ';'
 
@@ -38,20 +41,20 @@ expr:
 |	'i' ID
 	{
 		ValidateLValue($2)
-		$$ = NewAst ( OpIncr, $2, nil, line_no )
+		$$ = NewAst ( OpIncr, $2, nil, lexx.Pd.LineNo )
 	}
 |	'd' ID
 	{
 		ValidateLValue($2)
-		$$ = NewAst ( OpDecr, $2, nil, line_no )
+		$$ = NewAst ( OpDecr, $2, nil, lexx.Pd.LineNo )
 	}
 |	'I' ID
 	{
-		$$ = NewAst ( OpDecr, $2, nil, line_no )
+		$$ = NewAst ( OpDecr, $2, nil, lexx.Pd.LineNo )
 	}
 |	'P' ID
 	{
-		$$ = NewAst ( OpDecr, $2, nil, line_no )
+		$$ = NewAst ( OpDecr, $2, nil, lexx.Pd.LineNo )
 	}
 
 expr0:
@@ -62,29 +65,29 @@ expr0:
 	}
 |	'-' expr
 	{
-		$$ = NewAst ( OpUMinus, $2, nil, line_no )
+		$$ = NewAst ( OpUMinus, $2, nil, lexx.Pd.LineNo )
 	}
 
 expr1:
 	expr2
 |	expr1 '+' expr2
 	{
-		$$ = NewAst ( OpAdd, $1, $3, line_no )
+		$$ = NewAst ( OpAdd, $1, $3, lexx.Pd.LineNo )
 	}
 |	expr1 '-' expr2
 	{
-		$$ = NewAst ( OpSub, $1, $3, line_no )
+		$$ = NewAst ( OpSub, $1, $3, lexx.Pd.LineNo )
 	}
 
 expr2:
 	expr3
 |	expr2 '*' expr3
 	{
-		$$ = NewAst ( OpMul, $1, $3, line_no )
+		$$ = NewAst ( OpMul, $1, $3, lexx.Pd.LineNo )
 	}
 |	expr2 '/' expr3
 	{
-		$$ = NewAst ( OpDiv, $1, $3, line_no )
+		$$ = NewAst ( OpDiv, $1, $3, lexx.Pd.LineNo )
 	}
 
 expr3:
