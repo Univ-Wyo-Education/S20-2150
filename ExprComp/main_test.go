@@ -146,7 +146,7 @@ func Test_Parser01(t *testing.T) {
 			fmt.Printf("Test skipped - run is false %d, at:%s\n", nn, godebug.LF())
 			continue
 		}
-		tk, raw, err := Scanner(test.Fn)
+		tk, _ /*raw*/, err := Scanner(test.Fn)
 		if err != nil {
 			if !test.ErrExpected {
 				t.Errorf("[%d] Error not expected, got one:%s ", nn, err)
@@ -167,7 +167,7 @@ func Test_Parser01(t *testing.T) {
 			errList:  []string{},
 		}
 		for {
-			lexx = &exprLex{line: raw, Tokens: tk, Pd: pd}
+			lexx = &exprLex{Tokens: tk, Pd: pd}
 			exprParse(lexx)
 			if lexx.Pd.ast == nil {
 				break
