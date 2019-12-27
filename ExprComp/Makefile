@@ -7,7 +7,7 @@ all: y.go
 y.go: expr.y main.go
 	goyacc -p "expr" expr.y 
 
-test: test_unit test000 test001 test002
+test: test_unit test000 test001 test002 test003
 	@ echo PASS
 
 test_unit: all
@@ -27,3 +27,8 @@ test002: all
 	@ echo "Test 002: ./test/scan_005.txt - prog002.mas"
 	@ ./ExprComp --in ./test/scan_005.txt --out ./out/prog002.mas
 	@ diff ./out/prog002.mas ./ref/prog002.mas
+
+test003: all
+	@ echo "Test 003: ./test/scan_006.txt - prog003.mas"
+	@ ./ExprComp --in ./test/scan_006.txt --out ./out/prog003.mas
+	@ diff ./out/prog003.mas ./ref/prog003.mas

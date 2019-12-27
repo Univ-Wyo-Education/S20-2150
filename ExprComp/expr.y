@@ -43,12 +43,10 @@ stmt:
 	}
 |	expr ';'
 	{
-		ast := NewAst ( OpAssign, nil, $1, lexx.Pd.LineNo )
 		if dbParse1 {
-			fmt.Printf ( "AT: %s Tree: %s\n", godebug.LF(), godebug.SVarI(ast) )
+			fmt.Printf ( "AT: %s Tree: %s\n", godebug.LF(), godebug.SVarI($1) )
 		}
-		astList = append(astList, ast)
-		$$ = ast 
+		astList = append(astList, $1)
 	}
 |	GET ID ';'
 	{

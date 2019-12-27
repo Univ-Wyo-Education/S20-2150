@@ -1,0 +1,9 @@
+	Load _7
+	Store A
+	Load A
+	Add __1
+	Store A
+	Halt 
+_7,	DEC 7
+__1,	DEC -1
+A,	DEC 0

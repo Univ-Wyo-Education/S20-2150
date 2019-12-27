@@ -21,23 +21,16 @@
 		"LineNo": 1
 	},
 	{
-		"Op": 408,
-		"OpName": "OpAssign",
+		"Op": 410,
+		"OpName": "OpDecr",
 		"SValue": "",
 		"IValue": 0,
-		"Right": {
-			"Op": 410,
-			"OpName": "OpDecr",
-			"SValue": "",
+		"Left": {
+			"Op": 57347,
+			"OpName": "TokID",
+			"SValue": "A",
 			"IValue": 0,
-			"Left": {
-				"Op": 57347,
-				"OpName": "TokID",
-				"SValue": "A",
-				"IValue": 0,
-				"LineNo": 2
-			},
-			"LineNo": 1
+			"LineNo": 2
 		},
 		"LineNo": 1
 	}

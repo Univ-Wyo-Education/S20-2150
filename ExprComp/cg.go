@@ -160,7 +160,7 @@ func cgPass4_gen_code(pos int, ast *SyntaxTree, depth int, errList []string, sub
 	} else if ast.Op == OpID && ast.Left == nil && ast.Right == nil {
 	} else if ast.Op == OpNUM && ast.Left == nil && ast.Right == nil {
 	} else {
-		fmt.Fprintf(os.Stderr, "%sError: Missing Case in Code Generation: %s, line: %d at:%s %s\n", MiscLib.ColorRed, godebug.SVarI(ast), ast.LineNo, godebug.LF(), MiscLib.ColorReset)
+		fmt.Fprintf(os.Stderr, "%sError: Missing Case in Code Generation: %s, line: %d depth: %d at:%s %s\n", MiscLib.ColorRed, godebug.SVarI(ast), ast.LineNo, depth, godebug.LF(), MiscLib.ColorReset)
 		errList = append(errList, fmt.Sprintf("Error: Missing Case in Code Generation: %s", godebug.SVarI(ast)))
 		err = fmt.Errorf("Errors in code generation")
 	}
