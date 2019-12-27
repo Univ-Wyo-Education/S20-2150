@@ -38,10 +38,10 @@ func cgPass1_gen_const(ast *SyntaxTree, list *map[string]int) {
 		ast.Op = OpNUM
 		ast.OpName = OpID.String()
 		ast.SValue = key
-	} else if ast.Op == TokIncr || ast.Op == OpIncr {
+	} else if ast.Op == OpIncr {
 		key := fmt.Sprintf("_%d", 1)
 		(*list)[key] = 1
-	} else if ast.Op == TokDecr || ast.Op == OpDecr {
+	} else if ast.Op == OpDecr {
 		key := fmt.Sprintf("__%d", 1)
 		(*list)[key] = -1
 	} else if ast.Op == OpUMinus && ast.Left != nil {
@@ -158,7 +158,7 @@ func cgPass4_gen_code(pos int, ast *SyntaxTree, depth int, errList []string, sub
 	} else if (ast.Op == OpIncr || ast.Op == OpDecr) && ast.Left != nil && ast.Left.Op == OpID {
 		// Increment and Decrement alwasy work on IDs.  Result is in Variable and AC
 		emit("", Mac.OpLoad, ast.Left.SValue, outFp)
-		if ast.Op == TokIncr || ast.Op == OpIncr {
+		if ast.Op == OpIncr {
 			emit("", Mac.OpAdd, "_1", outFp)
 		} else {
 			emit("", Mac.OpAdd, "__1", outFp)
