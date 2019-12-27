@@ -140,14 +140,14 @@
 		"LineNo": 22
 	},
 	{
-		"Tok": 73,
+		"Tok": 57350,
 		"TokName": "TokInput",
 		"SM": "in",
 		"Value": 0,
 		"LineNo": 24
 	},
 	{
-		"Tok": 80,
+		"Tok": 57351,
 		"TokName": "TokOutput",
 		"SM": "put",
 		"Value": 0,

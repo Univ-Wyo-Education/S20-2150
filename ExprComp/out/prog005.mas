@@ -1,0 +1,34 @@
+	Load _8
+	Store B
+	Load B
+	Store _a
+	Load _2
+	Store _b
+	JnS __mul__
+	Store _t_1
+	Load _3
+	Add _t_1
+	Store _t_2
+	Load _t_2
+	Store A
+	Load A
+	Output 
+	Halt 
+/ ---------------------------------------------------------------
+/ Subroutine to multiply 2 values.
+/ Input
+/   _a, _b	Values stored in memory
+/ Output
+/   Multiplication result in AC
+/ ---------------------------------------------------------------
+__mul__,    HEX            0xffff
+            JumpI        __mul__
+
+
+_2,	DEC 2
+_3,	DEC 3
+_8,	DEC 8
+A,	DEC 0
+B,	DEC 0
+_a,	DEC 0
+_b,	DEC 0

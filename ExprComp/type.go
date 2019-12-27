@@ -4,8 +4,8 @@ const (
 	// Scanner Tokens
 	TokID     = TokType(ID)   // [a-zA-Z][a-zA-Z0-9_$]*
 	TokEq     = TokType('=')  // =
-	TokInput  = TokType('I')  // 'in'
-	TokOutput = TokType('P')  // 'put'
+	TokInput  = TokType(GET)  // 'in'
+	TokOutput = TokType(PUT)  // 'put'
 	TokLP     = TokType('(')  // '('
 	TokRP     = TokType(')')  // ')'
 	TokPlus   = TokType('+')  // '+'

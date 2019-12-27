@@ -6,6 +6,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 
 	"github.com/Univ-Wyo-Education/S20-2150/Mac"
@@ -65,7 +66,7 @@ func cgPass2_vars(ast *SyntaxTree, list *map[string]bool) {
 		(*list)[key] = true
 		ast.Op = OpID
 		ast.OpName = OpID.String()
-	} else if ast.Op == TokMul || ast.Op == TokDiv {
+	} else if ast.Op == OpMul || ast.Op == OpDiv {
 		(*list)["_a"] = true
 		(*list)["_b"] = true
 	}
@@ -237,7 +238,12 @@ func GenerateCode(astList []*SyntaxTree, out string) (err error) {
 }
 
 func emitSub(sub string, outFp *os.File) {
-	fmt.Fprintf(outFp, "$include$ %s\n", sub)
+	buf, err := ioutil.ReadFile(fmt.Sprintf("./lib/%s.mas", sub))
+	if err != nil {
+		// xyzzy
+		return
+	}
+	fmt.Fprintf(outFp, "%s\n", buf)
 }
 
 // func emit(lab string, op Mac.OpCodeType, hand HandType) {

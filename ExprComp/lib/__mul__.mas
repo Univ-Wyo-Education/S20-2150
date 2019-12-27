@@ -1,0 +1,10 @@
+/ ---------------------------------------------------------------
+/ Subroutine to multiply 2 values.
+/ Input
+/   _a, _b	Values stored in memory
+/ Output
+/   Multiplication result in AC
+/ ---------------------------------------------------------------
+__mul__,    HEX            0xffff
+            JumpI        __mul__
+
