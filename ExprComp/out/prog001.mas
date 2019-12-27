@@ -1,0 +1,9 @@
+	Load _0
+	Subt _3333
+	Store _t_1
+	Load _t_1
+	Store AaaAaa
+	Halt 
+_0,	DEC 0
+_3333,	DEC 3333
+AaaAaa,	DEC 0

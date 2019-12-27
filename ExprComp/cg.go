@@ -10,6 +10,7 @@ import (
 
 	"github.com/Univ-Wyo-Education/S20-2150/Mac"
 	"github.com/pschlump/MiscLib"
+	"github.com/pschlump/filelib"
 	"github.com/pschlump/godebug"
 )
 
@@ -31,12 +32,17 @@ func cgPass1_gen_const(ast *SyntaxTree, list *map[string]int) {
 		}
 		(*list)[key] = ast.IValue
 		ast.Op = OpNUM
-	} else if ast.Op == TokIncr {
+		ast.OpName = OpID.String()
+		ast.SValue = key
+	} else if ast.Op == TokIncr || ast.Op == OpIncr {
 		key := fmt.Sprintf("_%d", 1)
 		(*list)[key] = 1
-	} else if ast.Op == TokDecr {
+	} else if ast.Op == TokDecr || ast.Op == OpDecr {
 		key := fmt.Sprintf("__%d", 1)
 		(*list)[key] = -1
+	} else if ast.Op == OpUMinus && ast.Left != nil {
+		key := fmt.Sprintf("_%d", 0)
+		(*list)[key] = 0
 	}
 }
 
@@ -52,6 +58,7 @@ func cgPass2_vars(ast *SyntaxTree, list *map[string]bool) {
 		key := ast.SValue
 		(*list)[key] = true
 		ast.Op = OpID
+		ast.OpName = OpID.String()
 	} else if ast.Op == TokMul || ast.Op == TokDiv {
 		(*list)["_a"] = true
 		(*list)["_b"] = true
@@ -69,68 +76,91 @@ func cgPass3_assign_tmp(ast *SyntaxTree, list *map[string]bool, tn *int) {
 	if (ast.Op == TokPlus || ast.Op == TokMinus || ast.Op == TokMul || ast.Op == TokDiv) && ast.Left != nil && ast.Right != nil {
 		ast.SValue = fmt.Sprintf("_t_%d", *tn)
 		(*tn)++
+	} else if ast.Op == OpUMinus && ast.Left != nil {
+		ast.SValue = fmt.Sprintf("_t_%d", *tn)
+		(*tn)++
 	}
 }
 
-func cgPass4_gen_code(pos int, ast *SyntaxTree, depth int, errList []string) (err error) {
+func cgPass4_gen_code(pos int, ast *SyntaxTree, depth int, errList []string, subUsed map[string]bool, outFp *os.File) (err error) {
 	if ast == nil {
 		return
 	}
-	cgPass4_gen_code(pos, ast.Left, depth+1, errList)
-	cgPass4_gen_code(pos, ast.Right, depth+1, errList)
+	if ast.Op == PtError {
+		return
+	}
+	err = cgPass4_gen_code(pos, ast.Left, depth+1, errList, subUsed, outFp)
+	if err != nil {
+		return
+	}
+	err = cgPass4_gen_code(pos, ast.Right, depth+1, errList, subUsed, outFp)
+	if err != nil {
+		return
+	}
 
 	if (ast.Op == TokPlus || ast.Op == TokMinus || ast.Op == TokMul || ast.Op == TokDiv) && ast.Left != nil && ast.Right != nil {
 		// Add/Sub/Mul/Div Left to Right - store in _t_%d tmp.  So at end of OP the value is in a variable in memory and in accumulator AC.
 		// For '=' this means just store the AC, for nested expressions it means you are always working on a variable.
-		emit("", Mac.OpLoad, ast.Left.SValue)
+		emit("", Mac.OpLoad, ast.Left.SValue, outFp)
 		if ast.Op == TokPlus {
-			emit("", Mac.OpAdd, ast.Right.SValue)
+			emit("", Mac.OpAdd, ast.Right.SValue, outFp)
 		}
 		if ast.Op == TokMinus {
-			emit("", Mac.OpSubt, ast.Right.SValue)
+			emit("", Mac.OpSubt, ast.Right.SValue, outFp)
 		}
 		if ast.Op == TokMul {
-			emit("", Mac.OpStore, "_a")
-			emit("", Mac.OpLoad, ast.Right.SValue)
-			emit("", Mac.OpStore, "_b")
-			emit("", Mac.OpJnS, "__mul__") // result left in AC
+			emit("", Mac.OpStore, "_a", outFp)
+			emit("", Mac.OpLoad, ast.Right.SValue, outFp)
+			emit("", Mac.OpStore, "_b", outFp)
+			emit("", Mac.OpJnS, "__mul__", outFp) // result left in AC
+			subUsed["__mul__"] = true
 		}
 		if ast.Op == TokDiv {
-			emit("", Mac.OpStore, "_a")
-			emit("", Mac.OpLoad, ast.Right.SValue)
-			emit("", Mac.OpStore, "_b")
-			emit("", Mac.OpJnS, "__div__") // result left in AC
+			emit("", Mac.OpStore, "_a", outFp)
+			emit("", Mac.OpLoad, ast.Right.SValue, outFp)
+			emit("", Mac.OpStore, "_b", outFp)
+			emit("", Mac.OpJnS, "__div__", outFp) // result left in AC
+			subUsed["__div__"] = true
 		}
-		emit("", Mac.OpStore, ast.SValue)
+		emit("", Mac.OpStore, ast.SValue, outFp)
+
+	} else if ast.Op == OpUMinus && ast.Left != nil && ast.Right == nil {
+		// Unary Minus ( -a ) => ( 0 - a )
+		emit("", Mac.OpLoad, "_0", outFp)
+		emit("", Mac.OpSubt, ast.Left.SValue, outFp)
+		emit("", Mac.OpStore, ast.SValue, outFp)
 
 	} else if ast.Op == OpAssign && ast.Left != nil && ast.Right != nil {
 		// Assignment
-		emit("", Mac.OpLoad, ast.Right.SValue)
-		emit("", Mac.OpStore, ast.Left.SValue)
+		emit("", Mac.OpLoad, ast.Right.SValue, outFp)
+		emit("", Mac.OpStore, ast.Left.SValue, outFp)
 
 	} else if ast.Op == OpInput && ast.Left != nil && ast.Right == nil {
 		// Input to Variable
-		emit("", Mac.OpInput, "")
-		emit("", Mac.OpStore, ast.Left.SValue)
+		emit("", Mac.OpInput, "", outFp)
+		emit("", Mac.OpStore, ast.Left.SValue, outFp)
 
 	} else if ast.Op == OpOutput && ast.Left != nil && ast.Right == nil {
 		// Output to Variable
-		emit("", Mac.OpLoad, ast.Left.SValue)
-		emit("", Mac.OpOutput, "")
+		emit("", Mac.OpLoad, ast.Left.SValue, outFp)
+		emit("", Mac.OpOutput, "", outFp)
 
-	} else if (ast.Op == TokIncr || ast.Op == TokDecr) && ast.Left != nil && ast.Left.Op == OpID {
+	} else if (ast.Op == OpIncr || ast.Op == OpDecr) && ast.Left != nil && ast.Left.Op == OpID {
 		// Increment and Decrement alwasy work on IDs.  Result is in Variable and AC
-		emit("", Mac.OpLoad, ast.Left.SValue)
-		if ast.Op == TokIncr {
-			emit("", Mac.OpAdd, "_1")
+		emit("", Mac.OpLoad, ast.Left.SValue, outFp)
+		if ast.Op == TokIncr || ast.Op == OpIncr {
+			emit("", Mac.OpAdd, "_1", outFp)
 		} else {
-			emit("", Mac.OpAdd, "__1")
+			emit("", Mac.OpAdd, "__1", outFp)
 		}
-		emit("", Mac.OpStore, ast.Left.SValue)
+		emit("", Mac.OpStore, ast.Left.SValue, outFp)
 		ast.SValue = ast.Left.SValue // <<<<<<<<<<<<<<< Note - now ID has moved up tree (Useful in + - / *
+		// ast.St = ast.Left.St         // if not null, then LValue
 
+	} else if ast.Op == OpID && ast.Left == nil && ast.Right == nil {
+	} else if ast.Op == OpNUM && ast.Left == nil && ast.Right == nil {
 	} else {
-		fmt.Fprintf(os.Stderr, "%sError: Missing Case in Code Generation: %s, at:%s %s\n", MiscLib.ColorRed, godebug.SVarI(ast), godebug.LF(), MiscLib.ColorReset)
+		fmt.Fprintf(os.Stderr, "%sError: Missing Case in Code Generation: %s, line: %d at:%s %s\n", MiscLib.ColorRed, godebug.SVarI(ast), ast.LineNo, godebug.LF(), MiscLib.ColorReset)
 		errList = append(errList, fmt.Sprintf("Error: Missing Case in Code Generation: %s", godebug.SVarI(ast)))
 		err = fmt.Errorf("Errors in code generation")
 	}
@@ -141,7 +171,15 @@ func GenerateCode(astList []*SyntaxTree, out string) (err error) {
 	ConstList := make(map[string]int)
 	VarList := make(map[string]bool)
 	TmpList := make(map[string]bool)
+	SubList := make(map[string]bool)
 	errList := make([]string, 0, 4)
+
+	outFp, err := filelib.Fopen(out, "w")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Fatal: Unable to open output [%s] error: %s\n", out, err)
+		os.Exit(1)
+	}
+	defer outFp.Close()
 
 	// -------------------------------------------------------------------------
 	// Pass 1 & 2 - get variables, create constants as variables
@@ -164,25 +202,40 @@ func GenerateCode(astList []*SyntaxTree, out string) (err error) {
 	// Pass 4 - walk tree and generate case by case
 	// -------------------------------------------------------------------------
 	for ii, ast := range astList {
-		cgPass4_gen_code(ii, ast, 0, errList)
+		err = cgPass4_gen_code(ii, ast, 0, errList, SubList, outFp)
 	}
 
-	emit("", Mac.OpHalt, "")
+	emit("", Mac.OpHalt, "", outFp)
 
-	for nam, val := range ConstList {
-		emit(nam, Mac.DirDEC, fmt.Sprintf("%d", val))
+	for _, sub := range SortKeysMapStringBool(SubList) {
+		emitSub(sub, outFp)
 	}
-	for nam := range VarList {
-		emit(nam, Mac.DirDEC, "0")
+
+	for _, nam := range SortKeysMapStringInt(ConstList) {
+		val := ConstList[nam]
+		emit(nam, Mac.DirDEC, fmt.Sprintf("%d", val), outFp)
 	}
-	for nam := range TmpList {
-		emit(nam, Mac.DirDEC, "0")
+	for _, nam := range SortKeysMapStringBool(VarList) {
+		emit(nam, Mac.DirDEC, "0", outFp)
 	}
+	for _, nam := range SortKeysMapStringBool(TmpList) {
+		emit(nam, Mac.DirDEC, "0", outFp)
+	}
+
+	// xyzzy - Error Check - len(errList) > 0
 
 	return
 }
 
+func emitSub(sub string, outFp *os.File) {
+	fmt.Fprintf(outFp, "$include$ %s\n", sub)
+}
+
 // func emit(lab string, op Mac.OpCodeType, hand HandType) {
-func emit(lab string, op Mac.OpCodeType, hand string) {
-	// xyzzy000 - TODO
+func emit(lab string, op Mac.OpCodeType, hand string, outFp *os.File) {
+	if lab != "" {
+		fmt.Fprintf(outFp, "%s,\t%s %s\n", lab, op, hand)
+	} else {
+		fmt.Fprintf(outFp, "\t%s %s\n", op, hand)
+	}
 }

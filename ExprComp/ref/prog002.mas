@@ -1,0 +1,12 @@
+	Load _5
+	Store A
+	Load A
+	Add _1
+	Store A
+	Load A
+	Store B
+	Halt 
+_1,	DEC 1
+_5,	DEC 5
+A,	DEC 0
+B,	DEC 0

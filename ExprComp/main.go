@@ -6,6 +6,8 @@ import (
 	"os"
 )
 
+// xyzzy401 - ImplementDebugFlags
+
 var In = flag.String("in", "", "Input File - assembly code.")
 var Out = flag.String("out", "", "Output in hex.")
 var DbFlag = flag.String("db-flag", "", "debug flags.") // xyzzy401 - TODO
@@ -28,6 +30,8 @@ func main() {
 
 	in := *In   // Language In
 	out := *Out // Assembler out
+
+	// xyzzy401 - ImplementDebugFlags
 
 	// ---------------------------------- scan ----------------------------------
 	tk, _ /*raw*/, e0 := Scanner(in)

@@ -1,0 +1,5 @@
+	Load _3
+	Store aa
+	Halt 
+_3,	DEC 3
+aa,	DEC 0
