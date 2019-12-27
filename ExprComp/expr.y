@@ -52,13 +52,15 @@ stmt:
 	{
 		ValidateLValue($2)
 		// fmt.Printf ( "AT:%s\n", godebug.LF())
-		$$ = NewAst ( OpDecr, $2, nil, lexx.Pd.LineNo )
+		$$ = NewAst ( OpInput, $2, nil, lexx.Pd.LineNo )
+		astList = append(astList, $$)
 	}
 |	PUT ID ';'
 	{
 		ValidateLValue($2)
 		// fmt.Printf ( "AT:%s\n", godebug.LF())
-		$$ = NewAst ( OpDecr, $2, nil, lexx.Pd.LineNo )
+		$$ = NewAst ( OpOutput, $2, nil, lexx.Pd.LineNo )
+		astList = append(astList, $$)
 	}
 
 expr:
