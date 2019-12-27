@@ -21,6 +21,9 @@ func cgPass1_gen_const(ast *SyntaxTree, list *map[string]int) {
 	if ast == nil {
 		return
 	}
+	if ast.Op == PtError {
+		return
+	}
 	cgPass1_gen_const(ast.Left, list)
 	cgPass1_gen_const(ast.Right, list)
 	if ast.Op == TokNUM {
@@ -52,6 +55,9 @@ func cgPass2_vars(ast *SyntaxTree, list *map[string]bool) {
 	if ast == nil {
 		return
 	}
+	if ast.Op == PtError {
+		return
+	}
 	cgPass2_vars(ast.Left, list)
 	cgPass2_vars(ast.Right, list)
 	if ast.Op == TokID {
@@ -69,6 +75,9 @@ func cgPass2_vars(ast *SyntaxTree, list *map[string]bool) {
 // Assign temporary storage for operators in expressions
 func cgPass3_assign_tmp(ast *SyntaxTree, list *map[string]bool, tn *int) {
 	if ast == nil {
+		return
+	}
+	if ast.Op == PtError {
 		return
 	}
 	cgPass3_assign_tmp(ast.Left, list, tn)
