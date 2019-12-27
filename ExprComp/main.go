@@ -52,9 +52,6 @@ func main() {
 	exprParse(lexx)
 
 	// ---------------------------------- code generate ----------------------------------
-	//	// GenerateCode(lexx.Pd.ast, out)
-	for _, ast := range astList {
-		GenerateCode(ast, out)
-	}
+	GenerateCode(astList, out)
 	return
 }

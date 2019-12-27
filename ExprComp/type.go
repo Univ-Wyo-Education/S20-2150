@@ -43,6 +43,8 @@ const (
 	OpAssign = TokType(408) // SyntaxTree -- Replacement for ParseTree -- LValue = Expr
 	OpIncr   = TokType(409) // SyntaxTree -- Replacement for ParseTree -- ++ LValue
 	OpDecr   = TokType(410) // SyntaxTree -- Replacement for ParseTree -- -- LValue
+	OpInput  = TokType(411) // ParseTree   -- Perform input on symbol
+	OpOutput = TokType(412) // ParseTree	-- Perform output on symbol
 )
 
 type ScanTokType struct {
