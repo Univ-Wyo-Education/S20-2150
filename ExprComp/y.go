@@ -10,6 +10,7 @@ import __yyfmt__ "fmt"
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/pschlump/godebug"
 )
@@ -17,7 +18,7 @@ import (
 var astList = make([]*SyntaxTree, 0, 10)
 var dbParse1 = false
 
-//line expr.y:18
+//line expr.y:19
 type exprSymType struct {
 	yys  int
 	tree *SyntaxTree
@@ -55,7 +56,16 @@ const exprEofCode = 1
 const exprErrCode = 2
 const exprInitialStackSize = 16
 
-//line expr.y:130
+//line expr.y:136
+
+func UseSymbol(Name string, LineNo int) (rv *SymbolTableType) {
+	st, err := LookupSymbol(Name)
+	if err != nil {
+		// NParseError++
+		fmt.Fprintf(os.Stderr, "Reference to %s symbol not defined. Line:%d\n", Name, LineNo)
+	}
+	return &st
+}
 
 //line yacctab:1
 var exprExca = [...]int{
@@ -473,9 +483,10 @@ exprdefault:
 
 	case 3:
 		exprDollar = exprS[exprpt-4 : exprpt+1]
-//line expr.y:35
+//line expr.y:36
 		{
-			ValidateLValue(exprDollar[1].tree)
+			St, _ := AddSymbol(exprDollar[1].tree.SValue, gLineNo)
+			exprDollar[1].tree.St = &St
 			ast := NewAst(OpAssign, exprDollar[1].tree, exprDollar[3].tree, lexx.Pd.LineNo)
 			astList = append(astList, ast)
 			if dbParse1 {
@@ -485,7 +496,7 @@ exprdefault:
 		}
 	case 4:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
-//line expr.y:45
+//line expr.y:47
 		{
 			if dbParse1 {
 				fmt.Printf("AT: %s Tree: %s\n", godebug.LF(), godebug.SVarI(exprDollar[1].tree))
@@ -494,8 +505,9 @@ exprdefault:
 		}
 	case 5:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
-//line expr.y:52
+//line expr.y:54
 		{
+			exprDollar[2].tree.St = UseSymbol(exprDollar[2].tree.SValue, exprDollar[2].tree.LineNo)
 			ValidateLValue(exprDollar[2].tree)
 			// fmt.Printf ( "AT:%s\n", godebug.LF())
 			exprVAL.tree = NewAst(OpInput, exprDollar[2].tree, nil, lexx.Pd.LineNo)
@@ -503,8 +515,9 @@ exprdefault:
 		}
 	case 6:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
-//line expr.y:59
+//line expr.y:62
 		{
+			exprDollar[2].tree.St = UseSymbol(exprDollar[2].tree.SValue, exprDollar[2].tree.LineNo)
 			ValidateLValue(exprDollar[2].tree)
 			// fmt.Printf ( "AT:%s\n", godebug.LF())
 			exprVAL.tree = NewAst(OpOutput, exprDollar[2].tree, nil, lexx.Pd.LineNo)
@@ -512,65 +525,70 @@ exprdefault:
 		}
 	case 8:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
-//line expr.y:69
+//line expr.y:73
 		{
 			// fmt.Printf ( "AT:%s\n", godebug.LF())
-			ValidateLValue(exprDollar[2].tree)
+			exprDollar[2].tree.St = UseSymbol(exprDollar[2].tree.SValue, exprDollar[2].tree.LineNo)
 			exprVAL.tree = NewAst(OpIncr, exprDollar[2].tree, nil, lexx.Pd.LineNo)
 		}
 	case 9:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
-//line expr.y:75
+//line expr.y:79
 		{
-			// fmt.Printf ( "AT:%s\n", godebug.LF())
-			ValidateLValue(exprDollar[2].tree)
+			exprDollar[2].tree.St = UseSymbol(exprDollar[2].tree.SValue, exprDollar[2].tree.LineNo)
 			exprVAL.tree = NewAst(OpDecr, exprDollar[2].tree, nil, lexx.Pd.LineNo)
 		}
 	case 11:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
-//line expr.y:84
+//line expr.y:87
 		{
 			// fmt.Printf ( "AT:%s\n", godebug.LF())
 			exprVAL.tree = exprDollar[2].tree
 		}
 	case 12:
 		exprDollar = exprS[exprpt-2 : exprpt+1]
-//line expr.y:89
+//line expr.y:92
 		{
 			// fmt.Printf ( "AT:%s\n", godebug.LF())
 			exprVAL.tree = NewAst(OpUMinus, exprDollar[2].tree, nil, lexx.Pd.LineNo)
 		}
 	case 14:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
-//line expr.y:97
+//line expr.y:100
 		{
 			// fmt.Printf ( "AT:%s\n", godebug.LF())
 			exprVAL.tree = NewAst(OpAdd, exprDollar[1].tree, exprDollar[3].tree, lexx.Pd.LineNo)
 		}
 	case 15:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
-//line expr.y:102
+//line expr.y:105
 		{
 			// fmt.Printf ( "AT:%s\n", godebug.LF())
 			exprVAL.tree = NewAst(OpSub, exprDollar[1].tree, exprDollar[3].tree, lexx.Pd.LineNo)
 		}
 	case 17:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
-//line expr.y:110
+//line expr.y:113
 		{
 			// fmt.Printf ( "AT:%s\n", godebug.LF())
 			exprVAL.tree = NewAst(OpMul, exprDollar[1].tree, exprDollar[3].tree, lexx.Pd.LineNo)
 		}
 	case 18:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
-//line expr.y:115
+//line expr.y:118
 		{
 			// fmt.Printf ( "AT:%s\n", godebug.LF())
 			exprVAL.tree = NewAst(OpDiv, exprDollar[1].tree, exprDollar[3].tree, lexx.Pd.LineNo)
 		}
+	case 20:
+		exprDollar = exprS[exprpt-1 : exprpt+1]
+//line expr.y:126
+		{
+			exprVAL.tree.St = UseSymbol(exprDollar[1].tree.SValue, exprDollar[1].tree.LineNo)
+		}
 	case 21:
 		exprDollar = exprS[exprpt-3 : exprpt+1]
-//line expr.y:124
+//line expr.y:130
 		{
 			// fmt.Printf ( "AT:%s\n", godebug.LF())
 			exprVAL.tree = exprDollar[2].tree

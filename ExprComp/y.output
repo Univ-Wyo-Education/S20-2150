@@ -47,7 +47,7 @@ state 1
 state 2
 	top:  stmt.    (1)
 
-	.  reduce 1 (src line 29)
+	.  reduce 1 (src line 30)
 
 
 state 3
@@ -55,7 +55,7 @@ state 3
 	expr3:  ID.    (20)
 
 	'='  shift 18
-	.  reduce 20 (src line 122)
+	.  reduce 20 (src line 125)
 
 
 state 4
@@ -82,7 +82,7 @@ state 6
 state 7
 	expr:  expr0.    (7)
 
-	.  reduce 7 (src line 66)
+	.  reduce 7 (src line 70)
 
 
 state 8
@@ -106,7 +106,7 @@ state 10
 
 	'+'  shift 24
 	'-'  shift 25
-	.  reduce 10 (src line 81)
+	.  reduce 10 (src line 84)
 
 
 state 11
@@ -152,19 +152,19 @@ state 13
 
 	'*'  shift 29
 	'/'  shift 30
-	.  reduce 13 (src line 94)
+	.  reduce 13 (src line 97)
 
 
 state 14
 	expr2:  expr3.    (16)
 
-	.  reduce 16 (src line 107)
+	.  reduce 16 (src line 110)
 
 
 state 15
 	expr3:  NUM.    (19)
 
-	.  reduce 19 (src line 120)
+	.  reduce 19 (src line 123)
 
 
 state 16
@@ -188,7 +188,7 @@ state 16
 state 17
 	top:  top stmt.    (2)
 
-	.  reduce 2 (src line 31)
+	.  reduce 2 (src line 32)
 
 
 state 18
@@ -212,7 +212,7 @@ state 18
 state 19
 	stmt:  expr ';'.    (4)
 
-	.  reduce 4 (src line 44)
+	.  reduce 4 (src line 46)
 
 
 state 20
@@ -232,13 +232,13 @@ state 21
 state 22
 	expr:  INCR ID.    (8)
 
-	.  reduce 8 (src line 68)
+	.  reduce 8 (src line 72)
 
 
 state 23
 	expr:  DECR ID.    (9)
 
-	.  reduce 9 (src line 74)
+	.  reduce 9 (src line 78)
 
 
 state 24
@@ -266,19 +266,19 @@ state 25
 state 26
 	expr0:  '+' expr.    (11)
 
-	.  reduce 11 (src line 83)
+	.  reduce 11 (src line 86)
 
 
 state 27
 	expr3:  ID.    (20)
 
-	.  reduce 20 (src line 122)
+	.  reduce 20 (src line 125)
 
 
 state 28
 	expr0:  '-' expr.    (12)
 
-	.  reduce 12 (src line 88)
+	.  reduce 12 (src line 91)
 
 
 state 29
@@ -318,13 +318,13 @@ state 32
 state 33
 	stmt:  GET ID ';'.    (5)
 
-	.  reduce 5 (src line 51)
+	.  reduce 5 (src line 53)
 
 
 state 34
 	stmt:  PUT ID ';'.    (6)
 
-	.  reduce 6 (src line 58)
+	.  reduce 6 (src line 61)
 
 
 state 35
@@ -334,7 +334,7 @@ state 35
 
 	'*'  shift 29
 	'/'  shift 30
-	.  reduce 14 (src line 96)
+	.  reduce 14 (src line 99)
 
 
 state 36
@@ -344,31 +344,31 @@ state 36
 
 	'*'  shift 29
 	'/'  shift 30
-	.  reduce 15 (src line 101)
+	.  reduce 15 (src line 104)
 
 
 state 37
 	expr2:  expr2 '*' expr3.    (17)
 
-	.  reduce 17 (src line 109)
+	.  reduce 17 (src line 112)
 
 
 state 38
 	expr2:  expr2 '/' expr3.    (18)
 
-	.  reduce 18 (src line 114)
+	.  reduce 18 (src line 117)
 
 
 state 39
 	expr3:  '(' expr ')'.    (21)
 
-	.  reduce 21 (src line 123)
+	.  reduce 21 (src line 129)
 
 
 state 40
 	stmt:  ID '=' expr ';'.    (3)
 
-	.  reduce 3 (src line 33)
+	.  reduce 3 (src line 34)
 
 
 17 terminals, 8 nonterminals

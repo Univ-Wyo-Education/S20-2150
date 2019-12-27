@@ -9,7 +9,11 @@
 			"OpName": "TokID",
 			"SValue": "A",
 			"IValue": 0,
-			"LineNo": 1
+			"LineNo": 1,
+			"St": {
+				"LineNo": 0,
+				"Value": 0
+			}
 		},
 		"Right": {
 			"Op": 57346,
@@ -30,7 +34,11 @@
 			"OpName": "TokID",
 			"SValue": "B",
 			"IValue": 0,
-			"LineNo": 2
+			"LineNo": 2,
+			"St": {
+				"LineNo": 0,
+				"Value": 0
+			}
 		},
 		"Right": {
 			"Op": 57346,
@@ -51,7 +59,12 @@
 			"OpName": "TokID",
 			"SValue": "C",
 			"IValue": 0,
-			"LineNo": 3
+			"LineNo": 3,
+			"St": {
+				"Name": "C",
+				"LineNo": 3,
+				"Value": 0
+			}
 		},
 		"Right": {
 			"Op": 402,
@@ -63,7 +76,12 @@
 				"OpName": "TokID",
 				"SValue": "A",
 				"IValue": 0,
-				"LineNo": 3
+				"LineNo": 3,
+				"St": {
+					"Name": "A",
+					"LineNo": 1,
+					"Value": 0
+				}
 			},
 			"Right": {
 				"Op": 405,
@@ -80,7 +98,12 @@
 						"OpName": "TokID",
 						"SValue": "B",
 						"IValue": 0,
-						"LineNo": 3
+						"LineNo": 3,
+						"St": {
+							"Name": "B",
+							"LineNo": 2,
+							"Value": 0
+						}
 					},
 					"Right": {
 						"Op": 57346,

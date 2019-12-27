@@ -48,8 +48,12 @@ func main() {
 	}
 
 	// ---------------------------------- parse ----------------------------------
+	exprErrorVerbose = true
 	lexx = &exprLex{Tokens: tk, Pd: pd}
 	exprParse(lexx)
+	if NParseError > 0 {
+		os.Exit(1)
+	}
 
 	// ----------------------------------  type check  ----------------------------------
 	// Look for ++ LValue, -- LValue

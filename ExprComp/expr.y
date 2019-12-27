@@ -6,6 +6,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/pschlump/godebug"
 )
@@ -33,7 +34,8 @@ top:
 stmt:
 	ID '=' expr ';'
 	{
-		ValidateLValue($1)
+		St, _ := AddSymbol($1.SValue, gLineNo)
+		$1.St = &St
 		ast := NewAst ( OpAssign, $1, $3, lexx.Pd.LineNo )
 		astList = append(astList, ast)
 		if dbParse1 {
@@ -50,6 +52,7 @@ stmt:
 	}
 |	GET ID ';'
 	{
+		$2.St = UseSymbol ( $2.SValue, $2.LineNo ) 
 		ValidateLValue($2)
 		// fmt.Printf ( "AT:%s\n", godebug.LF())
 		$$ = NewAst ( OpInput, $2, nil, lexx.Pd.LineNo )
@@ -57,6 +60,7 @@ stmt:
 	}
 |	PUT ID ';'
 	{
+		$2.St = UseSymbol ( $2.SValue, $2.LineNo ) 
 		ValidateLValue($2)
 		// fmt.Printf ( "AT:%s\n", godebug.LF())
 		$$ = NewAst ( OpOutput, $2, nil, lexx.Pd.LineNo )
@@ -68,13 +72,12 @@ expr:
 |	INCR ID
 	{
 		// fmt.Printf ( "AT:%s\n", godebug.LF())
-		ValidateLValue($2)
+		$2.St = UseSymbol ( $2.SValue, $2.LineNo ) 
 		$$ = NewAst ( OpIncr, $2, nil, lexx.Pd.LineNo )
 	}
 |	DECR ID
 	{
-		// fmt.Printf ( "AT:%s\n", godebug.LF())
-		ValidateLValue($2)
+		$2.St = UseSymbol ( $2.SValue, $2.LineNo ) 
 		$$ = NewAst ( OpDecr, $2, nil, lexx.Pd.LineNo )
 	}
 
@@ -120,6 +123,9 @@ expr2:
 expr3:
 	NUM
 |	ID
+	{
+		$$.St = UseSymbol ( $1.SValue, $1.LineNo ) 
+	}
 |	'(' expr ')'
 	{
 		// fmt.Printf ( "AT:%s\n", godebug.LF())
@@ -128,4 +134,13 @@ expr3:
 
 
 %%
+
+func UseSymbol ( Name string, LineNo int ) ( rv *SymbolTableType ) {
+	st, err := LookupSymbol(Name)
+	if err != nil {
+		// NParseError++
+		fmt.Fprintf(os.Stderr, "Reference to %s symbol not defined. Line:%d\n", Name, LineNo)
+	}
+	return &st
+}
 

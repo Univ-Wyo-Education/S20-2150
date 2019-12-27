@@ -9,7 +9,12 @@
 			"OpName": "TokID",
 			"SValue": "aa",
 			"IValue": 0,
-			"LineNo": 1
+			"LineNo": 1,
+			"St": {
+				"Name": "aa",
+				"LineNo": 1,
+				"Value": 0
+			}
 		},
 		"Right": {
 			"Op": 57346,

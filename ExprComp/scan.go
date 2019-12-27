@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
-	"log"
+	"os"
 	"strconv"
 	"strings"
 
@@ -32,6 +32,8 @@ import (
 	'input'
 	'output'
 */
+
+var gLineNo = 0
 
 func Scanner(fn string) (rv []ScanTokType, raw []byte, err error) {
 	buf, e0 := ioutil.ReadFile(fn)
@@ -226,6 +228,7 @@ func (x *exprLex) Lex(yylval *exprSymType) int {
 	if dbScanner02 {
 		fmt.Printf("%s in .Lex - curPos=%d getting token %7d ->%s<->%s<-, at:%s \n%s", MiscLib.ColorYellow, x.Pd.curPos, ct.Tok, ct.SM, ct.TokName, godebug.LF(), MiscLib.ColorReset)
 	}
+	gLineNo = ct.LineNo
 	x.Pd.curPos++
 	if ct.Tok == TokNUM {
 		if dbScanner02 {
@@ -254,9 +257,12 @@ func (x *exprLex) Lex(yylval *exprSymType) int {
 
 }
 
+var NParseError = 0
+
 // Error is called by the generated parser when an syntax error occurs.
 func (x *exprLex) Error(s string) {
-	log.Printf("Syntax Error: %s", s)
+	NParseError++
+	fmt.Fprintf(os.Stderr, "Syntax Error: %s Line:%d\n", s, gLineNo)
 }
 
 var dbScanner01 = false
