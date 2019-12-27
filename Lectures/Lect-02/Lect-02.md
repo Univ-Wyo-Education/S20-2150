@@ -57,6 +57,17 @@ accidents that were not their fault!
 
 ## The Layers of Representation
 
+Layers:
+- Applications
+- High level languages
+- Operating System
+- Machine Language
+- Microcode | Direct Hardware
+- Logic circuits
+- Gates
+- Transistors | Resisters | Capacitors
+- Silicon structures (Quantum Holes)
+
 ### What most persons see
 
 1. User Interface (input)

@@ -11,6 +11,7 @@ import (
 )
 
 var astList = make([]*SyntaxTree, 0, 10)
+var dbParse1 = false
 
 %}
 
@@ -35,13 +36,17 @@ stmt:
 		ValidateLValue($1)
 		ast := NewAst ( OpAssign, $1, $3, lexx.Pd.LineNo )
 		astList = append(astList, ast)
-		fmt.Printf ( "AT: %s Tree: %s\n", godebug.LF(), godebug.SVarI(ast) )
+		if dbParse1 {
+			fmt.Printf ( "AT: %s Tree: %s\n", godebug.LF(), godebug.SVarI(ast) )
+		}
 		$$ = ast 
 	}
 |	expr ';'
 	{
 		ast := NewAst ( OpAssign, nil, $1, lexx.Pd.LineNo )
-		fmt.Printf ( "AT: %s Tree: %s\n", godebug.LF(), godebug.SVarI(ast) )
+		if dbParse1 {
+			fmt.Printf ( "AT: %s Tree: %s\n", godebug.LF(), godebug.SVarI(ast) )
+		}
 		astList = append(astList, ast)
 		$$ = ast 
 	}

@@ -223,21 +223,29 @@ Loop:
 // Lex is called by the parser to get each new token.
 func (x *exprLex) Lex(yylval *exprSymType) int {
 	ct := x.Tokens[x.Pd.curPos]
-	fmt.Printf("%s in .Lex - curPos=%d getting token %7d ->%s<->%s<-, at:%s \n%s", MiscLib.ColorYellow, x.Pd.curPos, ct.Tok, ct.SM, ct.TokName, godebug.LF(), MiscLib.ColorReset)
+	if dbScanner02 {
+		fmt.Printf("%s in .Lex - curPos=%d getting token %7d ->%s<->%s<-, at:%s \n%s", MiscLib.ColorYellow, x.Pd.curPos, ct.Tok, ct.SM, ct.TokName, godebug.LF(), MiscLib.ColorReset)
+	}
 	x.Pd.curPos++
 	if ct.Tok == TokNUM {
-		fmt.Printf("    %s\n", godebug.LF())
+		if dbScanner02 {
+			fmt.Printf("    %s\n", godebug.LF())
+		}
 		// yylval.tree = NewAst(OpNum, nil, nil, ct.LineNo)
 		// yylval.tree.SValue = ct.SM
 		// yylval.tree.IValue = ct.Value
 		yylval.tree = NewAstNUM(ct.SM, ct.Value, ct.LineNo)
 	} else if ct.Tok == TokID {
-		fmt.Printf("    %s\n", godebug.LF())
+		if dbScanner02 {
+			fmt.Printf("    %s\n", godebug.LF())
+		}
 		// yylval.tree = NewAst(OpID, nil, nil, ct.LineNo)
 		// yylval.tree.SValue = ct.SM
 		yylval.tree = NewAstID(ct.SM, ct.LineNo)
 	} else if ct.Tok == TokEOF {
-		fmt.Printf("    %s\n", godebug.LF())
+		if dbScanner02 {
+			fmt.Printf("    %s\n", godebug.LF())
+		}
 		yylval.tree = nil
 		x.Pd.curPos--
 		return LEX_EOF
@@ -252,3 +260,4 @@ func (x *exprLex) Error(s string) {
 }
 
 var dbScanner01 = false
+var dbScanner02 = false

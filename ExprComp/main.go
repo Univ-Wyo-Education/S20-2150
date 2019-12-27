@@ -6,10 +6,6 @@ import (
 	"os"
 )
 
-// ------------------------------------------------------------------------------------------------------------------
-// Main
-// ------------------------------------------------------------------------------------------------------------------
-
 var In = flag.String("in", "", "Input File - assembly code.")
 var Out = flag.String("out", "", "Output in hex.")
 var DbFlag = flag.String("db-flag", "", "debug flags.") // xyzzy401 - TODO
@@ -50,6 +46,14 @@ func main() {
 	// ---------------------------------- parse ----------------------------------
 	lexx = &exprLex{Tokens: tk, Pd: pd}
 	exprParse(lexx)
+
+	// ----------------------------------  type check  ----------------------------------
+	// Look for ++ LValue, -- LValue
+	// Look for LValue = Expr
+	// err := TypeCheck ( ast )
+	// if err != nil {
+	//		xyzzy
+	// }
 
 	// ---------------------------------- code generate ----------------------------------
 	GenerateCode(astList, out)

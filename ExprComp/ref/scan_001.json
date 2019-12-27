@@ -48,69 +48,69 @@
 		"LineNo": 9
 	},
 	{
-		"Tok": 105,
+		"Tok": 57348,
 		"TokName": "TokIncr",
 		"Value": 0,
 		"LineNo": 10
 	},
 	{
-		"Tok": 100,
+		"Tok": 57349,
 		"TokName": "TokDecr",
 		"Value": 0,
 		"LineNo": 11
 	},
 	{
 		"Tok": 57346,
-		"TokName": "TokNum",
+		"TokName": "TokNUM",
 		"SM": "0",
 		"Value": 0,
 		"LineNo": 12
 	},
 	{
 		"Tok": 57346,
-		"TokName": "TokNum",
+		"TokName": "TokNUM",
 		"SM": "00",
 		"Value": 0,
 		"LineNo": 13
 	},
 	{
 		"Tok": 57346,
-		"TokName": "TokNum",
+		"TokName": "TokNUM",
 		"SM": "01",
 		"Value": 1,
 		"LineNo": 14
 	},
 	{
 		"Tok": 57346,
-		"TokName": "TokNum",
+		"TokName": "TokNUM",
 		"SM": "0b1",
 		"Value": 1,
 		"LineNo": 15
 	},
 	{
 		"Tok": 57346,
-		"TokName": "TokNum",
+		"TokName": "TokNUM",
 		"SM": "0x2",
 		"Value": 2,
 		"LineNo": 16
 	},
 	{
 		"Tok": 57346,
-		"TokName": "TokNum",
+		"TokName": "TokNUM",
 		"SM": "0xf",
 		"Value": 15,
 		"LineNo": 17
 	},
 	{
 		"Tok": 57346,
-		"TokName": "TokNum",
+		"TokName": "TokNUM",
 		"SM": "07",
 		"Value": 7,
 		"LineNo": 18
 	},
 	{
 		"Tok": 57346,
-		"TokName": "TokNum",
+		"TokName": "TokNUM",
 		"SM": "7",
 		"Value": 7,
 		"LineNo": 19
