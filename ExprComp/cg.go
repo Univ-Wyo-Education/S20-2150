@@ -73,7 +73,7 @@ func cgPass3_assign_tmp(ast *SyntaxTree, list *map[string]bool, tn *int) {
 	}
 	cgPass3_assign_tmp(ast.Left, list, tn)
 	cgPass3_assign_tmp(ast.Right, list, tn)
-	if (ast.Op == TokPlus || ast.Op == TokMinus || ast.Op == TokMul || ast.Op == TokDiv) && ast.Left != nil && ast.Right != nil {
+	if (ast.Op == OpAdd || ast.Op == OpSub || ast.Op == OpMul || ast.Op == OpDiv) && ast.Left != nil && ast.Right != nil {
 		ast.SValue = fmt.Sprintf("_t_%d", *tn)
 		(*tn)++
 	} else if ast.Op == OpUMinus && ast.Left != nil {
@@ -98,24 +98,24 @@ func cgPass4_gen_code(pos int, ast *SyntaxTree, depth int, errList []string, sub
 		return
 	}
 
-	if (ast.Op == TokPlus || ast.Op == TokMinus || ast.Op == TokMul || ast.Op == TokDiv) && ast.Left != nil && ast.Right != nil {
+	if (ast.Op == OpAdd || ast.Op == OpSub || ast.Op == OpMul || ast.Op == OpDiv) && ast.Left != nil && ast.Right != nil {
 		// Add/Sub/Mul/Div Left to Right - store in _t_%d tmp.  So at end of OP the value is in a variable in memory and in accumulator AC.
 		// For '=' this means just store the AC, for nested expressions it means you are always working on a variable.
 		emit("", Mac.OpLoad, ast.Left.SValue, outFp)
-		if ast.Op == TokPlus {
+		if ast.Op == OpAdd {
 			emit("", Mac.OpAdd, ast.Right.SValue, outFp)
 		}
-		if ast.Op == TokMinus {
+		if ast.Op == OpSub {
 			emit("", Mac.OpSubt, ast.Right.SValue, outFp)
 		}
-		if ast.Op == TokMul {
+		if ast.Op == OpMul {
 			emit("", Mac.OpStore, "_a", outFp)
 			emit("", Mac.OpLoad, ast.Right.SValue, outFp)
 			emit("", Mac.OpStore, "_b", outFp)
 			emit("", Mac.OpJnS, "__mul__", outFp) // result left in AC
 			subUsed["__mul__"] = true
 		}
-		if ast.Op == TokDiv {
+		if ast.Op == OpDiv {
 			emit("", Mac.OpStore, "_a", outFp)
 			emit("", Mac.OpLoad, ast.Right.SValue, outFp)
 			emit("", Mac.OpStore, "_b", outFp)

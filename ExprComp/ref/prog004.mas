@@ -1,0 +1,17 @@
+	Load _2
+	Add _3
+	Store _t_1
+	Load _4
+	Add _5
+	Store _t_2
+	Load _t_1
+	Add _t_2
+	Store _t_3
+	Load _t_3
+	Store A
+	Halt 
+_2,	DEC 2
+_3,	DEC 3
+_4,	DEC 4
+_5,	DEC 5
+A,	DEC 0

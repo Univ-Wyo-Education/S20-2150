@@ -32,3 +32,8 @@ test003: all
 	@ echo "Test 003: ./test/scan_006.txt - prog003.mas"
 	@ ./ExprComp --in ./test/scan_006.txt --out ./out/prog003.mas
 	@ diff ./out/prog003.mas ./ref/prog003.mas
+
+test004: all
+	@ echo "Test 004: ./test/scan_007.txt - prog004.mas"
+	@ ./ExprComp --in ./test/scan_007.txt --out ./out/prog004.mas
+	@ diff ./out/prog004.mas ./ref/prog004.mas
