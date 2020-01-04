@@ -7,13 +7,23 @@ import (
 
 // microcode emulator in Go
 
-// TODO:  Add a "Description" and a "URL" field to each chip that will return the description and the URL where the description page is.
-
 /// ==============================================================================================================================================================
 // TODO - Not 04
 // TODO - Nor 02
 // TODO - 4 input AND (Decode 0x8 -> True signal with 3*Not + 4-input AND) -> Input
 // TODO - 4bit PC for M-PC counter.
+// xyzzy - ALU - 8bit ALU 4 in function, 1 out, Result, A-input/B-input = 2 input * 8 = 16, 16+4+(2)+8 = 24+6 = 30 (Cin, Cout) = 32 pin
+// xyzzy - Microcode Memory ( 8 address - 64 bit wide output = 256 instructions, 64 wide )
+// xyzzy - Decode Instruction ( 0x0 -> 0xf (main) ) + 2 bits = 6bit Address
+
+// --------------------------------------------------------------------------
+// 16bit ALU
+// ls04 - not
+// ls02 - nor
+// microcode-eeprom
+// mux
+// registers MAR / MBR / ACC / PC
+// --------------------------------------------------------------------------
 /// ==============================================================================================================================================================
 
 type ConnectionType struct {
@@ -38,6 +48,7 @@ var ChipsLayout []ChipType
 // ==============================================================================================================================================================
 
 type Chip interface {
+	Description() (string, string)
 	GetInputs() []int
 	GetOutputs() []int
 	GetVccGnd() (int, int)
@@ -70,6 +81,9 @@ func NewLs7400(loc string) Chip {
 	}
 }
 
+func (cp *Ls7400) Description() (string, string) {
+	return "74ls00 4 Nand Gate", "./chip/ls7400.html"
+}
 func (cp *Ls7400) GetNPins() int {
 	return cp.NPins
 }
@@ -130,6 +144,9 @@ func NewLs74_Mux(loc string) Chip {
 	}
 }
 
+func (cp *Ls74_Mux) Description() (string, string) {
+	return "4 Bit Mux", "./chip/mux4bit.html"
+}
 func (cp *Ls74_Mux) GetNPins() int {
 	return cp.NPins
 }
@@ -223,6 +240,9 @@ func NewLs74_Reg_File(loc string) Chip {
 	}
 }
 
+func (cp *Ls74_Reg_File) Description() (string, string) {
+	return "8 Addres / 8 Bit Register File", "./chip/reg_file_8x8.html"
+}
 func (cp *Ls74_Reg_File) GetNPins() int {
 	return cp.NPins
 }
@@ -307,6 +327,10 @@ func NewLs74_2k_Mem(loc string) Chip {
 	}
 }
 
+func (cp *Ls74_2k_Mem) Description() (string, string) {
+	return "2k Memory - 8 bit", "./chip/2k-8bit-SRam.html"
+}
+
 func (cp *Ls74_2k_Mem) GetNPins() int {
 	return cp.NPins
 }
@@ -344,22 +368,13 @@ func (cp *Ls74_2k_Mem) Behave() {
 	cp.Wire2.Set(22, pp&0x1)
 }
 
-// xyzzy - ALU - 8bit ALU 4 in function, 1 out, Result, A-input/B-input = 2 input * 8 = 16, 16+4+(2)+8 = 24+6 = 30 (Cin, Cout) = 32 pin
-// xyzzy - Microcode Memory ( 8 address - 64 bit wide output = 256 instructions, 64 wide )
-// xyzzy - Decode Instruction ( 0x0 -> 0xf (main) ) + 2 bits = 6bit Address
-
-// --------------------------------------------------------------------------
-// 16bit ALU
-// ls04 - not
-// ls02 - nor
-// microcode-eeprom
-// mux
-// registers MAR / MBR / ACC / PC
-// --------------------------------------------------------------------------
-
+/// ==============================================================================================================================================================
+/// ==============================================================================================================================================================
 // --------------------------------------------------------------------------
 // A single wire
 // --------------------------------------------------------------------------
+/// ==============================================================================================================================================================
+/// ==============================================================================================================================================================
 type Wire interface {
 	Get(pinNo int) int
 	Set(pinNo, val int)
