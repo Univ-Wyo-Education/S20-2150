@@ -7,3 +7,6 @@ windows:
 
 linux:
 	GOOS=linux go build -o FeSim.linux . 
+
+install: all windows linux
+	cp FeSim FeSim.* ../Download
