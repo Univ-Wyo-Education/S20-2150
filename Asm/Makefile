@@ -16,3 +16,11 @@ test002:
 	diff out/test002.hex ref
 
 
+windows:
+	GOOS=windows go build -o Asm.pc.exe . 
+
+linux:
+	GOOS=linux go build -o Asm.linux . 
+
+install: all windows linux
+	cp Asm Asm.* ../Download
