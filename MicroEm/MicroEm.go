@@ -7,6 +7,15 @@ import (
 
 // microcode emulator in Go
 
+// TODO:  Add a "Description" and a "URL" field to each chip that will return the description and the URL where the description page is.
+
+/// ==============================================================================================================================================================
+// TODO - Not 04
+// TODO - Nor 02
+// TODO - 4 input AND (Decode 0x8 -> True signal with 3*Not + 4-input AND) -> Input
+// TODO - 4bit PC for M-PC counter.
+/// ==============================================================================================================================================================
+
 type ConnectionType struct {
 	ChipNo int
 	Pin    []int
@@ -18,9 +27,15 @@ type ChipType struct {
 
 var WireDiagram []ConnectionType
 
-var ChipsOnBoard []ChipType
+var ChipsLayout []ChipType
 
-/// Chip -------------------------------------------------------------------------------------
+// ==============================================================================================================================================================
+// ==============================================================================================================================================================
+// Chip
+// -------------
+// This is the inteface that describes a "Chip" or "Module" in our system.
+// ==============================================================================================================================================================
+// ==============================================================================================================================================================
 
 type Chip interface {
 	GetInputs() []int
@@ -30,7 +45,9 @@ type Chip interface {
 	Behave() // Run 1 clock cycle given current inputs
 }
 
-/// Ls7400 Nand ------------------------------------------------------------------------------
+// ==============================================================================================================================================================
+// Ls7400 Nand
+// ==============================================================================================================================================================
 type Ls7400 struct {
 	Location string
 	NPins    int
@@ -82,8 +99,10 @@ func (cp *Ls7400) Behave() {
 	fx(10, 9, 8)
 }
 
-/// Ls74_Mux 4 bit ------------------------------------------------------------------------------
+/// ==============================================================================================================================================================
+/// Ls74_Mux 4 bit
 // 4 input mux, 4 bits.
+/// ==============================================================================================================================================================
 type Ls74_Mux struct {
 	Location string
 	NPins    int
@@ -170,8 +189,10 @@ func (cp *Ls74_Mux) Behave() {
 	}
 }
 
-/// Ls74_Reg_File 4 bit ------------------------------------------------------------------------------
+/// ==============================================================================================================================================================
+/// Ls74_Reg_File 4 bit
 // Register - File ( 8 registers )		3 address, 8 in, 8 out, inc in, Vcc/Gnd = 20 pin
+/// ==============================================================================================================================================================
 type Ls74_Reg_File struct {
 	Location string
 	NPins    int
@@ -198,6 +219,7 @@ func NewLs74_Reg_File(loc string) Chip {
 			24,  // Complement
 			25}, // Set-to-1
 		Outputs: []int{15, 16, 17, 18, 19, 20, 21, 22}, // Outputs
+		data:    make([]int, 8),
 	}
 }
 
@@ -254,10 +276,77 @@ func (cp *Ls74_Reg_File) Behave() {
 	cp.Wire2.Set(22, pp&0x1)
 }
 
+/// ==============================================================================================================================================================
+/// Ls74_2k_Mem 4 bit
+// Memory module, 2k - 8bit - SRAM
+/// ==============================================================================================================================================================
+type Ls74_2k_Mem struct {
+	Location string
+	NPins    int
+	Vcc      int
+	Gnd      int
+	Inputs   []int
+	Outputs  []int
+	Wire2    Wire
+	data     []int
+}
+
+func NewLs74_2k_Mem(loc string) Chip {
+	return &Ls74_2k_Mem{
+		Location: loc,
+		Wire2:    NewWireImpl("", "", 0),
+		NPins:    28,
+		Vcc:      28,
+		Gnd:      14,
+		Inputs: []int{1, 2, 3, 4, 5, 6, 7, 8, // Inputs
+			9, 10, 11, 12, 13, 23, 24, 25, // Address to apply to
+			26,  // Unused
+			27}, // Load
+		Outputs: []int{15, 16, 17, 18, 19, 20, 21, 22}, // Outputs
+		data:    make([]int, 2048),
+	}
+}
+
+func (cp *Ls74_2k_Mem) GetNPins() int {
+	return cp.NPins
+}
+
+func (cp *Ls74_2k_Mem) GetInputs() []int {
+	return cp.Inputs
+}
+
+func (cp *Ls74_2k_Mem) GetOutputs() []int {
+	return cp.Outputs
+}
+
+func (cp *Ls74_2k_Mem) GetVccGnd() (int, int) {
+	return cp.Vcc, cp.Gnd
+}
+
+func (cp *Ls74_2k_Mem) Behave() {
+	addr := cp.Wire2.Get(9)<<7 | cp.Wire2.Get(10)<<6 | cp.Wire2.Get(11)<<5 | cp.Wire2.Get(12)<<4 |
+		cp.Wire2.Get(13)<<3 | cp.Wire2.Get(23)<<2 | cp.Wire2.Get(24)<<1 | cp.Wire2.Get(25)
+
+	no, ni := 0, 0
+	if cp.Wire2.Get(23) != 0 { // Load
+		ni = cp.Wire2.Get(1)<<7 | cp.Wire2.Get(2)<<6 | cp.Wire2.Get(3)<<5 | cp.Wire2.Get(4)<<4 | cp.Wire2.Get(5)<<3 | cp.Wire2.Get(6)<<2 | cp.Wire2.Get(7)<<1 | cp.Wire2.Get(8)
+		no = ni
+		cp.data[addr] = no
+	}
+	pp := cp.data[addr]
+	cp.Wire2.Set(15, (pp>>7)&0x1)
+	cp.Wire2.Set(16, (pp>>6)&0x1)
+	cp.Wire2.Set(17, (pp>>5)&0x1)
+	cp.Wire2.Set(18, (pp>>4)&0x1)
+	cp.Wire2.Set(19, (pp>>3)&0x1)
+	cp.Wire2.Set(20, (pp>>2)&0x1)
+	cp.Wire2.Set(21, (pp>>1)&0x1)
+	cp.Wire2.Set(22, pp&0x1)
+}
+
 // xyzzy - ALU - 8bit ALU 4 in function, 1 out, Result, A-input/B-input = 2 input * 8 = 16, 16+4+(2)+8 = 24+6 = 30 (Cin, Cout) = 32 pin
 // xyzzy - Microcode Memory ( 8 address - 64 bit wide output = 256 instructions, 64 wide )
-// xyzzy - Main Memory ( 2k x 1 bit ) = 10 + 4 = 14
-//					   ( 2k x 8 bit ) = 10 (address) + 8 = input/output + 2 (Vcc/Gnd) = 20 pin ( use 2 for 16 bit )
+// xyzzy - Decode Instruction ( 0x0 -> 0xf (main) ) + 2 bits = 6bit Address
 
 // --------------------------------------------------------------------------
 // 16bit ALU

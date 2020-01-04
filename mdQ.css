@@ -1,0 +1,26 @@
+<style>
+ol {
+    display: block;
+    list-style-type: decimal;
+}
+.pagebreak { page-break-before: always; }
+.half { height: 200px; }
+.ind {
+    margin-left: 40px;
+    margin-bottom: 60px;
+}
+.ind2 {
+    margin-left: 60px;
+    margin-bottom: 60px;
+}
+pre {
+    margin-left: 40px;
+    margin-bottom: 60px;
+}
+h4 {
+    margin-left: 60px;
+}
+li {
+	margin-left: -16px;
+}
+</style>

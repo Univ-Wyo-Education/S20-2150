@@ -24,6 +24,8 @@ in the 2150 class.
 ## Required texts
 
 Textbook: The Essentials of Computer Organization and Architecture, 5th edition, Linda Null & Julia Lobur.
+(3rd and 4th edition will work - you do not need the scratch off code in the book so a used book
+is fine)
 
 ## Required 
 
@@ -35,6 +37,8 @@ Final Examination is 8:00AM till 10:00AM May 15th 2020.  Location to be determin
 
 No extra credit is planned at this time.
 
+<div class="pagebreak"> </div>
+
 ## Office Hours 
 
 Immediately following class from 9:00 am till 11:00am,
@@ -42,11 +46,6 @@ Mon, Wed, Fri.
 
 Other times via an appointment.  Generally I am unavailable on Tuesday
 and Thursday.
-
-
-<div class="pagebreak"> </div>
-
-
 
 
 ## Grading
@@ -72,6 +71,8 @@ Your grade is from the 2 Midterms, Final and the homework.
 
 Total: 3000
 
+<div class="pagebreak"> </div>
+
 Homework is 66% - tests are 33% of grade.  This means that you MUST
 do a significant portion of the homework or you will not pass the
 class.
@@ -85,8 +86,8 @@ class.
 | From 0 to 1700                              | F 			| 
 
 
-
 <div class="pagebreak"> </div>
+
 
 ## Overview
 
@@ -132,56 +133,54 @@ This is an approximate schedule.  Updates will be noted in class.
 | Mon Mar 09 2020 | 19 | Microcode Implementations of Hardware                                      |
 | Wed Mar 11 2020 | 20 | Microcode Part 2                                                           |
 |                 |    | Read paper on microcoded architecture                                      |
-| Fri Mar 13 2020 | 21 |                                                                            |
+| Fri Mar 13 2020 | 21 | Instruction Decode for Microcode (Memory Decode / Hard-Wired)              |
 |                 |    |                                                                            |
 | Mon Mar 16 2020 |    | *spring break - no class*                                                  |
 | Wed Mar 18 2020 |    | *spring break - no class*                                                  |
 | Fri Mar 20 2020 |    | *spring break - no class*                                                  |
 |                 |    |                                                                            |
-| Mon Mar 23 2020 | 22 |                                                                            |
+| Mon Mar 23 2020 | 22 | Pointers / Safe Pointers / Buffer Overrun                                  |
 |                 |    | Homework 6 Due / MARIE Emulator                                            |
 |                 |    | Finish reading Chapter 6 by this date                                      |
-| Wed Mar 25 2020 | 23 |                                                                            |
-| Fri Mar 27 2020 | 24 |                                                                            |
+| Wed Mar 25 2020 | 23 | System Software / Performance Tuning / Quantum Computing                   |
+| Fri Mar 27 2020 | 24 | NUMA - Cache Persistence - Timing Attacks / Specter                        |
 |                 |    |                                                                            |
-| Mon Mar 30 2020 | 25 |                                                                            |
+| Mon Mar 30 2020 | 25 | Virtual Memory - Memory Controllers - Programs larger than memory          |
 |                 |    | Homework 7 Due / Multiply / Divide                                         |
 |                 |    | Finish reading Chapter 7 (some sections) by this date                      |
 |                 |    | &nbsp;&nbsp;Only: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.10.                      |
 | Wed Apr 01 2020 | 26 | Midterm Review                                                             |
 | Fri Apr 03 2020 | 27 | Midterm 2                                                                  |
 |                 |    |                                                                            |
-| Mon Apr 06 2020 | 28 |                                                                            |
+| Mon Apr 06 2020 | 28 | Microcode Demo - Logic Analyzer                                            |
 |                 |    | Finish reading (do not study) Chapter 8 and 9 by this date                 |
-| Wed Apr 08 2020 | 29 |                                                                            |
-| Fri Apr 10 2020 | 30 |                                                                            |
-|                 |    | Homework 8 Due - Project - Part 1 - Microcode Machine                      |
+| Wed Apr 08 2020 | 29 | Programming in Logic - Why Microcode - Verlog - FPGAs/ASICs                |
+| Fri Apr 10 2020 | 30 | More on Microcode Architecture - Intel ME / OS                             |
+|                 |    | Homework 8 Due - Project - Part 1 - Microcode Machine - Hardware           |
 |                 |    |                                                                            |
-| Mon Apr 13 2020 | 31 |                                                                            |
-| Wed Apr 15 2020 | 32 |                                                                            |
-| Fri Apr 17 2020 | 33 |                                                                            |
+| Mon Apr 13 2020 | 31 | Stack Machines - 256Bit - Ethereum                                         |
+| Wed Apr 15 2020 | 32 | GPUs - high parallel computation                                           |
+| Fri Apr 17 2020 | 33 | Tiny Processors - IoT - Adrino etc.                                        |
 |                 |    |                                                                            |
-| Mon Apr 20 2020 | 34 |                                                                            |
-| Wed Apr 22 2020 | 35 |                                                                            |
-| Fri Apr 24 2020 | 36 |                                                                            |
-|                 |    | Homework 9 Due - Project - Part 2 - Microcode Machine                      |
+| Mon Apr 20 2020 | 34 | Growth of Processing / Linux as an OS / VxWorks (Pathfinder)               |
+| Wed Apr 22 2020 | 35 | Emulating Hardware ( IBM OS 360/370, VM Host, VM-Ware, Docker )            |
+| Fri Apr 24 2020 | 36 | Emulating Handheld Devices ( iOS / Android )                               |
+|                 |    | Homework 9 Due - Project - Part 2 - Microcode Machine - Microcode          |
 |                 |    |                                                                            |
-| Mon Apr 27 2020 | 37 |                                                                            |
-| Wed Apr 29 2020 | 38 |                                                                            |
-| Fri May 01 2020 | 39 |                                                                            |
+| Mon Apr 27 2020 | 37 | To Be Determined (TBD)                                                     |
+| Wed Apr 29 2020 | 38 | TBD                                                                        |
+| Fri May 01 2020 | 39 | TBD                                                                        |
 |                 |    | Homework 10 Due - Compiled Program run on your microcode machine           |
 |                 |    |                                                                            |
-| Mon May 04 2020 | 40 |                                                                            |
-| Wed May 06 2020 | 41 |                                                                            |
+| Mon May 04 2020 | 40 | TBD                                                                        |
+| Wed May 06 2020 | 41 | TBD                                                                        |
 | Fri May 08 2020 | 42 | Final Review                                                               |
+
+<div class="pagebreak"> </div>
 
 ### Final Exam
 
 Final Examination is 8:00AM till 10:00AM May 15th 2020.  Location to be determined.
-
-xyzzy - stack architecture (4th?)
-xyzzy - parallel vector 
-xyzzy - microcode
 
 
 
@@ -253,4 +252,4 @@ during the semester. Class could be canceled or assignments due dates changed.
 
 # Copyright
 
-Copyright (C) University of Wyoming, 2019.
+Copyright (C) University of Wyoming, 2019-2020.

@@ -1,0 +1,1463 @@
+<style>
+@font-face {
+	font-family: octicons-link;
+	src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	line-height: 1.5;
+	color: #24292e;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-size: 16px;
+	line-height: 1.5;
+	word-wrap: break-word;
+}
+
+.markdown-body .pl-c {
+	color: #6a737d;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+	color: #005cc5;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+	color: #6f42c1;
+}
+
+.markdown-body .pl-smi,
+.markdown-body .pl-s .pl-s1 {
+	color: #24292e;
+}
+
+.markdown-body .pl-ent {
+	color: #22863a;
+}
+
+.markdown-body .pl-k {
+	color: #d73a49;
+}
+
+.markdown-body .pl-s,
+.markdown-body .pl-pds,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sre,
+.markdown-body .pl-sr .pl-sra {
+	color: #032f62;
+}
+
+.markdown-body .pl-v,
+.markdown-body .pl-smw {
+	color: #e36209;
+}
+
+.markdown-body .pl-bu {
+	color: #b31d28;
+}
+
+.markdown-body .pl-ii {
+	color: #fafbfc;
+	background-color: #b31d28;
+}
+
+.markdown-body .pl-c2 {
+	color: #fafbfc;
+	background-color: #d73a49;
+}
+
+.markdown-body .pl-c2::before {
+	content: "^M";
+}
+
+.markdown-body .pl-sr .pl-cce {
+	font-weight: bold;
+	color: #22863a;
+}
+
+.markdown-body .pl-ml {
+	color: #735c0f;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+	font-weight: bold;
+	color: #005cc5;
+}
+
+.markdown-body .pl-mi {
+	font-style: italic;
+	color: #24292e;
+}
+
+.markdown-body .pl-mb {
+	font-weight: bold;
+	color: #24292e;
+}
+
+.markdown-body .pl-md {
+	color: #b31d28;
+	background-color: #ffeef0;
+}
+
+.markdown-body .pl-mi1 {
+	color: #22863a;
+	background-color: #f0fff4;
+}
+
+.markdown-body .pl-mc {
+	color: #e36209;
+	background-color: #ffebda;
+}
+
+.markdown-body .pl-mi2 {
+	color: #f6f8fa;
+	background-color: #005cc5;
+}
+
+.markdown-body .pl-mdr {
+	font-weight: bold;
+	color: #6f42c1;
+}
+
+.markdown-body .pl-ba {
+	color: #586069;
+}
+
+.markdown-body .pl-sg {
+	color: #959da5;
+}
+
+.markdown-body .pl-corl {
+	text-decoration: underline;
+	color: #032f62;
+}
+
+.markdown-body .octicon {
+	display: inline-block;
+	vertical-align: text-top;
+	fill: currentColor;
+}
+
+.markdown-body a {
+	background-color: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+	outline-width: 0;
+}
+
+.markdown-body strong {
+	font-weight: inherit;
+}
+
+.markdown-body strong {
+	font-weight: bolder;
+}
+
+.markdown-body h1 {
+	font-size: 2em;
+	margin: 0.67em 0;
+}
+
+.markdown-body img {
+	border-style: none;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+	font-family: monospace, monospace;
+	font-size: 1em;
+}
+
+.markdown-body hr {
+	box-sizing: content-box;
+	height: 0;
+	overflow: visible;
+}
+
+.markdown-body input {
+	font: inherit;
+	margin: 0;
+}
+
+.markdown-body input {
+	overflow: visible;
+}
+
+.markdown-body [type="checkbox"] {
+	box-sizing: border-box;
+	padding: 0;
+}
+
+.markdown-body * {
+	box-sizing: border-box;
+}
+
+.markdown-body input {
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+}
+
+.markdown-body a {
+	color: #0366d6;
+	text-decoration: none;
+}
+
+.markdown-body a:hover {
+	text-decoration: underline;
+}
+
+.markdown-body strong {
+	font-weight: 600;
+}
+
+.markdown-body hr {
+	height: 0;
+	margin: 15px 0;
+	overflow: hidden;
+	background: transparent;
+	border: 0;
+	border-bottom: 1px solid #dfe2e5;
+}
+
+.markdown-body hr::before {
+	display: table;
+	content: "";
+}
+
+.markdown-body hr::after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+.markdown-body table {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.markdown-body td,
+.markdown-body th {
+	padding: 0;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body h1 {
+	font-size: 32px;
+	font-weight: 600;
+}
+
+.markdown-body h2 {
+	font-size: 24px;
+	font-weight: 600;
+}
+
+.markdown-body h3 {
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.markdown-body h4 {
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.markdown-body h5 {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.markdown-body h6 {
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.markdown-body p {
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+
+.markdown-body blockquote {
+	margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+	x-list-style-type: lower-roman;
+	  list-style-type: decimal;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+	list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+	margin-left: 0;
+}
+
+.markdown-body code {
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	font-size: 12px;
+}
+
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 0;
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	font-size: 12px;
+}
+
+.markdown-body .octicon {
+	vertical-align: text-bottom;
+}
+
+.markdown-body .pl-0 {
+	padding-left: 0 !important;
+}
+
+.markdown-body .pl-1 {
+	padding-left: 4px !important;
+}
+
+.markdown-body .pl-2 {
+	padding-left: 8px !important;
+}
+
+.markdown-body .pl-3 {
+	padding-left: 16px !important;
+}
+
+.markdown-body .pl-4 {
+	padding-left: 24px !important;
+}
+
+.markdown-body .pl-5 {
+	padding-left: 32px !important;
+}
+
+.markdown-body .pl-6 {
+	padding-left: 40px !important;
+}
+
+.markdown-body::before {
+	display: table;
+	content: "";
+}
+
+.markdown-body::after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+.markdown-body>*:first-child {
+	margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+	margin-bottom: 0 !important;
+}
+
+.markdown-body a:not([href]) {
+	color: inherit;
+	text-decoration: none;
+}
+
+.markdown-body .anchor {
+	float: left;
+	padding-right: 4px;
+	margin-left: -20px;
+	line-height: 1;
+}
+
+.markdown-body .anchor:focus {
+	outline: none;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 16px;
+}
+
+.markdown-body hr {
+	height: 0.25em;
+	padding: 0;
+	margin: 24px 0;
+	background-color: #e1e4e8;
+	border: 0;
+}
+
+.markdown-body blockquote {
+	padding: 0 1em;
+	color: #6a737d;
+	border-left: 0.25em solid #dfe2e5;
+}
+
+.markdown-body blockquote>:first-child {
+	margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+	margin-bottom: 0;
+}
+
+.markdown-body kbd {
+	display: inline-block;
+	padding: 3px 5px;
+	font-size: 11px;
+	line-height: 10px;
+	color: #444d56;
+	vertical-align: middle;
+	background-color: #fafbfc;
+	border: solid 1px #c6cbd1;
+	border-bottom-color: #959da5;
+	border-radius: 3px;
+	box-shadow: inset 0 -1px 0 #959da5;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	margin-top: 24px;
+	margin-bottom: 16px;
+	font-weight: 600;
+	line-height: 1.25;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+	color: #1b1f23;
+	vertical-align: middle;
+	visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+	text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+	visibility: visible;
+}
+
+.markdown-body h1 {
+	padding-bottom: 0.3em;
+	font-size: 2em;
+	border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h2 {
+	padding-bottom: 0.3em;
+	font-size: 1.5em;
+	border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h3 {
+	font-size: 1.25em;
+}
+
+.markdown-body h4 {
+	font-size: 1em;
+}
+
+.markdown-body h5 {
+	font-size: 0.875em;
+}
+
+.markdown-body h6 {
+	font-size: 0.85em;
+	color: #6a737d;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body li {
+	word-wrap: break-all;
+}
+
+.markdown-body li>p {
+	margin-top: 16px;
+}
+
+.markdown-body li+li {
+	margin-top: 0.25em;
+}
+
+.markdown-body dl {
+	padding: 0;
+}
+
+.markdown-body dl dt {
+	padding: 0;
+	margin-top: 16px;
+	font-size: 1em;
+	font-style: italic;
+	font-weight: 600;
+}
+
+.markdown-body dl dd {
+	padding: 0 16px;
+	margin-bottom: 16px;
+}
+
+.markdown-body table {
+	display: block;
+	width: 100%;
+	overflow: auto;
+}
+
+.markdown-body table th {
+	font-weight: 600;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+	padding: 6px 13px;
+	border: 1px solid #dfe2e5;
+}
+
+.markdown-body table tr {
+	background-color: #fff;
+	border-top: 1px solid #c6cbd1;
+}
+
+.markdown-body table tr:nth-child(2n) {
+	background-color: #f6f8fa;
+}
+
+.markdown-body img {
+	max-width: 100%;
+	box-sizing: content-box;
+	background-color: #fff;
+}
+
+.markdown-body img[align=right] {
+	padding-left: 20px;
+}
+
+.markdown-body img[align=left] {
+	padding-right: 20px;
+}
+
+.markdown-body code {
+	padding: 0.2em 0.4em;
+	margin: 0;
+	font-size: 85%;
+	background-color: rgba(27,31,35,0.05);
+	border-radius: 3px;
+}
+
+.markdown-body pre {
+	word-wrap: normal;
+}
+
+.markdown-body pre>code {
+	padding: 0;
+	margin: 0;
+	font-size: 100%;
+	word-break: normal;
+	white-space: pre;
+	background: transparent;
+	border: 0;
+}
+
+.markdown-body .highlight {
+	margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre {
+	margin-bottom: 0;
+	word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+	padding: 16px;
+	overflow: auto;
+	font-size: 85%;
+	line-height: 1.45;
+	background-color: #f6f8fa;
+	border-radius: 3px;
+}
+
+.markdown-body pre code {
+	display: inline;
+	max-width: auto;
+	padding: 0;
+	margin: 0;
+	overflow: visible;
+	line-height: inherit;
+	word-wrap: normal;
+	background-color: transparent;
+	border: 0;
+}
+
+.markdown-body .full-commit .btn-outline:not(:disabled):hover {
+	color: #005cc5;
+	border-color: #005cc5;
+}
+
+.markdown-body kbd {
+	display: inline-block;
+	padding: 3px 5px;
+	font: 11px "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	line-height: 10px;
+	color: #444d56;
+	vertical-align: middle;
+	background-color: #fafbfc;
+	border: solid 1px #d1d5da;
+	border-bottom-color: #c6cbd1;
+	border-radius: 3px;
+	box-shadow: inset 0 -1px 0 #c6cbd1;
+}
+
+.markdown-body :checked+.radio-label {
+	position: relative;
+	z-index: 1;
+	border-color: #0366d6;
+}
+
+.markdown-body .task-list-item {
+	list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+	margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+	margin: 0 0.2em 0.25em -1.6em;
+	vertical-align: middle;
+}
+
+.markdown-body hr {
+	border-bottom-color: #eee;
+}
+
+</style>
+<style>
+ol {
+    display: block;
+    list-style-type: decimal;
+}
+.pagebreak { page-break-before: always; }
+.half { height: 200px; }
+</style>
+
+<div class="markdown-body">
+
+<style>
+.pagebreak { page-break-before: always; }
+.half { height: 200px; }
+</style>
+
+<h1>Class Syllabus: 2150 CoSc Spring 2020.</h1>
+
+<h2>Instructor</h2>
+
+<ul>
+<li>Prof. Philip Schlump</li>
+<li>Office: 4081B - Engineering Building (Right across from the CoSci Office)</li>
+<li>Contact via email (pschlump@uwyo.edu) or for emergencies only: 720-209-7888 (my cell)
+and pschlump@gmail.com (personal email - I check my UW email more often).</li>
+<li>Class M/W/F 8:00AM to 8:50AM - Attendance is required.</li>
+</ul>
+
+<p>I prefer email for contact and setup of appointments.  After hours appointments will usually
+be in the Coe Library - so plan on reserving a room.</p>
+
+<p>If you want to call me to set up an appointment you will need to send me a SMS message
+first so that I enter your name into my contact list.  I get 20+ robo-calls a day and
+I will not answer a random number.  Text me with your name and that you are a student
+in the 2150 class.</p>
+
+<h2>Required texts</h2>
+
+<p>Textbook: The Essentials of Computer Organization and Architecture, 5th edition, Linda Null &amp; Julia Lobur.
+(3rd and 4th edition will work - you do not need the scratch off code in the book so a used book
+is fine)</p>
+
+<h2>Required</h2>
+
+<p>Both the two midterms and the final are required.</p>
+
+<p>Final Examination is 8:00AM till 10:00AM May 15th 2020.  Location to be determined.</p>
+
+<h2>Extra credit</h2>
+
+<p>No extra credit is planned at this time.</p>
+
+<div class="pagebreak"> </div>
+
+<h2>Office Hours</h2>
+
+<p>Immediately following class from 9:00 am till 11:00am,
+Mon, Wed, Fri.</p>
+
+<p>Other times via an appointment.  Generally I am unavailable on Tuesday
+and Thursday.</p>
+
+<h2>Grading</h2>
+
+<p>Your grade is from the 2 Midterms, Final and the homework.</p>
+
+<table>
+<thead>
+<tr>
+<th>Title</th>
+<th>Points</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Homework 1 - Setup / Access MARIE - Price Computer</td>
+<td>200 Pts</td>
+</tr>
+
+<tr>
+<td>Homework 2 - Representation of Numbers / ASCII / Unicode</td>
+<td>200 Pts</td>
+</tr>
+
+<tr>
+<td>Homework 3 - Boolean Algebra - Gates</td>
+<td>200 Pts</td>
+</tr>
+
+<tr>
+<td>Homework 4 - MARIE 1st program</td>
+<td>200 Pts</td>
+</tr>
+
+<tr>
+<td>Homework 5 - MARIE assembly language programs</td>
+<td>200 Pts</td>
+</tr>
+
+<tr>
+<td>Homework 6 - Implement MARIE Emulator</td>
+<td>200 Pts</td>
+</tr>
+
+<tr>
+<td>Homework 7 - Multiply/Divide Subroutine n MARIE</td>
+<td>200 Pts</td>
+</tr>
+
+<tr>
+<td>Homework 8 - Microcode Part 1</td>
+<td>200 Pts</td>
+</tr>
+
+<tr>
+<td>Homework 9 - Microcode Part 2</td>
+<td>200 Pts</td>
+</tr>
+
+<tr>
+<td>Homework 10 - Compiled Code / Paper (1-2 page)</td>
+<td>200 Pts</td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>Midterm - 1</td>
+<td>300 Pts</td>
+</tr>
+
+<tr>
+<td>Midterm - 2</td>
+<td>300 Pts</td>
+</tr>
+
+<tr>
+<td>Final</td>
+<td>400 Pts</td>
+</tr>
+</tbody>
+</table>
+
+<p>Total: 3000</p>
+
+<div class="pagebreak"> </div>
+
+<p>Homework is 66% - tests are 33% of grade.  This means that you MUST
+do a significant portion of the homework or you will not pass the
+class.</p>
+
+<table>
+<thead>
+<tr>
+<th>Points</th>
+<th align="center">Letter Grade</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>From 2600 to 3000</td>
+<td align="center">A</td>
+</tr>
+
+<tr>
+<td>From 2300 to 2600</td>
+<td align="center">B</td>
+</tr>
+
+<tr>
+<td>From 2000 to 2300</td>
+<td align="center">C</td>
+</tr>
+
+<tr>
+<td>From 1700 to 2000</td>
+<td align="center">D</td>
+</tr>
+
+<tr>
+<td>From 0 to 1700</td>
+<td align="center">F</td>
+</tr>
+</tbody>
+</table>
+
+<div class="pagebreak"> </div>
+
+<h2>Overview</h2>
+
+<p>This is an approximate schedule.  Updates will be noted in class.</p>
+
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th align="center">No</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Mon Jan 27 2020</td>
+<td align="center">01</td>
+<td align="left">Introduction to class</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">Cover Syllabus - Syllabus revisions  - Office Hours - Class Policy</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">My background</td>
+</tr>
+
+<tr>
+<td>Wed Jan 29 2020</td>
+<td align="center">02</td>
+<td align="left">Layers of Representation in systems.</td>
+</tr>
+
+<tr>
+<td>Fri Jan 31 2020</td>
+<td align="center">03</td>
+<td align="left">What is knowing machine architecture good for?</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">Homework 1 Due / Setup / Access MARIE etc.</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td>Mon Feb 03 2020</td>
+<td align="center">04</td>
+<td align="left">Base Conversion / Octal / Decimal / Hex / Base37 / Base64 etc.</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">Finish reading Chapter 1 &amp; 2 by this date</td>
+</tr>
+
+<tr>
+<td>Wed Feb 05 2020</td>
+<td align="center">05</td>
+<td align="left">Signed Numbers / Character Codes</td>
+</tr>
+
+<tr>
+<td>Fri Feb 07 2020</td>
+<td align="center">06</td>
+<td align="left">Error Correction Codes</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">Homework 2 Due / Representation of Numbers / ASCII / Unicode</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td>Mon Feb 10 2020</td>
+<td align="center">07</td>
+<td align="left">Gates and Boolean Logic</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">Finish reading Chapter 3 by this date</td>
+</tr>
+
+<tr>
+<td>Wed Feb 12 2020</td>
+<td align="center">08</td>
+<td align="left">More on Gates and Logic</td>
+</tr>
+
+<tr>
+<td>Fri Feb 14 2020</td>
+<td align="center">09</td>
+<td align="left">FPGA&rsquo;s / ASIC&rsquo;s and VLSI design</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">Homework 3 Due / Boolean Algebra / Gates</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td>Mon Feb 17 2020</td>
+<td align="center">10</td>
+<td align="left">MARIE system - How an instruction gets run</td>
+</tr>
+
+<tr>
+<td>Wed Feb 19 2020</td>
+<td align="center">11</td>
+<td align="left">Components of MARIE</td>
+</tr>
+
+<tr>
+<td>Fri Feb 21 2020</td>
+<td align="center">12</td>
+<td align="left">More on MARIE and instructions</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">Homework 4 Due / 1st MARIE assembly language programs</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td>Mon Feb 24 2020</td>
+<td align="center">13</td>
+<td align="left">Fancier Assembly Language Architectures</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">Finish reading Chapter 4 by this date</td>
+</tr>
+
+<tr>
+<td>Wed Feb 26 2020</td>
+<td align="center">14</td>
+<td align="left">Midterm Review</td>
+</tr>
+
+<tr>
+<td>Fri Feb 28 2020</td>
+<td align="center">15</td>
+<td align="left">Midterm 1</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td>Mon Mar 02 2020</td>
+<td align="center">16</td>
+<td align="left">Instruction Types</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">Finish reading Chapter 5 by this date</td>
+</tr>
+
+<tr>
+<td>Wed Mar 04 2020</td>
+<td align="center">17</td>
+<td align="left">Pointers in C / C++ / MARIE</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">Homework 5 Due / MARIE assembly language programs</td>
+</tr>
+
+<tr>
+<td>Fri Mar 06 2020</td>
+<td align="center">18</td>
+<td align="left">Call Return Processing</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td>Mon Mar 09 2020</td>
+<td align="center">19</td>
+<td align="left">Microcode Implementations of Hardware</td>
+</tr>
+
+<tr>
+<td>Wed Mar 11 2020</td>
+<td align="center">20</td>
+<td align="left">Microcode Part 2</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">Read paper on microcoded architecture</td>
+</tr>
+
+<tr>
+<td>Fri Mar 13 2020</td>
+<td align="center">21</td>
+<td align="left">Instruction Decode for Microcode (Memory Decode / Hard-Wired)</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td>Mon Mar 16 2020</td>
+<td align="center"></td>
+<td align="left"><em>spring break - no class</em></td>
+</tr>
+
+<tr>
+<td>Wed Mar 18 2020</td>
+<td align="center"></td>
+<td align="left"><em>spring break - no class</em></td>
+</tr>
+
+<tr>
+<td>Fri Mar 20 2020</td>
+<td align="center"></td>
+<td align="left"><em>spring break - no class</em></td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td>Mon Mar 23 2020</td>
+<td align="center">22</td>
+<td align="left">Pointers / Safe Pointers / Buffer Overrun</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">Homework 6 Due / MARIE Emulator</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">Finish reading Chapter 6 by this date</td>
+</tr>
+
+<tr>
+<td>Wed Mar 25 2020</td>
+<td align="center">23</td>
+<td align="left">System Software / Performance Tuning / Quantum Computing</td>
+</tr>
+
+<tr>
+<td>Fri Mar 27 2020</td>
+<td align="center">24</td>
+<td align="left">NUMA - Cache Persistence - Timing Attacks / Specter</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td>Mon Mar 30 2020</td>
+<td align="center">25</td>
+<td align="left">Virtual Memory - Memory Controllers - Programs larger than memory</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">Homework 7 Due / Multiply / Divide</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">Finish reading Chapter 7 (some sections) by this date</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">&nbsp;&nbsp;Only: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.10.</td>
+</tr>
+
+<tr>
+<td>Wed Apr 01 2020</td>
+<td align="center">26</td>
+<td align="left">Midterm Review</td>
+</tr>
+
+<tr>
+<td>Fri Apr 03 2020</td>
+<td align="center">27</td>
+<td align="left">Midterm 2</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td>Mon Apr 06 2020</td>
+<td align="center">28</td>
+<td align="left">Microcode Demo - Logic Analyzer</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">Finish reading (do not study) Chapter 8 and 9 by this date</td>
+</tr>
+
+<tr>
+<td>Wed Apr 08 2020</td>
+<td align="center">29</td>
+<td align="left">Programming in Logic - Why Microcode - Verlog - FPGAs/ASICs</td>
+</tr>
+
+<tr>
+<td>Fri Apr 10 2020</td>
+<td align="center">30</td>
+<td align="left">More on Microcode Architecture - Intel ME / OS</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">Homework 8 Due - Project - Part 1 - Microcode Machine - Hardware</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td>Mon Apr 13 2020</td>
+<td align="center">31</td>
+<td align="left">Stack Machines - 256Bit - Ethereum</td>
+</tr>
+
+<tr>
+<td>Wed Apr 15 2020</td>
+<td align="center">32</td>
+<td align="left">GPUs - high parallel computation</td>
+</tr>
+
+<tr>
+<td>Fri Apr 17 2020</td>
+<td align="center">33</td>
+<td align="left">Tiny Processors - IoT - Adrino etc.</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td>Mon Apr 20 2020</td>
+<td align="center">34</td>
+<td align="left">Growth of Processing / Linux as an OS / VxWorks (Pathfinder)</td>
+</tr>
+
+<tr>
+<td>Wed Apr 22 2020</td>
+<td align="center">35</td>
+<td align="left">Emulating Hardware ( IBM OS <sup>360</sup>&frasl;<sub>370</sub>, VM Host, VM-Ware, Docker )</td>
+</tr>
+
+<tr>
+<td>Fri Apr 24 2020</td>
+<td align="center">36</td>
+<td align="left">Emulating Handheld Devices ( iOS / Android )</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">Homework 9 Due - Project - Part 2 - Microcode Machine - Microcode</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td>Mon Apr 27 2020</td>
+<td align="center">37</td>
+<td align="left">To Be Determined (TBD)</td>
+</tr>
+
+<tr>
+<td>Wed Apr 29 2020</td>
+<td align="center">38</td>
+<td align="left">TBD</td>
+</tr>
+
+<tr>
+<td>Fri May 01 2020</td>
+<td align="center">39</td>
+<td align="left">TBD</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left">Homework 10 Due - Compiled Program run on your microcode machine</td>
+</tr>
+
+<tr>
+<td></td>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td>Mon May 04 2020</td>
+<td align="center">40</td>
+<td align="left">TBD</td>
+</tr>
+
+<tr>
+<td>Wed May 06 2020</td>
+<td align="center">41</td>
+<td align="left">TBD</td>
+</tr>
+
+<tr>
+<td>Fri May 08 2020</td>
+<td align="center">42</td>
+<td align="left">Final Review</td>
+</tr>
+</tbody>
+</table>
+
+<div class="pagebreak"> </div>
+
+<h3>Final Exam</h3>
+
+<p>Final Examination is 8:00AM till 10:00AM May 15th 2020.  Location to be determined.</p>
+
+<h2>Late work.</h2>
+
+<p>Work turned in late will loose 10% per calendar day.  Nothing may be turned in after the last day of
+class.</p>
+
+<h2>Title IX – Duty to Report</h2>
+
+<p>The University of Wyoming faculty are committed to helping create a safe learning environment for all students and for
+the university as a whole. If you have experienced any form of gender or sex-based discrimination or harassment,
+including sexual assault, sexual harassment, relationship violence, or stalking, know that help and support are
+available. The University has staff members trained to support survivors in navigating campus life, accessing health and
+counseling services, providing academic and housing accommodations, and more. The University strongly encourages all
+students to report any such incidents to the University. Please be aware that all University of Wyoming employees,
+including student staff, are required to report all Title IX related concerns to the Title IX Coordinator or their
+supervisor. This means that if you tell a faculty member about a situation of sexual harassment or sexual violence, or
+other related misconduct, the faculty member must share that information with the University’s Title IX Coordinator.
+UW’s Title IX Coordinator is Jim Osborn (Manager of Investigations, Equal Opportunity Report and Response). He is
+located in Room 320 of the Bureau of Mines Building, and can be reached via email at report-it@uwyo.edu or via phone at
+766-5200 or 766-5228. For more information, go to:
+<a href="http://www.uwyo.edu/reportit/learn-more/faqs.html">http://www.uwyo.edu/reportit/learn-more/faqs.html</a> .</p>
+
+<h2>Attendance and Absence policies</h2>
+
+<p>Attendance is critical. There is no text book for ALL of the material. The only way to know what you need to know is by
+attending class. If you have an excused absence that is fine, try to get notes from the day you missed from one of your
+classmates. Just don&rsquo;t skip!</p>
+
+<h2>Classroom Behavior Policy</h2>
+
+<p>At all times, treat your presence in the classroom and your enrollment in this course as you would a job. Act
+professionally, arrive on time, pay attention, complete your work in a timely and professional manner. You will be
+respectful towards your classmates and instructor. Spirited debate and disagreement are to be expected in any classroom
+and all views will be heard fully, but at all times we will behave civilly and with respect towards one another.
+Personal attacks, offensive language, name-calling, and dismissive gestures are not warranted in a learning atmosphere.
+As the instructor, I have the right to dismiss you from the classroom.</p>
+
+<h2>Classroom Statement on Diversity</h2>
+
+<p>The University of Wyoming values an educational environment that is diverse, equitable, and inclusive. The diversity
+that students and faculty bring to class, including age, country of origin, culture, disability, economic class,
+ethnicity, gender identity, immigration status, linguistic, political affiliation, race, religion, sexual orientation,
+veteran status, worldview, and other social and cultural diversity is valued, respected, and considered a resource for
+learning.</p>
+
+<h2>Disability Support</h2>
+
+<p>If you have a physical, learning, sensory or psychological disability and require accommodations, please register as
+soon as possible and provide documentation of your disability to Disability Support Services (DSS), Room 109 Knight
+Hall. You may also contact DSS at (307) 766-3073 or udss@uwyo.edu. Visit their website for more
+information: www.uwyo.edu/udss</p>
+
+<h2>Academic Dishonesty Policies</h2>
+
+<p>Don&rsquo;t cheat on the exams. I expect you to take full advantage of all the online resources you can get your hands on.
+That includes Stack Overflow, Github etc. If you do use someone else&rsquo;s code, put in a link to where you found it.
+Don&rsquo;t cheat on the projects - do you own work.  Most of the learning in the class is from <em>doing</em> the projects.</p>
+
+<h2>Substantive changes to syllabus</h2>
+
+<p>All deadlines, requirements, and course structure are subject to change if deemed necessary by the instructor. Students
+will be notified verbally in class, on our WyoCourses page announcement, and via email of these changes. I do travel
+during the semester. Class could be canceled or assignments due dates changed.</p>
+
+<h1>Copyright</h1>
+
+<p>Copyright &copy; University of Wyoming, 2019-2020.</p>
+
+</div>
+
