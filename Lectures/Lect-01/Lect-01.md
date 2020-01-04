@@ -25,6 +25,15 @@ penalty.
 
 ## Homework Overview for Semester
 
-1. 
-4. Build a fetch-execute machine.  Build in your choice of languages C, C++, Go, Python, Kotlin, JavaScript(node.js).
-
+| Title                                         			| Points  |
+|-----------------------------------------------------------|---------|
+| Homework 1 - Setup / Access MARIE - Price Computer		| 200 Pts |
+| Homework 2 - Representation of Numbers / ASCII / Unicode 	| 200 Pts |
+| Homework 3 - Boolean Algebra - Gates                  	| 200 Pts |
+| Homework 4 - MARIE 1st program							| 200 Pts |
+| Homework 5 - MARIE assembly language programs        		| 200 Pts |
+| Homework 6 - Implement MARIE Emulator                		| 200 Pts |
+| Homework 7 - Multiply/Divide Subroutine n MARIE  			| 200 Pts |			
+| Homework 8 - Microcode Part 1 - Machine      				| 200 Pts |
+| Homework 9 - Microcode Part 2 - Microcode        			| 200 Pts |		
+| Homework 10 - Compiled Code / Paper (1-2 page)        	| 200 Pts |
