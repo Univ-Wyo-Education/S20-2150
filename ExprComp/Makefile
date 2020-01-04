@@ -7,6 +7,15 @@ all: y.go
 y.go: expr.y main.go
 	goyacc -p "expr" expr.y 
 
+windows: y.go
+	GOOS=windows go build -o ExprComp.pc.exe . 
+
+linux: y.go
+	GOOS=linux go build -o ExprComp.linux . 
+
+install: all windows linux
+	cp ExprComp ExprComp.* ../Download
+
 test: test_unit test000 test001 test002 test003 test004 test005
 	@ echo PASS
 
