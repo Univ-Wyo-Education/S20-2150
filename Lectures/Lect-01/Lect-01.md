@@ -3,10 +3,11 @@
 ## Survey on languages that you know
 
 For homework that is not in MARIA - our emulated machine you
-have your choice of { C, C++, Python, Go, Haskell, F#, Swift } as your
+have your choice of { C, C++, Python, Go, Haskell, F#, Swift, Kotlin } as your
 language of implementation.  If you do other than C/C++/Python then 
 I will be grading your homework instead of the graduate assistant - so
-it may take longer to get graded.
+it may take longer to get graded.  If you pick other than C, C++, Python
+or Go you are responsible for knowing the language.
 
 
 
@@ -37,3 +38,9 @@ penalty.
 | Homework 8 - Microcode Part 1 - Machine      				| 200 Pts |
 | Homework 9 - Microcode Part 2 - Microcode        			| 200 Pts |		
 | Homework 10 - Compiled Code / Paper (1-2 page)        	| 200 Pts |
+
+Note on the 1-2 page paper - this is not a formal paper.  Just put it
+in a text file.   A list with your analysis of the compiled code
+and how it is working - along with a screen capture of the
+logic analyzer will be fine.
+
