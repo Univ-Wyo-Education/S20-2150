@@ -8,22 +8,18 @@ import (
 // microcode emulator in Go
 
 /// ==============================================================================================================================================================
+// xyzzyALU
+// xyzzy - ALU - 8bit ALU 4 in function, 1 out, Result, A-input/B-input = 2 input * 8 = 16, 16+4+(2)+8 = 24+6 = 30 (Cin, Cout) = 32 pin
+
+/// ==============================================================================================================================================================
+// xyzzy - Decode Instruction ( 0x0 -> 0xf (main) ) + 2 bits = 6bit Address
 // TODO - Not 04
 // TODO - Nor 02
 // TODO - 4 input AND (Decode 0x8 -> True signal with 3*Not + 4-input AND) -> Input
 // TODO - 4bit PC for M-PC counter.
-// xyzzy - ALU - 8bit ALU 4 in function, 1 out, Result, A-input/B-input = 2 input * 8 = 16, 16+4+(2)+8 = 24+6 = 30 (Cin, Cout) = 32 pin
-// xyzzy - Microcode Memory ( 8 address - 64 bit wide output = 256 instructions, 64 wide )
-// xyzzy - Decode Instruction ( 0x0 -> 0xf (main) ) + 2 bits = 6bit Address
 
-// --------------------------------------------------------------------------
-// 16bit ALU
-// ls04 - not
-// ls02 - nor
-// microcode-eeprom
-// mux
-// registers MAR / MBR / ACC / PC
-// --------------------------------------------------------------------------
+// done - Microcode Memory ( 8 address - 64 bit wide output = 256 instructions, 64 wide ) (2x32 wide)
+
 /// ==============================================================================================================================================================
 
 type ConnectionType struct {
@@ -315,14 +311,13 @@ func NewLs74_2k_Mem(loc string) Chip {
 	return &Ls74_2k_Mem{
 		Location: loc,
 		Wire2:    NewWireImpl("", "", 0),
-		NPins:    28,
-		Vcc:      28,
-		Gnd:      14,
+		NPins:    30,
+		Vcc:      30,
+		Gnd:      15,
 		Inputs: []int{1, 2, 3, 4, 5, 6, 7, 8, // Inputs
-			9, 10, 11, 12, 13, 23, 24, 25, // Address to apply to
-			26,  // Unused
-			27}, // Load
-		Outputs: []int{15, 16, 17, 18, 19, 20, 21, 22}, // Outputs
+			9, 10, 11, 12, 13, 14, 24, 25, 26, 27, 28, // Address to apply to (2**11)
+			29}, // Load
+		Outputs: []int{16, 17, 18, 19, 20, 21, 22, 23}, // Outputs
 		data:    make([]int, 2048),
 	}
 }
@@ -348,8 +343,17 @@ func (cp *Ls74_2k_Mem) GetVccGnd() (int, int) {
 }
 
 func (cp *Ls74_2k_Mem) Behave() {
-	addr := cp.Wire2.Get(9)<<7 | cp.Wire2.Get(10)<<6 | cp.Wire2.Get(11)<<5 | cp.Wire2.Get(12)<<4 |
-		cp.Wire2.Get(13)<<3 | cp.Wire2.Get(23)<<2 | cp.Wire2.Get(24)<<1 | cp.Wire2.Get(25)
+	addr := cp.Wire2.Get(9)<<10 |
+		cp.Wire2.Get(10)<<9 |
+		cp.Wire2.Get(11)<<8 |
+		cp.Wire2.Get(12)<<7 |
+		cp.Wire2.Get(13)<<6 |
+		cp.Wire2.Get(14)<<5 |
+		cp.Wire2.Get(24)<<4 |
+		cp.Wire2.Get(25)<<3 |
+		cp.Wire2.Get(26)<<2 |
+		cp.Wire2.Get(27)<<1 |
+		cp.Wire2.Get(28)
 
 	no, ni := 0, 0
 	if cp.Wire2.Get(23) != 0 { // Load
@@ -358,14 +362,164 @@ func (cp *Ls74_2k_Mem) Behave() {
 		cp.data[addr] = no
 	}
 	pp := cp.data[addr]
-	cp.Wire2.Set(15, (pp>>7)&0x1)
-	cp.Wire2.Set(16, (pp>>6)&0x1)
-	cp.Wire2.Set(17, (pp>>5)&0x1)
-	cp.Wire2.Set(18, (pp>>4)&0x1)
-	cp.Wire2.Set(19, (pp>>3)&0x1)
-	cp.Wire2.Set(20, (pp>>2)&0x1)
-	cp.Wire2.Set(21, (pp>>1)&0x1)
-	cp.Wire2.Set(22, pp&0x1)
+	cp.Wire2.Set(16, (pp>>7)&0x1)
+	cp.Wire2.Set(17, (pp>>6)&0x1)
+	cp.Wire2.Set(18, (pp>>5)&0x1)
+	cp.Wire2.Set(19, (pp>>4)&0x1)
+	cp.Wire2.Set(20, (pp>>3)&0x1)
+	cp.Wire2.Set(21, (pp>>2)&0x1)
+	cp.Wire2.Set(22, (pp>>1)&0x1)
+	cp.Wire2.Set(23, pp&0x1)
+}
+
+/// ==============================================================================================================================================================
+/// Ls74_Fast_Rom - Microcode Store
+// Memory module, Wide memory (32bit out)
+/// ==============================================================================================================================================================
+type Ls74_Fast_Rom struct {
+	Location string
+	NPins    int
+	Vcc      int
+	Gnd      int
+	Inputs   []int
+	Outputs  []int
+	Wire2    Wire
+	Data     []uint64
+}
+
+func NewLs74_Fast_Rom(loc string) Chip {
+	return &Ls74_Fast_Rom{
+		Location: loc,
+		Wire2:    NewWireImpl("", "", 0),
+		NPins:    44,
+		Vcc:      44,
+		Gnd:      22,
+		Inputs: []int{
+			1, 2, 3, 4, 5, 6, 7, 8, // Address to apply to
+			43, // SIO - Input (not implemented)
+			9}, // Re-Burn (Load) (not implemented)
+		Outputs: []int{
+			10, 11, 12, 13, 14, 15, 16, 17,
+			18, 19, 20, 21, 23, 24, 25, 26,
+			27, 28, 29, 30, 31, 32, 33, 34,
+			35, 36, 37, 38, 39, 40, 41, 42,
+		},
+		Data: make([]uint64, 256),
+	}
+}
+
+func (cp *Ls74_Fast_Rom) Description() (string, string) {
+	return "256 words of 32 bits", "./chip/Fast_Rom.html"
+}
+
+func (cp *Ls74_Fast_Rom) GetNPins() int {
+	return cp.NPins
+}
+
+func (cp *Ls74_Fast_Rom) GetInputs() []int {
+	return cp.Inputs
+}
+
+func (cp *Ls74_Fast_Rom) GetOutputs() []int {
+	return cp.Outputs
+}
+
+func (cp *Ls74_Fast_Rom) GetVccGnd() (int, int) {
+	return cp.Vcc, cp.Gnd
+}
+
+func (cp *Ls74_Fast_Rom) Behave() {
+	addr := cp.Wire2.Get(1)<<7 |
+		cp.Wire2.Get(2)<<6 |
+		cp.Wire2.Get(3)<<5 |
+		cp.Wire2.Get(4)<<4 |
+		cp.Wire2.Get(5)<<3 |
+		cp.Wire2.Get(6)<<2 |
+		cp.Wire2.Get(7)<<1 |
+		cp.Wire2.Get(8)
+
+	//no, ni := 0, 0
+	//if cp.Wire2.Get(23) != 0 { // Load -- xyzzy
+	//	ni = cp.Wire2.Get(1)<<7 | cp.Wire2.Get(2)<<6 | cp.Wire2.Get(3)<<5 | cp.Wire2.Get(4)<<4 | cp.Wire2.Get(5)<<3 | cp.Wire2.Get(6)<<2 | cp.Wire2.Get(7)<<1 | cp.Wire2.Get(8)
+	//	no = ni
+	//	cp.Data[addr] = no
+	//}
+	pp := cp.Data[addr]
+	for ii := range cp.Outputs {
+		pin := cp.Outputs[31-ii] // go through in reverse order
+		cp.Wire2.Set(pin, int(pp&0x1))
+		pp >>= 1
+	}
+}
+
+/// ==============================================================================================================================================================
+// xyzzyALU
+/// ==============================================================================================================================================================
+type Ls74_ALU_8bit struct {
+	Location string
+	NPins    int
+	Vcc      int
+	Gnd      int
+	Inputs   []int
+	Outputs  []int
+	Wire2    Wire
+}
+
+func NewLs74_ALU_8bit(loc string) Chip {
+	return &Ls74_ALU_8bit{
+		Location: loc,
+		Wire2:    NewWireImpl("", "", 0),
+		NPins:    40, // 16 + 8 + 5 + 2 + 2, +...
+		Vcc:      40,
+		Gnd:      20,
+		Inputs: []int{
+			1, 2, 3, 4, 5, 6, 7, 8, // Inputs A
+			1, 2, 3, 4, 5, 6, 7, 8, // Inputs B
+			9, 10, 11, 00, 00, // Function to Perform (See Table) (32 functions) // 1 bit is Logic v.s. Arithmetic
+			00, // Carry In
+		},
+		Outputs: []int{
+			15, 16, 17, 18, 19, 20, 21, 22, // Outputs C
+			00, // Carry out
+		}, // Outputs
+	}
+}
+
+func (cp *Ls74_ALU_8bit) Description() (string, string) {
+	return "8 bit cascade-able able ALU", "./chip/8bit-ALU.html"
+}
+func (cp *Ls74_ALU_8bit) GetNPins() int {
+	return cp.NPins
+}
+
+func (cp *Ls74_ALU_8bit) GetInputs() []int {
+	return cp.Inputs
+}
+
+func (cp *Ls74_ALU_8bit) GetOutputs() []int {
+	return cp.Outputs
+}
+
+func (cp *Ls74_ALU_8bit) GetVccGnd() (int, int) {
+	return cp.Vcc, cp.Gnd
+}
+
+func (cp *Ls74_ALU_8bit) Behave() {
+	// xyzzy -
+	operation := cp.Wire2.Get(9)<<4 |
+		cp.Wire2.Get(9)<<3 |
+		cp.Wire2.Get(9)<<2 |
+		cp.Wire2.Get(10)<<1 |
+		cp.Wire2.Get(11)
+	A := 0 // xyzzy
+	B := 0 // xyzzy
+	C := 0
+	switch operation {
+	case 0: // Clear output
+	case 1: // A + B
+		C = A + B
+	}
+	_ = C
 }
 
 /// ==============================================================================================================================================================
