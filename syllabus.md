@@ -16,7 +16,7 @@ and pschlump@gmail.com (personal email - I check my UW email more often).
 I prefer email for contact and setup of appointments.  After hours appointments will usually
 be in the Coe Library - so plan on reserving a room.
 
-If you want to call me to set up an appointment you will need to send me a SMS message
+If you want to call me to set up an appointment you, will need to send me a SMS message
 first so that I enter your name into my contact list.  I get 20+ robo-calls a day and
 I will not answer a random number.  Text me with your name and that you are a student
 in the 2150 class.
@@ -25,7 +25,7 @@ in the 2150 class.
 
 Textbook: The Essentials of Computer Organization and Architecture, 5th edition, Linda Null & Julia Lobur.
 (3rd and 4th edition will work - you do not need the scratch off code in the book so a used book
-is fine)
+is fine).
 
 ## Required 
 
@@ -50,40 +50,40 @@ and Thursday.
 
 ## Grading
 
-Your grade is from the 2 Midterms, Final and the homework.
+Your grade is from the 2 Midterms, Final and the Homework.
 
-| Title                                         			| Points  |
+| Title                                                     | Points  |
 |-----------------------------------------------------------|---------|
-| Homework 1 - Setup / Access MARIE - Price Computer		| 200 Pts |
-| Homework 2 - Representation of Numbers / ASCII / Unicode 	| 200 Pts |
-| Homework 3 - Boolean Algebra - Gates                  	| 200 Pts |
-| Homework 4 - MARIE 1st program							| 200 Pts |
-| Homework 5 - MARIE assembly language programs        		| 200 Pts |
-| Homework 6 - Implement MARIE Emulator                		| 200 Pts |
-| Homework 7 - Multiply/Divide Subroutine n MARIE  			| 200 Pts |			2x 400 / Microcode Emulator?
-| Homework 8 - Microcode Part 1             				| 200 Pts |
-| Homework 9 - Microcode Part 2                    			| 200 Pts |			1x Microcode Emulator - Supplied - Build a CPU/Memory etc.
-| Homework 10 - Compiled Code / Paper (1-2 page)        	| 200 Pts |
-|                                               			|         |
-| Midterm - 1                                     			| 300 Pts |
-| Midterm - 2                                     			| 300 Pts |
-| Final                                         			| 400 Pts |
+| Homework 1 - Setup / Access MARIE - Price Computer        | 200 Pts |
+| Homework 2 - Representation of Numbers / ASCII / Unicode  | 200 Pts |
+| Homework 3 - Boolean Algebra - Gates                      | 200 Pts |
+| Homework 4 - MARIE 1st program                            | 200 Pts |
+| Homework 5 - MARIE assembly language programs             | 200 Pts |
+| Homework 6 - Implement MARIE Emulator                     | 200 Pts |
+| Homework 7 - Multiply/Divide Subroutine in MARIE          | 200 Pts |        
+| Homework 8 - Microcode Part 1                             | 200 Pts |
+| Homework 9 - Microcode Part 2                             | 200 Pts |    
+| Homework 10 - Compiled Code / Paper (1-2 page)            | 200 Pts |
+|                                                           |         |
+| Midterm - 1                                               | 300 Pts |
+| Midterm - 2                                               | 300 Pts |
+| Final                                                     | 400 Pts |
 
 Total: 3000
 
 <div class="pagebreak"> </div>
 
-Homework is 66% - tests are 33% of grade.  This means that you MUST
+Homework is 66% - tests are 33% of the grade.  This means that you MUST
 do a significant portion of the homework or you will not pass the
 class.
 
 | Points                                      | Letter Grade  |
 |---------------------------------------------|:-------------:|
-| From 2600 to 3000                           | A 			|
-| From 2300 to 2600                           | B 			| 
-| From 2000 to 2300                           | C 			| 
-| From 1700 to 2000                           | D 			| 
-| From 0 to 1700                              | F 			| 
+| From 2600 to 3000                           | A             |
+| From 2300 to 2600                           | B             | 
+| From 2000 to 2300                           | C             | 
+| From 1700 to 2000                           | D             | 
+| From 0 to 1700                              | F             | 
 
 
 <div class="pagebreak"> </div>
@@ -93,88 +93,88 @@ class.
 
 This is an approximate schedule.  Updates will be noted in class.  
 
-| Date     | No | Description                                                                       |
-|----------|:--:|:----------------------------------------------------------------------------------|
-| Mon Jan 27 2020 | 01 | Introduction to class                                                      |
-|                 |    | Cover Syllabus - Syllabus revisions  - Office Hours - Class Policy         |
-|                 |    | My background                                                              |
-| Wed Jan 29 2020 | 02 | Layers of Representation in systems.                                       |
-| Fri Jan 31 2020 | 03 | What is knowing machine architecture good for?                             |
-|                 |    | Homework 1 Due / Setup / Access MARIE etc.                                 |
-|                 |    |                                                                            |
-| Mon Feb 03 2020 | 04 | Base Conversion / Octal / Decimal / Hex / Base37 / Base64 etc.             |
-|                 |    | Finish reading Chapter 1 & 2 by this date                                  |
-| Wed Feb 05 2020 | 05 | Signed Numbers / Character Codes                                           |
-| Fri Feb 07 2020 | 06 | Error Correction Codes                                                     |
-|                 |    | Homework 2 Due / Representation of Numbers / ASCII / Unicode               |
-|                 |    |                                                                            |
-| Mon Feb 10 2020 | 07 | Gates and Boolean Logic                                                    |
-|                 |    | Finish reading Chapter 3 by this date                                      |
-| Wed Feb 12 2020 | 08 | More on Gates and Logic                                                    |
-| Fri Feb 14 2020 | 09 | FPGA's / ASIC's and VLSI design                                            |
-|                 |    | Homework 3 Due / Boolean Algebra / Gates                                   |
-|                 |    |                                                                            |
-| Mon Feb 17 2020 | 10 | MARIE system - How an instruction gets run                                 |
-| Wed Feb 19 2020 | 11 | Components of MARIE                                                        |
-| Fri Feb 21 2020 | 12 | More on MARIE and instructions                                             |
-|                 |    | Homework 4 Due / 1st MARIE assembly language programs                      |
-|                 |    |                                                                            |
-| Mon Feb 24 2020 | 13 | Fancier Assembly Language Architectures                                    |
-|                 |    | Finish reading Chapter 4 by this date                                      |
-| Wed Feb 26 2020 | 14 | Midterm Review                                                             |
-| Fri Feb 28 2020 | 15 | Midterm 1                                                                  |
-|                 |    |                                                                            |
-| Mon Mar 02 2020 | 16 | Instruction Types                                                          |
-|                 |    | Finish reading Chapter 5 by this date                                      |
-| Wed Mar 04 2020 | 17 | Pointers in C / C++ / MARIE                                                |
-|                 |    | Homework 5 Due / MARIE assembly language programs                          |
-| Fri Mar 06 2020 | 18 | Call Return Processing                                                     |
-|                 |    |                                                                            |
-| Mon Mar 09 2020 | 19 | Microcode Implementations of Hardware                                      |
-| Wed Mar 11 2020 | 20 | Microcode Part 2                                                           |
-|                 |    | Read paper on microcoded architecture                                      |
-| Fri Mar 13 2020 | 21 | Instruction Decode for Microcode (Memory Decode / Hard-Wired)              |
-|                 |    |                                                                            |
-| Mon Mar 16 2020 |    | *spring break - no class*                                                  |
-| Wed Mar 18 2020 |    | *spring break - no class*                                                  |
-| Fri Mar 20 2020 |    | *spring break - no class*                                                  |
-|                 |    |                                                                            |
-| Mon Mar 23 2020 | 22 | Pointers / Safe Pointers / Buffer Overrun                                  |
-|                 |    | Homework 6 Due / MARIE Emulator                                            |
-|                 |    | Finish reading Chapter 6 by this date                                      |
-| Wed Mar 25 2020 | 23 | System Software / Performance Tuning / Quantum Computing                   |
-| Fri Mar 27 2020 | 24 | NUMA - Cache Persistence - Timing Attacks / Specter                        |
-|                 |    |                                                                            |
-| Mon Mar 30 2020 | 25 | Virtual Memory - Memory Controllers - Programs larger than memory          |
-|                 |    | Homework 7 Due / Multiply / Divide                                         |
-|                 |    | Finish reading Chapter 7 (some sections) by this date                      |
-|                 |    | &nbsp;&nbsp;Only: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.10.                      |
-| Wed Apr 01 2020 | 26 | Midterm Review                                                             |
-| Fri Apr 03 2020 | 27 | Midterm 2                                                                  |
-|                 |    |                                                                            |
-| Mon Apr 06 2020 | 28 | Microcode Demo - Logic Analyzer                                            |
-|                 |    | Finish reading (do not study) Chapter 8 and 9 by this date                 |
-| Wed Apr 08 2020 | 29 | Programming in Logic - Why Microcode - Verlog - FPGAs/ASICs                |
-| Fri Apr 10 2020 | 30 | More on Microcode Architecture - Intel ME / OS                             |
-|                 |    | Homework 8 Due - Project - Part 1 - Microcode Machine - Hardware           |
-|                 |    |                                                                            |
-| Mon Apr 13 2020 | 31 | Stack Machines - 256Bit - Ethereum                                         |
-| Wed Apr 15 2020 | 32 | GPUs - high parallel computation                                           |
-| Fri Apr 17 2020 | 33 | Tiny Processors - IoT - Adrino etc.                                        |
-|                 |    |                                                                            |
-| Mon Apr 20 2020 | 34 | Growth of Processing / Linux as an OS / VxWorks (Pathfinder)               |
-| Wed Apr 22 2020 | 35 | Emulating Hardware ( IBM OS 360/370, VM Host, VM-Ware, Docker )            |
-| Fri Apr 24 2020 | 36 | Emulating Handheld Devices ( iOS / Android )                               |
-|                 |    | Homework 9 Due - Project - Part 2 - Microcode Machine - Microcode          |
-|                 |    |                                                                            |
-| Mon Apr 27 2020 | 37 | To Be Determined (TBD)                                                     |
-| Wed Apr 29 2020 | 38 | TBD                                                                        |
-| Fri May 01 2020 | 39 | TBD                                                                        |
-|                 |    | Homework 10 Due - Compiled Program run on your microcode machine           |
-|                 |    |                                                                            |
-| Mon May 04 2020 | 40 | TBD                                                                        |
-| Wed May 06 2020 | 41 | TBD                                                                        |
-| Fri May 08 2020 | 42 | Final Review                                                               |
+| Date                            | No | Description                                                                |
+|---------------------------------|:--:|:---------------------------------------------------------------------------|
+| Mon&nbsp;Jan&nbsp;27,&nbsp;2020 | 01 | Introduction to class                                                      |
+|                                 |    | Cover Syllabus - Syllabus revisions  - Office Hours - Class Policy         |
+|                                 |    | My background                                                              |
+| Wed&nbsp;Jan&nbsp;29,&nbsp;2020 | 02 | Layers of Representation in Systems                                        |
+| Fri&nbsp;Jan&nbsp;31,&nbsp;2020 | 03 | What is knowing machine architecture good for?                             |
+|                                 |    | Homework 1 Due / Setup / Access MARIE etc.                                 |
+|                                 |    |                                                                            |
+| Mon&nbsp;Feb&nbsp;03,&nbsp;2020 | 04 | Base Conversion / Octal / Decimal / Hex / Base37 / Base64 etc.             |
+|                                 |    | Finish reading Chapter 1 & 2 by this date                                  |
+| Wed&nbsp;Feb&nbsp;05,&nbsp;2020 | 05 | Signed Numbers / Character Codes                                           |
+| Fri&nbsp;Feb&nbsp;07,&nbsp;2020 | 06 | Error Correction Codes                                                     |
+|                                 |    | Homework 2 Due / Representation of Numbers / ASCII / Unicode               |
+|                                 |    |                                                                            |
+| Mon&nbsp;Feb&nbsp;10,&nbsp;2020 | 07 | Gates and Boolean Logic                                                    |
+|                                 |    | Finish reading Chapter 3 by this date                                      |
+| Wed&nbsp;Feb&nbsp;12,&nbsp;2020 | 08 | More on Gates and Logic                                                    |
+| Fri&nbsp;Feb&nbsp;14,&nbsp;2020 | 09 | FPGA's / ASIC's and VLSI design                                            |
+|                                 |    | Homework 3 Due / Boolean Algebra / Gates                                   |
+|                                 |    |                                                                            |
+| Mon&nbsp;Feb&nbsp;17,&nbsp;2020 | 10 | MARIE system - How an instruction gets run                                 |
+| Wed&nbsp;Feb&nbsp;19,&nbsp;2020 | 11 | Components of MARIE                                                        |
+| Fri&nbsp;Feb&nbsp;21,&nbsp;2020 | 12 | More on MARIE and instructions                                             |
+|                                 |    | Homework 4 Due / 1st MARIE assembly language programs                      |
+|                                 |    |                                                                            |
+| Mon&nbsp;Feb&nbsp;24,&nbsp;2020 | 13 | Fancier Assembly Language Architectures                                    |
+|                                 |    | Finish reading Chapter 4 by this date                                      |
+| Wed&nbsp;Feb&nbsp;26,&nbsp;2020 | 14 | Midterm Review                                                             |
+| Fri&nbsp;Feb&nbsp;28,&nbsp;2020 | 15 | Midterm 1                                                                  |
+|                                 |    |                                                                            |
+| Mon&nbsp;Mar&nbsp;02,&nbsp;2020 | 16 | Instruction Types                                                          |
+|                                 |    | Finish reading Chapter 5 by this date                                      |
+| Wed&nbsp;Mar&nbsp;04,&nbsp;2020 | 17 | Pointers in C / C++ / MARIE                                                |
+|                                 |    | Homework 5 Due / MARIE assembly language programs                          |
+| Fri&nbsp;Mar&nbsp;06,&nbsp;2020 | 18 | Call Return Processing                                                     |
+|                                 |    |                                                                            |
+| Mon&nbsp;Mar&nbsp;09,&nbsp;2020 | 19 | Microcode Implementations of Hardware                                      |
+| Wed&nbsp;Mar&nbsp;11,&nbsp;2020 | 20 | Microcode Part 2                                                           |
+|                                 |    | Read paper on microcoded architecture                                      |
+| Fri&nbsp;Mar&nbsp;13,&nbsp;2020 | 21 | Instruction Decode for Microcode (Memory Decode / Hard-Wired)              |
+|                                 |    |                                                                            |
+| Mon&nbsp;Mar&nbsp;16,&nbsp;2020 |    | *spring break - no class*                                                  |
+| Wed&nbsp;Mar&nbsp;18,&nbsp;2020 |    | *spring break - no class*                                                  |
+| Fri&nbsp;Mar&nbsp;20,&nbsp;2020 |    | *spring break - no class*                                                  |
+|                                 |    |                                                                            |
+| Mon&nbsp;Mar&nbsp;23,&nbsp;2020 | 22 | Pointers / Safe Pointers / Buffer Overrun                                  |
+|                                 |    | Homework 6 Due / MARIE Emulator                                            |
+|                                 |    | Finish reading Chapter 6 by this date                                      |
+| Wed&nbsp;Mar&nbsp;25,&nbsp;2020 | 23 | System Software / Performance Tuning / Quantum Computing                   |
+| Fri&nbsp;Mar&nbsp;27,&nbsp;2020 | 24 | NUMA - Cache Persistence - Timing Attacks / Specter                        |
+|                                 |    |                                                                            |
+| Mon&nbsp;Mar&nbsp;30,&nbsp;2020 | 25 | Virtual Memory - Memory Controllers - Programs larger than memory          |
+|                                 |    | Homework 7 Due / Multiply / Divide                                         |
+|                                 |    | Finish reading Chapter 7 (some sections) by this date                      |
+|                                 |    | &nbsp;&nbsp;Only: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.10.                      |
+| Wed&nbsp;Apr&nbsp;01,&nbsp;2020 | 26 | Midterm Review                                                             |
+| Fri&nbsp;Apr&nbsp;03,&nbsp;2020 | 27 | Midterm 2                                                                  |
+|                                 |    |                                                                            |
+| Mon&nbsp;Apr&nbsp;06,&nbsp;2020 | 28 | Microcode Demo - Logic Analyzer                                            |
+|                                 |    | Finish reading (do not study) Chapter 8 and 9 by this date                 |
+| Wed&nbsp;Apr&nbsp;08,&nbsp;2020 | 29 | Programming in Logic - Why Microcode - Verlog - FPGAs/ASICs                |
+| Fri&nbsp;Apr&nbsp;10,&nbsp;2020 | 30 | More on Microcode Architecture - Intel ME / OS                             |
+|                                 |    | Homework 8 Due - Project - Part 1 - Microcode Machine - Hardware           |
+|                                 |    |                                                                            |
+| Mon&nbsp;Apr&nbsp;13,&nbsp;2020 | 31 | Stack Machines - 256Bit - Ethereum                                         |
+| Wed&nbsp;Apr&nbsp;15,&nbsp;2020 | 32 | GPUs - high parallel computation                                           |
+| Fri&nbsp;Apr&nbsp;17,&nbsp;2020 | 33 | Tiny Processors - IoT - Adrino etc.                                        |
+|                                 |    |                                                                            |
+| Mon&nbsp;Apr&nbsp;20,&nbsp;2020 | 34 | Growth of Processing / Linux as an OS / VxWorks (Pathfinder)               |
+| Wed&nbsp;Apr&nbsp;22,&nbsp;2020 | 35 | Emulating Hardware ( IBM OS 360 and 370, VM Host, VM-Ware, Docker )        |
+| Fri&nbsp;Apr&nbsp;24,&nbsp;2020 | 36 | Emulating Handheld Devices ( iOS / Android )                               |
+|                                 |    | Homework 9 Due - Project - Part 2 - Microcode Machine - Microcode          |
+|                                 |    |                                                                            |
+| Mon&nbsp;Apr&nbsp;27,&nbsp;2020 | 37 | To Be Determined (TBD)                                                     |
+| Wed&nbsp;Apr&nbsp;29,&nbsp;2020 | 38 | TBD                                                                        |
+| Fri&nbsp;May&nbsp;01,&nbsp;2020 | 39 | TBD                                                                        |
+|                                 |    | Homework 10 Due - Compiled Program run on your microcode machine           |
+|                                 |    |                                                                            |
+| Mon&nbsp;May&nbsp;04,&nbsp;2020 | 40 | TBD                                                                        |
+| Wed&nbsp;May&nbsp;06,&nbsp;2020 | 41 | TBD                                                                        |
+| Fri&nbsp;May&nbsp;08,&nbsp;2020 | 42 | Final Review                                                               |
 
 <div class="pagebreak"> </div>
 

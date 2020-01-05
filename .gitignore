@@ -1,4 +1,10 @@
 Marie
+*.1
+.DS_Store
+,*
+Video/
+email.txt
+cal.txt
 gen-cal
 Microcode-Slides-NCAT-Comp375.pdf
 micmachandout.pdf

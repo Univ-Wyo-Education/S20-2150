@@ -11,14 +11,26 @@ import (
 // xyzzyALU
 // xyzzy - ALU - 8bit ALU 4 in function, 1 out, Result, A-input/B-input = 2 input * 8 = 16, 16+4+(2)+8 = 24+6 = 30 (Cin, Cout) = 32 pin
 
-/// ==============================================================================================================================================================
 // xyzzy - Decode Instruction ( 0x0 -> 0xf (main) ) + 2 bits = 6bit Address
+
+// Parse-Load .hex file
+// Parse-Load .wire file (hook system together)
+
+// mcAsm - Microcode Assembler
+
+// Wire up machine
+
+// Write micro-code
+
+// test and enjoy
+
+/// ==============================================================================================================================================================
+
+// done - Microcode Memory ( 8 address - 64 bit wide output = 256 instructions, 64 wide ) (2x32 wide)
 // TODO - Not 04
 // TODO - Nor 02
 // TODO - 4 input AND (Decode 0x8 -> True signal with 3*Not + 4-input AND) -> Input
 // TODO - 4bit PC for M-PC counter.
-
-// done - Microcode Memory ( 8 address - 64 bit wide output = 256 instructions, 64 wide ) (2x32 wide)
 
 /// ==============================================================================================================================================================
 
