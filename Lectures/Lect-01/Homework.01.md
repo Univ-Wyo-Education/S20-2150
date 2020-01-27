@@ -43,7 +43,7 @@ then send me an email or do a google search for vi tutorial.
 ```
 	/ This is a comment: put YOUR NAME in if you want to get a grade!
 	Load X
-	Output X
+	Output 
 	Halt
 X,	DEC		65
 ```

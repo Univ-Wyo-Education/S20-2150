@@ -1,0 +1,5 @@
+	/ This is a comment: put YOUR NAME in if you want to get a grade!
+	Load X
+	Output 
+	Halt
+X,	DEC		65
