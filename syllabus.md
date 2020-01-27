@@ -56,7 +56,7 @@ Your grade is from the 2 Midterms, Final and the Homework.
 |-----------------------------------------------------------|---------|
 | Homework 1 - Setup / Access MARIE - Price Computer        | 200 Pts |
 | Homework 2 - Representation of Numbers / ASCII / Unicode  | 200 Pts |
-| Homework 3 - Boolean Algebra - Gates                      | 200 Pts |
+| Homework 3 - Boolean Algebra - Gates / Error Correction   | 200 Pts |
 | Homework 4 - MARIE 1st program                            | 200 Pts |
 | Homework 5 - MARIE assembly language programs             | 200 Pts |
 | Homework 6 - Implement MARIE Emulator                     | 200 Pts |

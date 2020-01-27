@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"regexp"
+	"runtime"
 	"strconv"
 	"strings"
 
@@ -23,6 +24,14 @@ var In = flag.String("in", "", "Input File - assembly code.")
 var Out = flag.String("out", "", "Output in hex.")
 var IncPath = flag.String("inc_path", "./inc", "Path for include diretives") // xyzzy200
 var DbFlag = flag.String("db-flag", "", "debug flags.")                      // xyzzy401 - TODO
+
+var OnWindows = false
+
+func init() {
+	if runtime.GOOS == "windows" {
+		OnWindows = true
+	}
+}
 
 func main() {
 
@@ -55,6 +64,10 @@ func main() {
 	pc := Mac.AddressType(0)
 	for ii, line := range mes_lines {
 		line_no := ii + 1
+
+		if OnWindows {
+			line = strings.TrimRight(line, "\r\n")
+		}
 
 		label, _ /*op_s*/, op, hand, err := ParseLine(line, line_no)
 		if err != nil {
@@ -141,6 +154,10 @@ func main() {
 	max_pc := Mac.AddressType(0)
 	for ii, line := range mes_lines {
 		line_no := ii + 1
+
+		if OnWindows {
+			line = strings.TrimRight(line, "\r\n")
+		}
 
 		_ /*label*/, _ /*op_s*/, op, hand, err := ParseLine(line, -1)
 		if err != nil {
