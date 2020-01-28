@@ -57,6 +57,7 @@ accidents that were not their fault!
 ## The Layers of Representation
 
 Layers:
+- Machine Learning (self programming)
 - Applications
 - High level languages
 - Operating System
@@ -90,6 +91,7 @@ Layers:
 5. Concurrent (real concurrency) - Microcode instructions
 6. DFA - Deterministic Finite Automata
 7. Push-Down Acceptor: LALR(1)
+8. Stack Architecture Machine (forth, HP-41 calculator, Ethereum and Bitcoin)
 
 Inputs change "state" in a program - that then results in the possibility of new "state".
 
@@ -100,12 +102,25 @@ remote system in some language like Python and SQL (database).
 
 ### Simple C Program
 
+K&R C or Early ANSI C:
+
 ```
 #include <stdio.h>
 int main() {
 	putc('A',stdout);
 }
 ```
+
+More recent ANSI C
+
+```
+#include <stdio.h>
+int main(int argc, char *argv[]) {
+	putc('A',stdout);
+}
+```
+
+
 
 1. System software like a "compiler" that turns our "language" into what the machine can run.
 2. An Operating system to run the program.
@@ -123,10 +138,10 @@ int main() {
 	Load X
 	Output
 	Halt
-X,	DEC 65
+X,	DEC 141
 ```
 
-And in Hex we get 0041 - is that an 'A'?   Why?
+And in Hex we get 0061 - is that an 'a'?   Why?
 
 ASCII
 
@@ -140,11 +155,13 @@ class.
 
 ### Binary Representation of Program
 
+In hex:
+
 ```
 1003
 6000
 7000
-0041
+0061
 ```
 
 ### Electrical Representation of Program

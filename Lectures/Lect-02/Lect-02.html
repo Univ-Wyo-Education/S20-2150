@@ -798,6 +798,7 @@ accidents that were not their fault!</p>
 <h2>The Layers of Representation</h2>
 
 <p>Layers:
+- Machine Learning (self programming)
 - Applications
 - High level languages
 - Operating System
@@ -840,6 +841,7 @@ accidents that were not their fault!</p>
 <li>Concurrent (real concurrency) - Microcode instructions</li>
 <li>DFA - Deterministic Finite Automata</li>
 <li>Push-Down Acceptor: LALR(1)</li>
+<li>Stack Architecture Machine (forth, HP-41 calculator, Ethereum and Bitcoin)</li>
 </ol>
 
 <p>Inputs change &ldquo;state&rdquo; in a program - that then results in the possibility of new &ldquo;state&rdquo;.</p>
@@ -851,8 +853,18 @@ remote system in some language like Python and SQL (database).</p>
 
 <h3>Simple C Program</h3>
 
+<p>K&amp;R C or Early ANSI C:</p>
+
 <pre><code>#include &lt;stdio.h&gt;
 int main() {
+	putc('A',stdout);
+}
+</code></pre>
+
+<p>More recent ANSI C</p>
+
+<pre><code>#include &lt;stdio.h&gt;
+int main(int argc, char *argv[]) {
 	putc('A',stdout);
 }
 </code></pre>
@@ -873,10 +885,10 @@ int main() {
 	Load X
 	Output
 	Halt
-X,	DEC 65
+X,	DEC 141
 </code></pre>
 
-<p>And in Hex we get 0041 - is that an &lsquo;A&rsquo;?   Why?</p>
+<p>And in Hex we get 0061 - is that an &lsquo;a&rsquo;?   Why?</p>
 
 <p>ASCII</p>
 
@@ -890,10 +902,12 @@ class.</p>
 
 <h3>Binary Representation of Program</h3>
 
+<p>In hex:</p>
+
 <pre><code>1003
 6000
 7000
-0041
+0061
 </code></pre>
 
 <h3>Electrical Representation of Program</h3>
