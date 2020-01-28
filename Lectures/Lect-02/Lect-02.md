@@ -1,5 +1,4 @@
-# Lecture 02 - 
-
+# Lecture 02 - Layers of Representation in Systems                                        
 
 
 ## Thinking in categories
@@ -108,8 +107,7 @@ int main() {
 }
 ```
 
-1. System software like a "compiler" that turns our "language" into what the machine
-can run.
+1. System software like a "compiler" that turns our "language" into what the machine can run.
 2. An Operating system to run the program.
 3. Connection for the program to input/output.
 4. Memory.
@@ -160,15 +158,5 @@ Gates
 Microcode Architecture
 
 Boolean logic
-
-
-
-
-
-
-
-
-# A Common Desktop Computer
-
 
 
