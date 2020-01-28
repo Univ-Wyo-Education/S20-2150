@@ -708,375 +708,91 @@ ol {
 
 <div class="markdown-body">
 
-<style>
-.pagebreak { page-break-before: always; }
-.half { height: 200px; }
-</style>
+<h1>Error Correction Codes</h1>
 
-<h1>Homework 3 - Boolean Algebra - Gates / Error Detection</h1>
+<p>First add to this error detection codes.  Luhn check.   Luhn is not the best check.
+If you are going to use one use Verhoeff - we will talk about that in a moment.
+First Luhn.</p>
 
-<p>Due Friday Feb 14.</p>
+<p>Every time a CC is verified this is the first step.</p>
 
-<p>Remember that I have a grader and if you do not put your name on the top of
-your homework - you will <em>NOT</em> get credit.  That is bad after doing the work!</p>
-
-<p>Points: 200</p>
-
-<p>Testing you are expected to produce a unit test for each of the following.   The test should print out &ldquo;PASS&rdquo; if it is successful
-and run at least 4 examples of good and bad values for each.</p>
-
-<ol>
-<li>50pts - Implement a Lhun Verifier.  Do it in C or C++.</li>
-
-<li><p>50pts - Implement a Verhoeff verifier in C or C++ (Go steal the code in C - see link - and give credit, note the license - you want an original that is MIT or 3 clause BSD then copy like crazy).
-This is the JavaScript(node.js) and Go version that I have on github.com.    Search google for &ldquo;verhoeff algorithm&rdquo;.
-<a href="https://github.com/pschlump/verhoeff_algorithm">https://github.com/pschlump/verhoeff_algorithm</a></p>
-
-<p>Java script:  <a href="https://github.com/yuyudhan/verhoeff.git">https://github.com/yuyudhan/verhoeff.git</a>  Do not copy this - it is proprietary code -  No LICENSE file at all.</p>
-
-<p>Other solutions: License CC Attribution: <a href="https://en.wikibooks.org/wiki/Algorithm_Implementation/Checksums/Verhoeff_Algorithm">https://en.wikibooks.org/wiki/Algorithm_Implementation/Checksums/Verhoeff_Algorithm</a></p></li>
-
-<li><p>25pts - Provide the circuit diagram in mixed logic for</p>
-
-<p>Dec1 = ( A &amp; !B &amp; !C &amp; !D ) &amp; !X &amp; Y</p>
-
-<p>Dec2 = ( A &amp; !B &amp; !C &amp; !D ) &amp; X &amp; !Y</p>
-
-<p>Dec3 = ( A &amp; !B &amp; !C &amp; !D ) &amp; X &amp; Y</p>
-
-<p>(A&amp;!B&amp;!C&amp;!D) is a commmon sub-expression in the hardware.</p></li>
-
-<li><p>25pts - Derive the truth table for:</p>
-
-<p><img src="hw4.png" alt="hw4.png" /></p>
-
-<div class="pagebreak"></div></li>
-
-<li><p>50pts - Given the following truth table show the circuit for:
-( 74ls47 7-segment LED decoder  - see <a href="https://buzztech.in/bcd-to-seven-segment-decoder-program-in-vhdl/">https://buzztech.in/bcd-to-seven-segment-decoder-program-in-vhdl/</a> )</p>
-
-<p>I, J, K, L are inputs</p>
-
-<p>a, b, c, d, e, f, g are outputs</p></li>
-</ol>
+<p>Credit cards use from 13 to 16 digits.  You can identify the
+system used with</p>
 
 <table>
 <thead>
 <tr>
-<th align="right">Decimal Digit</th>
-<th align="right">Hex</th>
-<th align="center">I</th>
-<th align="center">J</th>
-<th align="center">K</th>
-<th align="center">L</th>
-<th>&nbsp;</th>
-<th align="center">a</th>
-<th align="center">b</th>
-<th align="center">c</th>
-<th align="center">d</th>
-<th align="center">e</th>
-<th align="center">f</th>
-<th align="center">g</th>
-<th align="center">Display Pattern</th>
+<th align="center">Leading Digits</th>
+<th align="left">Card type</th>
 </tr>
 </thead>
 
 <tbody>
 <tr>
-<td align="right">0</td>
-<td align="right">0x0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center"><img src="7-seg-0.svg" height="35px"></td>
+<td align="center">4</td>
+<td align="left">Visa cards</td>
 </tr>
 
 <tr>
-<td align="right">1</td>
-<td align="right">0x1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center"><img src="7-seg-1.svg" height="35px"></td>
+<td align="center">5</td>
+<td align="left">Master cards</td>
 </tr>
 
 <tr>
-<td align="right">2</td>
-<td align="right">0x2</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-2.svg" height="35px"></td>
+<td align="center">37</td>
+<td align="left">American Express cards</td>
 </tr>
 
 <tr>
-<td align="right">3</td>
-<td align="right">0x3</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-3.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">4</td>
-<td align="right">0x4</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-4.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">5</td>
-<td align="right">0x5</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-5.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">6</td>
-<td align="right">0x6</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-6.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">7</td>
-<td align="right">0x7</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center"><img src="7-seg-7.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">8</td>
-<td align="right">0x8</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-8.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">9</td>
-<td align="right">0x9</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-9.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">10</td>
-<td align="right">0xA</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">11</td>
-<td align="right">0xB</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">12</td>
-<td align="right">0xC</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">13</td>
-<td align="right">0xD</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">14</td>
-<td align="right">0xE</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">15</td>
-<td align="right">0xF</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
+<td align="center">6</td>
+<td align="left">Discover cards</td>
 </tr>
 </tbody>
 </table>
 
-<h1>Copyright</h1>
+<p>The first step in validate a card is to use the Luhn algorithm. This is also
+called the Mod 10 algorithm. It was developed by Hans Luhn at IBM. This is a
+check-digit that is included at the end of the CC number. It is used to validate
+a variety of other identification numbers including,  IMEI numbers,
+Greek Social Security Numbers (ΑΜΚΑ),
+South African ID Numbers,
+Canadian Social Insurance Numbers,
+Israel ID Numbers,
+survey codes appearing on McDonald&rsquo;s, Taco Bell, and Tractor Supply Co. receipts.<br />
+U.S. Patent No.
+2,950,048 (now expired) has the details of how it works.</p>
 
-<p>7 Segment Display is modified from Wikimedia Commons CC Attribution license.</p>
+<p>xyzzy - below</p>
 
-<p>Copyright &copy; University of Wyoming, 2020.</p>
+<pre><code>    Luhn check or the Mod 10 check, which can be described as follows (for illustration,
+    consider the card number 4388576018402626):
+
+
+
+    Step 1. Double every second digit from right to left. If doubling of a digit results in a
+    two-digit number, add up the two digits to get a single-digit number (like for 12:1+2, 18=1+8).
+
+    Step 2. Now add all single-digit numbers from Step 1.
+    4 + 4 + 8 + 2 + 3 + 1 + 7 + 8 = 37
+
+    Step 3. Add all digits in the odd places from right to left in the card number.
+    6 + 6 + 0 + 8 + 0 + 7 + 8 + 3 = 38
+
+    Step 4. Sum the results from Step 2 and Step 3.
+    37 + 38 = 75
+
+    Step 5. If the result from Step 4 is divisible by 10, the card number is valid; otherwise, it is invalid.
+    Examples :
+
+    Input : 379354508162306
+    Output : 379354508162306 is Valid
+
+    Input : 4388576018402626
+    Output : 4388576018402626 is invalid
+</code></pre>
+
+<p>See: <a href="https://www.geeksforgeeks.org/program-credit-card-number-validation/">https://www.geeksforgeeks.org/program-credit-card-number-validation/</a>
+<a href="https://en.wikipedia.org/wiki/Luhn_algorithm">https://en.wikipedia.org/wiki/Luhn_algorithm</a></p>
 
 </div>
 
