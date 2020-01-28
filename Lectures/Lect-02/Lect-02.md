@@ -134,7 +134,7 @@ int main(int argc, char *argv[]) {
 ### Assembly Language Code
 
 ```
-/ Program to output 'A' as a number
+/ Program to output 'a' as a number
 	Load X
 	Output
 	Halt
