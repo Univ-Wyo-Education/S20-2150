@@ -41,11 +41,10 @@ No extra credit is planned at this time.
 
 ## Office Hours 
 
-Immediately following class from 9:00 am till 11:00am,
+Immediately following class from 9:15 am till 11:30am,
 Mon, Wed, Fri.  
 
-Other times via an appointment.  Generally I am unavailable on Tuesday
-and Thursday.
+Other times via an appointment.  Generally I am unavailable on Tuesday and Thursday.
 
 
 ## Grading
@@ -106,9 +105,9 @@ This is an approximate schedule.  Updates will be noted in class.
 |                                 |    | Finish reading Chapter 1 & 2 by this date                                  |
 | Wed&nbsp;Feb&nbsp;05,&nbsp;2020 | 05 | Signed Numbers / Character Codes                                           |
 | Fri&nbsp;Feb&nbsp;07,&nbsp;2020 | 06 | Error Correction Codes                                                     |
-|                                 |    | Homework 2 Due / Representation of Numbers / ASCII / Unicode               |
 |                                 |    |                                                                            |
 | Mon&nbsp;Feb&nbsp;10,&nbsp;2020 | 07 | Gates and Boolean Logic                                                    |
+|                                 |    | Homework 2 Due / Representation of Numbers / ASCII / Unicode               |
 |                                 |    | Finish reading Chapter 3 by this date                                      |
 | Wed&nbsp;Feb&nbsp;12,&nbsp;2020 | 08 | More on Gates and Logic                                                    |
 | Fri&nbsp;Feb&nbsp;14,&nbsp;2020 | 09 | FPGA's / ASIC's and VLSI design                                            |

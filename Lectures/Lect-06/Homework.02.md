@@ -3,9 +3,9 @@
 .half { height: 200px; }
 </style>
 
-# Homework 3 - Boolean Algebra - Gates / Error Detection
+# Homework 2 - Boolean Algebra - Gates / Error Detection
 
-Due Friday Feb 14.
+Due Monday Feb 10 - by end of class.  You can turn in parts 3,4,5 on paper - 1 and 2 should be uploaded.
 
 Remember that I have a grader and if you do not put your name on the top of
 your homework - you will *NOT* get credit.  That is bad after doing the work!
