@@ -1,0 +1,5 @@
+/ Program to output 'a' as a number
+	Load X
+	Output
+	Halt
+X,	DEC 97

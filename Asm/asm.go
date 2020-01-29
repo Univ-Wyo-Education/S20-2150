@@ -45,6 +45,14 @@ func main() {
 	}
 
 	// xyzzy401 - ImplementDebugFlags
+	if *In == "" {
+		fmt.Printf("Fatal: Required command line parameter --in FILE.mas is missing\n")
+		os.Exit(1)
+	}
+	if *Out == "" {
+		fmt.Printf("Fatal: Required command line parameter --out FILE.hex is missing\n")
+		os.Exit(1)
+	}
 
 	fn := *In
 	out := *Out
