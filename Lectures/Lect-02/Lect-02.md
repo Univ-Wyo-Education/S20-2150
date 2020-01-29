@@ -10,7 +10,7 @@ Colors and categories.
 4 14 23 34
 
 Programming Example: Merkel Hashes - Lots of uses.  BlockChain is one.
-Mike did a class where the implementation was about 1000 lines of code.
+Mike did a class where the implementation was about 1000 to 1500 lines of code.
 I went and looked at implementations for my BlockChian class - 1140 to
 1521 lines of code.  But wait....  To build a blockchain you only need
 a couple of features - and if you take advantage of the machine
@@ -107,7 +107,7 @@ K&R C or Early ANSI C:
 ```
 #include <stdio.h>
 int main() {
-	putc('A',stdout);
+	putc('a',stdout);
 }
 ```
 
@@ -116,7 +116,7 @@ More recent ANSI C
 ```
 #include <stdio.h>
 int main(int argc, char *argv[]) {
-	putc('A',stdout);
+	putc('a',stdout);
 }
 ```
 
@@ -138,7 +138,7 @@ int main(int argc, char *argv[]) {
 	Load X
 	Output
 	Halt
-X,	DEC 141
+X,	DEC 97
 ```
 
 And in Hex we get 0061 - is that an 'a'?   Why?
@@ -176,4 +176,9 @@ Microcode Architecture
 
 Boolean logic
 
+
+
+# Copyright
+
+Copyright (C) University of Wyoming, 2020.
 
