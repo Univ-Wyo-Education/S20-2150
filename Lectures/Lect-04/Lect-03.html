@@ -708,376 +708,133 @@ ol {
 
 <div class="markdown-body">
 
-<style>
-.pagebreak { page-break-before: always; }
-.half { height: 200px; }
-</style>
+<h1>Lecture 03 - What is knowing machine architecture good for?</h1>
 
-<h1>Homework 2 - Boolean Algebra - Gates / Error Detection</h1>
-
-<p>Due Monday Feb 10 - by end of class.  You can turn in parts 3,4,5 on paper - 1 and 2 should be uploaded.</p>
-
-<p>Remember that I have a grader and if you do not put your name on the top of
-your homework - you will <em>NOT</em> get credit.  That is bad after doing the work!</p>
-
-<p>Points: 200</p>
-
-<p>Testing you are expected to produce a unit test for each of the following.   The test should print out &ldquo;PASS&rdquo; if it is successful
-and run at least 4 examples of good and bad values for each.</p>
+<h2>2 Reasons</h2>
 
 <ol>
-<li>50pts - Implement a Luhn Verifier.  Implement in your choice of { C, C++, Python, Go, Haskell, F#, Swift, Kotlin }.</li>
-
-<li><p>50pts - Implement a Verhoeff verifier in { C, C++, Python, Go, Haskell, F#, Swift, Kotlin }.
-(Go steal the code in C - see link - and give credit, note the license - you want an original that is MIT or 3 clause BSD then copy like crazy).
-This is the JavaScript(node.js) and Go version that I have on github.com.    Search google for &ldquo;verhoeff algorithm&rdquo;.
-<a href="https://github.com/pschlump/verhoeff_algorithm">https://github.com/pschlump/verhoeff_algorithm</a></p>
-
-<p>Java script:  <a href="https://github.com/yuyudhan/verhoeff.git">https://github.com/yuyudhan/verhoeff.git</a>  Do not copy this - it is proprietary code -  No LICENSE file at all.</p>
-
-<p>Other solutions: License CC Attribution: <a href="https://en.wikibooks.org/wiki/Algorithm_Implementation/Checksums/Verhoeff_Algorithm">https://en.wikibooks.org/wiki/Algorithm_Implementation/Checksums/Verhoeff_Algorithm</a></p></li>
-
-<li><p>25pts - Provide the circuit diagram in mixed logic for</p>
-
-<p>Dec1 = ( A &amp; !B &amp; !C &amp; !D ) &amp; !X &amp; Y</p>
-
-<p>Dec2 = ( A &amp; !B &amp; !C &amp; !D ) &amp; X &amp; !Y</p>
-
-<p>Dec3 = ( A &amp; !B &amp; !C &amp; !D ) &amp; X &amp; Y</p>
-
-<p>(A&amp;!B&amp;!C&amp;!D) is a commmon sub-expression in the hardware.</p></li>
-
-<li><p>25pts - Derive the truth table for:</p>
-
-<p><img src="hw4.png" alt="hw4.png" /></p>
-
-<div class="pagebreak"></div></li>
-
-<li><p>50pts - Given the following truth table show the circuit for:
-( 74ls47 7-segment LED decoder  - see <a href="https://buzztech.in/bcd-to-seven-segment-decoder-program-in-vhdl/">https://buzztech.in/bcd-to-seven-segment-decoder-program-in-vhdl/</a> )</p>
-
-<p>I, J, K, L are inputs</p>
-
-<p>a, b, c, d, e, f, g are outputs</p></li>
+<li>Performance</li>
+<li>Knowledge over time</li>
 </ol>
 
-<table>
-<thead>
-<tr>
-<th align="right">Decimal Digit</th>
-<th align="right">Hex</th>
-<th align="center">I</th>
-<th align="center">J</th>
-<th align="center">K</th>
-<th align="center">L</th>
-<th>&nbsp;</th>
-<th align="center">a</th>
-<th align="center">b</th>
-<th align="center">c</th>
-<th align="center">d</th>
-<th align="center">e</th>
-<th align="center">f</th>
-<th align="center">g</th>
-<th align="center">Display Pattern</th>
-</tr>
-</thead>
+<h2>Example 1 - NTRU Encryption</h2>
 
-<tbody>
-<tr>
-<td align="right">0</td>
-<td align="right">0x0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center"><img src="7-seg-0.svg" height="35px"></td>
-</tr>
+<p>Quantum Computers and the &ldquo;shore&rdquo; algorithm will break RSA and ECDSA encryption.
+This is the underlying encryption behind TLS, the transport layer security that
+enables all of HTTPS.</p>
 
-<tr>
-<td align="right">1</td>
-<td align="right">0x1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center"><img src="7-seg-1.svg" height="35px"></td>
-</tr>
+<p>Quick explanation of how ECDSA works.</p>
 
-<tr>
-<td align="right">2</td>
-<td align="right">0x2</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-2.svg" height="35px"></td>
-</tr>
+<p>Why non-planer encryption is quantum proof.</p>
 
-<tr>
-<td align="right">3</td>
-<td align="right">0x3</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-3.svg" height="35px"></td>
-</tr>
+<p>Google current at 53 bits.  Needs to get to 64 to 98 bits to break ECDSA.</p>
 
-<tr>
-<td align="right">4</td>
-<td align="right">0x4</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-4.svg" height="35px"></td>
-</tr>
+<p>NTRU Encryption entered into the NIS competition 4 years ago.  NTRU Is a replacement
+for all of ECDSA that is quantum proof.  It is also faster than ECDSA and AES.
+One of the finalists for the new encryption standard.</p>
 
-<tr>
-<td align="right">5</td>
-<td align="right">0x5</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-5.svg" height="35px"></td>
-</tr>
+<p>Port to multiple architectures.</p>
 
-<tr>
-<td align="right">6</td>
-<td align="right">0x6</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-6.svg" height="35px"></td>
-</tr>
+<h2>Example 2 - Faster database</h2>
 
-<tr>
-<td align="right">7</td>
-<td align="right">0x7</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center"><img src="7-seg-7.svg" height="35px"></td>
-</tr>
+<p>Data growth and IoT is driving this.  The world is creating 2.5 Quintilian bytes of data a data.  90% of the data in the
+world has been created in the past 2 years.   This is just the tip of the iceberg.   For example Tesla cars have 2.1 billion
+miles of driving under Auto-Pilot - and they generate 2.8 terabytes of data a day that Tesla would just love to have.  Right
+now they are pulling about 25 megabytes of this back per week.  5G really won&rsquo;t make much difference in phone calls.  It will
+provide the thru-put necessary for Tesla to get the terabytes of data back from every car.</p>
 
-<tr>
-<td align="right">8</td>
-<td align="right">0x8</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-8.svg" height="35px"></td>
-</tr>
+<p>About <sup>1</sup>&frasl;<sub>2</sub> of time in a database management system (DBMS) is spent sorting
+data.   One way to sort faster is to use faster hardware for the sorting.
+The other <sup>1</sup>&frasl;<sub>2</sub> is on searching. If you can get more CPU/Cores to do the searching in parallel  you can speed it up.</p>
 
-<tr>
-<td align="right">9</td>
-<td align="right">0x9</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-9.svg" height="35px"></td>
-</tr>
+<p>Database is about lots of data - the other slow portion of database is the disks.  Replace the disks with memory (SSD) or store the data
+in main memory (RAM).   Redis is an example of a &ldquo;memory&rdquo; database - but might be better called a shared / persistent data structure.</p>
 
-<tr>
-<td align="right">10</td>
-<td align="right">0xA</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
+<p>What about passing the sorting to the GPU in a dedicated box.</p>
 
-<tr>
-<td align="right">11</td>
-<td align="right">0xB</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
+<p>CPU v.s. GPU based computation</p>
 
-<tr>
-<td align="right">12</td>
-<td align="right">0xC</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
+<p>Latest AMD system with 64 cores.</p>
 
-<tr>
-<td align="right">13</td>
-<td align="right">0xD</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
+<p>Nvidia Kinetica CPU based database: 5100+ cores for GPU cards.</p>
 
-<tr>
-<td align="right">14</td>
-<td align="right">0xE</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
+<p>Kinetica also runs on DGX-2 Nvidia - GPUs on non-graphics boards in 4 redundant systems: 81,920 cores.</p>
 
-<tr>
-<td align="right">15</td>
-<td align="right">0xF</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
-</tbody>
-</table>
+<p>MapD: GPU-powered SQL data platform uses in-memory storage and also leverages modern SSDs for persistent storage, It boasts microsecond query processing performance in the billions of rows.</p>
+
+<h2>Example 3 - Turning FedEx Packages Tracking</h2>
+
+<p>FedEx tracks packages - When they put in the system they had &ldquo;performance&rdquo; problems with Oracle database
+and a bunch of very expensive people from Oracle working on it.  They hired me to be an outside review
+of they performance tuning from Oracle.</p>
+
+<p>My conclusion:  Given the requirements that the Oracle folks were never going to get the database to
+perform as needed.  They needed a different solution - to split the load into multiple chunks.
+We changed the hash code and used a computer as a &ldquo;switch&rdquo; to direct traffic.</p>
+
+<h2>Example 4 - Building / Porting an OS</h2>
+
+<p>New architectures will require ports of an operating system.  The Unix/Posix system has dominated
+the world.  VxWorks is the 2nd most common system.   Both require a &ldquo;port&rdquo; for new hardware.
+The Thrid most common system in the world is Minix - it is an open source Unix-ish system
+found in the Intel ME engine.</p>
+
+<p>Another alternative is to build a system from the ground up.   I have done this once.</p>
+
+<h2>Example 5 - Merkle Hash</h2>
+
+<p>One of the biggest computer platforms in existence is Bitcoin.  Over 12,000 &ldquo;nodes&rdquo; running
+a very simple hashing algorithm. (Ethereum is 2nd largest with 11,000 &ldquo;nodes&rdquo;)</p>
+
+<h3>Mining Algorithm: Use an infinite loop to:</h3>
+
+<p>The Proof-of-Work mining process is:</p>
+
+<ol>
+<li>Serialize the data from the block for hashing.</li>
+<li>Calculate the hash of the data.  This is the slow part.  In BTC it is done in an ASIC, in Ethereum it is done on GPU.  A GPU can run 4 billion hashes a second?</li>
+<li>See if the first 4 characters of the hash are 0&rsquo;s. - if so we have met the work criteria.
+
+<ul>
+<li>Set the block&rsquo;s &ldquo;Seal&rdquo; to the hash</li>
+<li>return</li>
+</ul></li>
+<li>Increment the Nonce in the block, and&hellip;</li>
+<li>Back to the top of the loop for another try at finding a seal for this block.</li>
+</ol>
+
+<h2>Example 6 - System Vitalization</h2>
+
+<p>OS 360 running as a virtual system on OS 370.  The post office.</p>
+
+<p>VMWare brought this to the land of PCs.</p>
+
+<p>Docker move this into a &ldquo;container&rdquo; system (Not a new idea by the way - BSD &ldquo;jails&rdquo; had been doing this for over a decade).</p>
+
+<p>Can you write software that will &ldquo;mimic&rdquo; an entire hardware system?</p>
+
+<h2>Alternative Architectures</h2>
+
+<h3>Stack architectures</h3>
+
+<p>Ethereum runs on a &ldquo;stack&rdquo; system.  The &ldquo;fourth&rdquo; programming language.</p>
+
+<h3>VILW - very long instruction words</h3>
+
+<p>Run in parallel multiple parts of a computation by building bigger instructions.</p>
+
+<h3>Computation in Memory</h3>
+
+<p>Move the &ldquo;calculation&rdquo; from the CPU to memory.</p>
 
 <h1>Copyright</h1>
 
-<p>7 Segment Display is modified from Wikimedia Commons CC Attribution license.</p>
-
 <p>Copyright &copy; University of Wyoming, 2020.</p>
+
+<!--
+https://en.wikipedia.org/wiki/Comparison_of_instruction_set_architectures
+https://youtu.be/-P28LKWTzrI
+-->
 
 </div>
 

@@ -708,133 +708,249 @@ ol {
 
 <div class="markdown-body">
 
-<h1>Lecture 03 - What is knowing machine architecture good for?</h1>
+<h1>OS and Command Line</h1>
 
-<h2>2 Reasons</h2>
+<h2>Using the Command Line</h2>
+
+<h3>Why Command Line</h3>
 
 <ol>
-<li>Performance</li>
-<li>Knowledge over time</li>
+<li>It works everywhere</li>
+<li>You don&rsquo;t have to re-train for every tool</li>
+<li>Continuous Integration</li>
+<li>It is scalable (has loops, scripting etc)</li>
+<li>It works on tiny systems (IoT)</li>
+<li>It is much faster for most development processes</li>
 </ol>
 
-<h2>Example 1 - NTRU Encryption</h2>
+<h2>Linux / Max / Unix</h2>
 
-<p>Quantum Computers and the &ldquo;shore&rdquo; algorithm will break RSA and ECDSA encryption.
-This is the underlying encryption behind TLS, the transport layer security that
-enables all of HTTPS.</p>
+<p>Downlaod a file - it shows up in you ./Downloads directory.</p>
 
-<p>Quick explanation of how ECDSA works.</p>
+<p>Bring up &ldquo;Terminal&rdquo; or install and use &ldquo;iTerm2&rdquo; (I recommend iTerm2) you start in your &ldquo;Home&rdquo; directory.</p>
 
-<p>Why non-planer encryption is quantum proof.</p>
+<p>On Linux/Unix/Ubuntu/Red-Hat etc - you Start a terminal.  In each of these cases you end up at
+a &ldquo;prompt&rdquo; to type something in:</p>
 
-<p>Google current at 53 bits.  Needs to get to 64 to 98 bits to break ECDSA.</p>
+<pre><code>$
+</code></pre>
 
-<p>NTRU Encryption entered into the NIS competition 4 years ago.  NTRU Is a replacement
-for all of ECDSA that is quantum proof.  It is also faster than ECDSA and AES.
-One of the finalists for the new encryption standard.</p>
+<h2>Commands</h2>
 
-<p>Port to multiple architectures.</p>
+<p>All of these commands work on Mac / Linux and in Windows PowerShell.</p>
 
-<h2>Example 2 - Faster database</h2>
+<p>List the files in the current directory:</p>
 
-<p>Data growth and IoT is driving this.  The world is creating 2.5 Quintilian bytes of data a data.  90% of the data in the
-world has been created in the past 2 years.   This is just the tip of the iceberg.   For example Tesla cars have 2.1 billion
-miles of driving under Auto-Pilot - and they generate 2.8 terabytes of data a day that Tesla would just love to have.  Right
-now they are pulling about 25 megabytes of this back per week.  5G really won&rsquo;t make much difference in phone calls.  It will
-provide the thru-put necessary for Tesla to get the terabytes of data back from every car.</p>
+<pre><code>$ ls
+</code></pre>
 
-<p>About <sup>1</sup>&frasl;<sub>2</sub> of time in a database management system (DBMS) is spent sorting
-data.   One way to sort faster is to use faster hardware for the sorting.
-The other <sup>1</sup>&frasl;<sub>2</sub> is on searching. If you can get more CPU/Cores to do the searching in parallel  you can speed it up.</p>
+<p>Mac/Window - list with attributes and size:</p>
 
-<p>Database is about lots of data - the other slow portion of database is the disks.  Replace the disks with memory (SSD) or store the data
-in main memory (RAM).   Redis is an example of a &ldquo;memory&rdquo; database - but might be better called a shared / persistent data structure.</p>
+<pre><code>$ ls -l
+</code></pre>
 
-<p>What about passing the sorting to the GPU in a dedicated box.</p>
+<p>Make a directory to work in:</p>
 
-<p>CPU v.s. GPU based computation</p>
+<pre><code>$ mkdir hw1
+</code></pre>
 
-<p>Latest AMD system with 64 cores.</p>
+<p>Make the directory your current working directory:</p>
 
-<p>Nvidia Kinetica CPU based database: 5100+ cores for GPU cards.</p>
+<pre><code>$ cd hw1
+</code></pre>
 
-<p>Kinetica also runs on DGX-2 Nvidia - GPUs on non-graphics boards in 4 redundant systems: 81,920 cores.</p>
+<p>See where you are in the directory tree:</p>
 
-<p>MapD: GPU-powered SQL data platform uses in-memory storage and also leverages modern SSDs for persistent storage, It boasts microsecond query processing performance in the billions of rows.</p>
+<pre><code>$ pwd
+</code></pre>
 
-<h2>Example 3 - Turning FedEx Packages Tracking</h2>
+<p>Go up 1 directory</p>
 
-<p>FedEx tracks packages - When they put in the system they had &ldquo;performance&rdquo; problems with Oracle database
-and a bunch of very expensive people from Oracle working on it.  They hired me to be an outside review
-of they performance tuning from Oracle.</p>
+<pre><code>$ cd ..
+$ pwd
+</code></pre>
 
-<p>My conclusion:  Given the requirements that the Oracle folks were never going to get the database to
-perform as needed.  They needed a different solution - to split the load into multiple chunks.
-We changed the hash code and used a computer as a &ldquo;switch&rdquo; to direct traffic.</p>
+<p>Go back into the hw1 directory</p>
 
-<h2>Example 4 - Building / Porting an OS</h2>
+<pre><code>$ cd hw1
+$ pwd
+</code></pre>
 
-<p>New architectures will require ports of an operating system.  The Unix/Posix system has dominated
-the world.  VxWorks is the 2nd most common system.   Both require a &ldquo;port&rdquo; for new hardware.
-The Thrid most common system in the world is Minix - it is an open source Unix-ish system
-found in the Intel ME engine.</p>
+<p>Rename or move a file (like the ones that you downloaded):
+<code>~</code> refers to you home directory.  <code>.</code> refers to the current directory.  (Note that <code>..</code> refers to the parent of the current home directory)</p>
 
-<p>Another alternative is to build a system from the ground up.   I have done this once.</p>
+<pre><code>$ mv ~/Downloads/Asm .
+</code></pre>
 
-<h2>Example 5 - Merkle Hash</h2>
+<p>Mac/Linux requires that a file be &ldquo;executable&rdquo; to be run.  When you download the file it is not executable.
+To fix this:</p>
 
-<p>One of the biggest computer platforms in existence is Bitcoin.  Over 12,000 &ldquo;nodes&rdquo; running
-a very simple hashing algorithm. (Ethereum is 2nd largest with 11,000 &ldquo;nodes&rdquo;)</p>
+<pre><code>$ ls -l ./Asm
+$ chmod +x ./Asm
+$ ls -l ./Asm
+</code></pre>
 
-<h3>Mining Algorithm: Use an infinite loop to:</h3>
+<p>Now we &ldquo;may&rdquo; be able to run the program if the OS is tweaked into it.   On Linux - no tweaking is needed.
+On Mac we need to run the program and then tell it that it is Ok to run programs from non-trusted sources.</p>
 
-<p>The Proof-of-Work mining process is:</p>
+<pre><code>$ ./Asm --in InputFile.mas --out Output.hex
+</code></pre>
+
+<p>You can setup a directory where the &ldquo;shell&rdquo; (bash/zsh) will look for your commands.
+Google for &ldquo;setting your PATH&rdquo;.</p>
+
+<p>To see what is in the file:</p>
+
+<pre><code>$ cat Output.hex
+</code></pre>
+
+<h1>PowerShell / Windows</h1>
+
+<p>The prompt is different.</p>
+
+<pre><code>H:\&gt;
+</code></pre>
+
+<p>Lot&rsquo;s of commands don&rsquo;t have any useful options - Example.</p>
+
+<p>Very few commands to use.</p>
+
+<p>You have to install and configure everything.</p>
+
+<p>Virus software may need to be turned off to get these programs to run - I am working on that.</p>
+
+<p>On 4th floor of Engineering (4072) there is a lab where you can use PCs and do this stuff.<br />
+That is where I tested.</p>
+
+<p>In the PowerShell the following commands work sort of the same as in Linux(Posix)</p>
+
+<pre><code>ls
+mv
+pwd
+cd
+</code></pre>
+
+<p>Instead of &ldquo;cat&rdquo; use &ldquo;type&rdquo;.</p>
+
+<p>Windows is missing the concept of an &ldquo;executable&rdquo; program so there is nothing
+like &ldquo;chmod&rdquo;.</p>
+
+<h2>What most persons see</h2>
 
 <ol>
-<li>Serialize the data from the block for hashing.</li>
-<li>Calculate the hash of the data.  This is the slow part.  In BTC it is done in an ASIC, in Ethereum it is done on GPU.  A GPU can run 4 billion hashes a second?</li>
-<li>See if the first 4 characters of the hash are 0&rsquo;s. - if so we have met the work criteria.
+<li>User Interface (input)
 
 <ul>
-<li>Set the block&rsquo;s &ldquo;Seal&rdquo; to the hash</li>
-<li>return</li>
+<li>web</li>
+<li>gui</li>
+<li>command line</li>
+<li>binary input to a computer</li>
+<li>electricity / on / off</li>
 </ul></li>
-<li>Increment the Nonce in the block, and&hellip;</li>
-<li>Back to the top of the loop for another try at finding a seal for this block.</li>
+<li>User Interface (output)
+
+<ul>
+<li>reports</li>
+<li>printouts</li>
+<li>control of systems</li>
+<li>screen</li>
+</ul></li>
 </ol>
 
-<h2>Example 6 - System Vitalization</h2>
+<h2>A Single Programming Language</h2>
 
-<p>OS 360 running as a virtual system on OS 370.  The post office.</p>
+<ol>
+<li>The &ldquo;categories&rdquo; - the &ldquo;model&rdquo; that the program uses.  Von Neumann Fetch Execute</li>
+<li>Imperative is the most common</li>
+<li>Object oriented</li>
+<li>Functional</li>
+<li>Concurrent (real concurrency) - Microcode instructions</li>
+<li>DFA - Deterministic Finite Automata</li>
+<li>Push-Down Acceptor: LALR(1)</li>
+<li>Stack Architecture Machine (forth, HP-41 calculator, Ethereum and Bitcoin)</li>
+</ol>
 
-<p>VMWare brought this to the land of PCs.</p>
+<p>Inputs change &ldquo;state&rdquo; in a program - that then results in the possibility of new &ldquo;state&rdquo;.</p>
 
-<p>Docker move this into a &ldquo;container&rdquo; system (Not a new idea by the way - BSD &ldquo;jails&rdquo; had been doing this for over a decade).</p>
+<h2>Multiple Languages Interacting</h2>
 
-<p>Can you write software that will &ldquo;mimic&rdquo; an entire hardware system?</p>
+<p>HTML on a web page, Cascading Style Sheets (CSS), with JavaScript - talking to a
+remote system in some language like Python and SQL (database).</p>
 
-<h2>Alternative Architectures</h2>
+<h2>Simple C Program</h2>
 
-<h3>Stack architectures</h3>
+<p>K&amp;R C or Early ANSI C:</p>
 
-<p>Ethereum runs on a &ldquo;stack&rdquo; system.  The &ldquo;fourth&rdquo; programming language.</p>
+<pre><code>#include &lt;stdio.h&gt;
+int main() {
+	putc('a',stdout);
+}
+</code></pre>
 
-<h3>VILW - very long instruction words</h3>
+<p>More recent ANSI C</p>
 
-<p>Run in parallel multiple parts of a computation by building bigger instructions.</p>
+<pre><code>#include &lt;stdio.h&gt;
+int main(int argc, char *argv[]) {
+	putc('a',stdout);
+}
+</code></pre>
 
-<h3>Computation in Memory</h3>
+<ol>
+<li>System software like a &ldquo;compiler&rdquo; that turns our &ldquo;language&rdquo; into what the machine can run.</li>
+<li>An Operating system to run the program.</li>
+<li>Connection for the program to input/output.</li>
+<li>Memory.</li>
+<li>A loader and a file system.</li>
+<li>Load - and Run The Code.</li>
+<li>Display the output.</li>
+</ol>
 
-<p>Move the &ldquo;calculation&rdquo; from the CPU to memory.</p>
+<h2>Assembly Language Code</h2>
+
+<pre><code>/ Program to output 'a' as a number
+	Load X
+	Output
+	Halt
+X,	DEC 97
+</code></pre>
+
+<p>And in Hex we get 0061 - is that an &lsquo;a&rsquo;?   Why?</p>
+
+<p>ASCII</p>
+
+<p>Representation</p>
+
+<p>What is &ldquo;HEX&rdquo;.</p>
+
+<p>There are 10 kinds of people.  Those that understand binary and those that don&rsquo;t.
+Either you already understand binary or you are going to before the end of this
+class.</p>
+
+<h3>Binary Representation of Program</h3>
+
+<p>In hex:</p>
+
+<pre><code>1003
+6000
+7000
+0061
+</code></pre>
+
+<h3>Electrical Representation of Program</h3>
+
+<p>Memory</p>
+
+<p>Layers of Storage</p>
+
+<p>Gates</p>
+
+<p>Microcode Architecture</p>
+
+<p>Boolean logic</p>
 
 <h1>Copyright</h1>
 
 <p>Copyright &copy; University of Wyoming, 2020.</p>
-
-<!--
-https://en.wikipedia.org/wiki/Comparison_of_instruction_set_architectures
-https://youtu.be/-P28LKWTzrI
--->
 
 </div>
 

@@ -15,8 +15,9 @@ Points: 200
 Testing you are expected to produce a unit test for each of the following.   The test should print out "PASS" if it is successful
 and run at least 4 examples of good and bad values for each.
 
-1. 50pts - Implement a Lhun Verifier.  Do it in C or C++.
-2. 50pts - Implement a Verhoeff verifier in C or C++ (Go steal the code in C - see link - and give credit, note the license - you want an original that is MIT or 3 clause BSD then copy like crazy).
+1. 50pts - Implement a Luhn Verifier.  Implement in your choice of { C, C++, Python, Go, Haskell, F#, Swift, Kotlin }.
+2. 50pts - Implement a Verhoeff verifier in { C, C++, Python, Go, Haskell, F#, Swift, Kotlin }.
+	(Go steal the code in C - see link - and give credit, note the license - you want an original that is MIT or 3 clause BSD then copy like crazy).
 	This is the JavaScript(node.js) and Go version that I have on github.com.    Search google for "verhoeff algorithm".
 	[https://github.com/pschlump/verhoeff_algorithm](https://github.com/pschlump/verhoeff_algorithm)
 

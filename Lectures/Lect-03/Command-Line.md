@@ -1,9 +1,4 @@
-# OS and Command Line
-
-## Using the Command Line
-
-
-### Why Command Line
+# Why Command Line
 
 1. It works everywhere
 2. You don't have to re-train for every tool
@@ -13,7 +8,7 @@
 6. It is much faster for most development processes
 
 
-## Linux / Max / Unix
+# Linux / Max / Unix
 
 Downlaod a file - it shows up in you ./Downloads directory.
 
@@ -147,120 +142,4 @@ Instead of "cat" use "type".
 
 Windows is missing the concept of an "executable" program so there is nothing
 like "chmod".
-
-
-
-## What most persons see
-
-1. User Interface (input)
-	- web
-	- gui
-	- command line
-	- binary input to a computer
-	- electricity / on / off 
-2. User Interface (output)
-	- reports
-	- printouts
-	- control of systems
-	- screen
-
-## A Single Programming Language
-
-1. The "categories" - the "model" that the program uses.  Von Neumann Fetch Execute
-2. Imperative is the most common
-3. Object oriented
-4. Functional
-5. Concurrent (real concurrency) - Microcode instructions
-6. DFA - Deterministic Finite Automata
-7. Push-Down Acceptor: LALR(1)
-8. Stack Architecture Machine (forth, HP-41 calculator, Ethereum and Bitcoin)
-
-Inputs change "state" in a program - that then results in the possibility of new "state".
-
-## Multiple Languages Interacting
-
-HTML on a web page, Cascading Style Sheets (CSS), with JavaScript - talking to a
-remote system in some language like Python and SQL (database).
-
-## Simple C Program
-
-K&R C or Early ANSI C:
-
-```
-#include <stdio.h>
-int main() {
-	putc('a',stdout);
-}
-```
-
-More recent ANSI C
-
-```
-#include <stdio.h>
-int main(int argc, char *argv[]) {
-	putc('a',stdout);
-}
-```
-
-
-
-1. System software like a "compiler" that turns our "language" into what the machine can run.
-2. An Operating system to run the program.
-3. Connection for the program to input/output.
-4. Memory.
-5. A loader and a file system.
-6. Load - and Run The Code.
-7. Display the output.
-
-
-## Assembly Language Code
-
-```
-/ Program to output 'a' as a number
-	Load X
-	Output
-	Halt
-X,	DEC 97
-```
-
-And in Hex we get 0061 - is that an 'a'?   Why?
-
-ASCII
-
-Representation
-
-What is "HEX".
-
-There are 10 kinds of people.  Those that understand binary and those that don't.
-Either you already understand binary or you are going to before the end of this
-class.
-
-### Binary Representation of Program
-
-In hex:
-
-```
-1003
-6000
-7000
-0061
-```
-
-### Electrical Representation of Program
-
-Memory
-
-Layers of Storage
-
-Gates
-
-Microcode Architecture
-
-Boolean logic
-
-
-
-# Copyright
-
-Copyright (C) University of Wyoming, 2020.
 

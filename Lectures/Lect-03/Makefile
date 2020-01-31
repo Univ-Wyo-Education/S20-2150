@@ -1,5 +1,5 @@
 
-all: Lect-03.html 
+all: Lect-03.html Command-Line.html
 
 FR=../Lect-01/
 
@@ -9,9 +9,9 @@ Lect-03.html: Lect-03.md
 	cat ${FR}/css/pre ${FR}/css/markdown.css ${FR}/css/post ../../md.css ${FR}/css/hpre Lect-03.html ${FR}/css/hpost >/tmp/Lect-03.html
 	mv /tmp/Lect-03.html ./Lect-03.html
 
-# Homework.03.md
-#Homework.03.html: Homework.03.md
-#	markdown-cli --input=./Homework.03.md --output=Homework.03.html
-#	echo cat ../../md.css Homework.03.html >/tmp/Homework.03.html
-#	cat ./css/pre ./css/markdown.css ./css/post ../../md.css ./css/hpre Homework.03.html ./css/hpost >/tmp/Homework.03.html
-#	mv /tmp/Homework.03.html ./Homework.03.html
+Command-Line.html: Command-Line.md
+	markdown-cli --input=./Command-Line.md --output=Command-Line.html
+	echo cat ../../md.css Command-Line.html >/tmp/Command-Line.html
+	cat ${FR}/css/pre ${FR}/css/markdown.css ${FR}/css/post ../../md.css ${FR}/css/hpre Command-Line.html ${FR}/css/hpost >/tmp/Command-Line.html
+	mv /tmp/Command-Line.html ./Command-Line.html
+

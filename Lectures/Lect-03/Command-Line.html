@@ -708,376 +708,128 @@ ol {
 
 <div class="markdown-body">
 
-<style>
-.pagebreak { page-break-before: always; }
-.half { height: 200px; }
-</style>
-
-<h1>Homework 2 - Boolean Algebra - Gates / Error Detection</h1>
-
-<p>Due Monday Feb 10 - by end of class.  You can turn in parts 3,4,5 on paper - 1 and 2 should be uploaded.</p>
-
-<p>Remember that I have a grader and if you do not put your name on the top of
-your homework - you will <em>NOT</em> get credit.  That is bad after doing the work!</p>
-
-<p>Points: 200</p>
-
-<p>Testing you are expected to produce a unit test for each of the following.   The test should print out &ldquo;PASS&rdquo; if it is successful
-and run at least 4 examples of good and bad values for each.</p>
+<h1>Why Command Line</h1>
 
 <ol>
-<li>50pts - Implement a Luhn Verifier.  Implement in your choice of { C, C++, Python, Go, Haskell, F#, Swift, Kotlin }.</li>
-
-<li><p>50pts - Implement a Verhoeff verifier in { C, C++, Python, Go, Haskell, F#, Swift, Kotlin }.
-(Go steal the code in C - see link - and give credit, note the license - you want an original that is MIT or 3 clause BSD then copy like crazy).
-This is the JavaScript(node.js) and Go version that I have on github.com.    Search google for &ldquo;verhoeff algorithm&rdquo;.
-<a href="https://github.com/pschlump/verhoeff_algorithm">https://github.com/pschlump/verhoeff_algorithm</a></p>
-
-<p>Java script:  <a href="https://github.com/yuyudhan/verhoeff.git">https://github.com/yuyudhan/verhoeff.git</a>  Do not copy this - it is proprietary code -  No LICENSE file at all.</p>
-
-<p>Other solutions: License CC Attribution: <a href="https://en.wikibooks.org/wiki/Algorithm_Implementation/Checksums/Verhoeff_Algorithm">https://en.wikibooks.org/wiki/Algorithm_Implementation/Checksums/Verhoeff_Algorithm</a></p></li>
-
-<li><p>25pts - Provide the circuit diagram in mixed logic for</p>
-
-<p>Dec1 = ( A &amp; !B &amp; !C &amp; !D ) &amp; !X &amp; Y</p>
-
-<p>Dec2 = ( A &amp; !B &amp; !C &amp; !D ) &amp; X &amp; !Y</p>
-
-<p>Dec3 = ( A &amp; !B &amp; !C &amp; !D ) &amp; X &amp; Y</p>
-
-<p>(A&amp;!B&amp;!C&amp;!D) is a commmon sub-expression in the hardware.</p></li>
-
-<li><p>25pts - Derive the truth table for:</p>
-
-<p><img src="hw4.png" alt="hw4.png" /></p>
-
-<div class="pagebreak"></div></li>
-
-<li><p>50pts - Given the following truth table show the circuit for:
-( 74ls47 7-segment LED decoder  - see <a href="https://buzztech.in/bcd-to-seven-segment-decoder-program-in-vhdl/">https://buzztech.in/bcd-to-seven-segment-decoder-program-in-vhdl/</a> )</p>
-
-<p>I, J, K, L are inputs</p>
-
-<p>a, b, c, d, e, f, g are outputs</p></li>
+<li>It works everywhere</li>
+<li>You don&rsquo;t have to re-train for every tool</li>
+<li>Continuous Integration</li>
+<li>It is scalable (has loops, scripting etc)</li>
+<li>It works on tiny systems (IoT)</li>
+<li>It is much faster for most development processes</li>
 </ol>
 
-<table>
-<thead>
-<tr>
-<th align="right">Decimal Digit</th>
-<th align="right">Hex</th>
-<th align="center">I</th>
-<th align="center">J</th>
-<th align="center">K</th>
-<th align="center">L</th>
-<th>&nbsp;</th>
-<th align="center">a</th>
-<th align="center">b</th>
-<th align="center">c</th>
-<th align="center">d</th>
-<th align="center">e</th>
-<th align="center">f</th>
-<th align="center">g</th>
-<th align="center">Display Pattern</th>
-</tr>
-</thead>
+<h1>Linux / Max / Unix</h1>
 
-<tbody>
-<tr>
-<td align="right">0</td>
-<td align="right">0x0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center"><img src="7-seg-0.svg" height="35px"></td>
-</tr>
+<p>Downlaod a file - it shows up in you ./Downloads directory.</p>
 
-<tr>
-<td align="right">1</td>
-<td align="right">0x1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center"><img src="7-seg-1.svg" height="35px"></td>
-</tr>
+<p>Bring up &ldquo;Terminal&rdquo; or install and use &ldquo;iTerm2&rdquo; (I recommend iTerm2) you start in your &ldquo;Home&rdquo; directory.</p>
 
-<tr>
-<td align="right">2</td>
-<td align="right">0x2</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-2.svg" height="35px"></td>
-</tr>
+<p>On Linux/Unix/Ubuntu/Red-Hat etc - you Start a terminal.  In each of these cases you end up at
+a &ldquo;prompt&rdquo; to type something in:</p>
 
-<tr>
-<td align="right">3</td>
-<td align="right">0x3</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-3.svg" height="35px"></td>
-</tr>
+<pre><code>$
+</code></pre>
 
-<tr>
-<td align="right">4</td>
-<td align="right">0x4</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-4.svg" height="35px"></td>
-</tr>
+<h2>Commands</h2>
 
-<tr>
-<td align="right">5</td>
-<td align="right">0x5</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-5.svg" height="35px"></td>
-</tr>
+<p>All of these commands work on Mac / Linux and in Windows PowerShell.</p>
 
-<tr>
-<td align="right">6</td>
-<td align="right">0x6</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-6.svg" height="35px"></td>
-</tr>
+<p>List the files in the current directory:</p>
 
-<tr>
-<td align="right">7</td>
-<td align="right">0x7</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center"><img src="7-seg-7.svg" height="35px"></td>
-</tr>
+<pre><code>$ ls
+</code></pre>
 
-<tr>
-<td align="right">8</td>
-<td align="right">0x8</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-8.svg" height="35px"></td>
-</tr>
+<p>Mac/Window - list with attributes and size:</p>
 
-<tr>
-<td align="right">9</td>
-<td align="right">0x9</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-9.svg" height="35px"></td>
-</tr>
+<pre><code>$ ls -l
+</code></pre>
 
-<tr>
-<td align="right">10</td>
-<td align="right">0xA</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
+<p>Make a directory to work in:</p>
 
-<tr>
-<td align="right">11</td>
-<td align="right">0xB</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
+<pre><code>$ mkdir hw1
+</code></pre>
 
-<tr>
-<td align="right">12</td>
-<td align="right">0xC</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
+<p>Make the directory your current working directory:</p>
 
-<tr>
-<td align="right">13</td>
-<td align="right">0xD</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
+<pre><code>$ cd hw1
+</code></pre>
 
-<tr>
-<td align="right">14</td>
-<td align="right">0xE</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
+<p>See where you are in the directory tree:</p>
 
-<tr>
-<td align="right">15</td>
-<td align="right">0xF</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
-</tbody>
-</table>
+<pre><code>$ pwd
+</code></pre>
 
-<h1>Copyright</h1>
+<p>Go up 1 directory</p>
 
-<p>7 Segment Display is modified from Wikimedia Commons CC Attribution license.</p>
+<pre><code>$ cd ..
+$ pwd
+</code></pre>
 
-<p>Copyright &copy; University of Wyoming, 2020.</p>
+<p>Go back into the hw1 directory</p>
+
+<pre><code>$ cd hw1
+$ pwd
+</code></pre>
+
+<p>Rename or move a file (like the ones that you downloaded):
+<code>~</code> refers to you home directory.  <code>.</code> refers to the current directory.  (Note that <code>..</code> refers to the parent of the current home directory)</p>
+
+<pre><code>$ mv ~/Downloads/Asm .
+</code></pre>
+
+<p>Mac/Linux requires that a file be &ldquo;executable&rdquo; to be run.  When you download the file it is not executable.
+To fix this:</p>
+
+<pre><code>$ ls -l ./Asm
+$ chmod +x ./Asm
+$ ls -l ./Asm
+</code></pre>
+
+<p>Now we &ldquo;may&rdquo; be able to run the program if the OS is tweaked into it.   On Linux - no tweaking is needed.
+On Mac we need to run the program and then tell it that it is Ok to run programs from non-trusted sources.</p>
+
+<pre><code>$ ./Asm --in InputFile.mas --out Output.hex
+</code></pre>
+
+<p>You can setup a directory where the &ldquo;shell&rdquo; (bash/zsh) will look for your commands.
+Google for &ldquo;setting your PATH&rdquo;.</p>
+
+<p>To see what is in the file:</p>
+
+<pre><code>$ cat Output.hex
+</code></pre>
+
+<h1>PowerShell / Windows</h1>
+
+<p>The prompt is different.</p>
+
+<pre><code>H:\&gt;
+</code></pre>
+
+<p>Lot&rsquo;s of commands don&rsquo;t have any useful options - Example.</p>
+
+<p>Very few commands to use.</p>
+
+<p>You have to install and configure everything.</p>
+
+<p>Virus software may need to be turned off to get these programs to run - I am working on that.</p>
+
+<p>On 4th floor of Engineering (4072) there is a lab where you can use PCs and do this stuff.<br />
+That is where I tested.</p>
+
+<p>In the PowerShell the following commands work sort of the same as in Linux(Posix)</p>
+
+<pre><code>ls
+mv
+pwd
+cd
+</code></pre>
+
+<p>Instead of &ldquo;cat&rdquo; use &ldquo;type&rdquo;.</p>
+
+<p>Windows is missing the concept of an &ldquo;executable&rdquo; program so there is nothing
+like &ldquo;chmod&rdquo;.</p>
 
 </div>
 
