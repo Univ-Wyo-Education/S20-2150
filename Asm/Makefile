@@ -9,6 +9,8 @@ fail_test001:
 	diff out/test001.hex ref
 
 
+test: test003
+
 test002:
 	go build
 	mkdir -p ./ref ./out
@@ -24,3 +26,23 @@ linux:
 
 install: all windows linux
 	cp Asm Asm.* ../Download
+
+# test for HEX with hex values
+# test symbol table also.
+test003:
+	go build
+	mkdir -p out ref
+	./asm --in test-code/test-HEX.mas --out ./out/test-HEX.hex -st ./out/test-HEX.st.out
+	diff ./out/test-HEX.hex ./ref/test-HEX.hex
+	sort -u <out/test-HEX.st.out >,a
+	sort -u <ref/test-HEX.st.out >,b
+	diff ,a ,b
+
+# test for STR with hex values
+# Test for uppler lower op names (Case Insensitive)
+test004:
+	go build
+	mkdir -p out ref
+	./asm --in test-code/test-STR.mas --out ./out/test-STR.hex 
+	diff ./out/test-STR.hex ./ref/test-STR.hex
+

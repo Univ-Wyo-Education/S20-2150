@@ -1,0 +1,16 @@
+L1,     LoadI    X
+        Output
+        Load     X
+        Add      _1
+        Store    X
+        LoadI    X
+        SkipGt0            / OnLine use Skipins 0x400 - same instruction just different human representation.
+        Jump L1
+        Halt
+        ORG  20
+X,      DEC  22             / Counter of how many characters to output.
+_1,     DEC  1
+hw,     CHR 'a'
+        CHR 'b'
+        CHR 'c'
+		DEC 0
