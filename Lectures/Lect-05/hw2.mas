@@ -14,8 +14,8 @@ hw,     HEX  48            / 'H' Your values (clue: 48 is not correct for homewo
     HEX 49                    / 'I'
     HEX 50                    / 'P'
     HEX 51
-    HEX 52
-    HEX 53
+    HEX 5aB2
+    HEX aaaa
     HEX 54
     HEX 55
     HEX 56

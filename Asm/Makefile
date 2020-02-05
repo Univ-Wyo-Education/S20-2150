@@ -9,7 +9,7 @@ fail_test001:
 	diff out/test001.hex ref
 
 
-test: test003
+test: test003 test004 test005
 
 test002:
 	go build
@@ -45,4 +45,12 @@ test004:
 	mkdir -p out ref
 	./asm --in test-code/test-STR.mas --out ./out/test-STR.hex 
 	diff ./out/test-STR.hex ./ref/test-STR.hex
+
+# test for CHR with hex values
+# Test for uppler lower op names (Case Insensitive)
+test005:
+	go build
+	mkdir -p out ref
+	./asm --in test-code/test-CHR.mas --out ./out/test-CHR.hex 
+	diff ./out/test-CHR.hex ./ref/test-CHR.hex
 

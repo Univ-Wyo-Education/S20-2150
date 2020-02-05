@@ -87,6 +87,12 @@ class.
 
 <div class="pagebreak"> </div>
 
+1. Hw 1 - Feb 10
+2. Hw 2 - Feb 14 ( will be out later today )
+3. Hw 3 - Feb 23
+4. Hw 4 - 
+
+Try hex with Letters - asm 
 
 ## Overview
 
@@ -99,7 +105,6 @@ This is an approximate schedule.  Updates will be noted in class.
 |                                 |    | My background                                                              |
 | Wed&nbsp;Jan&nbsp;29,&nbsp;2020 | 02 | Layers of Representation in Systems                                        |
 | Fri&nbsp;Jan&nbsp;31,&nbsp;2020 | 03 | What is knowing machine architecture good for?                             |
-|                                 |    | Homework 1 Due / Setup / Access MARIE etc.                                 |
 |                                 |    |                                                                            |
 | Mon&nbsp;Feb&nbsp;03,&nbsp;2020 | 04 | Base Conversion / Octal / Decimal / Hex / Base37 / Base64 etc.             |
 |                                 |    | Finish reading Chapter 1 & 2 by this date                                  |
@@ -107,18 +112,19 @@ This is an approximate schedule.  Updates will be noted in class.
 | Fri&nbsp;Feb&nbsp;07,&nbsp;2020 | 06 | Error Correction Codes                                                     |
 |                                 |    |                                                                            |
 | Mon&nbsp;Feb&nbsp;10,&nbsp;2020 | 07 | Gates and Boolean Logic                                                    |
-|                                 |    | Homework 2 Due / Representation of Numbers / ASCII / Unicode               |
+|                                 |    | Homework 1 Due / Setup / Access MARIE etc.                                 |
 |                                 |    | Finish reading Chapter 3 by this date                                      |
 | Wed&nbsp;Feb&nbsp;12,&nbsp;2020 | 08 | More on Gates and Logic                                                    |
 | Fri&nbsp;Feb&nbsp;14,&nbsp;2020 | 09 | FPGA's / ASIC's and VLSI design                                            |
-|                                 |    | Homework 3 Due / Boolean Algebra / Gates                                   |
+|                                 |    | Homework 2 Due / Representation of Numbers / ASCII / Unicode               |
 |                                 |    |                                                                            |
 | Mon&nbsp;Feb&nbsp;17,&nbsp;2020 | 10 | MARIE system - How an instruction gets run                                 |
 | Wed&nbsp;Feb&nbsp;19,&nbsp;2020 | 11 | Components of MARIE                                                        |
 | Fri&nbsp;Feb&nbsp;21,&nbsp;2020 | 12 | More on MARIE and instructions                                             |
-|                                 |    | Homework 4 Due / 1st MARIE assembly language programs                      |
+|                                 |    | Homework 3 Due / Boolean Algebra / Gates                                   |
 |                                 |    |                                                                            |
 | Mon&nbsp;Feb&nbsp;24,&nbsp;2020 | 13 | Fancier Assembly Language Architectures                                    |
+|                                 |    | Homework 4 Due / 1st MARIE assembly language programs                      |
 |                                 |    | Finish reading Chapter 4 by this date                                      |
 | Wed&nbsp;Feb&nbsp;26,&nbsp;2020 | 14 | Midterm Review                                                             |
 | Fri&nbsp;Feb&nbsp;28,&nbsp;2020 | 15 | Midterm 1                                                                  |

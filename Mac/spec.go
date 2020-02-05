@@ -49,6 +49,7 @@ const (
 	DirOCT       = OpCodeType(90004)
 	DirBIN       = OpCodeType(90005)
 	DirSTR       = OpCodeType(90006)
+	DirCHR       = OpCodeType(90007)
 	DirBlankLine = OpCodeType(90000)
 	// AddI 11
 	// JumpI 12
@@ -66,30 +67,31 @@ const (
 
 var OpTab = map[string]OpCodeType{
 	"":         OpN_A,
-	"Add":      OpAdd,
-	"Subt":     OpSubt,
-	"Halt":     OpHalt,
-	"Load":     OpLoad,
-	"Store":    OpStore,
-	"Input":    OpInput,
-	"Output":   OpOutput,
-	"Jump":     OpJump,
-	"JnS":      OpJnS,
-	"Clear":    OpClear,
-	"Skipcond": OpSkipcond,
-	"SkipLt0":  OpSkipLt0,
-	"SkipEq0":  OpSkipEq0,
-	"SkipGt0":  OpSkipGt0,
-	"AddI":     OpAddI,
-	"JumpI":    OpJumpI,
-	"LoadI":    OpLoadI,
-	"StoreI":   OpStoreI,
-	"ORG":      DirORG,
-	"DEC":      DirDEC,
-	"HEX":      DirHEX,
-	"OCT":      DirOCT,
-	"BIN":      DirBIN,
-	"STR":      DirSTR,
+	"add":      OpAdd,
+	"subt":     OpSubt,
+	"halt":     OpHalt,
+	"load":     OpLoad,
+	"store":    OpStore,
+	"input":    OpInput,
+	"output":   OpOutput,
+	"jump":     OpJump,
+	"jns":      OpJnS,
+	"clear":    OpClear,
+	"skipcond": OpSkipcond,
+	"skiplt0":  OpSkipLt0,
+	"skipeq0":  OpSkipEq0,
+	"skipgt0":  OpSkipGt0,
+	"addi":     OpAddI,
+	"jumpi":    OpJumpI,
+	"loadi":    OpLoadI,
+	"storei":   OpStoreI,
+	"org":      DirORG,
+	"dec":      DirDEC,
+	"hex":      DirHEX,
+	"oct":      DirOCT,
+	"bin":      DirBIN,
+	"str":      DirSTR,
+	"chr":      DirCHR,
 }
 
 var OpTabStr = map[OpCodeType]string{
@@ -116,6 +118,7 @@ var OpTabStr = map[OpCodeType]string{
 	DirOCT:    "OCT",
 	DirBIN:    "BIN",
 	DirSTR:    "STR",
+	DirCHR:    "CHR",
 }
 
 func (x OpCodeType) String() string {
