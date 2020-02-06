@@ -7,7 +7,7 @@
 specifications for our MARIE assembler.  Use the command line to assemble the result and turn in the .hex file.   How much storage was used for the string (how many bytes/words?)   
 Prepend the program below and run it.  Show the output.  (You can also do this with the on-line web based assembler/emulator)
 3. 20pts: Convert the number 4313 decimal into octal, binary and hex.
-4. 20pts: Convert the number 0b_0110_1001_1100_0001 into decimal.  The "_" are for the human - the number is in binary.
+4. 20pts: Convert the number `0b_0110_1001_1100_0001` into decimal.  The `_` are for the human - the number is in binary.
 5. 10pts: Use an octal dump to dump the file hw2.bin.  (On Linux and Mac there is an 'od' command.  On windows download the 'od.exe' using chocolatie)
 ```
 H:\> choco install gnuwin32-coreutils.install
@@ -65,5 +65,5 @@ hw,     HEX  48            / 'H' Your values (clue: 48 is not correct for homewo
 
 ## Due
 
-Feb 14 - Friday by midnight.
+Feb 17 - Monday by end of class.
 

@@ -3,30 +3,27 @@
 .half { height: 200px; }
 </style>
 
-# Homework 2 - Boolean Algebra - Gates / Error Detection
+# Homework 3 - Boolean Algebra - Gates / Error Detection
 
-Due Monday Feb 10 - by end of class.  You can turn in parts 3,4,5 on paper - 1 and 2 should be uploaded.
+Due Monday Feb ?? - by end of class.  You can turn in parts 4,5,6 on paper - 1,2,3 should be uploaded (Upload source code only).
 
 Remember that I have a grader and if you do not put your name on the top of
 your homework - you will *NOT* get credit.  That is bad after doing the work!
 
-Points: 200 
+Points total: 200 
 
 Testing you are expected to produce a unit test for each of the following.   The test should print out "PASS" if it is successful
 and run at least 4 examples of good and bad values for each.
 
 1. 50pts - Implement a Luhn Verifier.  Implement in your choice of { C, C++, Python, Go, Haskell, F#, Swift, Kotlin }.
-2. 50pts - Implement a Verhoeff verifier in { C, C++, Python, Go, Haskell, F#, Swift, Kotlin }.
+2. 35pts - Implement a Verhoeff verifier in { C, C++, Python, Go, Haskell, F#, Swift, Kotlin }.
 	(Go steal the code in C - see link - and give credit, note the license - you want an original that is MIT or 3 clause BSD then copy like crazy).
 	This is the JavaScript(node.js) and Go version that I have on github.com.    Search google for "verhoeff algorithm".
 	[https://github.com/pschlump/verhoeff_algorithm](https://github.com/pschlump/verhoeff_algorithm)
-
 	Java script:  [https://github.com/yuyudhan/verhoeff.git](https://github.com/yuyudhan/verhoeff.git)  Do not copy this - it is proprietary code -  No LICENSE file at all.
-
 	Other solutions: License CC Attribution: [https://en.wikibooks.org/wiki/Algorithm_Implementation/Checksums/Verhoeff_Algorithm](https://en.wikibooks.org/wiki/Algorithm_Implementation/Checksums/Verhoeff_Algorithm)
-
-
-
+	Look at the LICENSE - is it OK to use?  What is a BSD 3 calause, an Apache Foundation version 2, a MIT License?  Use GOOGLE!
+2. 35pts - write a short C Program to calculate the Hamming distance between 0x43 and 0x121.
 3. 25pts - Provide the circuit diagram in mixed logic for
 
 	Dec1 = ( A & !B & !C & !D ) & !X & Y		
@@ -43,7 +40,7 @@ and run at least 4 examples of good and bad values for each.
 
 	<div class="pagebreak"></div>
 
-5. 50pts - Given the following truth table show the circuit for:
+5. 30pts - Given the following truth table show the circuit for:
 	( 74ls47 7-segment LED decoder  - see [https://buzztech.in/bcd-to-seven-segment-decoder-program-in-vhdl/](https://buzztech.in/bcd-to-seven-segment-decoder-program-in-vhdl/) )
 
 	I, J, K, L are inputs
