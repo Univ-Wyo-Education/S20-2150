@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"reflect"
 	"regexp"
 	"runtime"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -14,6 +16,7 @@ import (
 	"github.com/pschlump/MiscLib"
 	"github.com/pschlump/filelib"
 	"github.com/pschlump/godebug"
+	"gitlab.com/pschlump/PureImaginationServer/ymux"
 )
 
 // (in-prog) xyzzy400 - convert bytes of string into 0 term set of values (ASCII in memory and store) at pc...
@@ -559,11 +562,35 @@ func LookupSymbol(Name string) (st SymbolTableType, err error) {
 	return
 }
 
+// KeysFromMap returns an array of keys from a map.
+//
+// This is used like this:
+//
+//	keys := KeysFromMap(nameMap)
+//	sort.Strings(keys)
+//	for _, key := range keys {
+//		val := nameMap[key]
+//		...
+//	}
+//
+func KeysFromMap(a interface{}) (keys []string) {
+	xkeys := reflect.ValueOf(a).MapKeys()
+	keys = make([]string, len(xkeys))
+	for ii, vv := range xkeys {
+		keys[ii] = vv.String()
+	}
+	return
+}
+
 func DumpSymbolTable(fp *os.File) {
 	// xyzzy800 - Sort symbol table output before outputting
 	fmt.Fprintf(fp, "Symbol Table\n")
 	fmt.Fprintf(fp, "-------------------------------------------------------------\n")
-	for key, val := range SymbolTable {
+	keys := ymux.KeysFromMap(SymbolTable)
+	sort.Strings(keys)
+	// for key, val := range SymbolTable {
+	for _, key := range keys {
+		val := SymbolTable[key]
 		fmt.Fprintf(fp, "%s: %s\n", key, godebug.SVar(val))
 	}
 	fmt.Fprintf(fp, "-------------------------------------------------------------\n\n")
@@ -642,10 +669,10 @@ func MaxAddress(a, b Mac.AddressType) Mac.AddressType {
 	return b
 }
 
-var db1 = true // Leave True
-var db2 = true // Debug of Parsing code
+var db1 = true  // Leave True
+var db2 = false // Debug of Parsing code
 var db8 = false
 var db7 = false
-var db5 = false // HEX directive w/ hex output
-var db10 = true // test STR directive
-var db12 = true // test STR directive
+var db5 = false  // HEX directive w/ hex output
+var db10 = false // test STR directive
+var db12 = false // test STR directive

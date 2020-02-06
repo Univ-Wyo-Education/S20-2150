@@ -34,9 +34,7 @@ test003:
 	mkdir -p out ref
 	./asm --in test-code/test-HEX.mas --out ./out/test-HEX.hex -st ./out/test-HEX.st.out
 	diff ./out/test-HEX.hex ./ref/test-HEX.hex
-	sort -u <out/test-HEX.st.out >,a
-	sort -u <ref/test-HEX.st.out >,b
-	diff ,a ,b
+	diff out/test-HEX.st.out ref/test-HEX.st.out 
 
 # test for STR with hex values
 # Test for uppler lower op names (Case Insensitive)
@@ -53,4 +51,5 @@ test005:
 	mkdir -p out ref
 	./asm --in test-code/test-CHR.mas --out ./out/test-CHR.hex 
 	diff ./out/test-CHR.hex ./ref/test-CHR.hex
+
 
