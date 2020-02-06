@@ -708,7 +708,11 @@ ol {
 
 <div class="markdown-body">
 
-<h1>Error Correction Codes</h1>
+<h1>Error Correction and Detection</h1>
+
+<p>(Notes are probably too long for a single class so bring this back on Monday)</p>
+
+<h2>Error Correction Codes</h2>
 
 <p>First add to this error detection codes.  Luhn check.   Luhn is not the best check.
 If you are going to use one use Verhoeff - we will talk about that in a moment.
@@ -753,46 +757,246 @@ system used with</p>
 <p>The first step in validate a card is to use the Luhn algorithm. This is also
 called the Mod 10 algorithm. It was developed by Hans Luhn at IBM. This is a
 check-digit that is included at the end of the CC number. It is used to validate
-a variety of other identification numbers including,  IMEI numbers,
-Greek Social Security Numbers (ΑΜΚΑ),
-South African ID Numbers,
-Canadian Social Insurance Numbers,
-Israel ID Numbers,
-survey codes appearing on McDonald&rsquo;s, Taco Bell, and Tractor Supply Co. receipts.<br />
-U.S. Patent No.
-2,950,048 (now expired) has the details of how it works.</p>
+a variety of other identification numbers including,<br />
+1. IMEI numbers
+2. Greek Social Security Numbers (ΑΜΚΑ)
+3. South African ID Numbers,
+4. Canadian Social Insurance Numbers,
+5. Israel ID Numbers,
+6. survey codes appearing on McDonald&rsquo;s, Taco Bell, and Tractor Supply Co. receipts.<br />
+U.S. Patent No.  2,950,048 (now expired) has the details of how it works.</p>
 
-<p>xyzzy - below</p>
+<p>(This is in Homework 3 - so you get to implement this)</p>
 
-<pre><code>    Luhn check or the Mod 10 check, which can be described as follows (for illustration,
-    consider the card number 4388576018402626):
+<p>Luhn check also known as the Mod 10 check, can be described as follows (as an example let&rsquo;s use 4388576018402626 as our credit card number)
+(NOT A VALID CC NUMBER!):</p>
 
+<h3>Steps</h3>
 
+<ol>
+<li>Double every second digit from right to left. (Why Right to Left?  Think BCD numbers in COBOL).  If doubling of a digit results in a two-digit number, add up the two digits to get a single-digit number (for example: 14:1+4, 15=1+5).</li>
+<li>Now add all single-digit numbers from Step 1.
+<code>
+4 + 4 + 8 + 2 + 3 + 1 + 7 + 8 = 37
+</code></li>
+<li>Add all digits in the odd places from right to left in the credit card number.
+<code>
+6 + 6 + 0 + 8 + 0 + 7 + 8 + 3 = 38
+</code></li>
+<li>Sum the results from (2) and (3) above.
+<code>
+37 + 38 = 75
+</code></li>
+<li>If the result from Step 4 is divisible by 10, the card number is valid; otherwise, it is invalid.  In a BCD system this just meant to check
+that the least significant byte is 0.  This would be the &ldquo;sign&rdquo; positive nibble and the &ldquo;digit&rdquo; binary 0000.  In our code in &ldquo;C&rdquo; for example:
+<code>
+	if ( (sum%10) == 0 ) {
+</code></li>
+</ol>
 
-    Step 1. Double every second digit from right to left. If doubling of a digit results in a
-    two-digit number, add up the two digits to get a single-digit number (like for 12:1+2, 18=1+8).
+<h3>Examples</h3>
 
-    Step 2. Now add all single-digit numbers from Step 1.
-    4 + 4 + 8 + 2 + 3 + 1 + 7 + 8 = 37
+<p>(Consider using the following 2 as test data)</p>
 
-    Step 3. Add all digits in the odd places from right to left in the card number.
-    6 + 6 + 0 + 8 + 0 + 7 + 8 + 3 = 38
+<pre><code>		Input : 379354508162306
+		Output : 379354508162306 is Valid
+</code></pre>
 
-    Step 4. Sum the results from Step 2 and Step 3.
-    37 + 38 = 75
-
-    Step 5. If the result from Step 4 is divisible by 10, the card number is valid; otherwise, it is invalid.
-    Examples :
-
-    Input : 379354508162306
-    Output : 379354508162306 is Valid
-
-    Input : 4388576018402626
-    Output : 4388576018402626 is invalid
+<pre><code>		Input : 4388576018402626
+		Output : 4388576018402626 is invalid
 </code></pre>
 
 <p>See: <a href="https://www.geeksforgeeks.org/program-credit-card-number-validation/">https://www.geeksforgeeks.org/program-credit-card-number-validation/</a>
 <a href="https://en.wikipedia.org/wiki/Luhn_algorithm">https://en.wikipedia.org/wiki/Luhn_algorithm</a></p>
+
+<h2>State Machines</h2>
+
+<p>Why:<br />
+1. Regular expressions.<br />
+2. Capturing state in web applications.
+3. Scanners/Parsers
+4. Hardware</p>
+
+<p><img src="450px-Automata_theory.svg.png" alt="450px-Automata_theory.svg.png" /></p>
+
+<h3>Deterministic Finite Automata</h3>
+
+<p>My microwave!</p>
+
+<p><img src="Finite_state_machine_example_with_comments.svg.png" alt="Finite_state_machine_example_with_comments.svg.png" /></p>
+
+<h3>Non-Deterministic</h3>
+
+<p>Can convert automatically to deterministic.  Topic in Compiler Construction.</p>
+
+<p>Example - draw one on the board.</p>
+
+<h3>Regular Expressions</h3>
+
+<p>A regular expression is used all over for pattern matching in software.  Virtually every language has
+a regular-expression matcher.  Match a US Phone Number</p>
+
+<p>Match a string of characters:</p>
+
+<pre><code>	abc
+</code></pre>
+
+<p>Match 0 or more a&rsquo;s</p>
+
+<pre><code>	a*
+</code></pre>
+
+<p>Match 1 or more a&rsquo;s</p>
+
+<pre><code>	aa*
+</code></pre>
+
+<p>Match 1 or more a&rsquo;s</p>
+
+<pre><code>	a+
+</code></pre>
+
+<p>Match Beginning of line with 1 or more a&rsquo;s on it.</p>
+
+<pre><code>	^a+
+</code></pre>
+
+<p>Match Beginning of line to end of line with 1 or more a&rsquo;s on it.</p>
+
+<pre><code>	^a+$
+</code></pre>
+
+<p>Match a line of contain repeats of <code>abc</code>.</p>
+
+<pre><code>	^(abc)+$
+</code></pre>
+
+<p>Match letters between a and c with a character class:</p>
+
+<pre><code>	[abc]
+</code></pre>
+
+<p>Match 1 or more of letters between a and c with a character class:</p>
+
+<pre><code>	[abc]+
+</code></pre>
+
+<p>Match letters between a and z</p>
+
+<pre><code>	[a-z]
+</code></pre>
+
+<p>Match Upper and Lower Case a..z A..Z</p>
+
+<pre><code>	[a-zA-Z]
+</code></pre>
+
+<p>Match hex digits</p>
+
+<pre><code>	[0-9a-fA-F]+
+</code></pre>
+
+<p>Match An Optional 0x or 0X then a hex digit string</p>
+
+<pre><code>	(0[xX])?[0-9a-fA-F]+
+</code></pre>
+
+<p>Match a Phone Number</p>
+
+<pre><code>	[(][0-9]{3}[)]-[0-9]{3}-[0-9]{4}
+</code></pre>
+
+<p>Most regular expression systems have &lsquo;\d&rsquo; for <code>[0-9]</code> so</p>
+
+<pre><code>	[(]\d{3}[)] \d{3} \d{4}
+</code></pre>
+
+<h3>Hardware</h3>
+
+<p>All hardware is a push down acceptor or a Turing machine.</p>
+
+<p>In a digital circuit, an FSM may be built using a programmable logic device, a programmable logic controller, logic
+gates and flip flops.   Use use a &ldquo;register&rdquo; to store state and a block of &ldquo;logic&rdquo; to implement state transitions.</p>
+
+<p><img src="4_bit_counter.svg" alt="4_bit_counter.svg" /></p>
+
+<h2>One Hot Encoding</h2>
+
+<p>Encode each value to be a single value.</p>
+
+<p>So if we have &ldquo;Mike&rdquo; and &ldquo;Bob&rdquo; are names, and we have &ldquo;Has Dog Y/N&rdquo; in family.</p>
+
+<p>Raw Data</p>
+
+<pre><code>	Mike
+	Has Dog: N
+</code></pre>
+
+<p>and</p>
+
+<pre><code>	Bob
+	Has Dog: Y
+</code></pre>
+
+<p>We can build a 1 hot encoding with 3 columns:</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">Mike</th>
+<th align="center">Bob</th>
+<th align="center">Dog</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+
+<tr>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Hamming Distance</h2>
+
+<p>Given you have two binary numbers:</p>
+
+<pre><code>	0011
+	0101
+</code></pre>
+
+<p>The Hamming distance is how many 1&rsquo;s become 0&rsquo;s and how many 0&rsquo;s become 1&rsquo;s.
+So in the example:</p>
+
+<pre><code>	0011
+	0101
+ ^ --------
+    0110
+</code></pre>
+
+<p>Now count the bits giving us 2.</p>
+
+<p>This is going to be a midterm test question.</p>
+
+<p>It is covered in the book also.</p>
+
+<h1>Combine all of this together (DFA, 1-Hot) etc.</h1>
+
+<p>Combine all of this into a single thing.   Dr Mike B. Published this in the past 2 years as a paper.
+We will probably be using this for the design of hardware in the IOHK Research lab hear at UW.</p>
+
+<p>Example on board.</p>
+
+<h1>Copyright</h1>
+
+<p>Copyright &copy; University of Wyoming, 2019-2020.</p>
 
 </div>
 
