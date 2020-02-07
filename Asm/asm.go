@@ -45,6 +45,7 @@ func init() {
 	if runtime.GOOS == "windows" {
 		OnWindows = true
 	}
+	OnWindows = true
 }
 
 func main() {
@@ -91,6 +92,10 @@ func main() {
 
 	n_err := 0
 
+	if db14 {
+		fmt.Printf("Striping \\r?? OnWindows = %v", OnWindows)
+	}
+
 	// Pass 1
 	pc := Mac.AddressType(0)
 	for ii, line := range mes_lines {
@@ -98,6 +103,9 @@ func main() {
 
 		if OnWindows {
 			line = strings.TrimRight(line, "\r\n")
+		}
+		if line == "" {
+			continue
 		}
 
 		label, _ /*op_s*/, op, hand, err := ParseLine(line, line_no)
@@ -193,6 +201,9 @@ func main() {
 
 		if OnWindows {
 			line = strings.TrimRight(line, "\r\n")
+		}
+		if line == "" {
+			continue
 		}
 
 		_ /*label*/, _ /*op_s*/, op, hand, err := ParseLine(line, -line_no)
@@ -438,6 +449,7 @@ func main() {
 // Parsing
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 func ParseLine(line string, line_no int) (label string, op_s string, op Mac.OpCodeType, hand string, err error) {
+	op = Mac.OpN_A
 	godebug.DbPf(db2 || db8, "%s\nline[%d]=->%s<-%s at:%s\n", MiscLib.ColorCyan, line_no, line, MiscLib.ColorReset, godebug.LF())
 	r1 := regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-9_]*,")
 	r1a := regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-9_]*")
@@ -601,6 +613,7 @@ func DumpSymbolTable(fp *os.File) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 func ConvHand(hand string, base int) (handVal Mac.HandType, err error) {
+	hand = strings.TrimRight(hand, "\r\n \t")
 	handVal = Mac.HandType(-1)
 	if hand != "" {
 		st, e1 := LookupSymbol(hand)
@@ -670,9 +683,10 @@ func MaxAddress(a, b Mac.AddressType) Mac.AddressType {
 }
 
 var db1 = true  // Leave True
-var db2 = false // Debug of Parsing code
+var db2 = false // Debug of Parsing code		// xyzzy
 var db8 = false
 var db7 = false
 var db5 = false  // HEX directive w/ hex output
 var db10 = false // test STR directive
 var db12 = false // test STR directive
+var db14 = true  // DOS
