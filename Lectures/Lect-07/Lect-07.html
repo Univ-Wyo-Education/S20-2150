@@ -708,375 +708,78 @@ ol {
 
 <div class="markdown-body">
 
-<style>
-.pagebreak { page-break-before: always; }
-.half { height: 200px; }
-</style>
+<h1>Gates and Boolean Logic</h1>
 
-<h1>Homework 3 - Boolean Algebra - Gates / Error Detection</h1>
+<p>We have been hitting on this for some time.  Let&rsquo;s get serious about some gates
+and logic.</p>
 
-<p>Due Monday Feb ?? - by end of class.  You can turn in parts 4,5,6 on paper - 1,2,3 should be uploaded (Upload source code only).</p>
+<p>Last time we talked about a one-hot encoding.  We will be using (later in the year)
+a one-hot encoding in the MARIA instruction set.</p>
 
-<p>Remember that I have a grader and if you do not put your name on the top of
-your homework - you will <em>NOT</em> get credit.  That is bad after doing the work!</p>
+<p>Instruction 0x8000 is the Jump-Compare and Misc instruction.  The 2 bits after the 8
+determine how the compare is done.</p>
 
-<p>Points total: 200</p>
+<p>0x8000      = 0b_1000_0000_0000_0000</p>
 
-<p>Testing you are expected to produce a unit test for each of the following.   The test should print out &ldquo;PASS&rdquo; if it is successful
-and run at least 4 examples of good and bad values for each.</p>
+<p>0x8400      = 0b_1000_0100_0000_0000</p>
 
-<ol>
-<li>50pts - Implement a Luhn Verifier.  Implement in your choice of { C, C++, Python, Go, Haskell, F#, Swift, Kotlin }.</li>
-<li>35pts - Implement a Verhoeff verifier in { C, C++, Python, Go, Haskell, F#, Swift, Kotlin }.
-(Go steal the code in C - see link - and give credit, note the license - you want an original that is MIT or 3 clause BSD then copy like crazy).
-This is the JavaScript(node.js) and Go version that I have on github.com.    Search google for &ldquo;verhoeff algorithm&rdquo;.
-<a href="https://github.com/pschlump/verhoeff_algorithm">https://github.com/pschlump/verhoeff_algorithm</a>
-Java script:  <a href="https://github.com/yuyudhan/verhoeff.git">https://github.com/yuyudhan/verhoeff.git</a>  Do not copy this - it is proprietary code -  No LICENSE file at all.
-Other solutions: License CC Attribution: <a href="https://en.wikibooks.org/wiki/Algorithm_Implementation/Checksums/Verhoeff_Algorithm">https://en.wikibooks.org/wiki/Algorithm_Implementation/Checksums/Verhoeff_Algorithm</a>
-Look at the LICENSE - is it OK to use?  What is a BSD 3 calause, an Apache Foundation version 2, a MIT License?  Use GOOGLE!</li>
-<li>35pts - write a short C Program to calculate the Hamming distance between 0x43 and 0x121.</li>
+<p>0x8800      = 0b_1000_1000_0000_0000</p>
 
-<li><p>25pts - Provide the circuit diagram in mixed logic for</p>
-
-<p>Dec1 = ( A &amp; !B &amp; !C &amp; !D ) &amp; !X &amp; Y</p>
-
-<p>Dec2 = ( A &amp; !B &amp; !C &amp; !D ) &amp; X &amp; !Y</p>
-
-<p>Dec3 = ( A &amp; !B &amp; !C &amp; !D ) &amp; X &amp; Y</p>
-
-<p>(A&amp;!B&amp;!C&amp;!D) is a commmon sub-expression in the hardware.</p></li>
-
-<li><p>25pts - Derive the truth table for:</p>
-
-<p><img src="hw4.png" alt="hw4.png" /></p>
-
-<div class="pagebreak"></div></li>
-
-<li><p>30pts - Given the following truth table show the circuit for:
-( 74ls47 7-segment LED decoder  - see <a href="https://buzztech.in/bcd-to-seven-segment-decoder-program-in-vhdl/">https://buzztech.in/bcd-to-seven-segment-decoder-program-in-vhdl/</a> )</p>
-
-<p>I, J, K, L are inputs</p>
-
-<p>a, b, c, d, e, f, g are outputs</p></li>
-</ol>
+<p>Let&rsquo;s one-hot encode this 2 bit region.</p>
 
 <table>
 <thead>
 <tr>
-<th align="right">Decimal Digit</th>
-<th align="right">Hex</th>
-<th align="center">I</th>
-<th align="center">J</th>
-<th align="center">K</th>
-<th align="center">L</th>
-<th>&nbsp;</th>
-<th align="center">a</th>
-<th align="center">b</th>
-<th align="center">c</th>
-<th align="center">d</th>
-<th align="center">e</th>
-<th align="center">f</th>
-<th align="center">g</th>
-<th align="center">Display Pattern</th>
+<th align="right">Bits In</th>
+<th align="center">d0</th>
+<th align="center">d1</th>
+<th align="center">d2</th>
+<th align="center">Oth</th>
 </tr>
 </thead>
 
 <tbody>
 <tr>
-<td align="right">0</td>
-<td align="right">0x0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
+<td align="right">00</td>
 <td align="center">1</td>
 <td align="center">0</td>
-<td align="center"><img src="7-seg-0.svg" height="35px"></td>
+<td align="center">0</td>
+<td align="center">0</td>
 </tr>
 
 <tr>
-<td align="right">1</td>
-<td align="right">0x1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center"><img src="7-seg-1.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">2</td>
-<td align="right">0x2</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-2.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">3</td>
-<td align="right">0x3</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-3.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">4</td>
-<td align="right">0x4</td>
+<td align="right">01</td>
 <td align="center">0</td>
 <td align="center">1</td>
 <td align="center">0</td>
 <td align="center">0</td>
-<td></td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-4.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">5</td>
-<td align="right">0x5</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-5.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">6</td>
-<td align="right">0x6</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-6.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">7</td>
-<td align="right">0x7</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center"><img src="7-seg-7.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">8</td>
-<td align="right">0x8</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-8.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">9</td>
-<td align="right">0x9</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-9.svg" height="35px"></td>
 </tr>
 
 <tr>
 <td align="right">10</td>
-<td align="right">0xA</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
 <td align="center">0</td>
 <td align="center">0</td>
 <td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
+<td align="center">0</td>
 </tr>
 
 <tr>
 <td align="right">11</td>
-<td align="right">0xB</td>
-<td align="center">1</td>
 <td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
 <td align="center">0</td>
 <td align="center">0</td>
 <td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">12</td>
-<td align="right">0xC</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">13</td>
-<td align="right">0xD</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">14</td>
-<td align="right">0xE</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
-</tr>
-
-<tr>
-<td align="right">15</td>
-<td align="right">0xF</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td></td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center"><img src="7-seg-E.svg" height="35px"></td>
 </tr>
 </tbody>
 </table>
 
-<h1>Copyright</h1>
+<p>This matches with a 74ls155 dual 2 to 4 bit decoder.</p>
 
-<p>7 Segment Display is modified from Wikimedia Commons CC Attribution license.</p>
+<dl>
+<dt>Show Data Sheet.</dt>
+</dl>
 
-<p>Copyright &copy; University of Wyoming, 2020.</p>
+<p>:e ~/</p>
 
 </div>
 
