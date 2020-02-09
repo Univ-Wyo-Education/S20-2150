@@ -91,9 +91,7 @@ func main() {
 	mes_lines := strings.Split(mes, "\n")
 
 	n_err := 0
-
-	if db14 {
-	}
+	n_ins := 0
 
 	memBuf0 := make([]uint64, 256, 256) // Memory is 256 address, 64 wide
 
@@ -150,12 +148,14 @@ func main() {
 
 		}
 
+		n_ins++
 		memBuf0[mpc&0xff] = eu
 		mpc++
 
 	}
 
 	if db1 {
+		fmt.Fprintf(stOut, "# Of Instructions: %d\n", n_ins)
 		DumpSymbolTable(stOut)
 	}
 

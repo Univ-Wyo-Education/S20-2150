@@ -31,12 +31,26 @@
 		<!-- Connection from IR to Bus -->
 		<rect id="id_ir_to_bus" x="200" y="130" width="1" height="160" class="input-line" />
 		<rect id="id_ir_sw" x="175" y="230" width="50" height="45" class="gray-box" />
-			<text x="230" y="245" class="vsmall">Hand Out</text>
+			<text x="230" y="233" class="vsmall">Hand Out</text>
+			<text x="230" y="245" class="vsmall">Hand[12]</text>
 			<rect id="id_hand_out_a" x="225" y="250" width="60" height="1" class="input-line" />
 			<rect id="id_hand_out_b" x="285" y="250" width="1" height="40" class="input-line" />
-			<polygon id="arrow_001"
-				points=" 316,247    325,250 325,250       316,247 "
-				fill="#000000" stroke="#000000" stroke-width="1" />
+
+			<!-- arrow for hand-out to buss -->
+			<line x1="285" y1="290" x2="280" y2="285" style="stroke:rgb(0,0,0);stroke-width:3" />
+			<line x1="285" y1="290" x2="290" y2="285" style="stroke:rgb(0,0,0);stroke-width:3" />
+
+			<rect id="id_decode_msb_4" x="200" y="170" width="100" height="1" class="input-line" />
+				<text x="205" y="155" class="vsmall">IR(15..12)[4] to </text>
+				<text x="205" y="167" class="vsmall">decoder 11</text>
+			<rect id="id_decode_xIns_4" x="200" y="200" width="100" height="1" class="input-line" />
+				<text x="205" y="185" class="vsmall">IR(11..9)[4] to </text>
+				<text x="205" y="195" class="vsmall">decoder 10</text>
+
+			<!-- xyzzy - IR MSB[4] to Decodeer_In_01 -->
+			<!-- xyzzy - IR other[4] to Decodeer_In_02 -->
+			<!-- xyzzy - Decoder == 11, connect to bus -->
+
 	<rect id="id_result" x="300" y="30" width="50" height="100" class="teal-box" />
 		<text x="300" y="25" class="small">Result</text>
 		<rect id="id_result_Ld" x="350" y="40" width="20" height="1" class="input-line" />
@@ -45,6 +59,12 @@
 			<text x="355" y="55" class="vsmall">Out</text>
 		<rect id="id_result_clr" x="350" y="100" width="20" height="1" class="input-line" />
 			<text x="355" y="95" class="vsmall">Clr</text>
+		<rect id="id_result_zero_out" x="350" y="120" width="47" height="1" class="input-line" />
+			<text x="355" y="115" class="vsmall">Is Zero</text>
+			<!-- arrow for is zero - output from IR -->
+			<line x1="397" y1="120" x2="392" y2="115" style="stroke:rgb(0,0,0);stroke-width:3" />
+			<line x1="397" y1="120" x2="392" y2="125" style="stroke:rgb(0,0,0);stroke-width:3" />
+
 		<!-- Connection from Result to Bus -->
 		<rect id="id_result_to_bus" x="325" y="130" width="1" height="160" class="input-line" />
 	<polygon id="id_ALU"
@@ -65,6 +85,17 @@
 		<rect id="id_ac_to_Bus_pt1" x="500" y="120" width="40" height="1" class="input-line" />
 		<!-- Connection from ALU to Bus Pt2 -->
 		<rect id="id_ac_to_Bus_pt2" x="540" y="120" width="1" height="170" class="input-line" />
+
+			<!-- arrow for AC to Result -->
+			<line x1="352" y1="80" x2="357" y2="75" style="stroke:rgb(0,0,0);stroke-width:3" />
+			<line x1="352" y1="80" x2="357" y2="85" style="stroke:rgb(0,0,0);stroke-width:3" />
+			<!-- arrow for AC Input A (from AC register) -->
+			<line x1="502" y1="40" x2="507" y2="35" style="stroke:rgb(0,0,0);stroke-width:3" />
+			<line x1="502" y1="40" x2="507" y2="45" style="stroke:rgb(0,0,0);stroke-width:3" />
+			<!-- arrow for AC Input B (from buss) -->
+			<line x1="502" y1="120" x2="507" y2="115" style="stroke:rgb(0,0,0);stroke-width:3" />
+			<line x1="502" y1="120" x2="507" y2="125" style="stroke:rgb(0,0,0);stroke-width:3" />
+
 	<rect id="id_ac" x="600" y="30" width="50" height="100" class="teal-box" />
 		<text x="600" y="25" class="small">AC</text>
 		<rect id="id_result_Ld" x="650" y="40" width="20" height="1" class="input-line" />
@@ -77,6 +108,8 @@
 		<rect id="id_ac_to_bus" x="625" y="130" width="1" height="160" class="input-line" />
 	<rect id="id_microcode" x="750" y="30" width="400" height="100" fill="#c0a0a0" stroke="#000000" stroke-width="3" />
 		<text x="750" y="25" class="small">Microcode</text>
+		<text x="754" y="47" class="small">Address 256 Words</text>
+		<text x="754" y="67" class="small">Data 64 bits wide</text>
 	<rect id="id_microcode_pc" x="1200" y="30" width="100" height="50" fill="#ffd700" stroke="#000000" stroke-width="3" />
 		<text x="1200" y="25" class="small">Microcode PC</text>
 		<rect id="id_microcode_pc_Ld" x="1300" y="40" width="20" height="1" class="input-line" />
@@ -195,6 +228,8 @@
 		<rect id="id_mar_to_memory" x="570" y="375" width="1" height="45" class="input-line" />
 	<rect id="id_memory" x="250" y="420" width="400" height="250" fill="#d0d0d0" stroke="#000000" stroke-width="1" />
 		<text x="400" y="415" class="small">Main Memory</text>
+		<text x="254" y="440" class="small">Address 8K Words</text>
+		<text x="254" y="460" class="small">Data 16 bits wide</text>
 		<rect id="id_mdr_Ld" x="650" y="440" width="40" height="1" class="input-line" />
 			<text x="655" y="434" class="vsmall">Read</text>
 		<rect id="id_mdr_Ld" x="650" y="460" width="40" height="1" class="input-line" />
