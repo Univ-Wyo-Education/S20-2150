@@ -1,25 +1,31 @@
 <?xml version="1.0"?>
 <svg width="1640" height="1480" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
- <style>
-	.small { font: italic 15px sans-serif; }
-	.vsmall { font: italic 12px sans-serif; }
-	.teal-box { fill:#00ffff; stroke:#000000; stroke-width:3; }
+<head>
+<style>
+	.small      { font: italic 15px sans-serif; }
+	.vsmall     { font: italic 12px sans-serif; }
+	.teal-box   { fill:#00ffff; stroke:#000000; stroke-width:3; }
 	.yellow-box { fill:#ffff00; stroke:#000000; stroke-width:3; }
-	.white-box { fill:#ffffff; stroke:#000000; stroke-width:3; }
-	.gray-box { fill:#d0d0d0; stroke:#000000; stroke-width:3; }
+	.white-box  { fill:#ffffff; stroke:#000000; stroke-width:3; }
+	.gray-box   { fill:#d0d0d0; stroke:#000000; stroke-width:3; }
+	.white-box  { fill:#e0e0e0; stroke:#000000; stroke-width:3; }
 	.input-line { fill:#000000; stroke:#000000; stroke-width:1; }
-	.red-line { fill:#f00000; stroke:#000000; stroke-width:1; }
- </style>
+	.red-line   { fill:#f00000; stroke:#000000; stroke-width:1; }
+	.out-box    { fill:#ffffff; stroke:#000000; stroke-width:1; }
+</style>
+<script src="js/jquery-3.3.1.js" type="text/javascript"></script>
+<script src="js/popper-1.14.7.js" type="text/javascript"></script>
+</head>
  <g class="layer">
 	<title>Simple CPU - For Microcoding - CoSc 2150 2020-02-07</title>
-	<rect id="id_pc" x="75" y="30" width="50" height="100" class="teal-box" />
+	<rect id="id_pc" x="75" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_pc',1,2,3,4);"/>
 		<text x="75" y="25" class="small">PC</text>
 		<rect id="id_pc_Ld" x="125" y="40" width="20" height="1" class="input-line" />
-			<text x="130" y="35" class="vsmall">Ld</text>
+			<text x="130" y="35" class="vsmall" onclick="infoOn('id_pc_Ld',1,2,3,4);">Ld</text>
 		<rect id="id_pc_inc" x="125" y="60" width="20" height="1" class="input-line" />
-			<text x="130" y="55" class="vsmall">Inc</text>
+			<text x="130" y="55" class="vsmall" onclick="infoOn('id_pc_Inc',1,2,3,4);">Inc</text>
 		<rect id="id_pc_out" x="125" y="80" width="20" height="1" class="input-line" />
-			<text x="130" y="75" class="vsmall">Out</text>
+			<text x="130" y="75" class="vsmall" onclick="infoOn('id_pc_Out',1,2,3,4);">Out</text>
 		<!-- Connection from PC to Bus -->
 		<rect id="id_pc_to_bus" x="100" y="130" width="1" height="160" class="input-line" />
 	<rect id="id_ir" x="175" y="30" width="50" height="100" class="teal-box" />
@@ -50,6 +56,14 @@
 			<!-- xyzzy - IR MSB[4] to Decodeer_In_01 -->
 			<!-- xyzzy - IR other[4] to Decodeer_In_02 -->
 			<!-- xyzzy - Decoder == 11, connect to bus -->
+			<!-- From microcode.m2
+				Decoer Inputs
+					CTL		Line/Instruction
+					00		82,124	/ Microcode Jmp (Halt, Unused)
+					01		138,144,150 / Jump if (Is Zero) from Result/Cmp - Microcode PC Inc Twice
+					10		133 / OkSkip { OkSkipEe0, OkSkipGt0, OkSkipLt0 }
+					11		22  / Common IR Decode
+			-->
 
 	<rect id="id_result" x="300" y="30" width="50" height="100" class="teal-box" />
 		<text x="300" y="25" class="small">Result</text>
@@ -76,7 +90,7 @@
 		<rect id="id_ALU_ctl_3" x="430" y="112" width="1" height="41" class="input-line" />
 		<rect id="id_ALU_ctl_4" x="435" y="113" width="1" height="40" class="input-line" />
 			<text x="440" y="142" class="vsmall">ALU ctl</text>
-			<text x="440" y="152" class="vsmall">1..4</text>
+			<text x="440" y="152" class="vsmall">0..3</text>
 		<!-- Connection from ALU to Result -->
 		<rect id="id_ALU_to_result" x="350" y="80" width="50" height="1" class="input-line" />
 		<!-- Connection from ALU to AC -->
@@ -226,7 +240,7 @@
 		<rect id="id_mdr_to_bus" x="570" y="290" width="1" height="33" class="input-line" />
 		<!-- Connection from mdr to Main Memory -->
 		<rect id="id_mar_to_memory" x="570" y="375" width="1" height="45" class="input-line" />
-	<rect id="id_memory" x="250" y="420" width="400" height="250" fill="#d0d0d0" stroke="#000000" stroke-width="1" />
+	<rect id="id_memory" x="250" y="420" width="400" height="250" fill="#d0d0d0" stroke="#000000" stroke-width="1" onclick="infoOn('id_memory',254,480,400,860);"/>
 		<text x="400" y="415" class="small">Main Memory</text>
 		<text x="254" y="440" class="small">Address 8K Words</text>
 		<text x="254" y="460" class="small">Data 16 bits wide</text>
@@ -257,5 +271,27 @@
 				<text x="1140" y="144" class="vsmall">Out[8] </text>
 		</g>
 		-->
+
+	<rect id="out_box" x="750" y="420" width="650" height="300" class="out-box" />
+	<div id="output"></div>
+
  </g>
+<script>
+function infoOn(x,x1,y1,x2,y2) {
+	alert("svg/id:"+x+" ("+x1+","+y1+") ("+x2+","+y2+")");
+	switch ( x ) {
+	case "id_memory":
+		jQuery("#"+x).css("fill","#ff0000");
+		break;
+	case "id_pc":
+		break;
+	case "id_pc_Ld":
+		break;
+	case "id_pc_Inc":
+		break;
+	case "id_pc_Out":
+		break;
+	}
+}
+</script>
 </svg>

@@ -11,7 +11,7 @@
 	.red-line   { fill:#f00000; stroke:#000000; stroke-width:1; }
 	.out-box    { fill:#ffffff; stroke:#000000; stroke-width:1; }
 	.blue-line  { fill:#000000; stroke:#4040ff; stroke-width:3; fill:none }
-	.button-box { fill:#ffff00; stroke:#000000; stroke-width:2; opacity:0.75 }
+	.button-box { fill:#b4c5fb; stroke:#000000; stroke-width:2; opacity:0.75 }
 </style>
 <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
 <script src="js/popper-1.14.7.js" type="text/javascript"></script>
@@ -28,6 +28,8 @@
 			<text x="130" y="55" class="vsmall" onclick="infoOn('id_pc_Inc',1,2,3,4);">Inc</text>
 		<rect id="id_pc_out" x="125" y="80" width="20" height="1" class="input-line" />
 			<text x="130" y="75" class="vsmall" onclick="infoOn('id_pc_Out',1,2,3,4);">Out</text>
+		<rect id="id_pc_clr" x="125" y="100" width="20" height="1" class="input-line" />
+			<text x="130" y="95" class="vsmall" onclick="infoOn('id_pc_Out',1,2,3,4);">Clr</text>
 		<!-- Connection from PC to Bus -->
 		<rect id="id_pc_to_bus" x="100" y="130" width="1" height="160" class="input-line" />
 	<rect id="id_ir" x="175" y="30" width="50" height="100" class="teal-box" />
@@ -48,12 +50,12 @@
 			<line x1="285" y1="290" x2="280" y2="285" style="stroke:rgb(0,0,0);stroke-width:3" />
 			<line x1="285" y1="290" x2="290" y2="285" style="stroke:rgb(0,0,0);stroke-width:3" />
 
-			<rect id="id_decode_msb_4" x="200" y="170" width="100" height="1" class="input-line" />
-				<text x="205" y="155" class="vsmall">IR(15..12)[4] to </text>
-				<text x="205" y="167" class="vsmall">decoder 11</text>
-			<rect id="id_decode_xIns_4" x="200" y="200" width="100" height="1" class="input-line" />
-				<text x="205" y="185" class="vsmall">IR(11..9)[4] to </text>
-				<text x="205" y="195" class="vsmall">decoder 10</text>
+			<rect id="id_decode_msb_4" x="200" y="170" width="100" height="1" class="input-line" onclick="infoOn('ir_decode_g1',0,0,0,0);"/>
+				<text x="205" y="155" class="vsmall" onclick="infoOn('ir_decode_g1',0,0,0,0);">IR(15..12)[4] to </text>
+				<text x="205" y="167" class="vsmall" onclick="infoOn('ir_decode_g1',0,0,0,0);">decoder 0b11</text>
+			<rect id="id_decode_xIns_4" x="200" y="200" width="100" height="1" class="input-line" onclick="infoOn('ir_decode_g2',0,0,0,0);" />
+				<text x="205" y="185" class="vsmall" onclick="infoOn('ir_decode_g2',0,0,0,0);">IR(11..8)[4] to </text>
+				<text x="205" y="195" class="vsmall" onclick="infoOn('ir_decode_g2',0,0,0,0);">decoder 0b10</text>
 
 			<!-- xyzzy - IR MSB[4] to Decodeer_In_01 -->
 			<!-- xyzzy - IR other[4] to Decodeer_In_02 -->
@@ -164,7 +166,7 @@
 			</g>
 		<rect id="id_Microcode_Out[3]pc_ctl"  x="1040"   y="130"   width="1"    height="125"     class="input-line" />
 			<g transform="rotate(90 1000 400) translate(-390 94)">
-				<text x="1128" y="260" class="vsmall">PC[3] Ld/Inc/Out</text>
+				<text x="1128" y="260" class="vsmall">PC[4] Ld/Inc/Out/Clr</text>
 			</g>
 		<rect id="id_Microcode_Out[3]ir_ctl"  x="1020"   y="130"   width="1"    height="125"     class="input-line" />
 			<g transform="rotate(90 1000 400) translate(-390 114)">
@@ -276,9 +278,31 @@
 
 	<rect id="out_box" x="750" y="420" width="650" height="300" class="out-box" />
 
-<!-- Blue Connection Lines 
-	900 is 1st line out on MM 
--->
+<!-- Text Output -->
+	<text id="line_0"  x="755" y="435" class="small" ></text>
+	<text id="line_1"  x="755" y="455" class="small" ></text>
+	<text id="line_2"  x="755" y="475" class="small" ></text>
+	<text id="line_3"  x="755" y="495" class="small" ></text>
+	<text id="line_4"  x="755" y="515" class="small" ></text>
+	<text id="line_5"  x="755" y="535" class="small" ></text>
+	<text id="line_6"  x="755" y="555" class="small" ></text>
+	<text id="line_7"  x="755" y="575" class="small" ></text>
+	<text id="line_8"  x="755" y="595" class="small" ></text>
+	<text id="line_9"  x="755" y="615" class="small" ></text>
+	<text id="line_10" x="755" y="635" class="small" ></text>
+	<text id="line_11" x="755" y="655" class="small" ></text>
+	<text id="line_12" x="755" y="675" class="small" ></text>
+	<text id="line_13" x="755" y="695" class="small" ></text>
+	<text id="line_14" x="755" y="715" class="small" ></text>
+	<text id="line_15" x="755" y="735" class="small" ></text>
+	<text id="line_16" x="755" y="755" class="small" ></text>
+	<!--
+	<text id="line_17" x="755" y="775" class="small" ></text>
+	<text id="line_18" x="755" y="795" class="small" ></text>
+	<text id="line_19" x="755" y="815" class="small" ></text>
+	-->
+
+<!-- Blue Connection Lines ==== 900 is 1st line out on MM -->
 	<path id="pc_Ld_to_microcode" class="blue-line"
 		d="M 125 40   L 160 40  160 220  700 220  700 280 1040 280 1040 130  "
 		/>
@@ -289,9 +313,36 @@
 		d="M 125 80   L 160 80  160 220  700 220  700 280 1040 280 1040 130  "
 		/>
 
+	<path id="ir_15_12_to_decoder_11" class="blue-line"
+		d="M 200 170   L  705 170  705 280   1175 280 1175 240  1200 240 "
+		/>
+
 <!-- Buttons -->
-		<rect id="clear-line" x="40" y="360" rx="10" ry="10" width="100" height="25" class="button-box" onclick="infoOn('clear-line',0,0,0,0);"/>
+		<rect id="help" x="40" y="320" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('help',0,0,0,0);"/>
+		<text x="45" y="337" class="small" onclick="infoOn('help',0,0,0,0);">Help</text>
+
+		<rect id="clear-line" x="40" y="360" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('clear-line',0,0,0,0);"/>
 		<text x="45" y="377" class="small" onclick="infoOn('clear-line',0,0,0,0);">Clear Lines</text>
+
+		<rect id="clear-line" x="40" y="400" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('load-memory',0,0,0,0);"/>
+		<text x="45" y="417" class="small" onclick="infoOn('load-memory',0,0,0,0);">Load Memory</text>
+
+		<rect id="clear-line" x="40" y="440" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('step',0,0,0,0);"/>
+		<text x="45" y="457" class="small" onclick="infoOn('step',0,0,0,0);">Step</text>
+
+		<rect id="clear-line" x="40" y="480" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('run',0,0,0,0);"/>
+		<text x="45" y="497" class="small" onclick="infoOn('run',0,0,0,0);">Run</text>
+
+		<rect id="clear-line" x="40" y="520" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('input',0,0,0,0);"/>
+		<text x="45" y="537" class="small" onclick="infoOn('input',0,0,0,0);">Input</text>
+
+		<rect id="clear-line" x="40" y="560" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('reset',0,0,0,0);"/>
+		<text x="45" y="577" class="small" onclick="infoOn('reset',0,0,0,0);">Reset</text>
+
+		<rect id="clear-line" x="40" y="600" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('load-mc',0,0,0,0);"/>
+		<text x="45" y="617" class="small" onclick="infoOn('load-mc',0,0,0,0);">Load Microcode</text>
+
+
 
  </g>
 </svg>
@@ -301,6 +352,7 @@ var lineOn = [
 	 "#pc_Ld_to_microcode"
 	,"#pc_Inc_to_microcode"
 	,"#pc_Out_to_microcode"
+	,"#ir_15_12_to_decoder_11" 
 ];	// List of IDs of lines that are turned-on
 
 function clearOtherLine() {
@@ -317,6 +369,16 @@ function showLine(id) {
 	clearOtherLine()
 	$(id).show();
 	lineOn.push(id);
+}
+
+function showTextInOutputBox(text) {
+	var i = 0;
+	for ( var mx = arguments.length; i < mx && i < 16; i++ ) {
+		$("#line_"+i).html(arguments[i]);
+	}
+	for ( ; i < 16; i++ ) {
+		$("#line_"+i).html("");
+	}
 }
 
 function infoOn(x,x1,y1,x2,y2) {
@@ -339,6 +401,16 @@ function infoOn(x,x1,y1,x2,y2) {
 		break;
 	case "id_pc_Out":
 		showLine("#pc_Out_to_microcode");
+		break;
+	case "help":
+		showTextInOutputBox("CoSc 2150 - Maria Microcode Emulator", "Load assembled microcoe and assembled instructions, then step or run.", "", "https://github.com/Univ-Wyo-Education/S20-2150/McDocs/ for more detailed help.","","Click on a line to see where the input connects to.  Try Ld near the PC register.");
+		break;
+	case "ir_decode_g1":
+		showLine("#ir_15_12_to_decoder_11");
+		showTextInOutputBox("Instruction decode use 1 bit of output from the Microcode Out[8] (Out_7)","then 4 bits of the IR, the 3 bits of Out[8] (Out_2, Out_1, Out_0).")
+		break;
+	case "ir_decode_g2":
+		showLine("#ir_11_8_to_decoeer_10");	// xyzzy
 		break;
 	}
 }
