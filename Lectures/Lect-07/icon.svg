@@ -5,6 +5,7 @@
 	.vsmall { font: italic 12px sans-serif; }
 	.teal-box { fill:#00ffff; stroke:#000000; stroke-width:3; }
 	.yellow-box { fill:#ffff00; stroke:#000000; stroke-width:3; }
+	.white-box { fill:#ffffff; stroke:#000000; stroke-width:3; }
 	.input-line { fill:#000000; stroke:#000000; stroke-width:1; }
  </style>
  <g class="layer">
@@ -180,6 +181,19 @@
 			class="input-line"
 			/>
 			<text x="1305" y="55" class="vsmall">Clr</text>
+	<!-- Decoder | 4 Inputs | -->
+	<!-- id="decoder_ctl_0" -->
+	<!-- id="decoder_ctl_1" -->
+	<polygon id="id_decoder"
+		points=" 1200,180	1200,250 1280,220       1200,180 "
+		fill="#f0fff0"
+		stroke="#ff0000"
+		stroke-width="3"
+		/>
+			<text x="1220" y="180" class="small">Decoder</text>
+			<!-- xyzzy Decoder Control Lines 2? or 3? -->
+			<!-- xyzzy Decoder Output to Microcode_PC Input -->
+			<!-- xyzzy Decoder Input from Bus -->
 	<rect id="id_main_bus"
 		x="25" y="290"
 		width="1500"
@@ -266,5 +280,55 @@
 		stroke-width="1"
 		/>
 		<text x="400" y="415" class="small">Main Memory</text>
+	<rect id="id_output"
+		x="1200" y="324"
+		width="100"
+		height="50"
+		class="white-box"
+		/>
+		<text x="1200" y="319" class="small">Output</text>
+		<rect id="id_output_Ld"
+			x="1300" y="340"
+			width="20" height="1"
+			class="input-line"
+			/>
+			<text x="1305" y="334" class="vsmall">Ld</text>
+		<rect id="id_output_Out"
+			x="1300" y="360"
+			width="20" height="1"
+			class="input-line"
+			/>
+			<text x="1305" y="355" class="vsmall">Out</text>
+		<!-- Connection from output to Bus -->
+		<rect id="id_output_to_bus"
+			x="1250" y="290"
+			width="1" height="33"
+			class="input-line"
+			/>
+	<rect id="id_input"
+		x="1000" y="324"
+		width="100"
+		height="50"
+		class="white-box"
+		/>
+		<text x="1000" y="319" class="small">Input</text>
+		<rect id="id_input_Ld"
+			x="1100" y="340"
+			width="20" height="1"
+			class="input-line"
+			/>
+			<text x="1105" y="334" class="vsmall">Ld</text>
+		<rect id="id_input_Out"
+			x="1100" y="360"
+			width="20" height="1"
+			class="input-line"
+			/>
+			<text x="1105" y="355" class="vsmall">Out</text>
+		<!-- Connection from input to Bus -->
+		<rect id="id_input_to_bus"
+			x="1050" y="290"
+			width="1" height="33"
+			class="input-line"
+			/>
  </g>
 </svg>
