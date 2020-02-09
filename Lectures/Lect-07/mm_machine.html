@@ -1,0 +1,348 @@
+<head>
+<style>
+	.small      { font: italic 15px sans-serif; }
+	.vsmall     { font: italic 12px sans-serif; }
+	.teal-box   { fill:#00ffff; stroke:#000000; stroke-width:3; }
+	.yellow-box { fill:#ffff00; stroke:#000000; stroke-width:3; }
+	.white-box  { fill:#ffffff; stroke:#000000; stroke-width:3; }
+	.gray-box   { fill:#d0d0d0; stroke:#000000; stroke-width:3; }
+	.white-box  { fill:#e0e0e0; stroke:#000000; stroke-width:3; }
+	.input-line { fill:#000000; stroke:#000000; stroke-width:1; }
+	.red-line   { fill:#f00000; stroke:#000000; stroke-width:1; }
+	.out-box    { fill:#ffffff; stroke:#000000; stroke-width:1; }
+	.blue-line  { fill:#000000; stroke:#4040ff; stroke-width:3; fill:none }
+	.button-box { fill:#ffff00; stroke:#000000; stroke-width:2; opacity:0.75 }
+</style>
+<script src="js/jquery-3.3.1.js" type="text/javascript"></script>
+<script src="js/popper-1.14.7.js" type="text/javascript"></script>
+</head>
+<body>
+<svg width="1640" height="1480" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <g class="layer">
+	<title>Simple CPU - For Microcoding - CoSc 2150 2020-02-07</title>
+	<rect id="id_pc" x="75" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_pc',1,2,3,4);"/>
+		<text x="75" y="25" class="small">PC</text>
+		<rect id="id_pc_Ld" x="125" y="40" width="20" height="1" class="input-line" />
+			<text x="130" y="35" class="vsmall" onclick="infoOn('id_pc_Ld',1,2,3,4);">Ld</text>
+		<rect id="id_pc_inc" x="125" y="60" width="20" height="1" class="input-line" />
+			<text x="130" y="55" class="vsmall" onclick="infoOn('id_pc_Inc',1,2,3,4);">Inc</text>
+		<rect id="id_pc_out" x="125" y="80" width="20" height="1" class="input-line" />
+			<text x="130" y="75" class="vsmall" onclick="infoOn('id_pc_Out',1,2,3,4);">Out</text>
+		<!-- Connection from PC to Bus -->
+		<rect id="id_pc_to_bus" x="100" y="130" width="1" height="160" class="input-line" />
+	<rect id="id_ir" x="175" y="30" width="50" height="100" class="teal-box" />
+		<text x="175" y="25" class="small">IR</text>
+		<rect id="id_ir_Ld" x="225" y="40" width="20" height="1" class="input-line" />
+			<text x="230" y="35" class="vsmall">Ld</text>
+		<rect id="id_ir_out" x="225" y="60" width="20" height="1" class="input-line" />
+			<text x="230" y="55" class="vsmall">Out</text>
+		<!-- Connection from IR to Bus -->
+		<rect id="id_ir_to_bus" x="200" y="130" width="1" height="160" class="input-line" />
+		<rect id="id_ir_sw" x="175" y="230" width="50" height="45" class="gray-box" />
+			<text x="230" y="233" class="vsmall">Hand Out</text>
+			<text x="230" y="245" class="vsmall">Hand[12]</text>
+			<rect id="id_hand_out_a" x="225" y="250" width="60" height="1" class="input-line" />
+			<rect id="id_hand_out_b" x="285" y="250" width="1" height="40" class="input-line" />
+
+			<!-- arrow for hand-out to buss -->
+			<line x1="285" y1="290" x2="280" y2="285" style="stroke:rgb(0,0,0);stroke-width:3" />
+			<line x1="285" y1="290" x2="290" y2="285" style="stroke:rgb(0,0,0);stroke-width:3" />
+
+			<rect id="id_decode_msb_4" x="200" y="170" width="100" height="1" class="input-line" />
+				<text x="205" y="155" class="vsmall">IR(15..12)[4] to </text>
+				<text x="205" y="167" class="vsmall">decoder 11</text>
+			<rect id="id_decode_xIns_4" x="200" y="200" width="100" height="1" class="input-line" />
+				<text x="205" y="185" class="vsmall">IR(11..9)[4] to </text>
+				<text x="205" y="195" class="vsmall">decoder 10</text>
+
+			<!-- xyzzy - IR MSB[4] to Decodeer_In_01 -->
+			<!-- xyzzy - IR other[4] to Decodeer_In_02 -->
+			<!-- xyzzy - Decoder == 11, connect to bus -->
+			<!-- From microcode.m2
+				Decoer Inputs
+					CTL		Line/Instruction
+					00		82,124	/ Microcode Jmp (Halt, Unused)
+					01		138,144,150 / Jump if (Is Zero) from Result/Cmp - Microcode PC Inc Twice
+					10		133 / OkSkip { OkSkipEe0, OkSkipGt0, OkSkipLt0 }
+					11		22  / Common IR Decode
+			-->
+
+	<rect id="id_result" x="300" y="30" width="50" height="100" class="teal-box" />
+		<text x="300" y="25" class="small">Result</text>
+		<rect id="id_result_Ld" x="350" y="40" width="20" height="1" class="input-line" />
+			<text x="355" y="35" class="vsmall">Ld</text>
+		<rect id="id_result_out" x="350" y="60" width="20" height="1" class="input-line" />
+			<text x="355" y="55" class="vsmall">Out</text>
+		<rect id="id_result_clr" x="350" y="100" width="20" height="1" class="input-line" />
+			<text x="355" y="95" class="vsmall">Clr</text>
+		<rect id="id_result_zero_out" x="350" y="120" width="47" height="1" class="input-line" />
+			<text x="355" y="115" class="vsmall">Is Zero</text>
+			<!-- arrow for is zero - output from IR -->
+			<line x1="397" y1="120" x2="392" y2="115" style="stroke:rgb(0,0,0);stroke-width:3" />
+			<line x1="397" y1="120" x2="392" y2="125" style="stroke:rgb(0,0,0);stroke-width:3" />
+
+		<!-- Connection from Result to Bus -->
+		<rect id="id_result_to_bus" x="325" y="130" width="1" height="160" class="input-line" />
+	<polygon id="id_ALU"
+		points=" 500,30	400,60 400,100 500,130 500,110 480,100 480,60 500,50	 500,30 "
+		fill="#80ff80" stroke="#000000" stroke-width="3" />
+		<text x="400" y="45" class="small">ALU</text>
+		<rect id="id_ALU_ctl_1" x="420" y="108" width="1" height="45" class="input-line" />
+		<rect id="id_ALU_ctl_2" x="425" y="110" width="1" height="43" class="input-line" />
+		<rect id="id_ALU_ctl_3" x="430" y="112" width="1" height="41" class="input-line" />
+		<rect id="id_ALU_ctl_4" x="435" y="113" width="1" height="40" class="input-line" />
+			<text x="440" y="142" class="vsmall">ALU ctl</text>
+			<text x="440" y="152" class="vsmall">0..3</text>
+		<!-- Connection from ALU to Result -->
+		<rect id="id_ALU_to_result" x="350" y="80" width="50" height="1" class="input-line" />
+		<!-- Connection from ALU to AC -->
+		<rect id="id_ac_to_ALU" x="500" y="40" width="100" height="1" class="input-line" />
+		<!-- Connection from ALU to Bus Pt1 -->
+		<rect id="id_ac_to_Bus_pt1" x="500" y="120" width="40" height="1" class="input-line" />
+		<!-- Connection from ALU to Bus Pt2 -->
+		<rect id="id_ac_to_Bus_pt2" x="540" y="120" width="1" height="170" class="input-line" />
+
+			<!-- arrow for AC to Result -->
+			<line x1="352" y1="80" x2="357" y2="75" style="stroke:rgb(0,0,0);stroke-width:3" />
+			<line x1="352" y1="80" x2="357" y2="85" style="stroke:rgb(0,0,0);stroke-width:3" />
+			<!-- arrow for AC Input A (from AC register) -->
+			<line x1="502" y1="40" x2="507" y2="35" style="stroke:rgb(0,0,0);stroke-width:3" />
+			<line x1="502" y1="40" x2="507" y2="45" style="stroke:rgb(0,0,0);stroke-width:3" />
+			<!-- arrow for AC Input B (from buss) -->
+			<line x1="502" y1="120" x2="507" y2="115" style="stroke:rgb(0,0,0);stroke-width:3" />
+			<line x1="502" y1="120" x2="507" y2="125" style="stroke:rgb(0,0,0);stroke-width:3" />
+
+	<rect id="id_ac" x="600" y="30" width="50" height="100" class="teal-box" />
+		<text x="600" y="25" class="small">AC</text>
+		<rect id="id_result_Ld" x="650" y="40" width="20" height="1" class="input-line" />
+			<text x="655" y="35" class="vsmall">Ld</text>
+		<rect id="id_result_out" x="650" y="60" width="20" height="1" class="input-line" />
+			<text x="655" y="55" class="vsmall">Out</text>
+		<rect id="id_result_clr" x="650" y="80" width="20" height="1" class="input-line" />
+			<text x="655" y="75" class="vsmall">Out To ALU</text>
+		<!-- Connection from AC to Bus -->
+		<rect id="id_ac_to_bus" x="625" y="130" width="1" height="160" class="input-line" />
+	<rect id="id_microcode" x="750" y="30" width="400" height="100" fill="#c0a0a0" stroke="#000000" stroke-width="3" />
+		<text x="750" y="25" class="small">Microcode</text>
+		<text x="754" y="47" class="small">Address 256 Words</text>
+		<text x="754" y="67" class="small">Data 64 bits wide</text>
+	<rect id="id_microcode_pc" x="1200" y="30" width="100" height="50" fill="#ffd700" stroke="#000000" stroke-width="3" />
+		<text x="1200" y="25" class="small">Microcode PC</text>
+		<rect id="id_microcode_pc_Ld" x="1300" y="40" width="20" height="1" class="input-line" />
+			<text x="1305" y="35" class="vsmall">Ld</text>
+		<rect id="id_Microcode_PC_clr" x="1300" y="60" width="20" height="1" class="input-line" />
+			<text x="1305" y="55" class="vsmall">Clr</text>
+		<rect id="id_Microcode_PC_In[8]a"   x="1270"   y="80"   width="1"    height="65"    class="input-line" />
+		<rect id="id_Microcode_PC_In[8]b"   x="1270"   y="145"  width="60"   height="1"     class="input-line" />
+		<rect id="id_Microcode_PC_In[8]c"   x="1330"   y="145"  width="1"    height="75" 	class="input-line" />
+		<rect id="id_Microcode_PC_In[8]d"   x="1280"   y="220"  width="50"   height="1"     class="input-line" />
+			<text x="1275" y="95" class="vsmall">In[8]</text>
+			<text x="1282" y="215" class="vsmall">Out</text>
+
+		<rect id="id_Microcode_Out[8]dec_a"  x="1135"   y="130"  width="1"    height="25"    class="input-line" />
+		<rect id="id_Microcode_Out[8]dec_b"  x="1135"   y="155"  width="40"   height="1"     class="input-line" />
+		<rect id="id_Microcode_Out[8]dec_c"  x="1175"   y="155"  width="1"    height="40"    class="input-line" />
+		<rect id="id_Microcode_Out[8]dec_d"  x="1175"   y="195"  width="35"   height="1"     class="input-line" />
+			<text x="1140" y="144" class="vsmall">Out[8] </text>
+			<text x="1182" y="190" class="vsmall">00</text>
+		<rect id="id_Microcode_Out[2]deccoder_ctl_a"  x="1120"   y="130"   width="1"    height="135"     class="input-line" />
+		<rect id="id_Microcode_Out[2]deccoder_ctl_b"  x="1120"   y="265"   width="105"  height="1"     class="input-line" />
+			<g transform="rotate(90 1000 400) translate(-350 14)">
+				<text x="1128" y="260" class="vsmall">Decoder Ctl[2] </text>
+			</g>
+		<rect id="id_Microcode_Out[4]ALU_ctl"  x="1100"   y="130"   width="1"    height="125"     class="input-line" />
+			<g transform="rotate(90 1000 400) translate(-390 34)">
+				<text x="1128" y="260" class="vsmall">ALU Ctl[4]</text>
+			</g>
+		<rect id="id_Microcode_Out[1]memory_read"  x="1080"   y="130"   width="1"    height="125"     class="input-line" />
+			<g transform="rotate(90 1000 400) translate(-390 54)">
+				<text x="1128" y="260" class="vsmall">Memory Read</text>
+			</g>
+		<rect id="id_Microcode_Out[1]memory_write"  x="1060"   y="130"   width="1"    height="125"     class="input-line" />
+			<g transform="rotate(90 1000 400) translate(-390 74)">
+				<text x="1128" y="260" class="vsmall">Memory Write</text>
+			</g>
+		<rect id="id_Microcode_Out[3]pc_ctl"  x="1040"   y="130"   width="1"    height="125"     class="input-line" />
+			<g transform="rotate(90 1000 400) translate(-390 94)">
+				<text x="1128" y="260" class="vsmall">PC[3] Ld/Inc/Out</text>
+			</g>
+		<rect id="id_Microcode_Out[3]ir_ctl"  x="1020"   y="130"   width="1"    height="125"     class="input-line" />
+			<g transform="rotate(90 1000 400) translate(-390 114)">
+				<text x="1128" y="260" class="vsmall">IR[2] Ld/Out</text>
+			</g>
+		<rect id="id_Microcode_Out[3]result_ctl"  x="1000"   y="130"   width="1"    height="125"     class="input-line" />
+			<g transform="rotate(90 1000 400) translate(-390 134)">
+				<text x="1128" y="260" class="vsmall">Result[3] Ld/Clr/Out</text>
+			</g>
+		<rect id="id_Microcode_Out[3]mar_ctl"  x="980"   y="130"   width="1"    height="125"     class="input-line" />
+			<g transform="rotate(90 1000 400) translate(-390 154)">
+				<text x="1128" y="260" class="vsmall">MAR[2] Ld/Out</text>
+			</g>
+		<rect id="id_Microcode_Out[3]mdr_ctl"  x="960"   y="130"   width="1"    height="125"     class="input-line" />
+			<g transform="rotate(90 1000 400) translate(-390 174)">
+				<text x="1128" y="260" class="vsmall">MDR[2] Ld/Out</text>
+			</g>
+		<rect id="id_Microcode_Out[3]ac_ctl"  x="940"   y="130"   width="1"    height="125"     class="input-line" />
+			<g transform="rotate(90 1000 400) translate(-390 194)">
+				<text x="1128" y="260" class="vsmall">AC[3] Ld/Out/Out_to_ALU</text>
+			</g>
+		<rect id="id_Microcode_Out[3]ac_ctl"  x="920"   y="130"   width="1"    height="125"     class="input-line" />
+			<g transform="rotate(90 1000 400) translate(-390 214)">
+				<text x="1128" y="260" class="vsmall">Output[2] Ld/Out</text>
+			</g>
+		<rect id="id_Microcode_Out[3]ac_ctl"  x="900"   y="130"   width="1"    height="125"     class="input-line" />
+			<g transform="rotate(90 1000 400) translate(-390 234)">
+				<text x="1128" y="260" class="vsmall">Input[2] Ld/Out</text>
+			</g>
+		<rect id="id_Microcode_PC_Out[8]to_Microcode"  x="1150"   y="50"   width="50"   height="1"     class="input-line" />
+			<text x="1155" y="35" class="vsmall">Out[8]</text>
+			<text x="1155" y="45" class="vsmall">Addr</text>
+
+		<rect id="id_decoder_In[8]b"  x="1175"   y="210"  width="35"   height="1"     class="input-line" />
+			<text x="1182" y="208" class="vsmall">01</text>
+		<rect id="id_decoder_In[8]c"  x="1175"   y="225"  width="35"   height="1"     class="input-line" />
+			<text x="1182" y="223" class="vsmall">10</text>
+		<rect id="id_decoder_In[8]d"  x="1175"   y="240"  width="35"   height="1"     class="input-line" />
+			<text x="1182" y="238" class="vsmall">11</text>
+
+		<rect id="id_decoder_Ctl[2]a"  x="1215"   y="240"  width="1"   height="25"     class="input-line" />
+		<rect id="id_decoder_Ctl[2]a"  x="1225"   y="240"  width="1"   height="25"     class="input-line" />
+			<text x="1230" y="250" class="vsmall">Ctl</text>
+
+	<!-- id="decoder_ctl_0" -->
+	<!-- id="decoder_ctl_1" -->
+	<polygon id="id_decoder"
+		points=" 1200,180	1200,250 1280,220       1200,180 "
+		fill="#f0fff0" stroke="#ff0000" stroke-width="3" />
+			<text x="1220" y="180" class="small">Decoder</text>
+			<!-- xyzzy Decoder Control Lines 2? or 3? -->
+			<!-- xyzzy Decoder Output to Microcode_PC Input -->
+			<!-- xyzzy Decoder Input from Bus -->
+	<rect id="id_main_bus" x="25" y="290" width="1500" height="3" fill="#000000" stroke="#000000" stroke-width="1" />
+		<text x="25" y="285" class="small">Bus</text>
+	<rect id="id_mar" x="275" y="324" width="100" height="50" class="yellow-box" />
+		<text x="275" y="319" class="small">MAR</text>
+		<rect id="id_mar_Ld" x="375" y="340" width="20" height="1" class="input-line" />
+			<text x="379" y="334" class="vsmall">Ld</text>
+		<rect id="id_mar_Out" x="375" y="360" width="20" height="1" class="input-line" />
+			<text x="379" y="355" class="vsmall">Out</text>
+		<!-- Connection from mar to Bus -->
+		<rect id="id_mar_to_bus" x="335" y="290" width="1" height="33" class="input-line" />
+		<!-- Connection from mar to Main Memory -->
+		<rect id="id_mar_to_memory" x="335" y="375" width="1" height="45" class="input-line" />
+	<rect id="id_mdr" x="520" y="324" width="100" height="50" class="yellow-box" />
+		<text x="520" y="319" class="small">MDR</text>
+		<rect id="id_mdr_Ld" x="620" y="340" width="20" height="1" class="input-line" />
+			<text x="625" y="334" class="vsmall">Ld</text>
+		<rect id="id_mdr_Out" x="620" y="360" width="20" height="1" class="input-line" />
+			<text x="624" y="355" class="vsmall">Out</text>
+		<!-- Connection from mar to Bus -->
+		<rect id="id_mdr_to_bus" x="570" y="290" width="1" height="33" class="input-line" />
+		<!-- Connection from mar to Bus -->
+		<rect id="id_mdr_to_bus" x="570" y="290" width="1" height="33" class="input-line" />
+		<!-- Connection from mdr to Main Memory -->
+		<rect id="id_mar_to_memory" x="570" y="375" width="1" height="45" class="input-line" />
+	<rect id="id_memory" x="250" y="420" width="400" height="250" fill="#d0d0d0" stroke="#000000" stroke-width="1" onclick="infoOn('id_memory',254,480,400,860);"/>
+		<text x="400" y="415" class="small">Main Memory</text>
+		<text x="254" y="440" class="small">Address 8K Words</text>
+		<text x="254" y="460" class="small">Data 16 bits wide</text>
+		<rect id="id_mdr_Ld" x="650" y="440" width="40" height="1" class="input-line" />
+			<text x="655" y="434" class="vsmall">Read</text>
+		<rect id="id_mdr_Ld" x="650" y="460" width="40" height="1" class="input-line" />
+			<text x="655" y="454" class="vsmall">Write</text>
+	<rect id="id_output" x="1200" y="324" width="100" height="50" class="white-box" />
+		<text x="1200" y="319" class="small">Output</text>
+		<rect id="id_output_Ld" x="1300" y="340" width="20" height="1" class="input-line" />
+			<text x="1305" y="334" class="vsmall">Ld</text>
+		<rect id="id_output_Out" x="1300" y="360" width="20" height="1" class="input-line" />
+			<text x="1305" y="355" class="vsmall">Out</text>
+		<!-- Connection from output to Bus -->
+		<rect id="id_output_to_bus" x="1250" y="290" width="1" height="33" class="input-line" />
+	<rect id="id_input" x="1000" y="324" width="100" height="50" class="white-box" />
+		<text x="1000" y="319" class="small">Input</text>
+		<rect id="id_input_Ld" x="1100" y="340" width="20" height="1" class="input-line" />
+			<text x="1105" y="334" class="vsmall">Ld</text>
+		<rect id="id_input_Out" x="1100" y="360" width="20" height="1" class="input-line" />
+			<text x="1105" y="355" class="vsmall">Out</text>
+		<!-- Connection from input to Bus -->
+		<rect id="id_input_to_bus" x="1050" y="290" width="1" height="33" class="input-line" />
+
+		<!-- Decoder CTL Lines - Labeled
+		<g transform="rotate(-20 961 355)">
+			<rect id="id_Microcode_Out[2]decoder_0"  x="1175"   y="195"  width="1"   height="100"     class="red-line" />
+				<text x="1140" y="144" class="vsmall">Out[8] </text>
+		</g>
+		-->
+
+	<rect id="out_box" x="750" y="420" width="650" height="300" class="out-box" />
+
+<!-- Blue Connection Lines 
+	900 is 1st line out on MM 
+-->
+	<path id="pc_Ld_to_microcode" class="blue-line"
+		d="M 125 40   L 160 40  160 220  700 220  700 280 1040 280 1040 130  "
+		/>
+	<path id="pc_Inc_to_microcode" class="blue-line"
+		d="M 125 60   L 160 60  160 220  700 220  700 280 1040 280 1040 130  "
+		/>
+	<path id="pc_Out_to_microcode" class="blue-line"
+		d="M 125 80   L 160 80  160 220  700 220  700 280 1040 280 1040 130  "
+		/>
+
+<!-- Buttons -->
+		<rect id="clear-line" x="40" y="360" rx="10" ry="10" width="100" height="25" class="button-box" onclick="infoOn('clear-line',0,0,0,0);"/>
+		<text x="45" y="377" class="small" onclick="infoOn('clear-line',0,0,0,0);">Clear Lines</text>
+
+ </g>
+</svg>
+<script>
+
+var lineOn = [
+	 "#pc_Ld_to_microcode"
+	,"#pc_Inc_to_microcode"
+	,"#pc_Out_to_microcode"
+];	// List of IDs of lines that are turned-on
+
+function clearOtherLine() {
+	for ( var i = 0; i < lineOn.length; i++ ) {
+		var x = lineOn[i];
+		$(x).hide()
+	}
+	lineOn = [];	
+}
+
+clearOtherLine();
+
+function showLine(id) {
+	clearOtherLine()
+	$(id).show();
+	lineOn.push(id);
+}
+
+function infoOn(x,x1,y1,x2,y2) {
+	console.log("svg/id:"+x+" ("+x1+","+y1+") ("+x2+","+y2+")");
+	switch ( x ) {
+	case "id_memory":
+		$("#"+x).css("fill","#ff0000");
+		break;
+	case "clear-line":
+		clearOtherLine();
+		break;
+	case "id_pc":
+		$("#"+x).css("fill","#ff0000");
+		break;
+	case "id_pc_Ld":
+		showLine("#pc_Ld_to_microcode");
+		break;
+	case "id_pc_Inc":
+		showLine("#pc_Inc_to_microcode");
+		break;
+	case "id_pc_Out":
+		showLine("#pc_Out_to_microcode");
+		break;
+	}
+}
+
+</script>
+</body>
+</html>
