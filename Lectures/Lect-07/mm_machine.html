@@ -43,8 +43,8 @@
 		<!-- Connection from IR to Bus -->
 		<rect id="id_ir_to_bus" x="200" y="130" width="1" height="160" class="input-line" />
 		<rect id="id_ir_sw" x="175" y="230" width="50" height="45" class="gray-box" />
-			<text x="230" y="233" class="vsmall">Hand Out</text>
-			<text x="230" y="245" class="vsmall">Hand[12]</text>
+			<text x="230" y="233" class="vsmall" onclick="infoOn('hand_out',1,2,3,4);">Hand Out</text>
+			<text x="230" y="245" class="vsmall" onclick="infoOn('hand_out',1,2,3,4);">Hand[12]</text>
 			<rect id="id_hand_out_a" x="225" y="250" width="60" height="1" class="input-line" />
 			<rect id="id_hand_out_b" x="285" y="250" width="1" height="40" class="input-line" />
 
@@ -127,8 +127,8 @@
 		<!-- Connection from AC to Bus -->
 		<rect id="id_ac_to_bus" x="625" y="130" width="1" height="160" class="input-line" />
 
-	<rect id="id_microcode" x="750" y="30" width="400" height="100" fill="#c0a0a0" stroke="#000000" stroke-width="3" />
-		<text x="750" y="25" class="small">Microcode</text>
+	<rect id="id_microcode" x="750" y="30" width="400" height="100" fill="#c0a0a0" stroke="#000000" stroke-width="3" onclick="infoOn('id_microcode',1,2,3,4);"/>
+		<text x="750" y="25" class="small" onclick="infoOn('id_microcode',1,2,3,4);">Microcode</text>
 		<text x="754" y="47" class="small">Address 256 Words</text>
 		<text x="754" y="67" class="small">Data 64 bits wide</text>
 
@@ -178,7 +178,7 @@
 			</g>
 		<rect id="id_Microcode_Out[3]ir_ctl"  x="1020"   y="130"   width="1"    height="125"     class="input-line" />
 			<g transform="rotate(90 1000 400) translate(-390 114)">
-				<text x="1128" y="260" class="vsmall">IR[2] Ld/Out</text>
+				<text x="1128" y="260" class="vsmall">IR[3] Ld/Out/Hand_Out</text>
 			</g>
 		<rect id="id_Microcode_Out[3]result_ctl"  x="1000"   y="130"   width="1"    height="125"     class="input-line" />
 			<g transform="rotate(90 1000 400) translate(-390 134)">
@@ -269,7 +269,7 @@
 		<rect id="id_mar_to_memory" x="570" y="375" width="1" height="45" class="input-line" />
 
 	<rect id="id_memory" x="250" y="420" width="400" height="250" fill="#d0d0d0" stroke="#000000" stroke-width="1" onclick="infoOn('id_memory',254,480,400,860);"/>
-		<text x="400" y="415" class="small">Main Memory</text>
+		<text x="400" y="415" class="small" onclick="infoOn('id_memory',1,2,3,4);">Main Memory</text>
 		<text x="254" y="440" class="small">Address 8K Words</text>
 		<text x="254" y="460" class="small">Data 16 bits wide</text>
 		<rect id="id_memory_Ld" x="650" y="440" width="40" height="1" class="input-line" />
@@ -346,6 +346,9 @@
 		/>
 	<path id="ir_Out_to_microcode" class="blue-line"
 		d="M 225 60   L 270 60  270 220  700 220  700 280 1020 280 1020 130  "
+		/>
+	<path id="Hand_Out_to_microcode" class="blue-line"
+		d="M 225 250   L 700 250  700 280 1020 280 1020 130  "
 		/>
 
 	<path id="ir_15_12_to_decoder_11" class="blue-line"
@@ -520,6 +523,7 @@ var lineOn = [
 	,"#Microcode_PC_Clr_to_microcode"
 	,"#Main_Memory_Read" 
 	,"#Main_Memory_Write"
+	,"#Hand_Out_to_microcode"
 ];	// List of IDs of lines that are turned-on
 
 function clearOtherLine() {
@@ -563,6 +567,7 @@ function infoOn(x,x1,y1,x2,y2) {
 
 	case "id_pc":
 		$("#"+x).css("fill","#ff0000");
+		showTextInOutputBox("PC - Program Counter");
 		break;
 	case "id_pc_Ld":
 		showLine("#pc_Ld_to_microcode");
@@ -580,6 +585,7 @@ function infoOn(x,x1,y1,x2,y2) {
 
 	case "id_ir":
 		$("#"+x).css("fill","#ff0000");
+		showTextInOutputBox("IR - Instruction Register");
 		break;
 	case "id_ir_Ld":
 		showLine("#ir_Ld_to_microcode");
@@ -587,10 +593,16 @@ function infoOn(x,x1,y1,x2,y2) {
 	case "id_ir_Out":
 		showLine("#ir_Out_to_microcode");
 		break;
+// ,"#Hand_Out_to_microcode"
+	case "hand_out":
+		showTextInOutputBox("Take the least-significat 12 bits of the IR and puts that on the bus - with 0's for the most","signifiant nibble (4 bits).","","IR_Out must be enabled at the same time.");
+		showLine("#Hand_Out_to_microcode");
+		break;
 
 
 	case "id_result":
 		$("#"+x).css("fill","#ff0000");
+		showTextInOutputBox("Result - Output from ALU");
 		break;
 	case "id_result_Ld":
 		showLine("#result_Ld_to_microcode");
@@ -608,6 +620,7 @@ function infoOn(x,x1,y1,x2,y2) {
 
 	case "id_ac":
 		$("#"+x).css("fill","#ff0000");
+		showTextInOutputBox("AC - Accumulator");
 		break;
 	case "id_ac_Ld":
 		showLine("#ac_Ld_to_microcode");
@@ -621,12 +634,14 @@ function infoOn(x,x1,y1,x2,y2) {
 
 	case "id_ALU_Ctl":
 		showLine("#alu_ctl_4_to_microcode");
+		showTextInOutputBox("4 control lines for determining the Artithmetic or Logic Operation performed.");
 		break;
 
 //	,"#mar_Ld_to_microcode" 
 //	,"#mar_Out_to_microcode"
 	case "id_mar":
 		$("#"+x).css("fill","#ff0000");
+		showTextInOutputBox("MAR - Memory Address Register");
 		break;
 	case "id_mar_Ld":
 		showLine("#mar_Ld_to_microcode");
@@ -638,6 +653,7 @@ function infoOn(x,x1,y1,x2,y2) {
 //	,"#mdr_Ld_to_microcode" 
 //	,"#mdr_Out_to_microcode"
 	case "id_mdr":
+		showTextInOutputBox("MDR (mbr) - Memory Data Register - Buffer memory read/write");
 		$("#"+x).css("fill","#ff0000");
 		break;
 	case "id_mdr_Ld":
@@ -651,6 +667,7 @@ function infoOn(x,x1,y1,x2,y2) {
 //	,"#input_Out_to_microcode"
 	case "id_input":
 		$("#"+x).css("fill","#ff0000");
+		showTextInOutputBox("Input Register","You need to set the input value before the input instruction runs.");
 		break;
 	case "id_input_Ld":
 		showLine("#input_Ld_to_microcode");
@@ -663,6 +680,7 @@ function infoOn(x,x1,y1,x2,y2) {
 //	,"#output_Out_to_microcode"
 	case "id_output":
 		$("#"+x).css("fill","#ff0000");
+		showTextInOutputBox("Output from the CPU");
 		break;
 	case "id_output_Ld":
 		showLine("#output_Ld_to_microcode");
@@ -676,12 +694,19 @@ function infoOn(x,x1,y1,x2,y2) {
 //	,"#Microcode_PC_Clr_to_microcode"
 	case "id_Microcode_PC":
 		$("#"+x).css("fill","#ff0000");
+		showTextInOutputBox("PC for the Microcode Instructions");
 		break;
 	case "id_Microcode_PC_Ld":
 		showLine("#Microcode_PC_Ld_to_microcode");
 		break;
 	case "id_Microcode_PC_Clr":
 		showLine("#Microcode_PC_Clr_to_microcode");
+		break;
+
+
+	case "id_microcode":
+		$("#"+x).css("fill","#ff0000");
+		showTextInOutputBox("The Microcode Instructions");
 		break;
 
 
