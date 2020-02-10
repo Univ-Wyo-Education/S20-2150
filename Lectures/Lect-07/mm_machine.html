@@ -116,14 +116,14 @@
 			<line x1="502" y1="120" x2="507" y2="115" style="stroke:rgb(0,0,0);stroke-width:3" />
 			<line x1="502" y1="120" x2="507" y2="125" style="stroke:rgb(0,0,0);stroke-width:3" />
 
-	<rect id="id_ac" x="600" y="30" width="50" height="100" class="teal-box" />
-		<text x="600" y="25" class="small">AC</text>
-		<rect id="id_result_Ld" x="650" y="40" width="20" height="1" class="input-line" />
-			<text x="655" y="35" class="vsmall">Ld</text>
-		<rect id="id_result_out" x="650" y="60" width="20" height="1" class="input-line" />
-			<text x="655" y="55" class="vsmall">Out</text>
-		<rect id="id_result_clr" x="650" y="80" width="20" height="1" class="input-line" />
-			<text x="655" y="75" class="vsmall">Out To ALU</text>
+	<rect id="id_ac" x="600" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_ac',1,2,3,4);"/>
+		<text x="600" y="25" class="small" onclick="infoOn('id_ac',1,2,3,4);">AC</text>
+		<rect id="id_ac_Ld" x="650" y="40" width="20" height="1" class="input-line" />
+			<text x="655" y="35" class="vsmall" onclick="infoOn('id_ac_Ld',1,2,3,4);">Ld</text>
+		<rect id="id_ac_Out" x="650" y="60" width="20" height="1" class="input-line" />
+			<text x="655" y="55" class="vsmall" onclick="infoOn('id_ac_Out',1,2,3,4);">Out</text>
+		<rect id="id_ac_Clr" x="650" y="80" width="20" height="1" class="input-line" />
+			<text x="655" y="75" class="vsmall" onclick="infoOn('id_ac_Out_to_ALU',1,2,3,4);">Out To ALU</text>
 		<!-- Connection from AC to Bus -->
 		<rect id="id_ac_to_bus" x="625" y="130" width="1" height="160" class="input-line" />
 	<rect id="id_microcode" x="750" y="30" width="400" height="100" fill="#c0a0a0" stroke="#000000" stroke-width="3" />
@@ -243,25 +243,24 @@
 
 	<rect id="id_main_bus" x="25" y="290" width="1500" height="3" fill="#000000" stroke="#000000" stroke-width="1" />
 		<text x="25" y="285" class="small">Bus</text>
-	<rect id="id_mar" x="275" y="324" width="100" height="50" class="yellow-box" />
-		<text x="275" y="319" class="small">MAR</text>
+
+	<rect id="id_mar" x="275" y="324" width="100" height="50" class="yellow-box" onclick="infoOn('id_mar',1,2,3,4);" />
+		<text x="275" y="319" class="small" onclick="infoOn('id_mar',1,2,3,4);">MAR</text>
 		<rect id="id_mar_Ld" x="375" y="340" width="20" height="1" class="input-line" />
-			<text x="379" y="334" class="vsmall">Ld</text>
+			<text x="379" y="334" class="vsmall" onclick="infoOn('id_mar_Ld',1,2,3,4);">Ld</text>
 		<rect id="id_mar_Out" x="375" y="360" width="20" height="1" class="input-line" />
-			<text x="379" y="355" class="vsmall">Out</text>
+			<text x="379" y="355" class="vsmall" onclick="infoOn('id_mar_Out',1,2,3,4);">Out</text>
 		<!-- Connection from mar to Bus -->
 		<rect id="id_mar_to_bus" x="335" y="290" width="1" height="33" class="input-line" />
 		<!-- Connection from mar to Main Memory -->
 		<rect id="id_mar_to_memory" x="335" y="375" width="1" height="45" class="input-line" />
 
-	<rect id="id_mdr" x="520" y="324" width="100" height="50" class="yellow-box" />
-		<text x="520" y="319" class="small">MDR</text>
+	<rect id="id_mdr" x="520" y="324" width="100" height="50" class="yellow-box" onclick="infoOn('id_mdr',1,2,3,4);" />
+		<text x="520" y="319" class="small" onclick="infoOn('id_mdr',1,2,3,4);">MDR</text>
 		<rect id="id_mdr_Ld" x="620" y="340" width="20" height="1" class="input-line" />
-			<text x="625" y="334" class="vsmall">Ld</text>
+			<text x="625" y="334" class="vsmall" onclick="infoOn('id_mdr_Ld',1,2,3,4);">Ld</text>
 		<rect id="id_mdr_Out" x="620" y="360" width="20" height="1" class="input-line" />
-			<text x="624" y="355" class="vsmall">Out</text>
-		<!-- Connection from mar to Bus -->
-		<rect id="id_mdr_to_bus" x="570" y="290" width="1" height="33" class="input-line" />
+			<text x="624" y="355" class="vsmall" onclick="infoOn('id_mdr_Out',1,2,3,4);">Out</text>
 		<!-- Connection from mar to Bus -->
 		<rect id="id_mdr_to_bus" x="570" y="290" width="1" height="33" class="input-line" />
 		<!-- Connection from mdr to Main Memory -->
@@ -367,19 +366,6 @@
 	</g>
 
 
-<!--
-	<rect id="id_result" x="300" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_result',1,2,3,4);"/>
-		<text x="300" y="25" class="small" onclick="infoOn('id_result',1,2,3,4);">Result</text>
-		<rect id="id_result_Ld" x="350" y="40" width="20" height="1" class="input-line" />
-			<text x="355" y="35" class="vsmall" onclick="infoOn('id_result_Ld',1,2,3,4);">Ld</text>
-		<rect id="id_result_out" x="350" y="60" width="20" height="1" class="input-line" />
-			<text x="355" y="55" class="vsmall" onclick="infoOn('id_result_Out',1,2,3,4);">Out</text>
-		<rect id="id_result_clr" x="350" y="100" width="20" height="1" class="input-line" />
-			<text x="355" y="95" class="vsmall" onclick="infoOn('id_result_Clr',1,2,3,4);">Clr</text>
-		<rect id="id_result_zero_out" x="350" y="120" width="47" height="1" class="input-line" />
-			<text x="355" y="115" class="vsmall" onclick="infoOn('id_result_zero_out',1,2,3,4);">Is Zero</text>
--->
-
 	<path id="result_Ld_to_microcode" class="blue-line"
 		d="M 350 40   L  390 40   390 280    1000 280 1000 130  "
 		/>
@@ -392,6 +378,48 @@
 	<path id="result_zero_out" class="blue-line"
 		d="M 350 120  L  390 120  390 280    1175 280 1175 210  1200 210 "
 		/>
+
+
+	<path id="ac_Ld_to_microcode" class="blue-line"
+		d="M 650 40   L  690 40   690 280     940 280 940 130  "
+		/>
+	<path id="ac_Out_to_microcode" class="blue-line"
+		d="M 650 60   L  690 60   690 280     940 280 940 130  "
+		/>
+	<path id="ac_Out_to_ALU" class="blue-line"
+		d="M 650 80  L  690 80    690 280     940 280 940 130  "
+		/>
+
+<!--
+	<rect id="id_mdr" x="520" y="324" width="100" height="50" class="yellow-box" onclick="infoOn('id_mdr',1,2,3,4);" />
+		<text x="520" y="319" class="small" onclick="infoOn('id_mdr',1,2,3,4);">MDR</text>
+		<rect id="id_mdr_Ld" x="620" y="340" width="20" height="1" class="input-line" />
+			<text x="625" y="334" class="vsmall" onclick="infoOn('id_mdr_Ld',1,2,3,4);">Ld</text>
+		<rect id="id_mdr_Out" x="620" y="360" width="20" height="1" class="input-line" />
+			<text x="624" y="355" class="vsmall" onclick="infoOn('id_mdr_Out',1,2,3,4);">Out</text>
+-->
+	<path id="mdr_Ld_to_microcode" class="blue-line"
+		d="M 620 340   L  690 340   690 280     960 280 960 130  "
+		/>
+	<path id="mdr_Out_to_microcode" class="blue-line"
+		d="M 620 360   L  690 360   690 280     960 280 960 130  "
+		/>
+
+<!--
+	<rect id="id_mar" x="275" y="324" width="100" height="50" class="yellow-box" onclick="infoOn('id_mar',1,2,3,4);" />
+		<text x="275" y="319" class="small" onclick="infoOn('id_mar',1,2,3,4);">MAR</text>
+		<rect id="id_mar_Ld" x="375" y="340" width="20" height="1" class="input-line" />
+			<text x="379" y="334" class="vsmall" onclick="infoOn('id_mar_Ld',1,2,3,4);">Ld</text>
+		<rect id="id_mar_Out" x="375" y="360" width="20" height="1" class="input-line" />
+			<text x="379" y="355" class="vsmall" onclick="infoOn('id_mar_Out',1,2,3,4);">Out</text>
+-->
+	<path id="mar_Ld_to_microcode" class="blue-line"
+		d="M 375 340   L  450 340   450 280     980 280 980 130  "
+		/>
+	<path id="mar_Out_to_microcode" class="blue-line"
+		d="M 375 360   L  450 360   450 280     980 280 980 130  "
+		/>
+
 
 <!-- Buttons -->
 		<rect id="help" x="40" y="320" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('help',0,0,0,0);"/>
@@ -438,6 +466,13 @@ var lineOn = [
 	,"#result_Out_to_microcode"
 	,"#result_Clr_to_microcode"
 	,"#result_zero_out" 
+	,"#ac_Ld_to_microcode"
+	,"#ac_Out_to_microcode"
+	,"#ac_Out_to_ALU"
+	,"#mar_Ld_to_microcode" 
+	,"#mar_Out_to_microcode"
+	,"#mdr_Ld_to_microcode" 
+	,"#mdr_Out_to_microcode"
 ];	// List of IDs of lines that are turned-on
 
 function clearOtherLine() {
@@ -527,9 +562,45 @@ function infoOn(x,x1,y1,x2,y2) {
 		showTextInOutputBox("Connects 1 bit to decoder input 01.","The other addresses come from the McJmp_X");
 		break;
 
+	case "id_ac":
+		$("#"+x).css("fill","#ff0000");
+		break;
+	case "id_ac_Ld":
+		showLine("#ac_Ld_to_microcode");
+		break;
+	case "id_ac_Out":
+		showLine("#ac_Out_to_microcode");
+		break;
+	case "id_ac_Out_to_ALU":
+		showLine("#ac_Out_to_ALU");
+		break;
 
 	case "id_ALU_Ctl":
 		showLine("#alu_ctl_4_to_microcode");
+		break;
+
+//	,"#mar_Ld_to_microcode" 
+//	,"#mar_Out_to_microcode"
+	case "id_mar":
+		$("#"+x).css("fill","#ff0000");
+		break;
+	case "id_mar_Ld":
+		showLine("#mar_Ld_to_microcode");
+		break;
+	case "id_mar_Out":
+		showLine("#mar_Out_to_microcode");
+		break;
+
+//	,"#mdr_Ld_to_microcode" 
+//	,"#mdr_Out_to_microcode"
+	case "id_mdr":
+		$("#"+x).css("fill","#ff0000");
+		break;
+	case "id_mdr_Ld":
+		showLine("#mdr_Ld_to_microcode");
+		break;
+	case "id_mdr_Out":
+		showLine("#mdr_Out_to_microcode");
 		break;
 
 
