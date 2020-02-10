@@ -2,6 +2,7 @@
 <style>
 	.small      { font: italic 15px sans-serif; }
 	.vsmall     { font: italic 12px sans-serif; }
+	.vsmall-red     { font: italic 12px sans-serif; fill:#ff0000; }
 	.teal-box   { fill:#00ffff; stroke:#000000; stroke-width:3; }
 	.yellow-box { fill:#ffff00; stroke:#000000; stroke-width:3; }
 	.white-box  { fill:#ffffff; stroke:#000000; stroke-width:3; }
@@ -188,51 +189,51 @@
 			<text x="1182" y="190" class="vsmall">00</text>
 		<rect id="id_Microcode_Out[2]deccoder_ctl_a"  x="1120"   y="130"   width="1"    height="135"     class="input-line" />
 		<rect id="id_Microcode_Out[2]deccoder_ctl_b"  x="1120"   y="265"   width="105"  height="1"     class="input-line" />
-			<g transform="rotate(90 1000 400) translate(-350 14)">
+			<g transform="rotate(90 1000 400) translate(-350 14)" onclick="infoOn('decoder-info');">
 				<text x="1128" y="260" class="vsmall">Decoder Ctl[2] </text>
 			</g>
 		<rect id="id_Microcode_Out[4]ALU_ctl"  x="1100"   y="130"   width="1"    height="125"     class="input-line" />
-			<g transform="rotate(90 1000 400) translate(-390 34)">
-				<text x="1128" y="260" class="vsmall" onclick="infoOn('id_ALU_Ctl');">ALU Ctl[4]</text>
+			<g transform="rotate(90 1000 400) translate(-390 34)" onclick="infoOn('id_ALU_Ctl');" >
+				<text x="1128" y="260" class="vsmall" >ALU Ctl[4]</text>
 			</g>
 		<rect id="id_Microcode_Out[1]memory_read"  x="1080"   y="130"   width="1"    height="125"     class="input-line" />
-			<g transform="rotate(90 1000 400) translate(-390 54)">
-				<text x="1128" y="260" class="vsmall">Memory Read</text>
+			<g transform="rotate(90 1000 400) translate(-390 54)" onclick="infoOn('id_memory_Read');" >
+				<text x="1128" y="260" class="vsmall" >Memory Read</text>
 			</g>
 		<rect id="id_Microcode_Out[1]memory_write"  x="1060"   y="130"   width="1"    height="125"     class="input-line" />
-			<g transform="rotate(90 1000 400) translate(-390 74)">
+			<g transform="rotate(90 1000 400) translate(-390 74)" onclick="infoOn('id_memory_Write');">
 				<text x="1128" y="260" class="vsmall">Memory Write</text>
 			</g>
 		<rect id="id_Microcode_Out[3]pc_ctl"  x="1040"   y="130"   width="1"    height="125"     class="input-line" />
-			<g transform="rotate(90 1000 400) translate(-390 94)" onclick="infoOn('id_pc_Ld','id_pc_Inc','id_pc_Out','id_pc_Clr');">
+			<g transform="rotate(90 1000 400) translate(-390 94)" onclick="infoOn('id_pc_Ld','id_pc_Inc','id_pc_Out','id_pc_Clr');" >
 				<text x="1128" y="260" class="vsmall">PC[4] Ld/Inc/Out/Clr</text>
 			</g>
 		<rect id="id_Microcode_Out[3]ir_ctl"  x="1020"   y="130"   width="1"    height="125"     class="input-line" />
-			<g transform="rotate(90 1000 400) translate(-390 114)">
+			<g transform="rotate(90 1000 400) translate(-390 114)" onclick="infoOn('id_ir_Ld','id_ir_Out');" >
 				<text x="1128" y="260" class="vsmall">IR[3] Ld/Out/Hand_Out</text>
 			</g>
 		<rect id="id_Microcode_Out[3]result_ctl"  x="1000"   y="130"   width="1"    height="125"     class="input-line" />
-			<g transform="rotate(90 1000 400) translate(-390 134)">
+			<g transform="rotate(90 1000 400) translate(-390 134)" onclick="infoOn('id_result_Ld','id_result_Clr','id_result_Out');">
 				<text x="1128" y="260" class="vsmall">Result[3] Ld/Clr/Out</text>
 			</g>
 		<rect id="id_Microcode_Out[3]mar_ctl"  x="980"   y="130"   width="1"    height="125"     class="input-line" />
-			<g transform="rotate(90 1000 400) translate(-390 154)">
+			<g transform="rotate(90 1000 400) translate(-390 154)" onclick="infoOn('id_mar_Ld','id_mar_Out');">
 				<text x="1128" y="260" class="vsmall">MAR[2] Ld/Out</text>
 			</g>
 		<rect id="id_Microcode_Out[3]mdr_ctl"  x="960"   y="130"   width="1"    height="125"     class="input-line" />
-			<g transform="rotate(90 1000 400) translate(-390 174)">
+			<g transform="rotate(90 1000 400) translate(-390 174)" onclick="infoOn('id_mdr_Ld','id_mdr_Out');">
 				<text x="1128" y="260" class="vsmall">MDR[2] Ld/Out</text>
 			</g>
 		<rect id="id_Microcode_Out[3]ac_ctl"  x="940"   y="130"   width="1"    height="125"     class="input-line" />
-			<g transform="rotate(90 1000 400) translate(-390 194)">
+			<g transform="rotate(90 1000 400) translate(-390 194)" onclick="infoOn('id_ac_Ld','id_ac_Out','id_ac_Out_to_ALU');">
 				<text x="1128" y="260" class="vsmall">AC[3] Ld/Out/Out_to_ALU</text>
 			</g>
-		<rect id="id_Microcode_Out[3]ac_ctl"  x="920"   y="130"   width="1"    height="125"     class="input-line" />
-			<g transform="rotate(90 1000 400) translate(-390 214)">
+		<rect id="id_Microcode_Out[2]output_ctl"  x="920"   y="130"   width="1"    height="125"     class="input-line" />
+			<g transform="rotate(90 1000 400) translate(-390 214)" onclick="infoOn('id_output_Ld','id_output_Out');">
 				<text x="1128" y="260" class="vsmall">Output[2] Ld/Out</text>
 			</g>
-		<rect id="id_Microcode_Out[3]ac_ctl"  x="900"   y="130"   width="1"    height="125"     class="input-line" />
-			<g transform="rotate(90 1000 400) translate(-390 234)">
+		<rect id="id_Microcode_Out[2]input_ctl"  x="900"   y="130"   width="1"    height="125"     class="input-line" />
+			<g transform="rotate(90 1000 400) translate(-390 234)" onclick="infoOn('id_input_Ld','id_input_Out');">
 				<text x="1128" y="260" class="vsmall">Input[2] Ld/Out</text>
 			</g>
 		<rect id="id_Microcode_Out[2]mc_ctl"  x="880"   y="130"   width="1"    height="125"     class="input-line" />
@@ -274,7 +275,7 @@
 			<!-- Decoder Output to Microcode_PC Input -->
 
 
-	<rect id="id_main_bus" x="25" y="290" width="1500" height="3" fill="#000000" stroke="#000000" stroke-width="1" />
+	<rect id="id_main_bus" x="25" y="290" width="1380" height="3" fill="#000000" stroke="#000000" stroke-width="1" />
 		<text x="25" y="285" class="small">Bus</text>
 
 	<rect id="id_mar" x="275" y="324" width="100" height="50" class="yellow-box" onclick="infoOn('id_mar');" />
@@ -312,7 +313,7 @@
 			<!-- arrow up for MAR to bus -->
 			<line x1="570" y1="293" x2="565" y2="298" class="arrow-line" />
 			<line x1="570" y1="293" x2="575" y2="298" class="arrow-line" />
-			<!-- arrow down to MAR register, load AC input -->
+			<!-- arrow down to MAR register, load MAR input -->
 			<line x1="570" y1="322" x2="565" y2="317" class="arrow-line" />
 			<line x1="570" y1="322" x2="575" y2="317" class="arrow-line" />
 			<!-- arrow up to MAR register from Main Memory -->
@@ -338,7 +339,14 @@
 		<rect id="id_output_Out" x="1300" y="360" width="20" height="1" class="input-line" />
 			<text x="1305" y="355" class="vsmall" onclick="infoOn('id_output_Out');">Out</text>
 		<!-- Connection from output to Bus -->
-		<rect id="id_output_to_bus" x="1250" y="290" width="1" height="33" class="input-line" />
+		<rect id="id_output_to_bus" x="1270" y="290" width="1" height="33" class="input-line" />
+
+			<!-- arrow up for Output to bus -->
+			<line x1="1270" y1="293" x2="1265" y2="298" class="arrow-line" />
+			<line x1="1270" y1="293" x2="1275" y2="298" class="arrow-line" />
+			<!-- arrow down to Output register, load Output input -->
+			<line x1="1270" y1="322" x2="1265" y2="317" class="arrow-line" />
+			<line x1="1270" y1="322" x2="1275" y2="317" class="arrow-line" />
 
 	<rect id="id_input" x="1000" y="324" width="100" height="50" class="white-box" onclick="infoOn('id_input');"/>
 		<text x="1000" y="319" class="small"onclick="infoOn('id_input');">Input</text>
@@ -349,6 +357,12 @@
 		<!-- Connection from input to Bus -->
 		<rect id="id_input_to_bus" x="1050" y="290" width="1" height="33" class="input-line" />
 
+			<!-- arrow up for Input to bus -->
+			<line x1="1050" y1="293" x2="1045" y2="298" class="arrow-line" />
+			<line x1="1050" y1="293" x2="1055" y2="298" class="arrow-line" />
+			<!-- arrow down to Input register, load Input input -->
+			<line x1="1050" y1="322" x2="1045" y2="317" class="arrow-line" />
+			<line x1="1050" y1="322" x2="1055" y2="317" class="arrow-line" />
 
 
 
@@ -626,8 +640,28 @@ function infoOn(x) {
 		case "clear-line":
 			break;
 		case "help":
-			showTextInOutputBox("CoSc 2150 - Maria Microcode Emulator", "Load assembled microcoe and assembled instructions, then step or run.", "", "https://github.com/Univ-Wyo-Education/S20-2150/McDocs/ for more detailed help.","","Click on a line to see where the input connects to.  Try Ld near the PC register.");
+			showTextInOutputBox("CoSc 2150 - Maria Microcode Emulator"
+				,"Load assembled microcoe and assembled instructions, then step or run."
+				,""
+				,"https://github.com/Univ-Wyo-Education/S20-2150/McDocs/ for more detailed help."
+				,""
+				,"Click on a line to see where the input connects to.  Try Ld near the PC register."
+				);
 			break;
+		case "decoder-info":
+			showTextInOutputBox("Decoder takes 2 input lines and has 4 8-wide inputs connecting to 1 8-wide output."
+				,"The control lines select the input source."
+				,"Lines that are not hooked to other sources are Out_7 to Out_0 from the Microcode."
+				, ""
+				," CTL   Instruction"
+				," ---  -----------------------------------------------------"
+				,"  00   Microcode Jmp (Halt, Unused)"
+				,"  01   Jump if (Is Zero) from Result/Cmp - Microcode PC Inc Twice"
+				,"  10   Skip { SkipEe0, SkipGt0, SkipLt0 }"
+				,"  11   Common IR Decode"
+				);
+			break;
+			// <g transform="rotate(90 1000 400) translate(-350 14)" onclick="infoOn('decoder-info');">
 
 
 		case "id_pc":
