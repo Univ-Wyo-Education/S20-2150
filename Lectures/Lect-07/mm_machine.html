@@ -126,16 +126,18 @@
 			<text x="655" y="75" class="vsmall" onclick="infoOn('id_ac_Out_to_ALU',1,2,3,4);">Out To ALU</text>
 		<!-- Connection from AC to Bus -->
 		<rect id="id_ac_to_bus" x="625" y="130" width="1" height="160" class="input-line" />
+
 	<rect id="id_microcode" x="750" y="30" width="400" height="100" fill="#c0a0a0" stroke="#000000" stroke-width="3" />
 		<text x="750" y="25" class="small">Microcode</text>
 		<text x="754" y="47" class="small">Address 256 Words</text>
 		<text x="754" y="67" class="small">Data 64 bits wide</text>
-	<rect id="id_microcode_pc" x="1200" y="30" width="100" height="50" fill="#ffd700" stroke="#000000" stroke-width="3" />
-		<text x="1200" y="25" class="small">Microcode PC</text>
-		<rect id="id_microcode_pc_Ld" x="1300" y="40" width="20" height="1" class="input-line" />
-			<text x="1305" y="35" class="vsmall">Ld</text>
-		<rect id="id_Microcode_PC_clr" x="1300" y="60" width="20" height="1" class="input-line" />
-			<text x="1305" y="55" class="vsmall">Clr</text>
+
+	<rect id="id_Microcode_PC" x="1200" y="30" width="100" height="50" fill="#ffd700" stroke="#000000" stroke-width="3" onclick="infoOn('id_Microcode_PC',1,2,3,4);"/>
+		<text x="1200" y="25" class="small" onclick="infoOn('id_Microcode_PC',1,2,3,4);">Microcode PC</text>
+		<rect id="id_Microcode_PC_Ld" x="1300" y="40" width="20" height="1" class="input-line" />
+			<text x="1305" y="35" class="vsmall" onclick="infoOn('id_Microcode_PC_Ld',1,2,3,4);">Ld</text>
+		<rect id="id_Microcode_PC_Clr" x="1300" y="60" width="20" height="1" class="input-line" />
+			<text x="1305" y="55" class="vsmall" onclick="infoOn('id_Microcode_PC_Clr',1,2,3,4);">Clr</text>
 		<!-- connection from decoder output to Microcode Address Load/Input -->
 		<rect id="id_Microcode_PC_In[8]a"   x="1270"   y="80"   width="1"    height="65"    class="input-line" />
 		<rect id="id_Microcode_PC_In[8]b"   x="1270"   y="145"  width="60"   height="1"     class="input-line" />
@@ -265,28 +267,30 @@
 		<rect id="id_mdr_to_bus" x="570" y="290" width="1" height="33" class="input-line" />
 		<!-- Connection from mdr to Main Memory -->
 		<rect id="id_mar_to_memory" x="570" y="375" width="1" height="45" class="input-line" />
+
 	<rect id="id_memory" x="250" y="420" width="400" height="250" fill="#d0d0d0" stroke="#000000" stroke-width="1" onclick="infoOn('id_memory',254,480,400,860);"/>
 		<text x="400" y="415" class="small">Main Memory</text>
 		<text x="254" y="440" class="small">Address 8K Words</text>
 		<text x="254" y="460" class="small">Data 16 bits wide</text>
-		<rect id="id_mdr_Ld" x="650" y="440" width="40" height="1" class="input-line" />
-			<text x="655" y="434" class="vsmall">Read</text>
-		<rect id="id_mdr_Ld" x="650" y="460" width="40" height="1" class="input-line" />
-			<text x="655" y="454" class="vsmall">Write</text>
-	<rect id="id_output" x="1200" y="324" width="100" height="50" class="white-box" />
-		<text x="1200" y="319" class="small">Output</text>
+		<rect id="id_memory_Ld" x="650" y="440" width="40" height="1" class="input-line" />
+			<text x="655" y="434" class="vsmall" onclick="infoOn('id_memory_Read',1,2,3,4);">Read</text>
+		<rect id="id_memory_Ld" x="650" y="460" width="40" height="1" class="input-line" />
+			<text x="655" y="454" class="vsmall" onclick="infoOn('id_memory_Write',1,2,3,4);">Write</text>
+
+	<rect id="id_output" x="1200" y="324" width="100" height="50" class="white-box" onclick="infoOn('id_output',1,2,3,4);" />
+		<text x="1200" y="319" class="small" onclick="infoOn('id_output',1,2,3,4);">Output</text>
 		<rect id="id_output_Ld" x="1300" y="340" width="20" height="1" class="input-line" />
-			<text x="1305" y="334" class="vsmall">Ld</text>
+			<text x="1305" y="334" class="vsmall" onclick="infoOn('id_output_Ld',1,2,3,4);">Ld</text>
 		<rect id="id_output_Out" x="1300" y="360" width="20" height="1" class="input-line" />
-			<text x="1305" y="355" class="vsmall">Out</text>
+			<text x="1305" y="355" class="vsmall" onclick="infoOn('id_output_Out',1,2,3,4);">Out</text>
 		<!-- Connection from output to Bus -->
 		<rect id="id_output_to_bus" x="1250" y="290" width="1" height="33" class="input-line" />
-	<rect id="id_input" x="1000" y="324" width="100" height="50" class="white-box" />
-		<text x="1000" y="319" class="small">Input</text>
+	<rect id="id_input" x="1000" y="324" width="100" height="50" class="white-box" onclick="infoOn('id_input',1,2,3,4);"/>
+		<text x="1000" y="319" class="small"onclick="infoOn('id_input',1,2,3,4);">Input</text>
 		<rect id="id_input_Ld" x="1100" y="340" width="20" height="1" class="input-line" />
-			<text x="1105" y="334" class="vsmall">Ld</text>
+			<text x="1105" y="334" class="vsmall" onclick="infoOn('id_input_Ld',1,2,3,4);">Ld</text>
 		<rect id="id_input_Out" x="1100" y="360" width="20" height="1" class="input-line" />
-			<text x="1105" y="355" class="vsmall">Out</text>
+			<text x="1105" y="355" class="vsmall" onclick="infoOn('id_input_Out',1,2,3,4);">Out</text>
 		<!-- Connection from input to Bus -->
 		<rect id="id_input_to_bus" x="1050" y="290" width="1" height="33" class="input-line" />
 
@@ -366,6 +370,7 @@
 	</g>
 
 
+<!-- -->
 	<path id="result_Ld_to_microcode" class="blue-line"
 		d="M 350 40   L  390 40   390 280    1000 280 1000 130  "
 		/>
@@ -380,6 +385,7 @@
 		/>
 
 
+<!-- -->
 	<path id="ac_Ld_to_microcode" class="blue-line"
 		d="M 650 40   L  690 40   690 280     940 280 940 130  "
 		/>
@@ -390,14 +396,7 @@
 		d="M 650 80  L  690 80    690 280     940 280 940 130  "
 		/>
 
-<!--
-	<rect id="id_mdr" x="520" y="324" width="100" height="50" class="yellow-box" onclick="infoOn('id_mdr',1,2,3,4);" />
-		<text x="520" y="319" class="small" onclick="infoOn('id_mdr',1,2,3,4);">MDR</text>
-		<rect id="id_mdr_Ld" x="620" y="340" width="20" height="1" class="input-line" />
-			<text x="625" y="334" class="vsmall" onclick="infoOn('id_mdr_Ld',1,2,3,4);">Ld</text>
-		<rect id="id_mdr_Out" x="620" y="360" width="20" height="1" class="input-line" />
-			<text x="624" y="355" class="vsmall" onclick="infoOn('id_mdr_Out',1,2,3,4);">Out</text>
--->
+<!-- MDR -->
 	<path id="mdr_Ld_to_microcode" class="blue-line"
 		d="M 620 340   L  690 340   690 280     960 280 960 130  "
 		/>
@@ -405,19 +404,59 @@
 		d="M 620 360   L  690 360   690 280     960 280 960 130  "
 		/>
 
-<!--
-	<rect id="id_mar" x="275" y="324" width="100" height="50" class="yellow-box" onclick="infoOn('id_mar',1,2,3,4);" />
-		<text x="275" y="319" class="small" onclick="infoOn('id_mar',1,2,3,4);">MAR</text>
-		<rect id="id_mar_Ld" x="375" y="340" width="20" height="1" class="input-line" />
-			<text x="379" y="334" class="vsmall" onclick="infoOn('id_mar_Ld',1,2,3,4);">Ld</text>
-		<rect id="id_mar_Out" x="375" y="360" width="20" height="1" class="input-line" />
-			<text x="379" y="355" class="vsmall" onclick="infoOn('id_mar_Out',1,2,3,4);">Out</text>
--->
+<!-- MAR -->
 	<path id="mar_Ld_to_microcode" class="blue-line"
 		d="M 375 340   L  450 340   450 280     980 280 980 130  "
 		/>
 	<path id="mar_Out_to_microcode" class="blue-line"
 		d="M 375 360   L  450 360   450 280     980 280 980 130  "
+		/>
+
+
+<!-- input -->
+	<path id="input_Ld_to_microcode" class="blue-line"
+		d="M 1100 340   L  1150 340   1150 280     900 280 900 130  "
+		/>
+	<path id="input_Out_to_microcode" class="blue-line"
+		d="M 1100 360   L  1150 360   1150 280     900 280 900 130  "
+		/>
+
+
+<!-- output -->
+	<path id="output_Ld_to_microcode" class="blue-line"
+		d="M 1300 340   L  1350 340   1350 280     920 280 920 130  "
+		/>
+	<path id="output_Out_to_microcode" class="blue-line"
+		d="M 1300 360   L  1350 360   1350 280     920 280 920 130  "
+		/>
+
+
+
+<!-- Microcode PC -->
+	<path id="Microcode_PC_Ld_to_microcode" class="blue-line"
+		d="M 1300 40   L  1350 40   1350 280     880 280 880 130  "
+		/>
+	<path id="Microcode_PC_Clr_to_microcode" class="blue-line"
+		d="M 1300 60   L  1350 60   1350 280     880 280 880 130  "
+		/>
+
+
+<!-- Main Memory -->
+<!--
+	<rect id="id_memory" x="250" y="420" width="400" height="250" fill="#d0d0d0" stroke="#000000" stroke-width="1" onclick="infoOn('id_memory',254,480,400,860);"/>
+		<text x="400" y="415" class="small">Main Memory</text>
+		<text x="254" y="440" class="small">Address 8K Words</text>
+		<text x="254" y="460" class="small">Data 16 bits wide</text>
+		<rect id="id_mdr_Ld" x="650" y="440" width="40" height="1" class="input-line" />
+			<text x="655" y="434" class="vsmall">Read</text>
+		<rect id="id_mdr_Ld" x="650" y="460" width="40" height="1" class="input-line" />
+			<text x="655" y="454" class="vsmall">Write</text>
+-->
+	<path id="Main_Memory_Read" class="blue-line"
+		d="M 650 440   L  730 440   730 280     1080 280 1080 130  "
+		/>
+	<path id="Main_Memory_Write" class="blue-line"
+		d="M 650 460   L  730 460   730 280     1060 280 1060 130  "
 		/>
 
 
@@ -473,6 +512,14 @@ var lineOn = [
 	,"#mar_Out_to_microcode"
 	,"#mdr_Ld_to_microcode" 
 	,"#mdr_Out_to_microcode"
+	,"#input_Ld_to_microcode" 
+	,"#input_Out_to_microcode"
+	,"#output_Ld_to_microcode" 
+	,"#output_Out_to_microcode"
+	,"#Microcode_PC_Ld_to_microcode"
+	,"#Microcode_PC_Clr_to_microcode"
+	,"#Main_Memory_Read" 
+	,"#Main_Memory_Write"
 ];	// List of IDs of lines that are turned-on
 
 function clearOtherLine() {
@@ -506,9 +553,6 @@ function infoOn(x,x1,y1,x2,y2) {
 	switch ( x ) {
 
 
-	case "id_memory":
-		$("#"+x).css("fill","#ff0000");
-		break;
 	case "clear-line":
 		clearOtherLine();
 		break;
@@ -601,6 +645,56 @@ function infoOn(x,x1,y1,x2,y2) {
 		break;
 	case "id_mdr_Out":
 		showLine("#mdr_Out_to_microcode");
+		break;
+
+//	,"#input_Ld_to_microcode" 
+//	,"#input_Out_to_microcode"
+	case "id_input":
+		$("#"+x).css("fill","#ff0000");
+		break;
+	case "id_input_Ld":
+		showLine("#input_Ld_to_microcode");
+		break;
+	case "id_input_Out":
+		showLine("#input_Out_to_microcode");
+		break;
+
+//	,"#output_Ld_to_microcode" 
+//	,"#output_Out_to_microcode"
+	case "id_output":
+		$("#"+x).css("fill","#ff0000");
+		break;
+	case "id_output_Ld":
+		showLine("#output_Ld_to_microcode");
+		break;
+	case "id_output_Out":
+		showLine("#output_Out_to_microcode");
+		break;
+
+
+//	,"#Microcode_PC_Ld_to_microcode"
+//	,"#Microcode_PC_Clr_to_microcode"
+	case "id_Microcode_PC":
+		$("#"+x).css("fill","#ff0000");
+		break;
+	case "id_Microcode_PC_Ld":
+		showLine("#Microcode_PC_Ld_to_microcode");
+		break;
+	case "id_Microcode_PC_Clr":
+		showLine("#Microcode_PC_Clr_to_microcode");
+		break;
+
+
+//	,"#Main_Memory_Read" 
+//	,"#Main_Memory_Write"
+	case "id_memory":
+		$("#"+x).css("fill","#ff0000");
+		break;
+	case "id_memory_Read":
+		showLine("#Main_Memory_Read");
+		break;
+	case "id_memory_Write":
+		showLine("#Main_Memory_Write");
 		break;
 
 
