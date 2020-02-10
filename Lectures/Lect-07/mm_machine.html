@@ -11,6 +11,7 @@
 	.red-line   { fill:#f00000; stroke:#000000; stroke-width:1; }
 	.out-box    { fill:#ffffff; stroke:#000000; stroke-width:1; }
 	.blue-line  { fill:#000000; stroke:#4040ff; stroke-width:3; fill:none }
+	.blue-line-1 { fill:#000000; stroke:#4040ff; stroke-width:2; fill:none }
 	.button-box { fill:#b4c5fb; stroke:#000000; stroke-width:2; opacity:0.75 }
 </style>
 <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
@@ -21,7 +22,7 @@
  <g class="layer">
 	<title>Simple CPU - For Microcoding - CoSc 2150 2020-02-07</title>
 	<rect id="id_pc" x="75" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_pc',1,2,3,4);"/>
-		<text x="75" y="25" class="small">PC</text>
+		<text x="75" y="25" class="small" onclick="infoOn('id_pc',1,2,3,4);">PC</text>
 		<rect id="id_pc_Ld" x="125" y="40" width="20" height="1" class="input-line" />
 			<text x="130" y="35" class="vsmall" onclick="infoOn('id_pc_Ld',1,2,3,4);">Ld</text>
 		<rect id="id_pc_inc" x="125" y="60" width="20" height="1" class="input-line" />
@@ -29,15 +30,16 @@
 		<rect id="id_pc_out" x="125" y="80" width="20" height="1" class="input-line" />
 			<text x="130" y="75" class="vsmall" onclick="infoOn('id_pc_Out',1,2,3,4);">Out</text>
 		<rect id="id_pc_clr" x="125" y="100" width="20" height="1" class="input-line" />
-			<text x="130" y="95" class="vsmall" onclick="infoOn('id_pc_Out',1,2,3,4);">Clr</text>
+			<text x="130" y="95" class="vsmall" onclick="infoOn('id_pc_Clr',1,2,3,4);">Clr</text>
 		<!-- Connection from PC to Bus -->
 		<rect id="id_pc_to_bus" x="100" y="130" width="1" height="160" class="input-line" />
-	<rect id="id_ir" x="175" y="30" width="50" height="100" class="teal-box" />
-		<text x="175" y="25" class="small">IR</text>
+
+	<rect id="id_ir" x="175" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_ir',1,2,3,4);"/>
+		<text x="175" y="25" class="small" onclick="infoOn('id_ir',1,2,3,4);">IR</text>
 		<rect id="id_ir_Ld" x="225" y="40" width="20" height="1" class="input-line" />
-			<text x="230" y="35" class="vsmall">Ld</text>
+			<text x="230" y="35" class="vsmall" onclick="infoOn('id_ir_Ld',1,2,3,4);">Ld</text>
 		<rect id="id_ir_out" x="225" y="60" width="20" height="1" class="input-line" />
-			<text x="230" y="55" class="vsmall">Out</text>
+			<text x="230" y="55" class="vsmall" onclick="infoOn('id_ir_Out',1,2,3,4);">Out</text>
 		<!-- Connection from IR to Bus -->
 		<rect id="id_ir_to_bus" x="200" y="130" width="1" height="160" class="input-line" />
 		<rect id="id_ir_sw" x="175" y="230" width="50" height="45" class="gray-box" />
@@ -69,16 +71,16 @@
 					11		22  / Common IR Decode
 			-->
 
-	<rect id="id_result" x="300" y="30" width="50" height="100" class="teal-box" />
-		<text x="300" y="25" class="small">Result</text>
+	<rect id="id_result" x="300" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_result',1,2,3,4);"/>
+		<text x="300" y="25" class="small" onclick="infoOn('id_result',1,2,3,4);">Result</text>
 		<rect id="id_result_Ld" x="350" y="40" width="20" height="1" class="input-line" />
-			<text x="355" y="35" class="vsmall">Ld</text>
+			<text x="355" y="35" class="vsmall" onclick="infoOn('id_result_Ld',1,2,3,4);">Ld</text>
 		<rect id="id_result_out" x="350" y="60" width="20" height="1" class="input-line" />
-			<text x="355" y="55" class="vsmall">Out</text>
+			<text x="355" y="55" class="vsmall" onclick="infoOn('id_result_Out',1,2,3,4);">Out</text>
 		<rect id="id_result_clr" x="350" y="100" width="20" height="1" class="input-line" />
-			<text x="355" y="95" class="vsmall">Clr</text>
+			<text x="355" y="95" class="vsmall" onclick="infoOn('id_result_Clr',1,2,3,4);">Clr</text>
 		<rect id="id_result_zero_out" x="350" y="120" width="47" height="1" class="input-line" />
-			<text x="355" y="115" class="vsmall">Is Zero</text>
+			<text x="355" y="115" class="vsmall" onclick="infoOn('id_result_zero_out',1,2,3,4);">Is Zero</text>
 			<!-- arrow for is zero - output from IR -->
 			<line x1="397" y1="120" x2="392" y2="115" style="stroke:rgb(0,0,0);stroke-width:3" />
 			<line x1="397" y1="120" x2="392" y2="125" style="stroke:rgb(0,0,0);stroke-width:3" />
@@ -89,12 +91,12 @@
 		points=" 500,30	400,60 400,100 500,130 500,110 480,100 480,60 500,50	 500,30 "
 		fill="#80ff80" stroke="#000000" stroke-width="3" />
 		<text x="400" y="45" class="small">ALU</text>
-		<rect id="id_ALU_ctl_1" x="420" y="108" width="1" height="45" class="input-line" />
-		<rect id="id_ALU_ctl_2" x="425" y="110" width="1" height="43" class="input-line" />
-		<rect id="id_ALU_ctl_3" x="430" y="112" width="1" height="41" class="input-line" />
-		<rect id="id_ALU_ctl_4" x="435" y="113" width="1" height="40" class="input-line" />
-			<text x="440" y="142" class="vsmall">ALU ctl</text>
-			<text x="440" y="152" class="vsmall">0..3</text>
+		<rect id="id_ALU_Ctl_0" x="420" y="108" width="1" height="45" class="input-line" />
+		<rect id="id_ALU_Ctl_1" x="425" y="110" width="1" height="43" class="input-line" />
+		<rect id="id_ALU_Ctl_2" x="430" y="112" width="1" height="41" class="input-line" />
+		<rect id="id_ALU_Ctl_3" x="435" y="113" width="1" height="40" class="input-line" />
+			<text x="440" y="142" class="vsmall" onclick="infoOn('id_ALU_Ctl',1,2,3,4);">ALU Ctl</text>
+			<text x="440" y="152" class="vsmall" onclick="infoOn('id_ALU_Ctl',1,2,3,4);">0..3</text>
 		<!-- Connection from ALU to Result -->
 		<rect id="id_ALU_to_result" x="350" y="80" width="50" height="1" class="input-line" />
 		<!-- Connection from ALU to AC -->
@@ -134,12 +136,16 @@
 			<text x="1305" y="35" class="vsmall">Ld</text>
 		<rect id="id_Microcode_PC_clr" x="1300" y="60" width="20" height="1" class="input-line" />
 			<text x="1305" y="55" class="vsmall">Clr</text>
+		<!-- connection from decoder output to Microcode Address Load/Input -->
 		<rect id="id_Microcode_PC_In[8]a"   x="1270"   y="80"   width="1"    height="65"    class="input-line" />
 		<rect id="id_Microcode_PC_In[8]b"   x="1270"   y="145"  width="60"   height="1"     class="input-line" />
 		<rect id="id_Microcode_PC_In[8]c"   x="1330"   y="145"  width="1"    height="75" 	class="input-line" />
 		<rect id="id_Microcode_PC_In[8]d"   x="1280"   y="220"  width="50"   height="1"     class="input-line" />
 			<text x="1275" y="95" class="vsmall">In[8]</text>
 			<text x="1282" y="215" class="vsmall">Out</text>
+			<!-- arrow up -->
+			<line x1="1270" y1="82" x2="1265" y2="87" style="stroke:rgb(0,0,0);stroke-width:3" />
+			<line x1="1270" y1="82" x2="1275" y2="87" style="stroke:rgb(0,0,0);stroke-width:3" />
 
 		<rect id="id_Microcode_Out[8]dec_a"  x="1135"   y="130"  width="1"    height="25"    class="input-line" />
 		<rect id="id_Microcode_Out[8]dec_b"  x="1135"   y="155"  width="40"   height="1"     class="input-line" />
@@ -154,7 +160,7 @@
 			</g>
 		<rect id="id_Microcode_Out[4]ALU_ctl"  x="1100"   y="130"   width="1"    height="125"     class="input-line" />
 			<g transform="rotate(90 1000 400) translate(-390 34)">
-				<text x="1128" y="260" class="vsmall">ALU Ctl[4]</text>
+				<text x="1128" y="260" class="vsmall" onclick="infoOn('id_ALU_Ctl',1,2,3,4);">ALU Ctl[4]</text>
 			</g>
 		<rect id="id_Microcode_Out[1]memory_read"  x="1080"   y="130"   width="1"    height="125"     class="input-line" />
 			<g transform="rotate(90 1000 400) translate(-390 54)">
@@ -196,9 +202,24 @@
 			<g transform="rotate(90 1000 400) translate(-390 234)">
 				<text x="1128" y="260" class="vsmall">Input[2] Ld/Out</text>
 			</g>
+		<rect id="id_Microcode_Out[2]mc_ctl"  x="880"   y="130"   width="1"    height="125"     class="input-line" />
+			<g transform="rotate(90 1000 400) translate(-390 254)">
+				<text x="1128" y="260" class="vsmall">Microcode PC[2] Ld/Clr</text>
+			</g>
+
 		<rect id="id_Microcode_PC_Out[8]to_Microcode"  x="1150"   y="50"   width="50"   height="1"     class="input-line" />
 			<text x="1155" y="35" class="vsmall">Out[8]</text>
 			<text x="1155" y="45" class="vsmall">Addr</text>
+			<!-- arrow left -->
+			<line x1="1152" y1="50" x2="1157" y2="45" style="stroke:rgb(0,0,0);stroke-width:3" />
+			<line x1="1152" y1="50" x2="1157" y2="55" style="stroke:rgb(0,0,0);stroke-width:3" />
+		<rect id="id_Microcode_PC_to_Microcode_PC_Inc_out_a"  x="1150"   y="120"   width="85"   height="1"     class="input-line" />
+		<rect id="id_Microcode_PC_to_Microcode_PC_Inc_out_b"  x="1235"   y="80"   width="1"   height="40"     class="input-line" />
+			<text x="1155" y="105" class="vsmall">Out Inc </text>
+			<text x="1155" y="115" class="vsmall">Microcode PC</text>
+			<!-- arrow up -->
+			<line x1="1237" y1="80" x2="1230" y2="87" style="stroke:rgb(0,0,0);stroke-width:3" />
+			<line x1="1237" y1="80" x2="1240" y2="87" style="stroke:rgb(0,0,0);stroke-width:3" />
 
 		<rect id="id_decoder_In[8]b"  x="1175"   y="210"  width="35"   height="1"     class="input-line" />
 			<text x="1182" y="208" class="vsmall">01</text>
@@ -217,9 +238,9 @@
 		points=" 1200,180	1200,250 1280,220       1200,180 "
 		fill="#f0fff0" stroke="#ff0000" stroke-width="3" />
 			<text x="1220" y="180" class="small">Decoder</text>
-			<!-- xyzzy Decoder Control Lines 2? or 3? -->
-			<!-- xyzzy Decoder Output to Microcode_PC Input -->
-			<!-- xyzzy Decoder Input from Bus -->
+			<!-- Decoder Output to Microcode_PC Input -->
+
+
 	<rect id="id_main_bus" x="25" y="290" width="1500" height="3" fill="#000000" stroke="#000000" stroke-width="1" />
 		<text x="25" y="285" class="small">Bus</text>
 	<rect id="id_mar" x="275" y="324" width="100" height="50" class="yellow-box" />
@@ -232,6 +253,7 @@
 		<rect id="id_mar_to_bus" x="335" y="290" width="1" height="33" class="input-line" />
 		<!-- Connection from mar to Main Memory -->
 		<rect id="id_mar_to_memory" x="335" y="375" width="1" height="45" class="input-line" />
+
 	<rect id="id_mdr" x="520" y="324" width="100" height="50" class="yellow-box" />
 		<text x="520" y="319" class="small">MDR</text>
 		<rect id="id_mdr_Ld" x="620" y="340" width="20" height="1" class="input-line" />
@@ -312,9 +334,63 @@
 	<path id="pc_Out_to_microcode" class="blue-line"
 		d="M 125 80   L 160 80  160 220  700 220  700 280 1040 280 1040 130  "
 		/>
+	<path id="pc_Clr_to_microcode" class="blue-line"
+		d="M 125 100   L 160 100  160 220  700 220  700 280 1040 280 1040 130  "
+		/>
+
+	<path id="ir_Ld_to_microcode" class="blue-line"
+		d="M 225 40   L 270 40  270 220  700 220  700 280 1020 280 1020 130  "
+		/>
+	<path id="ir_Out_to_microcode" class="blue-line"
+		d="M 225 60   L 270 60  270 220  700 220  700 280 1020 280 1020 130  "
+		/>
 
 	<path id="ir_15_12_to_decoder_11" class="blue-line"
 		d="M 200 170   L  705 170  705 280   1175 280 1175 240  1200 240 "
+		/>
+	<path id="ir_11_8_to_decoder_10" class="blue-line"
+		d="M 200 200   L  705 200  705 280   1175 280 1175 225  1200 225 "
+		/>
+
+	<g id="alu_ctl_4_to_microcode">
+		<rect id="id_ALU_ctl_0" x="420" y="108" width="1" height="45" class="blue-line-1" />
+		<rect id="id_ALU_ctl_1" x="425" y="110" width="1" height="43" class="blue-line-1" />
+		<rect id="id_ALU_ctl_2" x="430" y="112" width="1" height="41" class="blue-line-1" />
+		<rect id="id_ALU_ctl_3" x="435" y="113" width="1" height="40" class="blue-line-1" />
+		<path id="alu_ctl_to_microcode_a" class="blue-line-1" d="M 420 152   L  427 160  " />
+		<path id="alu_ctl_to_microcode_b" class="blue-line-1" d="M 425 152   L  427 160  " />
+		<path id="alu_ctl_to_microcode_c" class="blue-line-1" d="M 430 152   L  428 160  " />
+		<path id="alu_ctl_to_microcode_d" class="blue-line-1" d="M 435 152   L  428 160  " />
+		<path id="alu_ctl_to_microcoee_e" class="blue-line"
+			d="M 428.5 160   L  428.5 280  705 280   700 280  1100 280 1100 130  "
+			/>
+	</g>
+
+
+<!--
+	<rect id="id_result" x="300" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_result',1,2,3,4);"/>
+		<text x="300" y="25" class="small" onclick="infoOn('id_result',1,2,3,4);">Result</text>
+		<rect id="id_result_Ld" x="350" y="40" width="20" height="1" class="input-line" />
+			<text x="355" y="35" class="vsmall" onclick="infoOn('id_result_Ld',1,2,3,4);">Ld</text>
+		<rect id="id_result_out" x="350" y="60" width="20" height="1" class="input-line" />
+			<text x="355" y="55" class="vsmall" onclick="infoOn('id_result_Out',1,2,3,4);">Out</text>
+		<rect id="id_result_clr" x="350" y="100" width="20" height="1" class="input-line" />
+			<text x="355" y="95" class="vsmall" onclick="infoOn('id_result_Clr',1,2,3,4);">Clr</text>
+		<rect id="id_result_zero_out" x="350" y="120" width="47" height="1" class="input-line" />
+			<text x="355" y="115" class="vsmall" onclick="infoOn('id_result_zero_out',1,2,3,4);">Is Zero</text>
+-->
+
+	<path id="result_Ld_to_microcode" class="blue-line"
+		d="M 350 40   L  390 40   390 280    1000 280 1000 130  "
+		/>
+	<path id="result_Out_to_microcode" class="blue-line"
+		d="M 350 60   L  390 60   390 280    1000 280 1000 130  "
+		/>
+	<path id="result_Clr_to_microcode" class="blue-line"
+		d="M 350 100  L  390 100 390 280     1000 280 1000 130  "
+		/>
+	<path id="result_zero_out" class="blue-line"
+		d="M 350 120  L  390 120  390 280    1175 280 1175 210  1200 210 "
 		/>
 
 <!-- Buttons -->
@@ -352,7 +428,16 @@ var lineOn = [
 	 "#pc_Ld_to_microcode"
 	,"#pc_Inc_to_microcode"
 	,"#pc_Out_to_microcode"
+	,"#pc_Clr_to_microcode" 
 	,"#ir_15_12_to_decoder_11" 
+	,"#ir_11_8_to_decoder_10"
+	,"#ir_Ld_to_microcode" 
+	,"#ir_Out_to_microcode"
+	,"#alu_ctl_4_to_microcode"
+	,"#result_Ld_to_microcode" 
+	,"#result_Out_to_microcode"
+	,"#result_Clr_to_microcode"
+	,"#result_zero_out" 
 ];	// List of IDs of lines that are turned-on
 
 function clearOtherLine() {
@@ -384,12 +469,19 @@ function showTextInOutputBox(text) {
 function infoOn(x,x1,y1,x2,y2) {
 	console.log("svg/id:"+x+" ("+x1+","+y1+") ("+x2+","+y2+")");
 	switch ( x ) {
+
+
 	case "id_memory":
 		$("#"+x).css("fill","#ff0000");
 		break;
 	case "clear-line":
 		clearOtherLine();
 		break;
+	case "help":
+		showTextInOutputBox("CoSc 2150 - Maria Microcode Emulator", "Load assembled microcoe and assembled instructions, then step or run.", "", "https://github.com/Univ-Wyo-Education/S20-2150/McDocs/ for more detailed help.","","Click on a line to see where the input connects to.  Try Ld near the PC register.");
+		break;
+
+
 	case "id_pc":
 		$("#"+x).css("fill","#ff0000");
 		break;
@@ -402,15 +494,54 @@ function infoOn(x,x1,y1,x2,y2) {
 	case "id_pc_Out":
 		showLine("#pc_Out_to_microcode");
 		break;
-	case "help":
-		showTextInOutputBox("CoSc 2150 - Maria Microcode Emulator", "Load assembled microcoe and assembled instructions, then step or run.", "", "https://github.com/Univ-Wyo-Education/S20-2150/McDocs/ for more detailed help.","","Click on a line to see where the input connects to.  Try Ld near the PC register.");
+	case "id_pc_Clr":
+		showLine("#pc_Clr_to_microcode");
 		break;
+
+
+	case "id_ir":
+		$("#"+x).css("fill","#ff0000");
+		break;
+	case "id_ir_Ld":
+		showLine("#ir_Ld_to_microcode");
+		break;
+	case "id_ir_Out":
+		showLine("#ir_Out_to_microcode");
+		break;
+
+
+	case "id_result":
+		$("#"+x).css("fill","#ff0000");
+		break;
+	case "id_result_Ld":
+		showLine("#result_Ld_to_microcode");
+		break;
+	case "id_result_Out":
+		showLine("#result_Out_to_microcode");
+		break;
+	case "id_result_Clr":
+		showLine("#result_Clr_to_microcode");
+		break;
+	case "id_result_zero_out":
+		showLine("#result_zero_out");
+		showTextInOutputBox("Connects 1 bit to decoder input 01.","The other addresses come from the McJmp_X");
+		break;
+
+
+	case "id_ALU_Ctl":
+		showLine("#alu_ctl_4_to_microcode");
+		break;
+
+
 	case "ir_decode_g1":
 		showLine("#ir_15_12_to_decoder_11");
-		showTextInOutputBox("Instruction decode use 1 bit of output from the Microcode Out[8] (Out_7)","then 4 bits of the IR, the 3 bits of Out[8] (Out_2, Out_1, Out_0).")
+		showTextInOutputBox("Instruction decode use 1 bit of output from the Microcode Out[8] (Out_7)","then 4 bits of the IR, the 3 bits of Out[8] (Out_2, Out_1, Out_0).");
+			// xyzzy - add addressing example
 		break;
 	case "ir_decode_g2":
-		showLine("#ir_11_8_to_decoeer_10");	// xyzzy
+		showLine("#ir_11_8_to_decoder_10");	// xyzzy
+		showTextInOutputBox("Instruction decode use 01 bit of output from the Microcode Out[8] (Out_7, Out_6)","then 4 bits of the IR, the 2 bits of Out[8] (Out_1, Out_0).");
+			// xyzzy - add addressing example
 		break;
 	}
 }
