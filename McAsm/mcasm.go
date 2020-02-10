@@ -108,9 +108,12 @@ func main() {
 
 		// Type of Parsed Lines
 
-		symbols, op_s, err := ParseLine(line, line_no)
+		symbols, op_s, ss, err := ParseLine(line, line_no)
 		_, _, _ = symbols, op_s, err
-		if symbols == nil || len(symbols) == 0 {
+		if symbols == nil || len(symbols) == 0 || (len(symbols) == 1 && symbols[0] == "") {
+			if db16 {
+				fmt.Printf("%sSkippign Empty Line%s\n", MiscLib.ColorGreen, MiscLib.ColorReset)
+			}
 			continue
 		}
 
@@ -122,12 +125,26 @@ func main() {
 				AddSymbol(ss, line_no, true)
 			}
 			continue
-		}
-		if op_s == "ORG" {
+		} else if op_s == "ORG" {
 			if len(symbols) >= 1 {
 				mpc = convertAddr(symbols[1], line_no)
 			} else {
 				fmt.Printf("Missing address for ORG, Line %d\n", line_no)
+			}
+			continue
+		} else if op_s == "STR" {
+			if db15 {
+				fmt.Printf("Symbols %s\n", symbols)
+			}
+			// STR will put a string into the MC memory as a comment.
+			for ii, eu := range As64BitWords(ss) {
+				if db15 {
+					fmt.Printf("Word[%d] = %x\n", ii, eu)
+				}
+				if eu != 0 {
+					memBuf0[mpc&0xff] = eu
+					mpc++
+				}
 			}
 			continue
 		}
@@ -178,6 +195,28 @@ func main() {
 	}
 }
 
+func As64BitWords(s string) (rv []uint64) {
+	b := []byte(s)
+	var i, j = 0, 0
+	var ee uint64 = 0
+	for i < len(b) {
+		j = i
+		k := 0
+		for k < 8 && j < len(b) {
+			ee = (ee << 8) | (uint64(b[j]) & 0xff)
+			j++
+			k++
+		}
+		for k < 8 {
+			ee = (ee << 8)
+			k++
+		}
+		rv = append(rv, ee)
+		i += 8
+	}
+	return
+}
+
 func convertAddr(h string, line_no int) int {
 	if len(h) > 2 && h[0:2] == "0b" {
 		h = h[2:]
@@ -196,7 +235,7 @@ func convertAddr(h string, line_no int) int {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Parsing
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-func ParseLine(line string, line_no int) (symbols []string, op_s string, err error) {
+func ParseLine(line string, line_no int) (symbols []string, op_s string, ss string, err error) {
 
 	symbols = []string{}
 
@@ -212,12 +251,18 @@ func ParseLine(line string, line_no int) (symbols []string, op_s string, err err
 		op_s = "ORG"
 	} else if len(symbols) > 0 && strings.ToLower(symbols[0]) == "dcl" {
 		op_s = "DCL"
+	} else if len(symbols) > 0 && strings.ToLower(symbols[0]) == "str" {
+		op_s = "STR"
+		ss = strings.Join(symbols[1:], " ")
 	} else if len(symbols) > 0 && strings.ToLower(symbols[0]) == "__end__" {
 		op_s = "__end__"
 	} else {
 		op_s = "1"
 	}
-	fmt.Printf("symbols ->%s<- op %s\n", godebug.SVar(symbols), op_s)
+
+	if db16 {
+		fmt.Printf("symbols ->%s<- op %s\n", godebug.SVar(symbols), op_s)
+	}
 
 	return
 }
@@ -244,7 +289,7 @@ func init() {
 func AddSymbol(Name string, line_no int, Dcl bool) (err error) {
 	if ss, found := SymbolTable[Name]; !found {
 		if !Dcl {
-			fmt.Fprintf(os.Stderr, "%sFond non-declared symbol (%s) on line %d%s\n", MiscLib.ColorRed, Name, line_no, MiscLib.ColorReset)
+			fmt.Fprintf(os.Stderr, "%sFound non-declared symbol (%s) on line %d%s\n", MiscLib.ColorRed, Name, line_no, MiscLib.ColorReset)
 		}
 		SymbolTable[Name] = SymbolTableType{
 			Name:     Name,
@@ -330,4 +375,6 @@ var db7 = false
 var db5 = false  // HEX directive w/ hex output
 var db10 = false // test STR directive
 var db12 = false // test STR directive
-var db14 = true  // DOS
+var db14 = false // DOS
+var db15 = false // DOS
+var db16 = false //
