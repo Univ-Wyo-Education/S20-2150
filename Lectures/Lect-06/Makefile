@@ -1,6 +1,8 @@
 
 all: Lect-06.html Homework-02.html
 
+xyz: Answer-02.html
+
 FR=../Lect-01/
 
 Lect-06.html: Lect-06.md

@@ -114,7 +114,7 @@ This is an approximate schedule.  Updates will be noted in class.
 | Mon&nbsp;Feb&nbsp;10,&nbsp;2020 | 07 | Gates and Boolean Logic                                                    |
 |                                 |    | Homework 1 Due / Setup / Access MARIE etc.                                 |
 |                                 |    | Finish reading Chapter 3 by this date                                      |
-| Wed&nbsp;Feb&nbsp;12,&nbsp;2020 | 08 | More on Gates and Logic                                                    |
+| Wed&nbsp;Feb&nbsp;12,&nbsp;2020 | 08 | More on Gates and Logic                                                    |	MARIE start
 | Fri&nbsp;Feb&nbsp;14,&nbsp;2020 | 09 | FPGA's / ASIC's and VLSI design                                            |
 |                                 |    | Homework 2 Due / Representation of Numbers / ASCII / Unicode               |
 |                                 |    |                                                                            |

@@ -41,7 +41,7 @@ and run at least 4 examples of good and bad values for each.
 	<div class="pagebreak"></div>
 
 5. 30pts - Given the following truth table show the circuit for:
-	( 74ls47 7-segment LED decoder  - see [https://buzztech.in/bcd-to-seven-segment-decoder-program-in-vhdl/](https://buzztech.in/bcd-to-seven-segment-decoder-program-in-vhdl/) )
+	An examlle of a 7 segment decoder is: 74ls47 7-segment LED decoder  - see [https://buzztech.in/bcd-to-seven-segment-decoder-program-in-vhdl/](https://buzztech.in/bcd-to-seven-segment-decoder-program-in-vhdl/)  Do note that it will not handle 10...15 the same way - it is not decoded to an E.
 
 	I, J, K, L are inputs
 

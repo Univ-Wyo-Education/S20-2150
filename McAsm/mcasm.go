@@ -3,6 +3,7 @@ package main
 // Microcode Assembler
 
 import (
+	"encoding/hex"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -15,6 +16,7 @@ import (
 	"strings"
 
 	"github.com/Univ-Wyo-Education/S20-2150/Mac"
+	"github.com/pschlump/HashStrings"
 	"github.com/pschlump/MiscLib"
 	"github.com/pschlump/filelib"
 	"github.com/pschlump/godebug"
@@ -36,8 +38,14 @@ var In = flag.String("in", "", "Input File - microcode assembly code. (microcode
 var Out = flag.String("out", "", "Output in hex. Loadable Microcode .hex file")
 var DbFlag = flag.String("db-flag", "", "debug flags.") // xyzzy401 - TODO
 var St = flag.String("st", "", "Output symbol table to file")
+var Upload = flag.Bool("upload", false, "Upload the microcode.hex to Amazon S3://")
+var Help = flag.Bool("help", false, "Help Printout")
 
 var stOut = os.Stdout
+
+// GitCommit must be external it is generated at compile time and set by the
+// loader.  This is the version of the program and date/time for the code.
+var GitCommit string
 
 var OnWindows = false
 
@@ -54,9 +62,42 @@ func main() {
 
 	fns := flag.Args()
 
+	if *Help {
+		fmt.Printf("Version: %s\n", GitCommit)
+		fmt.Printf(`
+
+./McAsm --in Microcode.m2 --out Microcode.mc.hex [--upload]
+
+--in <file>		Your source microcode file (remember to put your name in with the STR directive.
+--out <file>	File that will contain the assembled hex code.
+--upload		If specified then the file will be upload so that you can use it in the
+				microcode emulator.  Brows to the URL and click on Load Microcode then
+				enter the hash that is output by this tool:
+
+Microcode Emulator:
+				http://uw-s20-2015.s3-website-us-east-1.amazonaws.com/
+
+`)
+		os.Exit(0)
+	}
+
 	if len(fns) > 0 {
 		fmt.Fprintf(os.Stderr, "Invalid arguments\n")
 		os.Exit(1)
+	}
+
+	if db20 {
+		fmt.Printf("Upload = %v S3_BUCKET=[%s] S3_REGION=[%s]\n", *Upload, S3_BUCKET, S3_REGION)
+	}
+	if *Upload {
+		if S3_REGION == "" {
+			fmt.Fprintf(os.Stderr, "Executable not compiled correctly (1) - fatal.\n")
+			os.Exit(1)
+		}
+		if S3_BUCKET == "" {
+			fmt.Fprintf(os.Stderr, "Executable not compiled correctly (2) - fatal.\n")
+			os.Exit(1)
+		}
 	}
 
 	// xyzzy401 - ImplementDebugFlags
@@ -193,6 +234,43 @@ func main() {
 	if n_err > 0 {
 		os.Exit(3)
 	}
+
+	if *Upload {
+		data, err := ioutil.ReadFile(out)
+		if err != nil {
+			fmt.Printf("Error: (Unable to Upload to S3) failed to re-read output: file: %s error:%s\n", out, err)
+			os.Exit(1)
+		}
+		hashHex := HashByesReturnHex(data)
+
+		err = os.Mkdir("./tmp", 0755)
+		if err != nil {
+			fmt.Printf("Error: (Unable to Upload to S3) failed create temporary directory ./tmp error:%s\n", err)
+			os.Exit(1)
+		}
+		fn := fmt.Sprintf("./tmp/%s", hashHex)
+		// toFile := fmt.Sprintf("data/%s", hashHex)
+		toFile := hashHex
+		err = ioutil.WriteFile(fn, data, 0644)
+		if err != nil {
+			fmt.Printf("Error: (Unable to Upload to S3) failed to write temporary data: %s error:%s\n", fn, err)
+			os.Exit(1)
+		}
+		s := SetupS3()
+		err = AddFileToS3(s, fn, toFile)
+		if err != nil {
+			fmt.Printf("Error: (Unable to Upload to S3) failed to upload to S3 error:%s\n", err)
+			os.Exit(1)
+		}
+
+		fmt.Printf("Hash To Enter to Load the Microcode into the Emulator:\n\t%s\n\n", hashHex)
+
+		err = os.RemoveAll("./tmp")
+		if err != nil {
+			fmt.Printf("Error: %s\nManually remove ./tmp directory.", err)
+		}
+	}
+
 }
 
 func As64BitWords(s string) (rv []uint64) {
@@ -368,6 +446,12 @@ func removeComment(line string) (rv string) {
 	return
 }
 
+func HashByesReturnHex(data []byte) (s string) {
+	h := HashStrings.HashByte(data)
+	s = hex.EncodeToString(h)
+	return
+}
+
 var db1 = true  // Leave True
 var db2 = false // Debug of Parsing code		// xyzzy
 var db8 = false
@@ -378,3 +462,4 @@ var db12 = false // test STR directive
 var db14 = false // DOS
 var db15 = false // DOS
 var db16 = false //
+var db20 = true

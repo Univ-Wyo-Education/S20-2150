@@ -1,0 +1,42 @@
+#!/bin/bash
+
+if [ "$(hostname)" == "ub004" ] ; then
+	echo Setting Env
+	export GOPATH=~/go
+	export LD_LIBRARY_PATH=/usr/local/lib
+	export PATH="$GOPATH/bin:/usr/local/go/bin:$PATH"
+fi
+
+if [ "$*" ==  "" ] ; then
+	:
+else
+	OUT=" -o $* "
+fi
+
+# export AWS_REGION=us-east-1
+# export AWS_ACCESS_KEY_ID=X
+# export AWS_SECRET_ACCESS_KEY="X"
+# export AWS_SECRET_KEY="X"
+# export AWS_S3_BUCKET="X"
+
+cat >ver.go <<XxXx
+package main
+
+func init() {
+	S3_REGION = "${AWS_REGION}"
+	S3_BUCKET = "${AWS_S3_BUCKET}"
+}
+XxXx
+
+export GIT_COMMIT=`git rev-list -1 HEAD` && \
+	echo "Version: ${GIT_COMMIT}" && \
+	echo "AWS Region: ${AWS_REGION}" && \
+	go build \
+		-ldflags "-X main.GitCommit=${GIT_COMMIT}-$(date|sed -e 's/ /-/g')" \
+		${OUT} && \
+	echo "local:  " ${GIT_COMMIT} `date` >>build-log.txt 
+
+if [ -f ./ver.go ] ; then
+	rm -f ./ver.go
+fi
+

@@ -17,6 +17,86 @@
 	.arrow-line { stroke:#000000; stroke-width:2; stroke-linecap: round; }
 	.arrow-line-red { stroke:#ff0000; stroke-width:2; stroke-linecap: round; }
 	.arrow-line-green { stroke:#00ff00; stroke-width:2; stroke-linecap: round; }
+	.hash-input {
+		width: 450px;
+		margin-bottom: 20px;
+	}
+	.modal-submit {
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+/* Modal ---------------------------------------------------------------------------------- */
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+.modal-footer {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
 </style>
 <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
 <script src="js/popper-1.14.7.js" type="text/javascript"></script>
@@ -69,12 +149,12 @@
 			<line x1="200" y1="132" x2="195" y2="137" class="arrow-line" />
 			<line x1="200" y1="132" x2="205" y2="137" class="arrow-line" />
 
-			<rect id="id_decode_msb_4" x="200" y="170" width="100" height="1" class="input-line" onclick="infoOn('ir_decode_g1',0,0,0,0);"/>
-				<text x="205" y="155" class="vsmall" onclick="infoOn('ir_decode_g1',0,0,0,0);">IR(15..12)[4] to </text>
-				<text x="205" y="167" class="vsmall" onclick="infoOn('ir_decode_g1',0,0,0,0);">decoder 0b11</text>
-			<rect id="id_decode_xIns_4" x="200" y="200" width="100" height="1" class="input-line" onclick="infoOn('ir_decode_g2',0,0,0,0);" />
-				<text x="205" y="185" class="vsmall" onclick="infoOn('ir_decode_g2',0,0,0,0);">IR(11..8)[4] to </text>
-				<text x="205" y="195" class="vsmall" onclick="infoOn('ir_decode_g2',0,0,0,0);">decoder 0b10</text>
+			<rect id="id_decode_msb_4" x="200" y="170" width="100" height="1" class="input-line" onclick="infoOn('ir_decode_g1');"/>
+				<text x="205" y="155" class="vsmall" onclick="infoOn('ir_decode_g1');">IR(15..12)[4] to </text>
+				<text x="205" y="167" class="vsmall" onclick="infoOn('ir_decode_g1');">decoder 0b11</text>
+			<rect id="id_decode_xIns_4" x="200" y="200" width="100" height="1" class="input-line" onclick="infoOn('ir_decode_g2');" />
+				<text x="205" y="185" class="vsmall" onclick="infoOn('ir_decode_g2');">IR(11..8)[4] to </text>
+				<text x="205" y="195" class="vsmall" onclick="infoOn('ir_decode_g2');">decoder 0b10</text>
 
 			<!-- xyzzy - IR MSB[4] to Decodeer_In_01 -->
 			<!-- xyzzy - IR other[4] to Decodeer_In_02 -->
@@ -190,7 +270,7 @@
 		<rect id="id_Microcode_Out[2]deccoder_ctl_a"  x="1120"   y="130"   width="1"    height="135"     class="input-line" />
 		<rect id="id_Microcode_Out[2]deccoder_ctl_b"  x="1120"   y="265"   width="105"  height="1"     class="input-line" />
 			<g transform="rotate(90 1000 400) translate(-350 14)" onclick="infoOn('decoder-info');">
-				<text x="1128" y="260" class="vsmall">Decoder Ctl[2] </text>
+				<text x="1128" y="260" class="vsmall">Decoder Ctl[2]</text>
 			</g>
 		<rect id="id_Microcode_Out[4]ALU_ctl"  x="1100"   y="130"   width="1"    height="125"     class="input-line" />
 			<g transform="rotate(90 1000 400) translate(-390 34)" onclick="infoOn('id_ALU_Ctl');" >
@@ -323,7 +403,7 @@
 			<line x1="570" y1="420" x2="565" y2="415" class="arrow-line" />
 			<line x1="570" y1="420" x2="575" y2="415" class="arrow-line" />
 
-	<rect id="id_memory" x="250" y="420" width="400" height="250" fill="#d0d0d0" stroke="#000000" stroke-width="1" onclick="infoOn('id_memory',254,480,400,860);"/>
+	<rect id="id_memory" x="250" y="420" width="400" height="300" fill="#d0d0d0" stroke="#000000" stroke-width="1" onclick="infoOn('id_memory',254,480,400,860);"/>
 		<text x="400" y="415" class="small" onclick="infoOn('id_memory');">Main Memory</text>
 		<text x="254" y="440" class="small">Address 8K Words</text>
 		<text x="254" y="460" class="small">Data 16 bits wide</text>
@@ -525,37 +605,106 @@
 		d="M 650 460   L  730 460   730 280     1060 280 1060 130  "
 		/>
 
+<!--
+		<rect id="id_Microcode_Out[2]deccoder_ctl_a"  x="1120"   y="130"   width="1"    height="135"     class="input-line" />
+		<rect id="id_Microcode_Out[2]deccoder_ctl_b"  x="1120"   y="265"   width="105"  height="1"     class="input-line" />
+				1120+105 =
+			<g transform="rotate(90 1000 400) translate(-350 14)" onclick="infoOn('decoder-info');">
+-->
+	<path id="microcode_to_decoder_ctl" class="blue-line"
+		d="M 1120 130   L  1120 265  1225 265 1225 240 M 1215 245 L 1215 265"
+		/>
+
 
 <!-- Buttons -->
-		<rect id="help" x="40" y="320" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('help',0,0,0,0);"/>
-		<text x="45" y="337" class="small" onclick="infoOn('help',0,0,0,0);">Help</text>
+		<rect id="b-help"            x="40" y="300" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('help');"/>
+		<text id="b-help-txt"        x="45" y="317" class="small" onclick="infoOn('help');">Help</text>
 
-		<rect id="clear-line" x="40" y="360" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('clear-line',0,0,0,0);"/>
-		<text x="45" y="377" class="small" onclick="infoOn('clear-line',0,0,0,0);">Clear Lines</text>
+		<rect id="b-clear-line"      x="40" y="330" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('clear-line');"/>
+		<text id="b-clear-line-txt"  x="45" y="347" class="small" onclick="infoOn('clear-line');">Clear Lines</text>
 
-		<rect id="clear-line" x="40" y="400" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('load-memory',0,0,0,0);"/>
-		<text x="45" y="417" class="small" onclick="infoOn('load-memory',0,0,0,0);">Load Memory</text>
+		<rect id="b-load-memory"     x="40" y="360" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('load-memory');"/>
+		<text id="b-load-memory-txt" x="45" y="377" class="small" onclick="infoOn('load-memory');">Load Memory</text>
 
-		<rect id="clear-line" x="40" y="440" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('step',0,0,0,0);"/>
-		<text x="45" y="457" class="small" onclick="infoOn('step',0,0,0,0);">Step</text>
+		<rect id="b-step"            x="40" y="390" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('step');"/>
+		<text id="b-step-txt"        x="45" y="407" class="small" onclick="infoOn('step');">Step Tick</text>
 
-		<rect id="clear-line" x="40" y="480" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('run',0,0,0,0);"/>
-		<text x="45" y="497" class="small" onclick="infoOn('run',0,0,0,0);">Run</text>
+		<rect id="b-run"             x="40" y="420" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('run');"/>
+		<text id="b-run-txt"         x="45" y="437" class="small" onclick="infoOn('run');">Run</text>
 
-		<rect id="clear-line" x="40" y="520" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('input',0,0,0,0);"/>
-		<text x="45" y="537" class="small" onclick="infoOn('input',0,0,0,0);">Input</text>
+		<rect id="b-input"           x="40" y="450" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('input');"/>
+		<text id="b-input-txt"       x="45" y="467" class="small" onclick="infoOn('input');">Input</text>
 
-		<rect id="clear-line" x="40" y="560" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('reset',0,0,0,0);"/>
-		<text x="45" y="577" class="small" onclick="infoOn('reset',0,0,0,0);">Reset</text>
+		<rect id="b-reset"           x="40" y="480" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('reset');"/>
+		<text id="b-reset-txt"       x="45" y="497" class="small" onclick="infoOn('reset');">Reset</text>
 
-		<rect id="clear-line" x="40" y="600" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('load-mc',0,0,0,0);"/>
-		<text x="45" y="617" class="small" onclick="infoOn('load-mc',0,0,0,0);">Load Microcode</text>
+		<rect id="b-load-mc"         x="40" y="510" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('load-mc');"/>
+		<text id="b-load-mc-txt"     x="45" y="527" class="small" onclick="infoOn('load-mc');">Load Microcode</text>
+
+		<rect id="b-step-ins"        x="40" y="540" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('step-ins');"/>
+		<text id="b-step-ins-txt"    x="45" y="557" class="small" onclick="infoOn('step-ins');">Step Instruction</text>
+
+		<rect id="b-setup-cfg"       x="40" y="570" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('setup-cfg');"/>
+		<text id="b-setup-cfg-txt"   x="45" y="587" class="small" onclick="infoOn('setup-cfg');">Setup</text>
+
+		<rect id="b-logic-probe"     x="40" y="600" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('logic-probe');"/>
+		<text id="b-logic-probe-txt" x="45" y="617" class="small" onclick="infoOn('logic-probe');">Logic Probe</text>
+
+		<rect id="b-show-memory"     x="40" y="630" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('show-memory');"/>
+		<text id="b-show-memory-txt" x="45" y="647" class="small" onclick="infoOn('show-memory');">Show Memory</text>
+
+
+
 
 
 
  </g>
 </svg>
+
+<!-- The Modal ======================================================== -->
+<div id="myModal" class="modal">
+
+	<!-- Modal content -->
+	<div class="modal-content">
+		<div class="modal-header">
+			<span class="close" onclick="hideModal();">&times;</span>
+			<h4>Load Code Into Microcode Memory</h4>
+		</div>
+		<div class="modal-body">
+			<p>Enter the hash printed out by McAsm with the --upload flag.</p>
+			<input id="modal-input-code-hash" spellcheck="false" name="i_hash" class="hash-input">
+		</div>
+		<div class="modal-footer">
+			<button class="modal-submit" type="button" id="modal-submit">Load Code</button>
+		</div>
+	</div>
+
+</div>
+
 <script>
+
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+function displayModal () {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+function hideModal() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+	if (event.target == modal) {
+		modal.style.display = "none";
+	}
+}
 
 var lineOn = [
 	 "#pc_Ld_to_microcode"
@@ -587,6 +736,7 @@ var lineOn = [
 	,"#Main_Memory_Read" 
 	,"#Main_Memory_Write"
 	,"#Hand_Out_to_microcode"
+	,"#microcode_to_decoder_ctl"
 ];	// List of IDs of lines that are turned-on
 
 function clearOtherLine() {
@@ -648,7 +798,13 @@ function infoOn(x) {
 				,"Click on a line to see where the input connects to.  Try Ld near the PC register."
 				);
 			break;
+		case "load-mc":
+			console.log ( "load-mc - load microcode" );
+			displayModal() ;
+			// Display Form - setup for "Submit" button.
+			break;
 		case "decoder-info":
+			showLine("#microcode_to_decoder_ctl");
 			showTextInOutputBox("Decoder takes 2 input lines and has 4 8-wide inputs connecting to 1 8-wide output."
 				,"The control lines select the input source."
 				,"Lines that are not hooked to other sources are Out_7 to Out_0 from the Microcode."
