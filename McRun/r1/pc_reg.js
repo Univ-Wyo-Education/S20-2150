@@ -62,7 +62,7 @@ module.exports = {
 		my["_Clr_"] = null;
 		my["_Ld_"] = null;
 		my["_Inc_"] = null;
-		my["_Out"] = null;
+		my["_Out_"] = null;
 	}
 	, err: function () {
 		return Error();
@@ -86,7 +86,7 @@ function TurnOn ( id ) {
 	if(typeof theOutsideWorld.TurnOn === "function") {
 		theOutsideWorld.TurnOn ( my.Name, my, id );
 	} else {
-		console.log ( "Turn On ("+my.Name+"), id );
+		console.log ( "Turn On ("+my.Name+")", id );
 	}
 }
 
@@ -95,7 +95,7 @@ function Display ( val ) {
 	if(typeof theOutsideWorld.Display === "function") {
 		theOutsideWorld.Display ( my.Name, my, val );
 	} else {
-		console.log ( "Display ("+my.Name+"), val );
+		console.log ( "Display ("+my.Name+")", val );
 	}
 }
 

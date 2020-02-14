@@ -2,6 +2,13 @@
 // ======
 var PC = require('./pc_reg');
 var IR = require('./ir_reg');
+var AC = require('./ac_reg');
+var INPUT = require('./input_reg');
+var MAR = require('./mar_reg');
+var MDR = require('./mdr_reg');
+var MICROCODE_PC = require('./microcode_pc_reg');
+var OUTPUT = require('./output_reg');
+var RESULT = require('./result_reg');
 
 // console.log(typeof tools.foo); // => 'function'
 

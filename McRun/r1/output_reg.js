@@ -1,5 +1,5 @@
 
-// PC Register 
+// Output Register 
 // ========
 
 var my;
@@ -10,24 +10,24 @@ module.exports = {
 		console.log ( "Setup Self" );
 		theOutsideWorld = OutsideWorld;
 		my = {
-			  "Name": "PC"
+			  "Name": "Output"
 			, "TalkTo": OutsideWorld
 			, "Group": "Register"
 			, "Interface": {
 				  "bus" : { "width": 16, "mode": "io" }
-				  "vcc" : { "width": 1, "mode": "i" }
-				  "gnd" : { "width": 1, "mode": "i" }
-				, "Clr":  { "width": 1, "mode": "i" }
-				, "Ld"    { "width": 1, "mode": "i" }
-				, "Inc"   { "width": 1, "mode": "i" }
-				, "Out"   { "width": 1, "mode": "i" }	// Turn on Output on "bus"
+				, "vcc" : { "width": 1, "mode": "i" }
+				, "gnd" : { "width": 1, "mode": "i" }
+				// , "Clr" : { "width": 1, "mode": "i" }
+				, "Ld"  : { "width": 1, "mode": "i" }
+				// , "Inc" : { "width": 1, "mode": "i" }
+				, "Out" : { "width": 1, "mode": "i" }	// Turn on Output on "bus"
 			}
 			, "_data_": 0
 			, "_InputBuffer_": 0
 			, "_OutputBuffer_": 0
-			, "_Clr_": null
+			// , "_Clr_": null
 			, "_Ld_": null
-			, "_Inc_": null
+			// , "_Inc_": null
 			, "_Out_": null
 			, "CurState": 0
 			, "NewState": 0
@@ -36,10 +36,10 @@ module.exports = {
 	}
 	, msg: function ( wire, val ) {
 		switch ( wire ) {
-		case "Clr": if ( val === 1 ) { my["_data_"] = 0; }									TurnOn( "pc_Clr" );   Display( my["_data_"]); break;
-		case "Ld":  if ( val === 1 ) { my["_data_"] = my["_InputBuffer_"]; }				TurnOn( "pc_Ld"  );   Display( my["_data_"]); my["_Ld_"] = 1; break;
-		case "Inc": if ( val === 1 ) { my["_data_"] = my["_data_"] + 1; }	    			TurnOn( "pc_Inc" );   Display( my["_data_"]); break;
-		case "Out": if ( val === 1 ) { my["_OutputBuffer_"] = my["_data_"]; PushBuss(); }   TurnOn( "pc_Out" );   Display( my["_data_"]); break;
+		// case "Clr": if ( val === 1 ) { my["_data_"] = 0; }									TurnOn( "output_Clr" );   Display( my["_data_"]); break;
+		case "Ld":  if ( val === 1 ) { my["_data_"] = my["_InputBuffer_"]; }				TurnOn( "output_Ld"  );   Display( my["_data_"]); my["_Ld_"] = 1; break;
+		// case "Inc": if ( val === 1 ) { my["_data_"] = my["_data_"] + 1; }	    			TurnOn( "output_Inc" );   Display( my["_data_"]); break;
+		case "Out": if ( val === 1 ) { my["_OutputBuffer_"] = my["_data_"]; PushBuss(); }   TurnOn( "output_Out" );   Display( my["_data_"]); break;
 		case "bus": if ( val === 1 && my["_Ld_"] === 1 ) { PullBus(); my["_data_"] = my["_InputBuffer_"]; }                   break;
 		default:
 			Error ( "Invalid Message", wire, val );
@@ -55,12 +55,14 @@ module.exports = {
 			PushBus();
 		}
 
+		Display( my["_data_"] );
+
 		// After Tick Cleanup 
 		my["_InputBuffer_"] = null;
-		my["_Clr_"] = null;
+		// my["_Clr_"] = null;
 		my["_Ld_"] = null;
-		my["_Inc_"] = null;
-		my["_Out"] = null;
+		// my["_Inc_"] = null;
+		my["_Out_"] = null;
 	}
 	, err: function () {
 		return Error();
@@ -82,18 +84,18 @@ function PushBus() {
 // Turn on display of a wire with this ID
 function TurnOn ( id ) {
 	if(typeof theOutsideWorld.TurnOn === "function") {
-		theOutsideWorld.TurnOn ( "PC", my, id );
+		theOutsideWorld.TurnOn ( my.Name, my, id );
 	} else {
-		console.log ( "Turn On: ", id );
+		console.log ( "Turn On ("+my.Name+")", id );
 	}
 }
 
 // Display text to inside of register box
 function Display ( val ) {
 	if(typeof theOutsideWorld.Display === "function") {
-		theOutsideWorld.Display ( "PC", my, val );
+		theOutsideWorld.Display ( my.Name, my, val );
 	} else {
-		console.log ( "Turn On: ", id );
+		console.log ( "Display ("+my.Name+")", val );
 	}
 }
 

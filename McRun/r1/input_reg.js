@@ -1,6 +1,5 @@
 
-
-// Result Register 
+// Input Register 
 // ========
 
 var my;
@@ -11,7 +10,7 @@ module.exports = {
 		console.log ( "Setup Self" );
 		theOutsideWorld = OutsideWorld;
 		my = {
-			  "Name": "Result"
+			  "Name": "Input"
 			, "TalkTo": OutsideWorld
 			, "Group": "Register"
 			, "Interface": {
@@ -22,7 +21,6 @@ module.exports = {
 				, "Ld"  : { "width": 1, "mode": "i" }
 				, "Inc" : { "width": 1, "mode": "i" }
 				, "Out" : { "width": 1, "mode": "i" }	// Turn on Output on "bus"
-				, "IsZero" : { "width": 1, "mode": "o" }	// Turn on Output on "bus"
 			}
 			, "_data_": 0
 			, "_InputBuffer_": 0
@@ -37,21 +35,14 @@ module.exports = {
 		return ( my );
 	}
 	, msg: function ( wire, val ) {
-		// xyzzy ALU Input
 		switch ( wire ) {
-		case "Clr": if ( val === 1 ) { my["_data_"] = 0; }									TurnOn( "pc_Clr" );   Display( my["_data_"]); break;
-		case "Ld":  if ( val === 1 ) { my["_data_"] = my["_InputBuffer_"]; }				TurnOn( "pc_Ld"  );   Display( my["_data_"]); my["_Ld_"] = 1; break;
-		case "Inc": if ( val === 1 ) { my["_data_"] = my["_data_"] + 1; }	    			TurnOn( "pc_Inc" );   Display( my["_data_"]); break;
-		case "Out": if ( val === 1 ) { my["_OutputBuffer_"] = my["_data_"]; PushBuss(); }   TurnOn( "pc_Out" );   Display( my["_data_"]); break;
+		case "Clr": if ( val === 1 ) { my["_data_"] = 0; }									TurnOn( "input_Clr" );   Display( my["_data_"]); break;
+		case "Ld":  if ( val === 1 ) { my["_data_"] = my["_InputBuffer_"]; }				TurnOn( "input_Ld"  );   Display( my["_data_"]); my["_Ld_"] = 1; break;
+		case "Inc": if ( val === 1 ) { my["_data_"] = my["_data_"] + 1; }	    			TurnOn( "input_Inc" );   Display( my["_data_"]); break;
+		case "Out": if ( val === 1 ) { my["_OutputBuffer_"] = my["_data_"]; PushBuss(); }   TurnOn( "input_Out" );   Display( my["_data_"]); break;
 		case "bus": if ( val === 1 && my["_Ld_"] === 1 ) { PullBus(); my["_data_"] = my["_InputBuffer_"]; }                   break;
-		// xyzzy IsZero
 		default:
 			Error ( "Invalid Message", wire, val );
-		}
-		if ( my["_data_"] === 0 ) {
-			SendMsg ( "Result", "is_zero", 1 );
-		} else {
-			SendMsg ( "Result", "is_zero", 0 );
 		}
 	}
 	, tick: function ( ) {
@@ -63,7 +54,6 @@ module.exports = {
 			my["_OutputBuffer_"] = my["_data_"];
 			PushBus();
 		}
-		// xyzzy IsZero
 
 		Display( my["_data_"] );
 
@@ -73,7 +63,6 @@ module.exports = {
 		my["_Ld_"] = null;
 		my["_Inc_"] = null;
 		my["_Out_"] = null;
-		// xyzzy IsZero
 	}
 	, err: function () {
 		return Error();

@@ -36,10 +36,10 @@ module.exports = {
 	}
 	, msg: function ( wire, val ) {
 		switch ( wire ) {
-		// case "Clr": if ( val === 1 ) { my["_data_"] = 0; }									TurnOn( "pc_Clr" );   Display( my["_data_"]); break;
-		case "Ld":  if ( val === 1 ) { my["_data_"] = my["_InputBuffer_"]; }				TurnOn( "pc_Ld"  );   Display( my["_data_"]); my["_Ld_"] = 1; break;
-		// case "Inc": if ( val === 1 ) { my["_data_"] = my["_data_"] + 1; }	    			TurnOn( "pc_Inc" );   Display( my["_data_"]); break;
-		case "Out": if ( val === 1 ) { my["_OutputBuffer_"] = my["_data_"]; PushBuss(); }   TurnOn( "pc_Out" );   Display( my["_data_"]); break;
+		// case "Clr": if ( val === 1 ) { my["_data_"] = 0; }									TurnOn( "ir_Clr" );   Display( my["_data_"]); break;
+		case "Ld":  if ( val === 1 ) { my["_data_"] = my["_InputBuffer_"]; }				TurnOn( "ir_Ld"  );   Display( my["_data_"]); my["_Ld_"] = 1; break;
+		// case "Inc": if ( val === 1 ) { my["_data_"] = my["_data_"] + 1; }	    			TurnOn( "ir_Inc" );   Display( my["_data_"]); break;
+		case "Out": if ( val === 1 ) { my["_OutputBuffer_"] = my["_data_"]; PushBuss(); }   TurnOn( "ir_Out" );   Display( my["_data_"]); break;
 		case "bus": if ( val === 1 && my["_Ld_"] === 1 ) { PullBus(); my["_data_"] = my["_InputBuffer_"]; }                   break;
 		default:
 			Error ( "Invalid Message", wire, val );
@@ -62,7 +62,7 @@ module.exports = {
 		// my["_Clr_"] = null;
 		my["_Ld_"] = null;
 		// my["_Inc_"] = null;
-		my["_Out"] = null;
+		my["_Out_"] = null;
 	}
 	, err: function () {
 		return Error();
