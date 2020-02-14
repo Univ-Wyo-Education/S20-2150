@@ -1,6 +1,8 @@
 // app.js
 // ======
 var PC = require('./pc_reg');
+var IR = require('./ir_reg');
+
 // console.log(typeof tools.foo); // => 'function'
 
 var theWorld = {
