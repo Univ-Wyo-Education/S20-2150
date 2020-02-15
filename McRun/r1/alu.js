@@ -52,6 +52,9 @@ module.exports = {
 	, err: function () {
 		return Error();
 	}
+	, test_peek: function() {
+		return ( my["_data_"] );
+	}
 };
 
 function PullBus() {

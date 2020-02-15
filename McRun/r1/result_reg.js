@@ -40,9 +40,9 @@ module.exports = {
 		// xyzzy ALU Input
 		switch ( wire ) {
 		case "Clr": if ( val === 1 ) { my["_data_"] = 0; }									TurnOn( "pc_Clr" );   Display( my["_data_"]); break;
-		case "Ld":  if ( val === 1 ) { my["_data_"] = my["_InputBuffer_"]; }				TurnOn( "pc_Ld"  );   Display( my["_data_"]); my["_Ld_"] = 1; break;
+		case "Ld":  if ( val === 1 ) { PullBus(true); my["_data_"] = my["_InputBuffer_"]; }				TurnOn( "pc_Ld"  );   Display( my["_data_"]); my["_Ld_"] = 1; break;
 		case "Inc": if ( val === 1 ) { my["_data_"] = my["_data_"] + 1; }	    			TurnOn( "pc_Inc" );   Display( my["_data_"]); break;
-		case "Out": if ( val === 1 ) { my["_OutputBuffer_"] = my["_data_"]; PushBuss(); }   TurnOn( "pc_Out" );   Display( my["_data_"]); break;
+		case "Out": if ( val === 1 ) { my["_OutputBuffer_"] = my["_data_"]; PushBus(); }   TurnOn( "pc_Out" );   Display( my["_data_"]); break;
 		case "bus": if ( val === 1 && my["_Ld_"] === 1 ) { PullBus(); my["_data_"] = my["_InputBuffer_"]; }                   break;
 		// xyzzy IsZero
 		default:
@@ -77,6 +77,9 @@ module.exports = {
 	}
 	, err: function () {
 		return Error();
+	}
+	, test_peek: function() {
+		return ( my["_data_"] );
 	}
 };
 

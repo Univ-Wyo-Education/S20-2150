@@ -31,7 +31,7 @@ module.exports = {
 	, msg: function ( wire, val ) {
 		switch ( wire ) {
 		case "hand_out": if ( val === 1 ) { my["_data_"] = 0; }									TurnOn( "hand_out" );   Display( my["_data_"]); break;
-		case "bus": if ( val === 1 && my["_Ld_"] === 1 ) { PullBus(); my["_data_"] = my["_InputBuffer_"]; }                   break;
+		case "bus": if ( val === 1 && my["_Ld_"] === 1 ) { PullBus(true); my["_data_"] = my["_InputBuffer_"]; }                   break;
 		default:
 			Error ( "Invalid Message", wire, val );
 		}
@@ -47,6 +47,9 @@ module.exports = {
 	}
 	, err: function () {
 		return Error();
+	}
+	, test_peek: function() {
+		return ( my["_data_"] );
 	}
 };
 

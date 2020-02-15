@@ -39,10 +39,10 @@ module.exports = {
 	, msg: function ( wire, val ) {
 		switch ( wire ) {
 		case "Clr": if ( val === 1 ) { my["_data_"] = 0; }									TurnOn( "ac_Clr" );   Display( my["_data_"]); break;
-		case "Ld":  if ( val === 1 ) { my["_data_"] = my["_InputBuffer_"]; }				TurnOn( "ac_Ld"  );   Display( my["_data_"]); my["_Ld_"] = 1; break;
+		case "Ld":  if ( val === 1 ) { PullBus(true); my["_data_"] = my["_InputBuffer_"]; }				TurnOn( "ac_Ld"  );   Display( my["_data_"]); my["_Ld_"] = 1; break;
 		case "Inc": if ( val === 1 ) { my["_data_"] = my["_data_"] + 1; }	    			TurnOn( "ac_Inc" );   Display( my["_data_"]); break;
-		case "Out": if ( val === 1 ) { my["_OutputBuffer_"] = my["_data_"]; PushBuss(); }   TurnOn( "ac_Out" );   Display( my["_data_"]); break;
-		case "Out_to_ALU": if ( val === 1 ) { my["_ALUOutputBuffer_"] = my["_data_"]; PushBuss(); }   TurnOn( "ac_Out_to_ALU" );   Display( my["_data_"]); break;
+		case "Out": if ( val === 1 ) { my["_OutputBuffer_"] = my["_data_"]; PushBus(); }   TurnOn( "ac_Out" );   Display( my["_data_"]); break;
+		case "Out_to_ALU": if ( val === 1 ) { my["_ALUOutputBuffer_"] = my["_data_"]; PushBus(); }   TurnOn( "ac_Out_to_ALU" );   Display( my["_data_"]); break;
 		case "bus": if ( val === 1 && my["_Ld_"] === 1 ) { PullBus(); my["_data_"] = my["_InputBuffer_"]; }                   break;
 		default:
 			Error ( "Invalid Message", wire, val );
@@ -70,6 +70,9 @@ module.exports = {
 	}
 	, err: function () {
 		return Error();
+	}
+	, test_peek: function() {
+		return ( my["_data_"] );
 	}
 };
 

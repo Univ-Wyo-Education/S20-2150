@@ -17,33 +17,33 @@ module.exports = {
 				  "bus" : { "width": 16, "mode": "io" }
 				, "vcc" : { "width": 1, "mode": "i" }
 				, "gnd" : { "width": 1, "mode": "i" }
-				// , "Clr" : { "width": 1, "mode": "i" }
 				, "Ld"  : { "width": 1, "mode": "i" }
-				// , "Inc" : { "width": 1, "mode": "i" }
 				, "Out" : { "width": 1, "mode": "i" }	// Turn on Output on "bus"
+				// , "Clr" : { "width": 1, "mode": "i" }
+				// , "Inc" : { "width": 1, "mode": "i" }
 			}
 			, "_data_": 0
 			, "_InputBuffer_": 0
 			, "_OutputBuffer_": 0
-			// , "_Clr_": null
 			, "_Ld_": null
-			// , "_Inc_": null
 			, "_Out_": null
 			, "CurState": 0
 			, "NewState": 0
+			// , "_Clr_": null
+			// , "_Inc_": null
 		};
 		return ( my );
 	}
 	, msg: function ( wire, val ) {
 		switch ( wire ) {
-		// case "Clr": if ( val === 1 ) { my["_data_"] = 0; }									TurnOn( "output_Clr" );   Display( my["_data_"]); break;
-		case "Ld":  if ( val === 1 ) { my["_data_"] = my["_InputBuffer_"]; }				TurnOn( "output_Ld"  );   Display( my["_data_"]); my["_Ld_"] = 1; break;
-		// case "Inc": if ( val === 1 ) { my["_data_"] = my["_data_"] + 1; }	    			TurnOn( "output_Inc" );   Display( my["_data_"]); break;
-		case "Out": if ( val === 1 ) { my["_OutputBuffer_"] = my["_data_"]; PushBuss(); }   TurnOn( "output_Out" );   Display( my["_data_"]); break;
+		case "Ld":  if ( val === 1 ) { PullBus(true); my["_data_"] = my["_InputBuffer_"]; }				TurnOn( "output_Ld"  );   Display( my["_data_"]); my["_Ld_"] = 1; break;
+		case "Out": if ( val === 1 ) { my["_OutputBuffer_"] = my["_data_"]; PushBus(); }   TurnOn( "output_Out" );   Display( my["_data_"]); break;
 		case "bus": if ( val === 1 && my["_Ld_"] === 1 ) { PullBus(); my["_data_"] = my["_InputBuffer_"]; }                   break;
 		default:
 			Error ( "Invalid Message", wire, val );
 		}
+		// case "Clr": if ( val === 1 ) { my["_data_"] = 0; }									TurnOn( "output_Clr" );   Display( my["_data_"]); break;
+		// case "Inc": if ( val === 1 ) { my["_data_"] = my["_data_"] + 1; }	    			TurnOn( "output_Inc" );   Display( my["_data_"]); break;
 	}
 	, tick: function ( ) {
 		if ( my["_Ld_"] === 1 ) {
@@ -59,13 +59,16 @@ module.exports = {
 
 		// After Tick Cleanup 
 		my["_InputBuffer_"] = null;
-		// my["_Clr_"] = null;
 		my["_Ld_"] = null;
-		// my["_Inc_"] = null;
 		my["_Out_"] = null;
+		// my["_Clr_"] = null;
+		// my["_Inc_"] = null;
 	}
 	, err: function () {
 		return Error();
+	}
+	, test_peek: function() {
+		return ( my["_data_"] );
 	}
 };
 
