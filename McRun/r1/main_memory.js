@@ -20,7 +20,7 @@ module.exports = {
 				, "Read" : { "width": 1, "mode": "i" }
 				, "Write"  : { "width": 1, "mode": "i" }
 			}
-			, "_data_": 0		// xyzzy 16bit wide 8k
+			, "_data_": new Array(1000)		// xyzzy 16bit wide 8k
 			, "_InputBuffer_": 0
 			, "_OutputBuffer_": 0
 			, "_Read_": null

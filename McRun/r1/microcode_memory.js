@@ -19,7 +19,8 @@ module.exports = {
 				, "gnd" : { "width": 1, "mode": "i" }
 				, "Addr" : { "width": 8, "mode": "i" }
 			}
-			, "_data_": 0
+			, "_data_": new Array(256)	// 32 bits
+			, "_data2_": new Array(256) // 32 bits
 			, "_InputBuffer_": 0
 			, "_OutputBuffer_": 0
 			, "_Addr_": null
