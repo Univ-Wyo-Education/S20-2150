@@ -748,17 +748,56 @@ On Mac/Linux</p>
 
 <p>This uses the extended instruction set specified on p257 of the book.</p>
 
+<h3>For the command line assembler</h3>
+
 <pre><code>L1,     LoadI    X
         Output
         Load     X
         Add      _1
         Store    X
         LoadI    X
-        SkipGt0            / OnLine use Skipins 0x400 - same instruction just different human representation.
+        SkipGt0          / OnLine use &quot;Skipcond 400&quot; - see below
         Jump L1
         Halt
-        ORG  20
-X,      DEC  22             / Counter of how many characters to output.
+        ORG  20          / OnLine - push down - see below
+X,      DEC  22          / Counter of how many characters to output.
+_1,     DEC  1
+hw,     HEX  48          / 'H' Your values (clue: 48 is not correct for homework-02!)
+        HEX 49           / 'I'
+        HEX 50           / 'P'
+        HEX 51
+        HEX 52
+        HEX 53
+        HEX 54
+        HEX 55
+        HEX 56
+        HEX 0
+</code></pre>
+
+<h3>For the online assembler/runner</h3>
+
+<pre><code>
+L1,     LoadI    X
+        Output
+        Load     X
+        Add      _1
+        Store    X
+        LoadI    X
+        Skipcond 400       / 
+        Jump L1
+        Halt
+        DEC  1             / Move data down so X, is at address 20
+        DEC  1             / Move data down
+        DEC  1             / Move data down
+        DEC  1             / Move data down
+        DEC  1             / Move data down
+        DEC  1             / Move data down
+        DEC  1             / Move data down
+        DEC  1             / Move data down
+        DEC  1             / Move data down
+        DEC  1             / Move data down
+        DEC  1             / Move data down
+X,      DEC  22            / Pointer of characters to output.
 _1,     DEC  1
 hw,     HEX  48            / 'H' Your values (clue: 48 is not correct for homework-02!)
         HEX 49             / 'I'
