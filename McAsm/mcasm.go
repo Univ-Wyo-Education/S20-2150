@@ -123,7 +123,8 @@ Microcode Emulator:
 		}
 	}
 
-	idList := ReadIdList(*IdList)
+	// idList := ReadIdList(*IdList)
+	idList := GetIDsFromSVG("./mm_machine.html")
 
 	// process lines in file...
 	buf, err := ioutil.ReadFile(fn)
@@ -279,6 +280,76 @@ Microcode Emulator:
 		}
 	}
 
+}
+
+// 1. Find every line with id="..."
+// 2. Extract the "ID"
+// 3. Process "xxx[4]" into "xxx_0", "xxx_1" etc.
+func GetIDsFromSVG(HTMLFile string) (outIdList map[string]bool) {
+	outIdList = make(map[string]bool)
+	data, err := ioutil.ReadFile(HTMLFile)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error: Unable to open %s error: %s\n", HTMLFile, err)
+		os.Exit(1)
+	}
+
+	hasId := regexp.MustCompile("<.*id=\"[^\"]*\"")
+	getId := regexp.MustCompile("id=\"[^\"]*\"")
+	hasRange := regexp.MustCompile("\\[[0-9][0-9]*\\]")
+	rangeAtEnd := regexp.MustCompile("\\[[0-9][0-9]*\\]$")
+	getRange := regexp.MustCompile("\\[[0-9][0-9]*\\]")
+	getNum := getRange
+	for LineNo, bLine := range strings.Split(string(data), "\n") {
+		Line := string(bLine)
+		if hasId.MatchString(Line) {
+			s2 := getId.FindAllStringSubmatch(Line, -1)
+			if len(s2) == 0 {
+				fmt.Fprintf(os.Stderr, "Error: Failed to match ->%s<- for ID, LineNo:%d, at:%s\n", Line, LineNo, godebug.LF())
+			}
+			fmt.Printf("SUccess: %s\n", godebug.SVarI(s2[0][0]))
+			idS := s2[0][0]
+			idS = idS[4 : len(idS)-1]
+			fmt.Printf("SUccess: ->%s<-\n", idS)
+			outIdList[idS] = true
+
+			// check for [n] in ID - if found then replace with 0..n-1
+			if hasRange.MatchString(idS) {
+				fmt.Printf("%sHas a Range in it... ->%s<-%s\n", MiscLib.ColorYellow, idS, MiscLib.ColorReset)
+				if rangeAtEnd.MatchString(idS) {
+					s3 := getNum.FindAllStringSubmatch(idS, -1)
+					s3num := s3[0][0]
+					s3num = s3num[1 : len(s3num)-1]
+					num, err := strconv.ParseInt(s3num, 10, 64)
+					if err != nil {
+						fmt.Printf("Error: Invalid number ->%s<- LineNo: error:%s\n", s3num, LineNo, err)
+					} else {
+						begArr := strings.Split(idS, "[")
+						beg := begArr[0]
+						for i := 0; i < int(num); i++ {
+							outIdList[fmt.Sprintf("%s_%d", beg, i)] = true
+						}
+					}
+				} else {
+					s3 := getNum.FindAllStringSubmatch(idS, -1)
+					s3num := s3[0][0]               // get the [n]
+					s3num = s3num[1 : len(s3num)-1] // get the n
+					num, err := strconv.ParseInt(s3num, 10, 64)
+					if err != nil {
+						fmt.Printf("Error: Invalid number ->%s<- LineNo: error:%s\n", s3num, LineNo, err)
+					} else {
+						begArr := strings.Split(idS, "[")
+						beg := begArr[0]
+						endArr := strings.Split(idS, "]")
+						end := endArr[1]
+						for i := 0; i < int(num); i++ {
+							outIdList[fmt.Sprintf("%s_%d_%s", beg, i, end)] = true
+						}
+					}
+				}
+			}
+		}
+	}
+	return
 }
 
 // idList :=  ReadIdList ( *IdList )

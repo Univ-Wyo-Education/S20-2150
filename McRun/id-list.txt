@@ -128,6 +128,7 @@ id_mdr_to_bus
 id_memory
 id_memory_Read
 id_memory_Write
+Microcode_PC_Ld2
 id_microcode
 id_output
 id_output_Ld

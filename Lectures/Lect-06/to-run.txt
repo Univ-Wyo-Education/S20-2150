@@ -1,0 +1,2 @@
+ ../../Download/Asm --in ans-hw2.mas --out ans-hw2.hex
+ ../../Download/FeSim --in ans-hw2.hex
