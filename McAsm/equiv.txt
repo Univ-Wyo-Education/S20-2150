@@ -1,0 +1,3 @@
+# Chip Conn         blue-line (1)           blue-line - Microcode to
+# --------------    ----------------------  ---------------------------------------------------------------------------
+id_memory_Read		Main_Memory_Read

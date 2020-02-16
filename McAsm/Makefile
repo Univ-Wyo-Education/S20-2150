@@ -8,3 +8,8 @@ windows:
 linux:
 	GOOS=linux go build -o McAsm.linux . 
 
+run1:
+	go build
+	./McAsm --in microcode.m2 --out microcode.hex 
+
+

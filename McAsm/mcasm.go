@@ -36,6 +36,7 @@ import (
 
 var In = flag.String("in", "", "Input File - microcode assembly code. (microcode.mm)")
 var Out = flag.String("out", "", "Output in hex. Loadable Microcode .hex file")
+var IdList = flag.String("id-list", "id-list.txt", "List of Valid IDs in hardware")
 var DbFlag = flag.String("db-flag", "", "debug flags.") // xyzzy401 - TODO
 var St = flag.String("st", "", "Output symbol table to file")
 var Upload = flag.Bool("upload", false, "Upload the microcode.hex to Amazon S3://")
@@ -121,6 +122,8 @@ Microcode Emulator:
 			os.Exit(1)
 		}
 	}
+
+	idList := ReadIdList(*IdList)
 
 	// process lines in file...
 	buf, err := ioutil.ReadFile(fn)
@@ -230,10 +233,15 @@ Microcode Emulator:
 	for ii, aaa := range memBuf0 {
 		fmt.Fprintf(outFp, "%016x %03d\n", aaa, ii)
 	}
+	fmt.Fprintf(outFp, "##1\n")
+	DumpSymbolTableForHexFile(outFp)
+
 	outFp.Close()
 	if n_err > 0 {
 		os.Exit(3)
 	}
+
+	CheckIds(idList)
 
 	if *Upload {
 		data, err := ioutil.ReadFile(out)
@@ -271,6 +279,23 @@ Microcode Emulator:
 		}
 	}
 
+}
+
+// idList :=  ReadIdList ( *IdList )
+func ReadIdList(IdListFn string) (rv map[string]bool) {
+	rv = make(map[string]bool)
+	rv["_"] = true
+	data, err := ioutil.ReadFile(IdListFn)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Missing %s file, error:%s\n", IdListFn, err)
+		return
+	}
+	lines := strings.Split(string(data), "\n")
+	for _, line := range lines {
+		line = strings.TrimRight(line, "\r\n")
+		rv[line] = true
+	}
+	return
 }
 
 func As64BitWords(s string) (rv []uint64) {
@@ -423,6 +448,28 @@ func DumpSymbolTable(fp *os.File) {
 		fmt.Fprintf(fp, "%s: %s\n", key, godebug.SVar(val))
 	}
 	fmt.Fprintf(fp, "-------------------------------------------------------------\n\n")
+}
+
+func DumpSymbolTableForHexFile(fp *os.File) {
+	keys := ymux.KeysFromMap(SymbolTable)
+	sort.Strings(keys)
+	// for key, val := range SymbolTable {
+	for _, key := range keys {
+		val := SymbolTable[key]
+		fmt.Fprintf(fp, "%s %d\n", key, val.Address)
+	}
+}
+
+func CheckIds(idList map[string]bool) {
+	keys := ymux.KeysFromMap(SymbolTable)
+	sort.Strings(keys)
+	// for key, val := range SymbolTable {
+	for _, key := range keys {
+		val := SymbolTable[key]
+		if !idList[key] {
+			fmt.Fprintf(os.Stderr, "%sId %s Used Line %d - Not found in SVG%s\n", MiscLib.ColorRed, key, val.LineNo, MiscLib.ColorReset)
+		}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -9,6 +9,11 @@ var MDR = require('./mdr_reg');
 var MICROCODE_PC = require('./microcode_pc_reg');
 var OUTPUT = require('./output_reg');
 var RESULT = require('./result_reg');
+var ALU = require('./alu');
+var LOGIC = require('./logic');
+var MAIN_MEMORY = require('./main_memory');
+var MICROCODE_MEMORY = require('./microcode_memory');
+var MUX = require('./mux');
 
 // console.log(typeof tools.foo); // => 'function'
 
@@ -79,6 +84,39 @@ var theWorld = {
 			theWorld.IsZero._error_ = [];
 		}
 	}
+	,"MAR_to_Memory": {
+		"_data_": 0
+		, "_used_": false
+		, "_error_": []
+		, "State": function () {
+			if ( theWorld.IsZero._used_ ) {
+				return ( theWorld.IsZero._data_ );
+			} else {
+				var ignore = false;
+				if ( arguments.length > 0 ) {
+					ignore = arguments[0];
+				}
+				if ( ! ignore ) {
+					console.log ( "Warning: Pulling 'bus.State' when undefined" );
+					theWorld.IsZero._error_.push( "Warning: Pulling 'bus.State' when undefined" );
+				}
+				return ( theWorld.IsZero._data_ );
+			}
+		}
+		, "SetState": function ( v ) {
+			theWorld.IsZero._data_ = v;
+			theWorld.IsZero._used_ = true;
+		}
+		, "TickRise": function ( v ) {
+			theWorld.IsZero._used_ = false;
+		}
+		, "Error": function ( v ) {
+			return ( theWorld.IsZero._error_ );
+		}
+		, "ClearError": function ( v ) {
+			theWorld.IsZero._error_ = [];
+		}
+	}
 };
 var chips = [];
 
@@ -90,10 +128,14 @@ chips.push ( mar_my );
 var mdr_my = MDR.setupSelf ( theWorld );
 chips.push ( mdr_my );
 
+var microcode_memory_my = MICROCODE_MEMORY.setupSelf ( theWorld );
+chips.push ( microcode_memory_my );
 
+// ---------------------------------------------------------------------------------------------------------------------------------
 
 var test = false;
-var test001 = true;
+var test001 = false;
+var test002 = true;
 var err = 0;
 var errList = [];
 
@@ -139,6 +181,15 @@ if ( test001 ) {
 	}
 }
 
+// Test 2
+if ( test002 ) {
+	test = true;
+
+	MICROCODE_MEMORY.load_from_file("microcode.hex");
+}
+
+
+// ---------------------------------------------------------------------------------------------------------------------------------
 
 if ( test && err > 0 ) {
 	console.log ( "" );

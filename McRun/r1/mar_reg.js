@@ -17,10 +17,10 @@ module.exports = {
 				  "bus" : { "width": 16, "mode": "io" }
 				, "vcc" : { "width": 1, "mode": "i" }
 				, "gnd" : { "width": 1, "mode": "i" }
-				// , "Clr" : { "width": 1, "mode": "i" }
 				, "Ld"  : { "width": 1, "mode": "i" }
-				// , "Inc" : { "width": 1, "mode": "i" }
 				, "Out" : { "width": 1, "mode": "i" }	// Turn on Output on "bus"
+				// , "Clr" : { "width": 1, "mode": "i" }
+				// , "Inc" : { "width": 1, "mode": "i" }
 			}
 			, "_data_": 0
 			, "_InputBuffer_": 0
@@ -81,6 +81,9 @@ function PullBus() {
 function PushBus() {
 	if(theOutsideWorld.Bus && typeof theOutsideWorld.Bus.SetState === "function") {
 		theOutsideWorld.Bus.SetState( my["_OutputBuffer_"] );
+	}
+	if(theOutsideWorld.MAR_to_Memory && typeof theOutsideWorld.MAR_to_Memory.SetState === "function") {
+		theOutsideWorld.MAR_to_Memory.SetState( my["_OutputBuffer_"] );
 	}
 }
 
