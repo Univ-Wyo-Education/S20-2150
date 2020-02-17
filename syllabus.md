@@ -124,9 +124,9 @@ This is an approximate schedule.  Updates will be noted in class.
 |                                 |    | Homework 3 Due / Boolean Algebra / Gates                                   |
 |                                 |    |                                                                            |
 | Mon&nbsp;Feb&nbsp;24,&nbsp;2020 | 13 | Fancier Assembly Language Architectures                                    |
-|                                 |    | Homework 4 Due / 1st MARIE assembly language programs                      |
 |                                 |    | Finish reading Chapter 4 by this date                                      |
 | Wed&nbsp;Feb&nbsp;26,&nbsp;2020 | 14 | Midterm Review                                                             |
+|                                 |    | Homework 4 Due / 1st MARIE assembly language programs                      |
 | Fri&nbsp;Feb&nbsp;28,&nbsp;2020 | 15 | Midterm 1                                                                  |
 |                                 |    |                                                                            |
 | Mon&nbsp;Mar&nbsp;02,&nbsp;2020 | 16 | Instruction Types                                                          |
