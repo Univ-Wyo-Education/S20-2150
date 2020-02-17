@@ -720,10 +720,13 @@ window.onclick = function(event) {
 
 // Equvelance classes for wires - What is wired to what.
 
-var Connections = {
+var ConnectionsWiredTogether = {
+	// infoOn Name you use to turn on/off the line
+	//			// Connected To [ last one is the Microcode connection if it starts with id_Microcoude_Out[...
+	//			// Fisr one is line between that gets turned on-off
 	  "__From": [ "__To1", "__To2" ]		// Example
-	, " Main_Memory_Read" : [ "id_memory_Read" ]
-	, " Main_Memory_Write" : [ "id_memory_Write" ]
+	, "id_memory_Read" : [ "Main_Memory_Read", "id_Microcode_Out[1]memory_read" ]
+	, "id_memory_Write" : [ "Main_Memory_Write", "id_Microcode_Out[1]memory_write" ]
 };
 
 var lineOn = [
