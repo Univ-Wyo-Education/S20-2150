@@ -1,4 +1,4 @@
-# Lecture 10 - Components and Instructions
+# Lecture 9 - Components and Instructions
 
 ## What are the components 
 
