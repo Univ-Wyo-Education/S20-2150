@@ -5,10 +5,7 @@
 
 # Homework 3 - Boolean Algebra - Gates / Error Detection
 
-Due Monday Feb ?? - by end of class.  You can turn in parts 4,5,6 on paper - 1,2,3 should be uploaded (Upload source code only).
-
-Remember that I have a grader and if you do not put your name on the top of
-your homework - you will *NOT* get credit.  That is bad after doing the work!
+Due Wednesday Mon 24 - by end of class.  You can turn in parts 4,5,6 on paper - 1,2,3 should be uploaded (Upload source code only).
 
 Points total: 200 
 
@@ -23,8 +20,8 @@ and run at least 4 examples of good and bad values for each.
 	Java script:  [https://github.com/yuyudhan/verhoeff.git](https://github.com/yuyudhan/verhoeff.git)  Do not copy this - it is proprietary code -  No LICENSE file at all.
 	Other solutions: License CC Attribution: [https://en.wikibooks.org/wiki/Algorithm_Implementation/Checksums/Verhoeff_Algorithm](https://en.wikibooks.org/wiki/Algorithm_Implementation/Checksums/Verhoeff_Algorithm)
 	Look at the LICENSE - is it OK to use?  What is a BSD 3 calause, an Apache Foundation version 2, a MIT License?  Use GOOGLE!
-2. 35pts - write a short C Program to calculate the Hamming distance between 0x43 and 0x121.
-3. 25pts - Provide the circuit diagram in mixed logic for
+3. 35pts - write a short C Program to calculate the Hamming distance between 0x43 and 0x121.
+4. 25pts - Provide the circuit diagram in mixed logic for
 
 	Dec1 = ( A & !B & !C & !D ) & !X & Y		
 
@@ -34,13 +31,13 @@ and run at least 4 examples of good and bad values for each.
 
 	(A&!B&!C&!D) is a commmon sub-expression in the hardware.
 	
-4. 25pts - Derive the truth table for:
+5. 25pts - Derive the truth table for:
 
 	![hw4.png](hw4.png)
 
 	<div class="pagebreak"></div>
 
-5. 30pts - Given the following truth table show the circuit for:
+6. 30pts - Given the following truth table show the circuit for:
 	An examlle of a 7 segment decoder is: 74ls47 7-segment LED decoder  - see [https://buzztech.in/bcd-to-seven-segment-decoder-program-in-vhdl/](https://buzztech.in/bcd-to-seven-segment-decoder-program-in-vhdl/)  Do note that it will not handle 10...15 the same way - it is not decoded to an E.
 
 	I, J, K, L are inputs

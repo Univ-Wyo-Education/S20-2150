@@ -1,0 +1,12 @@
+  DCL id_ALU_Ctl_0 id_ALU_Ctl_1 id_ALU_Ctl_2 id_ALU_Ctl_3
+ 33     id_ac_Out_to_ALU   id_ALU_Ctl_2 id_result_Ld                 // ac = ac + mdr (id_ALU_Ctl[0..3] = 0x4)
+ 55     id_ac_Out_to_ALU   id_mdr_Out   id_ALU_Ctl_2  id_result_Ld          // AC output to ALU
+ 63     id_mdr_Out id_ALU_Ctl_3 id_result_Ld                          // MDR output to ALU, 1st compliment (id_ALU_Ctl[0..3] = 0x8 / COMPLEMENT)
+ 65     id_mdr_Out id_ALU_Ctl_1 id_result_Ld                          // MDR output to ALU, Incrment == 2s compliment (id_ALU_Ctl[0..3] = 0x2 / INCR)
+ 67     id_ac_Out_to_ALU  id_mdr_Out   id_ALU_Ctl_2 id_result_Ld             // AC output to ALU
+ 99     id_ac_Out_to_ALU   id_mdr_Out   id_ALU_Ctl_2  id_result_Ld         // AC output to ALU
+138     id_ac_Out_to_ALU   id_ALU_Ctl_3 id_ALU_Ctl_0 id_result_Ld       // Compare AC lessthan 0 (ALU LT 0)
+150     id_ac_Out_to_ALU   id_ALU_Ctl_3 id_ALU_Ctl_2 id_result_Ld       // Compare AC lessthan 0 (ALU GT 0xC)
+
+
+
