@@ -813,8 +813,8 @@ function infoOn(x) {
 		case "clear-line":
 			break;
 		case "help":
-			showTextInOutputBox("CoSc 2150 - Maria Microcode Emulator"
-				,"Load assembled microcoe and assembled instructions, then step or run."
+			showTextInOutputBox("CoSc 2150 - MARIA Microcode Emulator"
+				,"Load assembled microcode and assembled instructions, then step or run."
 				,""
 				,"https://github.com/Univ-Wyo-Education/S20-2150/McDocs/ for more detailed help."
 				,""
@@ -877,7 +877,7 @@ function infoOn(x) {
 			break;
 	// ,"#Hand_Out_to_microcode"
 		case "hand_out":
-			showTextInOutputBox("Take the least-significat 12 bits of the IR and puts that on the bus - with 0's for the most","signifiant nibble (4 bits).","","IR_Out must be enabled at the same time.");
+			showTextInOutputBox("Take the least-significant 12 bits of the IR and puts that on the bus - with 0's for the most","significant nibble (4 bits).","","IR_Out must be enabled at the same time.");
 			showLine("#hand_out");
 			break;
 
@@ -916,7 +916,7 @@ function infoOn(x) {
 
 		case "id_ALU_Ctl":
 			showLine("#alu_ctl_4_to_microcode");
-			showTextInOutputBox("4 control lines for determining the Artithmetic or Logic Operation performed.");
+			showTextInOutputBox("4 control lines for determining the Arithmetic or Logic Operation performed.");
 			break;
 
 	//	,"#mar_Ld_to_microcode" 
@@ -1007,14 +1007,14 @@ function infoOn(x) {
 
 		case "ir_decode_g1":
 			showLine("#ir_15_12_to_decoder_11");
-			showTextInOutputBox("Instruction decode use 1 bit of output from the Microcode Out[8] (Out_7)"
+			showTextInOutputBox("Instruction decode uses 1 bit of output from the Microcode Out[8] (Out_7)"
 				,"then 4 bits of the IR, the 3 bits of Out[8] (Out_2, Out_1, Out_0)."
 				,""
 				,"Given that Out_7 is a one for the high addresses of the memory, then the instruction"
-				,"0x2034 (Store) will jump to addres 0b1_0010_000);  Set the Microcode_Ld to 1 and"
+				,"0x2034 (Store) will jump to address 0b1_0010_000);  Set the Microcode_Ld to 1 and"
 				,"the decoder_ctl_1 and decoder_clt_0 to 0b11 to select and load this address."
 				,""
-				,"The hand_Out gives us access in to the 12 bits of operhand, the 034 portion of the instruction."
+				,"The hand_Out gives us access in to the 12 bits of operand, the 034 portion of the instruction."
 				,"Transfer the AC to the MDR with AC_Out = 1, and MDR_Ld = 1, then set the MAR_Ld to 1 and"
 				,"the hand_Out to 1 to transfer the address from the IR to the MAR.  Then Memory_Write = 1"
 				,"and the data is written to memory."
