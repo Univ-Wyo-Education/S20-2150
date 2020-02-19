@@ -1,18 +1,12 @@
 
-
 // Result Register 
 // ========
 
-var my;
-var theOutsideWorld;
-
-module.exports = {
-	setupSelf: function ( OutsideWorld ) {
-		console.log ( "Setup Self" );
-		theOutsideWorld = OutsideWorld;
+var RESULT = {
+	setupSelf: function ( ) {
+		console.log ( "Setup Self/Result" );
 		my = {
 			  "Name": "Result"
-			, "TalkTo": OutsideWorld
 			, "Group": "Register"
 			, "Interface": {
 				  "bus" : { "width": 16, "mode": "io" }
@@ -39,33 +33,33 @@ module.exports = {
 	, msg: function ( wire, val ) {
 		// xyzzy ALU Input
 		switch ( wire ) {
-		case "Clr": if ( val === 1 ) { my["_data_"] = 0; }									TurnOn( "pc_Clr" );   Display( my["_data_"]); break;
-		case "Ld":  if ( val === 1 ) { PullBus(true); my["_data_"] = my["_InputBuffer_"]; }				TurnOn( "pc_Ld"  );   Display( my["_data_"]); my["_Ld_"] = 1; break;
-		case "Inc": if ( val === 1 ) { my["_data_"] = my["_data_"] + 1; }	    			TurnOn( "pc_Inc" );   Display( my["_data_"]); break;
-		case "Out": if ( val === 1 ) { my["_OutputBuffer_"] = my["_data_"]; PushBus(); }   TurnOn( "pc_Out" );   Display( my["_data_"]); break;
-		case "bus": if ( val === 1 && my["_Ld_"] === 1 ) { PullBus(); my["_data_"] = my["_InputBuffer_"]; }                   break;
+		case "Clr": if ( val === 1 ) { my["_data_"] = 0; }												RESULT.TurnOn( "result_Clr" );   RESULT.Display( my["_data_"]); break;
+		case "Ld":  if ( val === 1 ) { RESULT.PullBus(true); my["_data_"] = my["_InputBuffer_"]; }		RESULT.TurnOn( "result_Ld"  );   RESULT.Display( my["_data_"]); my["_Ld_"] = 1; break;
+		case "Inc": if ( val === 1 ) { my["_data_"] = my["_data_"] + 1; }	    						RESULT.TurnOn( "result_Inc" );   RESULT.Display( my["_data_"]); break;
+		case "Out": if ( val === 1 ) { my["_OutputBuffer_"] = my["_data_"]; RESULT.PushBus(); }   		RESULT.TurnOn( "result_Out" );   RESULT.Display( my["_data_"]); break;
+		case "bus": if ( val === 1 && my["_Ld_"] === 1 ) { RESULT.PullBus(); my["_data_"] = my["_InputBuffer_"]; }                   break;
 		// xyzzy IsZero
 		default:
 			Error ( "Invalid Message", wire, val );
 		}
 		if ( my["_data_"] === 0 ) {
-			SendMsg ( "Result", "is_zero", 1 );
+			RESULT.SendMsg ( "Result", "is_zero", 1 );
 		} else {
-			SendMsg ( "Result", "is_zero", 0 );
+			RESULT.SendMsg ( "Result", "is_zero", 0 );
 		}
 	}
 	, tick: function ( ) {
 		if ( my["_Ld_"] === 1 ) {
-			PullBus();
+			RESULT.PullBus();
 			my["_data_"] = my["_InputBuffer_"];
 		}
 		if ( my["_Out_"] === 1 ) {
 			my["_OutputBuffer_"] = my["_data_"];
-			PushBus();
+			RESULT.PushBus();
 		}
 		// xyzzy IsZero
 
-		Display( my["_data_"] );
+		RESULT.Display( my["_data_"] );
 
 		// After Tick Cleanup 
 		my["_InputBuffer_"] = null;
@@ -81,40 +75,43 @@ module.exports = {
 	, test_peek: function() {
 		return ( my["_data_"] );
 	}
+
+	, PullBus: function () {
+		if(theWorld.Bus && typeof theWorld.Bus.State === "function") {
+			 my["_InputBuffer_"] = theWorld.Bus.State();
+		}
+	}
+
+	, PushBus: function () {
+		if(theWorld.Bus && typeof theWorld.Bus.SetState === "function") {
+			theWorld.Bus.SetState( my["_OutputBuffer_"] );
+		}
+	}
+
+	, SendMsg: function ( x, y, val ) {
+		// xyzzy - implement
+	}
+
+	// Turn on display of a wire with this ID
+	, TurnOn: function  ( id ) {
+		infoOn1 ( -1, "id_"+id );
+	}
+
+	// Display text to inside of register box
+	, Display: function  ( val ) {
+		var sVal = toHex(val,4);
+		// console.log ( "Padded", sVal );
+		var a = sVal.substr(0,2);
+		var b = sVal.substr(2,2);
+		$("#h_result_txt_0").text(a);
+		$("#h_result_txt_1").text(b);
+	}
+
+	// Return any errors generated in this "chip"
+	, Error: function  ( errorMsg, wire, val ) {
+		return ( [] );	 // xyzzy - needs fix!
+	}
+
 };
 
-function PullBus() {
-	if(theOutsideWorld.Bus && typeof theOutsideWorld.Bus.State === "function") {
-		 my["_InputBuffer_"] = theOutsideWorld.Bus.State();
-	}
-}
-
-function PushBus() {
-	if(theOutsideWorld.Bus && typeof theOutsideWorld.Bus.SetState === "function") {
-		theOutsideWorld.Bus.SetState( my["_OutputBuffer_"] );
-	}
-}
-
-// Turn on display of a wire with this ID
-function TurnOn ( id ) {
-	if(typeof theOutsideWorld.TurnOn === "function") {
-		theOutsideWorld.TurnOn ( my.Name, my, id );
-	} else {
-		console.log ( "Turn On ("+my.Name+")", id );
-	}
-}
-
-// Display text to inside of register box
-function Display ( val ) {
-	if(typeof theOutsideWorld.Display === "function") {
-		theOutsideWorld.Display ( my.Name, my, val );
-	} else {
-		console.log ( "Display ("+my.Name+")", val );
-	}
-}
-
-// Return any errors generated in this "chip"
-function Error ( errorMsg, wire, val ) {
-	return ( [] );
-}
 

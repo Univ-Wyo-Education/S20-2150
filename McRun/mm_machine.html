@@ -125,6 +125,9 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<line x1="100" y1="132" x2="95" y2="137" class="arrow-line" />
 			<line x1="100" y1="132" x2="105" y2="137" class="arrow-line" />
 
+			<text id="h_pc_txt_0" x="85" y="55" class="small"></text>
+			<text id="h_pc_txt_1" x="85" y="75" class="small"></text>
+
 	<rect id="id_ir" x="175" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_ir');"/>
 		<text x="175" y="25" class="small" onclick="infoOn('id_ir');">IR</text>
 		<rect id="id_ir_Ld" x="225" y="40" width="20" height="1" class="input-line" />
@@ -193,9 +196,12 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<line x1="325" y1="132" x2="320" y2="137" class="arrow-line" />
 			<line x1="325" y1="132" x2="330" y2="137" class="arrow-line" />
 
+			<text id="h_result_txt_0" x="310" y="55" class="small"></text>
+			<text id="h_result_txt_1" x="310" y="75" class="small"></text>
 
 		<!-- Connection from Result to Bus -->
 		<rect id="id_result_to_bus" x="325" y="130" width="1" height="160" class="input-line" />
+
 
 	<polygon id="id_ALU"
 		points=" 500,30	400,60 400,100 500,130 500,110 480,100 480,60 500,50	 500,30 "
@@ -797,239 +803,405 @@ function showTextInOutputBox(text) {
 	}
 }
 
-// function infoOn(x,x1,y1,x2,y2) {
-// 	console.log("svg/id:"+x+" ("+x1+","+y1+") ("+x2+","+y2+")");
 function infoOn(x) {
-
 	clearOtherLine();
 	clearText();
-
-	var i = 0;
-	for ( var mx = arguments.length; i < mx; i++ ) {
+	for ( var i = 0, mx = arguments.length; i < mx; i++ ) {
 		var x = arguments[i];
-		console.log("svg/id["+i+"]:"+x);
-		switch ( x ) {
-
-		case "clear-line":
-			break;
-		case "help":
-			showTextInOutputBox("CoSc 2150 - MARIA Microcode Emulator"
-				,"Load assembled microcode and assembled instructions, then step or run."
-				,""
-				,"https://github.com/Univ-Wyo-Education/S20-2150/McDocs/ for more detailed help."
-				,""
-				,"Click on a line to see where the input connects to.  Try Ld near the PC register."
-				);
-			break;
-		case "load-mc":
-			console.log ( "load-mc - load microcode" );
-			displayModal() ;
-			// Display Form - setup for "Submit" button.
-			break;
-		case "decoder-info":
-			showLine("#microcode_to_decoder_ctl");
-			showTextInOutputBox("Decoder takes 2 input lines and has 4 8-wide inputs connecting to 1 8-wide output."
-				,"The control lines select the input source."
-				,"Lines that are not hooked to other sources are Out_7 to Out_0 from the Microcode."
-				, ""
-				," CTL   Instruction"
-				," ---  -----------------------------------------------------"
-				,"  00   Microcode Jmp (Halt, Unused)"
-				,"  01   Jump if (Is Zero) from Result/Cmp - Microcode PC Inc Twice"
-				,"  10   Skip { SkipEe0, SkipGt0, SkipLt0 }"
-				,"  11   Common IR Decode"
-				);
-			break;
-			// <g transform="rotate(90 1000 400) translate(-350 14)" onclick="infoOn('decoder-info');">
-
-
-		case "id_pc":
-			$("#"+x).css("fill","#ff0000");
-			showTextInOutputBox("PC - Program Counter");
-			break;
-		case "id_pc_Ld":
-			showLine("#pc_Ld_to_microcode");
-			showTextInOutputBox("pc_Ld - Load Register");
-			break;
-		case "id_pc_Inc":
-			showLine("#pc_Inc_to_microcode");
-			showTextInOutputBox("pc_Inc - Increment Register");
-			break;
-		case "id_pc_Out":
-			showLine("#pc_Out_to_microcode");
-			showTextInOutputBox("pc_Out - Output Register to Bus");
-			break;
-		case "id_pc_Clr":
-			showLine("#pc_Clr_to_microcode");
-			showTextInOutputBox("pc_Clr - Clear Register, set to 0");
-			break;
-
-
-		case "id_ir":
-			$("#"+x).css("fill","#ff0000");
-			showTextInOutputBox("IR - Instruction Register");
-			break;
-		case "id_ir_Ld":
-			showLine("#ir_Ld_to_microcode");
-			break;
-		case "id_ir_Out":
-			showLine("#ir_Out_to_microcode");
-			break;
-	// ,"#Hand_Out_to_microcode"
-		case "hand_out":
-			showTextInOutputBox("Take the least-significant 12 bits of the IR and puts that on the bus - with 0's for the most","significant nibble (4 bits).","","IR_Out must be enabled at the same time.");
-			showLine("#hand_out");
-			break;
-
-
-		case "id_result":
-			$("#"+x).css("fill","#ff0000");
-			showTextInOutputBox("Result - Output from ALU");
-			break;
-		case "id_result_Ld":
-			showLine("#result_Ld_to_microcode");
-			break;
-		case "id_result_Out":
-			showLine("#result_Out_to_microcode");
-			break;
-		case "id_result_Clr":
-			showLine("#result_Clr_to_microcode");
-			break;
-		case "id_result_zero_out":
-			showLine("#result_zero_out");
-			showTextInOutputBox("Connects 1 bit to decoder input 01.","The other addresses come from the McJmp_X");
-			break;
-
-		case "id_ac":
-			$("#"+x).css("fill","#ff0000");
-			showTextInOutputBox("AC - Accumulator");
-			break;
-		case "id_ac_Ld":
-			showLine("#ac_Ld_to_microcode");
-			break;
-		case "id_ac_Out":
-			showLine("#ac_Out_to_microcode");
-			break;
-		case "id_ac_Out_to_ALU":
-			showLine("#ac_Out_to_ALU");
-			break;
-
-		case "id_ALU_Ctl":
-			showLine("#alu_ctl_4_to_microcode");
-			showTextInOutputBox("4 control lines for determining the Arithmetic or Logic Operation performed.");
-			break;
-
-	//	,"#mar_Ld_to_microcode" 
-	//	,"#mar_Out_to_microcode"
-		case "id_mar":
-			$("#"+x).css("fill","#ff0000");
-			showTextInOutputBox("MAR - Memory Address Register");
-			break;
-		case "id_mar_Ld":
-			showLine("#mar_Ld_to_microcode");
-			break;
-		case "id_mar_Out":
-			showLine("#mar_Out_to_microcode");
-			break;
-
-	//	,"#mdr_Ld_to_microcode" 
-	//	,"#mdr_Out_to_microcode"
-		case "id_mdr":
-			showTextInOutputBox("MDR (mbr) - Memory Data Register - Buffer memory read/write");
-			$("#"+x).css("fill","#ff0000");
-			break;
-		case "id_mdr_Ld":
-			showLine("#mdr_Ld_to_microcode");
-			break;
-		case "id_mdr_Out":
-			showLine("#mdr_Out_to_microcode");
-			break;
-
-	//	,"#input_Ld_to_microcode" 
-	//	,"#input_Out_to_microcode"
-		case "id_input":
-			$("#"+x).css("fill","#ff0000");
-			showTextInOutputBox("Input Register","You need to set the input value before the input instruction runs.");
-			break;
-		case "id_input_Ld":
-			showLine("#input_Ld_to_microcode");
-			break;
-		case "id_input_Out":
-			showLine("#input_Out_to_microcode");
-			break;
-
-	//	,"#output_Ld_to_microcode" 
-	//	,"#output_Out_to_microcode"
-		case "id_output":
-			$("#"+x).css("fill","#ff0000");
-			showTextInOutputBox("Output from the CPU");
-			break;
-		case "id_output_Ld":
-			showLine("#output_Ld_to_microcode");
-			break;
-		case "id_output_Out":
-			showLine("#output_Out_to_microcode");
-			break;
-
-
-	//	,"#Microcode_PC_Ld_to_microcode"
-	//	,"#Microcode_PC_Clr_to_microcode"
-		case "id_Microcode_PC":
-			$("#"+x).css("fill","#ff0000");
-			showTextInOutputBox("PC for the Microcode Instructions");
-			break;
-		case "id_Microcode_PC_Ld":
-			showLine("#Microcode_PC_Ld_to_microcode");
-			break;
-		case "id_Microcode_PC_Clr":
-			showLine("#Microcode_PC_Clr_to_microcode");
-			break;
-
-
-		case "id_microcode":
-			$("#"+x).css("fill","#ff0000");
-			showTextInOutputBox("The Microcode Instructions");
-			break;
-
-
-	//	,"#Main_Memory_Read" 
-	//	,"#Main_Memory_Write"
-		case "id_memory":
-			$("#"+x).css("fill","#ff0000");
-			break;
-		case "id_memory_Read":
-			showLine("#Main_Memory_Read");
-			break;
-		case "id_memory_Write":
-			showLine("#Main_Memory_Write");
-			break;
-
-
-		case "ir_decode_g1":
-			showLine("#ir_15_12_to_decoder_11");
-			showTextInOutputBox("Instruction decode uses 1 bit of output from the Microcode Out[8] (Out_7)"
-				,"then 4 bits of the IR, the 3 bits of Out[8] (Out_2, Out_1, Out_0)."
-				,""
-				,"Given that Out_7 is a one for the high addresses of the memory, then the instruction"
-				,"0x2034 (Store) will jump to address 0b1_0010_000);  Set the Microcode_Ld to 1 and"
-				,"the decoder_ctl_1 and decoder_clt_0 to 0b11 to select and load this address."
-				,""
-				,"The hand_Out gives us access in to the 12 bits of operand, the 034 portion of the instruction."
-				,"Transfer the AC to the MDR with AC_Out = 1, and MDR_Ld = 1, then set the MAR_Ld to 1 and"
-				,"the hand_Out to 1 to transfer the address from the IR to the MAR.  Then Memory_Write = 1"
-				,"and the data is written to memory."
-				);
-			break;
-		case "ir_decode_g2":
-			showLine("#ir_11_8_to_decoder_10");	// xyzzy
-			showTextInOutputBox("Instruction decode use 01 bit of output from the Microcode Out[8] (Out_7, Out_6)","then 4 bits of the IR, the 2 bits of Out[8] (Out_1, Out_0).");
-				// xyzzy - add addressing example
-			break;
-		}
+		infoOn1(i,x);
 	}
 }
 
+function infoOn1(i,x) {
+
+	console.log("svg/id["+i+"]:"+x);
+	switch ( x ) {
+
+	case "clear-line":
+		break;
+	case "help":
+		showTextInOutputBox("CoSc 2150 - MARIA Microcode Emulator"
+			,"Load assembled microcode and assembled instructions, then step or run."
+			,""
+			,"https://github.com/Univ-Wyo-Education/S20-2150/McDocs/ for more detailed help."
+			,""
+			,"Click on a line to see where the input connects to.  Try Ld near the PC register."
+			);
+		break;
+	case "load-mc":
+		console.log ( "load-mc - load microcode" );
+		displayModal() ;
+		// Display Form - setup for "Submit" button.
+		break;
+	case "decoder-info":
+		showLine("#microcode_to_decoder_ctl");
+		showTextInOutputBox("Decoder takes 2 input lines and has 4 8-wide inputs connecting to 1 8-wide output."
+			,"The control lines select the input source."
+			,"Lines that are not hooked to other sources are Out_7 to Out_0 from the Microcode."
+			, ""
+			," CTL   Instruction"
+			," ---  -----------------------------------------------------"
+			,"  00   Microcode Jmp (Halt, Unused)"
+			,"  01   Jump if (Is Zero) from Result/Cmp - Microcode PC Inc Twice"
+			,"  10   Skip { SkipEe0, SkipGt0, SkipLt0 }"
+			,"  11   Common IR Decode"
+			);
+		break;
+		// <g transform="rotate(90 1000 400) translate(-350 14)" onclick="infoOn('decoder-info');">
+
+
+	case "id_pc":
+		$("#"+x).css("fill","#ff0000");
+		showTextInOutputBox("PC - Program Counter");
+		break;
+	case "id_pc_Ld":
+		showLine("#pc_Ld_to_microcode");
+		showTextInOutputBox("pc_Ld - Load Register");
+		break;
+	case "id_pc_Inc":
+		showLine("#pc_Inc_to_microcode");
+		showTextInOutputBox("pc_Inc - Increment Register");
+		break;
+	case "id_pc_Out":
+		showLine("#pc_Out_to_microcode");
+		showTextInOutputBox("pc_Out - Output Register to Bus");
+		break;
+	case "id_pc_Clr":
+		showLine("#pc_Clr_to_microcode");
+		showTextInOutputBox("pc_Clr - Clear Register, set to 0");
+		break;
+
+
+	case "id_ir":
+		$("#"+x).css("fill","#ff0000");
+		showTextInOutputBox("IR - Instruction Register");
+		break;
+	case "id_ir_Ld":
+		showLine("#ir_Ld_to_microcode");
+		break;
+	case "id_ir_Out":
+		showLine("#ir_Out_to_microcode");
+		break;
+// ,"#Hand_Out_to_microcode"
+	case "hand_out":
+		showTextInOutputBox("Take the least-significant 12 bits of the IR and puts that on the bus - with 0's for the most","significant nibble (4 bits).","","IR_Out must be enabled at the same time.");
+		showLine("#hand_out");
+		break;
+
+
+	case "id_result":
+		$("#"+x).css("fill","#ff0000");
+		showTextInOutputBox("Result - Output from ALU");
+		break;
+	case "id_result_Ld":
+		showLine("#result_Ld_to_microcode");
+		break;
+	case "id_result_Out":
+		showLine("#result_Out_to_microcode");
+		break;
+	case "id_result_Clr":
+		showLine("#result_Clr_to_microcode");
+		break;
+	case "id_result_zero_out":
+		showLine("#result_zero_out");
+		showTextInOutputBox("Connects 1 bit to decoder input 01.","The other addresses come from the McJmp_X");
+		break;
+
+	case "id_ac":
+		$("#"+x).css("fill","#ff0000");
+		showTextInOutputBox("AC - Accumulator");
+		break;
+	case "id_ac_Ld":
+		showLine("#ac_Ld_to_microcode");
+		break;
+	case "id_ac_Out":
+		showLine("#ac_Out_to_microcode");
+		break;
+	case "id_ac_Out_to_ALU":
+		showLine("#ac_Out_to_ALU");
+		break;
+
+	case "id_ALU_Ctl":
+		showLine("#alu_ctl_4_to_microcode");
+		showTextInOutputBox("4 control lines for determining the Arithmetic or Logic Operation performed.");
+		break;
+
+//	,"#mar_Ld_to_microcode" 
+//	,"#mar_Out_to_microcode"
+	case "id_mar":
+		$("#"+x).css("fill","#ff0000");
+		showTextInOutputBox("MAR - Memory Address Register");
+		break;
+	case "id_mar_Ld":
+		showLine("#mar_Ld_to_microcode");
+		break;
+	case "id_mar_Out":
+		showLine("#mar_Out_to_microcode");
+		break;
+
+//	,"#mdr_Ld_to_microcode" 
+//	,"#mdr_Out_to_microcode"
+	case "id_mdr":
+		showTextInOutputBox("MDR (mbr) - Memory Data Register - Buffer memory read/write");
+		$("#"+x).css("fill","#ff0000");
+		break;
+	case "id_mdr_Ld":
+		showLine("#mdr_Ld_to_microcode");
+		break;
+	case "id_mdr_Out":
+		showLine("#mdr_Out_to_microcode");
+		break;
+
+//	,"#input_Ld_to_microcode" 
+//	,"#input_Out_to_microcode"
+	case "id_input":
+		$("#"+x).css("fill","#ff0000");
+		showTextInOutputBox("Input Register","You need to set the input value before the input instruction runs.");
+		break;
+	case "id_input_Ld":
+		showLine("#input_Ld_to_microcode");
+		break;
+	case "id_input_Out":
+		showLine("#input_Out_to_microcode");
+		break;
+
+//	,"#output_Ld_to_microcode" 
+//	,"#output_Out_to_microcode"
+	case "id_output":
+		$("#"+x).css("fill","#ff0000");
+		showTextInOutputBox("Output from the CPU");
+		break;
+	case "id_output_Ld":
+		showLine("#output_Ld_to_microcode");
+		break;
+	case "id_output_Out":
+		showLine("#output_Out_to_microcode");
+		break;
+
+
+//	,"#Microcode_PC_Ld_to_microcode"
+//	,"#Microcode_PC_Clr_to_microcode"
+	case "id_Microcode_PC":
+		$("#"+x).css("fill","#ff0000");
+		showTextInOutputBox("PC for the Microcode Instructions");
+		break;
+	case "id_Microcode_PC_Ld":
+		showLine("#Microcode_PC_Ld_to_microcode");
+		break;
+	case "id_Microcode_PC_Clr":
+		showLine("#Microcode_PC_Clr_to_microcode");
+		break;
+
+
+	case "id_microcode":
+		$("#"+x).css("fill","#ff0000");
+		showTextInOutputBox("The Microcode Instructions");
+		break;
+
+
+//	,"#Main_Memory_Read" 
+//	,"#Main_Memory_Write"
+	case "id_memory":
+		$("#"+x).css("fill","#ff0000");
+		break;
+	case "id_memory_Read":
+		showLine("#Main_Memory_Read");
+		break;
+	case "id_memory_Write":
+		showLine("#Main_Memory_Write");
+		break;
+
+
+	case "ir_decode_g1":
+		showLine("#ir_15_12_to_decoder_11");
+		showTextInOutputBox("Instruction decode uses 1 bit of output from the Microcode Out[8] (Out_7)"
+			,"then 4 bits of the IR, the 3 bits of Out[8] (Out_2, Out_1, Out_0)."
+			,""
+			,"Given that Out_7 is a one for the high addresses of the memory, then the instruction"
+			,"0x2034 (Store) will jump to address 0b1_0010_000);  Set the Microcode_Ld to 1 and"
+			,"the decoder_ctl_1 and decoder_clt_0 to 0b11 to select and load this address."
+			,""
+			,"The hand_Out gives us access in to the 12 bits of operand, the 034 portion of the instruction."
+			,"Transfer the AC to the MDR with AC_Out = 1, and MDR_Ld = 1, then set the MAR_Ld to 1 and"
+			,"the hand_Out to 1 to transfer the address from the IR to the MAR.  Then Memory_Write = 1"
+			,"and the data is written to memory."
+			);
+		break;
+	case "ir_decode_g2":
+		showLine("#ir_11_8_to_decoder_10");	// xyzzy
+		showTextInOutputBox("Instruction decode use 01 bit of output from the Microcode Out[8] (Out_7, Out_6)","then 4 bits of the IR, the 2 bits of Out[8] (Out_1, Out_0).");
+			// xyzzy - add addressing example
+		break;
+	}
+}
+
+
+function toHex(d, padding) {
+    var hex = Number(d).toString(16);
+    padding = typeof (padding) === "undefined" || padding === null ? padding = 2 : padding;
+
+    while (hex.length < padding) {
+        hex = "0" + hex;
+    }
+
+    return hex;
+}
+
+var theWorld = {
+	"Bus": {
+		"_data_": 0
+		, "_used_": false
+		, "_error_": []
+		, "State": function () {
+			if ( theWorld.Bus._used_ ) {
+				return ( theWorld.Bus._data_ );
+			} else {
+				var ignore = false;
+				if ( arguments.length > 0 ) {
+					ignore = arguments[0];
+				}
+				if ( ! ignore ) {
+					console.log ( "Warning: Pulling 'bus.State' when undefined" );
+					theWorld.Bus._error_.push( "Warning: Pulling 'bus.State' when undefined" );
+				}
+				return ( theWorld.Bus._data_ );
+			}
+		}
+		, "SetState": function ( v ) {
+			theWorld.Bus._data_ = v;
+			theWorld.Bus._used_ = true;
+		}
+		, "TickRise": function ( v ) {
+			theWorld.Bus._used_ = false;
+		}
+		, "Error": function ( v ) {
+			return ( theWorld.Bus._error_ );
+		}
+		, "ClearError": function ( v ) {
+			theWorld.Bus._error_ = [];
+		}
+	}
+	,"IsZero": {
+		"_data_": 0
+		, "_used_": false
+		, "_error_": []
+		, "State": function () {
+			if ( theWorld.IsZero._used_ ) {
+				return ( theWorld.IsZero._data_ );
+			} else {
+				var ignore = false;
+				if ( arguments.length > 0 ) {
+					ignore = arguments[0];
+				}
+				if ( ! ignore ) {
+					console.log ( "Warning: Pulling 'bus.State' when undefined" );
+					theWorld.IsZero._error_.push( "Warning: Pulling 'bus.State' when undefined" );
+				}
+				return ( theWorld.IsZero._data_ );
+			}
+		}
+		, "SetState": function ( v ) {
+			theWorld.IsZero._data_ = v;
+			theWorld.IsZero._used_ = true;
+		}
+		, "TickRise": function ( v ) {
+			theWorld.IsZero._used_ = false;
+		}
+		, "Error": function ( v ) {
+			return ( theWorld.IsZero._error_ );
+		}
+		, "ClearError": function ( v ) {
+			theWorld.IsZero._error_ = [];
+		}
+	}
+	,"MAR_to_Memory": {
+		"_data_": 0
+		, "_used_": false
+		, "_error_": []
+		, "State": function () {
+			if ( theWorld.IsZero._used_ ) {
+				return ( theWorld.IsZero._data_ );
+			} else {
+				var ignore = false;
+				if ( arguments.length > 0 ) {
+					ignore = arguments[0];
+				}
+				if ( ! ignore ) {
+					console.log ( "Warning: Pulling 'bus.State' when undefined" );
+					theWorld.IsZero._error_.push( "Warning: Pulling 'bus.State' when undefined" );
+				}
+				return ( theWorld.IsZero._data_ );
+			}
+		}
+		, "SetState": function ( v ) {
+			theWorld.IsZero._data_ = v;
+			theWorld.IsZero._used_ = true;
+		}
+		, "TickRise": function ( v ) {
+			theWorld.IsZero._used_ = false;
+		}
+		, "Error": function ( v ) {
+			return ( theWorld.IsZero._error_ );
+		}
+		, "ClearError": function ( v ) {
+			theWorld.IsZero._error_ = [];
+		}
+	}
+
+	//	theOutsideWorld.TurnOn ( my.Name, my, id );
+	,"TurnOn": function ( name, my, raw_id ) {
+		console.log ( "name=", name, "my=", my, "raw_id=", raw_id );
+		if ( $("id_"+raw_id) ) {
+			console.log ( "Found" );
+			infoOn ( "id_"+raw_id );
+		}
+	}
+	// theOutsideWorld.Display ( my.Name, my, val );
+	,"Display": function ( name, my, val ) {
+		console.log ( "name=", name, "my=", my, "val=", val );
+	}
+
+};
+
+
+// var module = {};
 // id_result_Out decoder_ctl_0 Microcode_PC_Ld2			// 0x3 on Decoder-CTL = will load address for a id_pc_Inc*    id_pc_Inc = result_eq_0
+</script>
+<script src="js/pc_reg.js?v=0001"></script>
+<script src="js/result_reg.js?v=0001"></script>
+<script>
+console.log ( "PC=",PC, "RESULT=", RESULT)
+
+var pc_my = PC.setupSelf ( );
+theWorld[pc_my.Name] = pc_my;
+
+var result_my = RESULT.setupSelf ( );
+theWorld[result_my.Name] = result_my;
+
+var test0001 = false;	// Turn on the line from the PC data
+var test0002 = false;	// Display value in the PC register
+var test0003 = false;	// Send message to PC and see it turn on.
+var test0004 = true;	// Send data from Result to PC and see it in both.
+
+if ( test0001 ) {
+	PC.TurnOn( "pc_Clr" );
+}
+if ( test0002 ) {
+	pc_my["_data_"] = "0123";
+	PC.Display(pc_my["_data_"]); 
+}
+if ( test0003 ) {
+	pc_my["_data_"] = 16;
+	PC.msg("Inc", 1);
+}
+if ( test0004 ) {
+	result_my["_data_"] = 32;
+	PC.msg("Ld", 1);
+	RESULT.msg("Out", 1);
+	PC.tick();
+	RESULT.tick();
+}
+
 </script>
 </body>
 </html>
