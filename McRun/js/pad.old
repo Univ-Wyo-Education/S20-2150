@@ -1,0 +1,14 @@
+
+function pad(n, width, z) {
+  z = z || '0';
+  // n = n + '';
+  n = decimalToHex(n,4);
+  if ( n.length == width ) {
+	return n;
+  }
+  if ( n.length > width ) {
+	return n.substr(n.length-width);
+  }
+  // return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+  return  new Array(width - n.length + 1).join(z) + n;
+}

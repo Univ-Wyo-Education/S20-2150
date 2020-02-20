@@ -1172,11 +1172,11 @@ var theWorld = {
 <script>
 console.log ( "PC=",PC, "RESULT=", RESULT)
 
-var pc_my = PC.setupSelf ( );
-theWorld[pc_my.Name] = pc_my;
+// var pc_my = PC.setupSelf ( );
+// theWorld[pc_my.Name] = pc_my;
 
-var result_my = RESULT.setupSelf ( );
-theWorld[result_my.Name] = result_my;
+// var result_my = RESULT.setupSelf ( );
+// theWorld[result_my.Name] = result_my;
 
 var test0001 = false;	// Turn on the line from the PC data
 var test0002 = false;	// Display value in the PC register
@@ -1187,15 +1187,15 @@ if ( test0001 ) {
 	PC.TurnOn( "pc_Clr" );
 }
 if ( test0002 ) {
-	pc_my["_data_"] = "0123";
+	PC.x["_data_"] = "0123";
 	PC.Display(pc_my["_data_"]); 
 }
 if ( test0003 ) {
-	pc_my["_data_"] = 16;
+	PC.x["_data_"] = 16;
 	PC.msg("Inc", 1);
 }
 if ( test0004 ) {
-	result_my["_data_"] = 32;
+	RESULT.x["_data_"] = 32;
 	PC.msg("Ld", 1);
 	RESULT.msg("Out", 1);
 	PC.tick();
