@@ -1323,25 +1323,80 @@ function displayMemoryText() {
 	}
 }
 
-// var module = {};
+/*
+0000000430000001 000
+0000000144000000 001
+0000000008c00008 002
+436f646520427920 003
+*/
+function ParseInput(data) {
+	var array = data.toString().split("\n");
+	var pc = 0;
+	var st = 0;
+    for(i in array) {
+        console.log(array[i]);
+		const str = array[i];
+		if ( str === "##1" ) {
+			st = 1;
+		} else if ( st === 0 ) {
+			const words = str.split(' ');
+			const str2 = words[0];
+			console.log(words[0]);
+			const p1 = str2.substr(0, 8)
+			const p2 = str2.substr(8)
+			console.log("p1 ->"+p1+"<- p2 ->"+p2+"<-");
+			const p1x = parseInt(p1,16);
+			const p2x = parseInt(p2,26);
+			my["_data1_"][pc] = p1x;
+			my["_data2_"][pc] = p2x;
+			pc++;
+		} else if ( st === 1 ) {
+			// Associate bit with "line" that is turned on.
+			const words = str.split(' ');
+			const str2 = words[0];		// LineName ####
+			const pos = 0 + words[1];
+			var da = "_data1_";
+			var nb = pos;
+			if ( pos > 32 ) {
+				da = "_data2_";
+				nb = pos - 32;
+			}	
+			my["_Output_Lines_"][words[0]] = {
+				Loc: pos,
+				NthBit: nb,
+				Name: words[0],
+				DataArray: da
+			};
+		}
+    }
+	console.log ( JSON.stringify ( my) );
+}
+
+
 // id_result_Out decoder_ctl_0 Microcode_PC_Ld2			// 0x3 on Decoder-CTL = will load address for a id_pc_Inc*    id_pc_Inc = result_eq_0
+
 </script>
-<script src="js/pc_reg.js?v=0001"></script>
-<script src="js/result_reg.js?v=0001"></script>
+<script src="js/pc_reg.js?v=0002"></script>
+<script src="js/ir_reg.js?v=0002"></script>
+<script src="js/result_reg.js?v=0002"></script>
+<script src="js/ac_reg.js?v=0002"></script>
+<script src="js/mar_reg.js?v=0002"></script>
+<script src="js/mdr_reg.js?v=0002"></script>
+<script src="js/input_reg.js?v=0002"></script>
+<script src="js/output_reg.js?v=0002"></script>
+<script src="js/microcode_pc_reg.js?v=0002"></script>
 <script>
-console.log ( "PC=",PC, "RESULT=", RESULT)
-
-// var pc_my = PC.setupSelf ( );
-// theWorld[pc_my.Name] = pc_my;
-
-// var result_my = RESULT.setupSelf ( );
-// theWorld[result_my.Name] = result_my;
+console.log ( "PC=",PC, "RESULT=", RESULT);
+console.log ( "IR=",IR, "AC=", AC);
+console.log ( "MAR=",MAR, "MDR=", MDR);
+console.log ( "INPUT=",INPUT, "OUTPUT=", OUTPUT);
+console.log ( "MICROCODE_PC=",MICROCODE_PC);
 
 var test0001 = false;	// Turn on the line from the PC data
 var test0002 = false;	// Display value in the PC register
 var test0003 = false;	// Send message to PC and see it turn on.
-var test0004 = true;	// Send data from Result to PC and see it in both.
-var test0005 = false;	// PC -> IR (abnomral move, what could be better?)
+var test0004 = false;	// Send data from Result to PC and see it in both.
+var test0005 = true;	// PC -> IR (abnomral move, what could be better?)
 
 if ( test0001 ) {
 	PC.x["_data_"] = "0123";	// 0x7b
@@ -1365,16 +1420,20 @@ if ( test0004 ) {
 		PC.tick();
 		RESULT.tick();
 	}
+	}
+	PC.rise();
 }
 if ( test0005 ) {
 	RESULT.msg("Ld", 1);
 	PC.msg("Out", 1);
-	PC.x["_data_"] = 4428;
+	PC.x["_data_"] = 4428;	// 0x114c
 	RESULT.x["_data_"] = 32;
 	for ( var ii = 0; ii < 2; ii++ ) {	// Tick to depth of propgation of signals
 		PC.tick();
 		RESULT.tick();
 	}
+	PC.rise();
+	RESULT.rise();
 }
 
 </script>
