@@ -2,104 +2,105 @@
 // Main Memory 
 // ========
 
-var my;
-var theOutsideWorld;
-
-module.exports = {
-	setupSelf: function ( OutsideWorld ) {
-		console.log ( "Setup Self" );
-		theOutsideWorld = OutsideWorld;
-		my = {
-			  "Name": "MainMemory"
-			, "TalkTo": OutsideWorld
-			, "Group": "Register"
-			, "Interface": {
-				  "bus" : { "width": 16, "mode": "io" }
-				, "vcc" : { "width": 1, "mode": "i" }
-				, "gnd" : { "width": 1, "mode": "i" }
-				, "Read" : { "width": 1, "mode": "i" }
-				, "Write"  : { "width": 1, "mode": "i" }
-			}
-			, "_data_": new Array(16384)		// xyzzy 16bit wide 8k
-			, "_InputBuffer_": 0
-			, "_OutputBuffer_": 0
-			, "_Read_": null
-			, "_Write_": null
-			, "_addr_": null
-			, "CurState": 0
-			, "NewState": 0
-		};
-		return ( my );
+var MEMORY = {
+	setupSelf: function ( ) {
+		console.log ( "Setup Self/MEMORY" );
+	}
+	, "x": {
+		  "Name": "MEMORY"
+		, "Group": "Memory"
+		, "Interface": {
+			  "Out" : { "width": 16, "mode": "io" }
+			, "vcc" : { "width": 1, "mode": "i" }
+			, "gnd" : { "width": 1, "mode": "i" }
+		}
+		, "_data_": new Array(1024*2)	// 16 bits	- 2k of memory
+		, "_InputBuffer_": 0
+		, "_OutputBuffer_": 0
+		, "_Addr_": null
+		, "_Write_": null
+		, "_Read_": null
 	}
 	, msg: function ( wire, val ) {
+		var addr = MAR.x["_data_"];
+		MEMORY.x["_Addr_"] = addr;
 		switch ( wire ) {
-		case "Write": if ( val === 1 ) { var a = my["_addr_"]; var v = my["_data_"][a];  my["_OutputBuffer_"] = v; PushBus(); }		TurnOn( "main_memory_Write" );   Display(v); my["_Write_"] = 1; break;
-		case "Read":  if ( val === 1 ) { PullBus(); var a = my["_addr_"]; var v = my["_InputBuffer_"]; my["_data_"][a] = v; }		TurnOn( "main_memory_Read"  );   Display(v); my["_Read_"] = 1; break;
-		case "bus": if ( val === 1 && my["_Read_"] === 1 ) { PullBus(true); my["_data_"] = my["_InputBuffer_"]; }                												   break;
+		case "Read": 
+			if ( val === 1 ) {
+				MEMORY.x["_Read_"] = 1;
+				MEMORY.PullMDR(true);
+				MEMORY.x["_data_"][addr] = MEMORY.x["_InputBuffer_"];
+				MEMORY.TurnOn( "memory_Read"  );  
+			}
+			MEMORY.Display( addr );
+		break;
+		case "Write":
+			if ( val === 1 ) {
+				MEMORY.x["_Write_"] = 1;
+				MEMORY.x["_OutputBuffer_"] = MEMORY.x["_data_"];
+				MEMORY.PushMDR();
+				MEMORY.TurnOn( "memory_Write" );  
+			}
+			MEMORY.Display( addr );
+		break;
 		default:
 			Error ( "Invalid Message", wire, val );
 		}
 	}
 	, tick: function ( ) {
-		var a = my["_addr_"];
-		if ( my["_Write_"] === 1 ) {
-			PullBus();
-			my["_data_"][a] = my["_InputBuffer_"];
+		var addr = MAR.x["_data_"];
+		MEMORY.x["_Addr_"] = addr;
+		if ( MEMORY.x["_Read)_"] === 1 ) {
+			MEMORY.PullMDR();
+			MEMORY.x["_data_"][addr] = MEMORY.x["_InputBuffer_"];
 		}
-		if ( my["_Write_"] === 1 ) {
-			my["_OutputBuffer_"] = my["_data_"][a];
-			PushBus();
+		if ( MEMORY.x["_Write_"] === 1 ) {
+			MEMORY.x["_OutputBuffer_"] = MEMORY.x["_data_"][addr];
+			MEMORY.PushMDR();
 		}
-
-		Display( my["_data_"][a] );
-
-		// After Tick Cleanup 
-		my["_InputBuffer_"] = null;
-		my["_Read_"] = null;
-		my["_Write_"] = null;
-		my["_addr_"] = null;
+		MEMORY.Display( addr );
+	}
+	// After Tick Cleanup 
+	, rise: function ( ) {
+		MEMORY.x["_InputBuffer_"] = null;
+		MEMORY.x["_Addr_"] = null;
+		MEMORY.x["_Read_"] = null;
+		MEMORY.x["_Write_"] = null;
 	}
 	, err: function () {
 		return Error();
 	}
-	, test_peek: function(addr) {	// peek at an addr in memory
-		return ( my["_data_"][addr] );
+	, test_peek: function(addr) {
+		return ( MEMORY.x["_data_"][addr] );
 	}
+
+	, PullMDR: function () {
+		MEMORY.x["_InputBuffer_"] = MDR.x["_data_"];
+	}
+
+	, PushMDR: function () {
+		MDR.x["_data_"] = MEMORY.x["_OutputBuffer_"];
+	}
+
+	// Turn on display of a wire with this ID
+	, TurnOn: function  ( id ) {
+		infoOn1 ( -1, "id_"+id );
+	}
+
+	// Display text to inside of register box
+	, Display: function  ( val ) {
+		var sVal = toHex(val,4);
+		// xyzzy - should show the address that is in MAR - as mid pos 7 of 16 in memory.
+		// console.log ( "Padded", sVal );
+		var a = sVal.substr(0,2);
+		var b = sVal.substr(2,2);
+		$("#h_memory_txt_0").text(a);
+		$("#h_memory_txt_1").text(b);
+	}
+
+	// Return any errors generated in this "chip"
+	, Error: function  ( errorMsg, wire, val ) {
+		return ( [] );
+	}
+
 };
-
-function PullBus() {
-	if(theOutsideWorld.Bus && typeof theOutsideWorld.Bus.State === "function") {
-		 my["_InputBuffer_"] = theOutsideWorld.Bus.State();
-		 my["_addr_"] = theOutsideWorld.MAR_to_Memory.State();	
-	}
-}
-
-function PushBus() {
-	if(theOutsideWorld.Bus && typeof theOutsideWorld.Bus.SetState === "function") {
-		theOutsideWorld.Bus.SetState( my["_OutputBuffer_"] );
-	}
-}
-
-// Turn on display of a wire with this ID
-function TurnOn ( id ) {
-	if(typeof theOutsideWorld.TurnOn === "function") {
-		theOutsideWorld.TurnOn ( my.Name, my, id );
-	} else {
-		console.log ( "Turn On ("+my.Name+")", id );
-	}
-}
-
-// Display text to inside of register box
-function Display ( val ) {
-	if(typeof theOutsideWorld.Display === "function") {
-		theOutsideWorld.Display ( my.Name, my, val );
-	} else {
-		console.log ( "Display ("+my.Name+")", val );
-	}
-}
-
-// Return any errors generated in this "chip"
-function Error ( errorMsg, wire, val ) {
-	return ( [] );
-}
-

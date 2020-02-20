@@ -1,27 +1,30 @@
 <head>
 <style>
-	.small      { font: italic 15px sans-serif; }
-	.vsmall     { font: italic 12px sans-serif; }
-	.vsmall-red     { font: italic 12px sans-serif; fill:#ff0000; }
-	.teal-box   { fill:#00ffff; stroke:#000000; stroke-width:3; }
-	.yellow-box { fill:#ffff00; stroke:#000000; stroke-width:3; }
-	.white-box  { fill:#ffffff; stroke:#000000; stroke-width:3; }
-	.gray-box   { fill:#d0d0d0; stroke:#000000; stroke-width:3; }
-	.white-box  { fill:#e0e0e0; stroke:#000000; stroke-width:3; }
-	.input-line { fill:#000000; stroke:#000000; stroke-width:1; }
-	.red-line   { fill:#f00000; stroke:#000000; stroke-width:1; }
-	.out-box    { fill:#ffffff; stroke:#000000; stroke-width:1; }
-	.blue-line  { fill:#000000; stroke:#4040ff; stroke-width:3; fill:none }
-	.blue-line-1 { fill:#000000; stroke:#4040ff; stroke-width:2; fill:none }
-	.button-box { fill:#b4c5fb; stroke:#000000; stroke-width:2; opacity:0.75 }
-	.arrow-line { stroke:#000000; stroke-width:2; stroke-linecap: round; }
-	.arrow-line-red { stroke:#ff0000; stroke-width:2; stroke-linecap: round; }
+	.small           { font: italic 15px sans-serif; }
+	.medium0         { font: 20px sans-serif; fill:#006000; }
+	.medium1         { font: italic 17px sans-serif; fill:#005000; }
+	.vsmall          { font: italic 12px sans-serif; }
+	.vsmall-red      { font: italic 12px sans-serif; fill:#ff0000; }
+	.teal-box        { fill:#00ffff; stroke:#000000; stroke-width:3; }
+	.yellow-box      { fill:#ffff00; stroke:#000000; stroke-width:3; }
+	.white-box       { fill:#ffffff; stroke:#000000; stroke-width:3; }
+	.gray-box        { fill:#d0d0d0; stroke:#000000; stroke-width:3; }
+	.white-box       { fill:#e0e0e0; stroke:#000000; stroke-width:3; }
+	.input-line      { fill:#000000; stroke:#000000; stroke-width:1; }
+	.red-line        { fill:#f00000; stroke:#000000; stroke-width:1; }
+	.out-box         { fill:#ffffff; stroke:#000000; stroke-width:1; }
+	.blue-line       { fill:#000000; stroke:#4040ff; stroke-width:3; fill:none }
+	.blue-line-1     { fill:#000000; stroke:#4040ff; stroke-width:2; fill:none }
+	.button-box      { fill:#b4c5fb; stroke:#000000; stroke-width:2; opacity:0.75 }
+	.arrow-line      { stroke:#000000; stroke-width:2; stroke-linecap: round; }
+	.arrow-line-red  { stroke:#ff0000; stroke-width:2; stroke-linecap: round; }
 	.arrow-line-green { stroke:#00ff00; stroke-width:2; stroke-linecap: round; }
-	.hash-input {
+	.bk-box 		 { fill:#d7d7d7; stroke-width:0; }
+	.hash-input 	 {
 		width: 450px;
 		margin-bottom: 20px;
 	}
-	.modal-submit {
+	.modal-submit 	 {
 		margin-top: 20px;
 		margin-bottom: 20px;
 	}
@@ -104,8 +107,9 @@ body {font-family: Arial, Helvetica, sans-serif;}
 <body>
 <svg width="1640" height="1480" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
  <g class="layer">
-	<text id="h_name_txt_0" x="525" y="75" class="small">MARIA</text>
-	<text id="h_name_txt_0" x="513" y="95" class="small">Microcode</text>
+	<rect x="493" y="55" width="97" height="50" rx="20" class="bk-box"/>
+	<text id="h_name_txt_0" x="510" y="80" class="medium0">MARIA</text>
+	<text id="h_name_txt_0" x="502" y="95" class="medium1">Microcode</text>
 
 	<title>Simple CPU - For Microcoding - CoSc 2150 2020-02-07</title>
 	<rect id="id_pc" x="75" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_pc');"/>
@@ -1385,18 +1389,24 @@ function ParseInput(data) {
 <script src="js/input_reg.js?v=0002"></script>
 <script src="js/output_reg.js?v=0002"></script>
 <script src="js/microcode_pc_reg.js?v=0002"></script>
+<script src="js/microcode_memory.js?v=0002"></script>
+<script src="js/main_memory.js?v=0002"></script>
 <script>
 console.log ( "PC=",PC, "RESULT=", RESULT);
 console.log ( "IR=",IR, "AC=", AC);
 console.log ( "MAR=",MAR, "MDR=", MDR);
 console.log ( "INPUT=",INPUT, "OUTPUT=", OUTPUT);
 console.log ( "MICROCODE_PC=",MICROCODE_PC);
+console.log ( "MICROCODE=",MICROCODE);
+console.log ( "MEMORY=",MEMORY);
 
 var test0001 = false;	// Turn on the line from the PC data
 var test0002 = false;	// Display value in the PC register
 var test0003 = false;	// Send message to PC and see it turn on.
 var test0004 = false;	// Send data from Result to PC and see it in both.
-var test0005 = true;	// PC -> IR (abnomral move, what could be better?)
+var test0005 = false;	// PC -> IR (abnomral move, what could be better?)
+var test0006 = true;	// Show Memory Read Line - via MEMORY.msg
+var test0007 = false;	// Show Memory Write Line - via MEMORY.msg
 
 if ( test0001 ) {
 	PC.x["_data_"] = "0123";	// 0x7b
@@ -1420,7 +1430,6 @@ if ( test0004 ) {
 		PC.tick();
 		RESULT.tick();
 	}
-	}
 	PC.rise();
 }
 if ( test0005 ) {
@@ -1434,6 +1443,12 @@ if ( test0005 ) {
 	}
 	PC.rise();
 	RESULT.rise();
+}
+if ( test0006 ) {
+	MEMORY.msg("Read", 1);
+}
+if ( test0007 ) {
+	MEMORY.msg("Write", 1);
 }
 
 </script>

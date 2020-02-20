@@ -3,6 +3,7 @@
 // ========
 
 
+/*
 function OldPushBus() {
 	var addr = my["_Addr_"];
 	if ( addr === null ) {
@@ -20,6 +21,7 @@ function OldPushBus() {
 		}
 	}
 }
+*/
 
 
 var MICROCODE = {
@@ -36,57 +38,71 @@ var MICROCODE = {
 		}
 		, "_data1_": new Array(256)	// 32 bits
 		, "_data2_": new Array(256) // 32 bits
-		, "_InputBuffer_": 0
-		, "_OutputBuffer_": 0
 		, "_Addr_": null
-		, "_Inc_": null
 		, "_Out_": null
+		, "_OutputBufferList_": []
 	}
+	, "my": {}
 	, msg: function ( wire, val ) {
+		var addr = MICROCODE_PC.x["_OutputBuffer_"];
+		if ( addr === null ) {
+			console.log ( "MC Memory: No _addr_ to use." )
+			addr = 255;
+		}
+		MICROCODE.x["_Addr_"] = addr;
 		switch ( wire ) {
-		case "Clr": if ( val === 1 ) { MICROCODE.x["_Clr_"] = 1; MICROCODE.x["_data_"] = 0; }											MICROCODE.TurnOn( "microcode_Clr" );   MICROCODE.Display( MICROCODE.x["_data_"]); 						break;
-		case "Ld":  if ( val === 1 ) { MICROCODE.x["_Ld_"] = 1; MICROCODE.PullBus(true); MICROCODE.x["_data_"] = MICROCODE.x["_InputBuffer_"]; }	MICROCODE.TurnOn( "microcode_Ld"  );   MICROCODE.Display( MICROCODE.x["_data_"]); MICROCODE.x["_Ld_"] = 1; 	break;
-		case "Inc": if ( val === 1 ) { MICROCODE.x["_Inc_"] = 1; MICROCODE.x["_data_"] = MICROCODE.x["_data_"] + 1; }	    				MICROCODE.TurnOn( "microcode_Inc" );   MICROCODE.Display( MICROCODE.x["_data_"]); 						break;
-		case "Out": if ( val === 1 ) { MICROCODE.x["_Out_"] = 1; MICROCODE.x["_OutputBuffer_"] = MICROCODE.x["_data_"]; MICROCODE.PushBus(); }   	MICROCODE.TurnOn( "microcode_Out" );   MICROCODE.Display( MICROCODE.x["_data_"]); 						break;
+		case "Addr":	// This is the "output" from the Microcode_PC
+			if ( val === 1 ) {
+				MICROCODE.x["_Addr_"] = 1;
+				// Walk across all the values in the microcode 
+				//	- for each one - lookup the line that needs to be turned on 
+				//  - turn it on.
+				// 	-- Append to _OutputBufferList_ for later use --
+				for ( key in MICROCODE.my["_Output_Lines_"] ) {
+					var def = MICROCODE.my["_Output_Lines_"][key];
+					var mcWord = MICROCODE.my[def.DataArray][addr];
+					var val = !!( mcWord & ( 1 << def.NthBit ) );	
+					MICROCODE.TurnOn( key );
+					MICROCODE.x[key] = 1;
+					MICROCODE.x._OutputBufferList_.push ( key );
+				}
+			}
+			MICROCODE.Display( addr );
+		break;
+		//break;
 		default:
 			Error ( "Invalid Message", wire, val );
 		}
 	}
 	, tick: function ( ) {
-		if ( MICROCODE.x["_Ld_"] === 1 ) {
-			MICROCODE.PullBus();
-			MICROCODE.x["_data_"] = MICROCODE.x["_InputBuffer_"];
+		var addr = MICROCODE_PC.x["_OutputBuffer_"];
+		if ( addr === null ) {
+			console.log ( "MC Memory: No _addr_ to use." )
+			addr = 255;
 		}
-		if ( MICROCODE.x["_Out_"] === 1 ) {
-			MICROCODE.x["_OutputBuffer_"] = MICROCODE.x["_data_"];
-			MICROCODE.PushBus();
+		MICROCODE.x["_Addr_"] = addr;
+		if ( MICROCODE.x["_Addr_"] === 1 ) {
+			for ( key in MICROCODE.my["_Output_Lines_"] ) {
+				var def = MICROCODE.my["_Output_Lines_"][key];
+				var mcWord = MICROCODE.my[def.DataArray][addr];
+				var val = !!( mcWord & ( 1 << def.NthBit ) );	
+				MICROCODE.TurnOn( key );
+			}
 		}
-		MICROCODE.Display( MICROCODE.x["_data_"] );
+		MICROCODE.Display( addr );
 	}
 	// After Tick Cleanup 
 	, rise: function ( ) {
-		MICROCODE.x["_InputBuffer_"] = null;
-		MICROCODE.x["_Addr_"] = null;
-		MICROCODE.x["_Inc_"] = null;
-		MICROCODE.x["_Out_"] = null;
+		for ( key in MICROCODE.x._OutputBufferList_ ) {
+			MICROCODE.x[key] = 0;
+		}
+		MICROCODE.x._OutputBufferList_ = [];
 	}
 	, err: function () {
 		return Error();
 	}
 	, test_peek: function() {
 		return ( MICROCODE.x["_data_"] );
-	}
-
-	, PullBus: function () {
-		if(theWorld.Bus && typeof theWorld.Bus.State === "function") {
-			 MICROCODE.x["_InputBuffer_"] = theWorld.Bus.State();
-		}
-	}
-
-	, PushBus: function () {
-		if(theWorld.Bus && typeof theWorld.Bus.SetState === "function") {
-			theWorld.Bus.SetState( MICROCODE.x["_OutputBuffer_"] );
-		}
 	}
 
 	// Turn on display of a wire with this ID
