@@ -32,9 +32,9 @@ var PC = {
 		case "Ld":  if ( val === 1 ) { PC.x["_Ld_"] = 1; PC.PullBus(true); PC.x["_data_"] = PC.x["_InputBuffer_"]; }	PC.TurnOn( "pc_Ld"  );   PC.Display( PC.x["_data_"]); PC.x["_Ld_"] = 1; 	break;
 		case "Inc": if ( val === 1 ) { PC.x["_Inc_"] = 1; PC.x["_data_"] = PC.x["_data_"] + 1; }	    				PC.TurnOn( "pc_Inc" );   PC.Display( PC.x["_data_"]); 						break;
 		case "Out": if ( val === 1 ) { PC.x["_Out_"] = 1; PC.x["_OutputBuffer_"] = PC.x["_data_"]; PC.PushBus(); }   	PC.TurnOn( "pc_Out" );   PC.Display( PC.x["_data_"]); 						break;
-		// case "bus": if ( val === 1 && PC.x["_Ld_"] === 1 ) { PC.PullBus(); PC.x["_data_"] = PC.x["_InputBuffer_"]; } 							                          						break;
 		default:
 			Error ( "Invalid Message", wire, val );
+		break;
 		}
 	}
 	, tick: function ( ) {

@@ -394,7 +394,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		<rect id="id_decoder_Ctl_1"  x="1225"   y="240"  width="1"   height="25"     class="input-line" />
 			<text x="1230" y="250" class="vsmall">Ctl</text>
 
-		<text id="h_mux_txt_0" x="1210" y="220" class="small"></text>
+		<text id="h_mux_txt" x="1210" y="220" class="small"></text>
 
 	<rect id="id_main_bus" x="25" y="290" width="1380" height="3" fill="#000000" stroke="#000000" stroke-width="1" />
 		<text x="25" y="285" class="small">Bus</text>
@@ -1090,12 +1090,18 @@ function infoOn1(i,x) {
 function toHex(d, padding) {
     var hex = Number(d).toString(16);
     padding = typeof (padding) === "undefined" || padding === null ? padding = 2 : padding;
-
     while (hex.length < padding) {
         hex = "0" + hex;
     }
-
     return hex;
+}
+function toBin(d, padding) {
+    var bin = Number(d).toString(2);
+    padding = typeof (padding) === "undefined" || padding === null ? padding = 2 : padding;
+    while (bin.length < padding) {
+        bin = "0" + bin;
+    }
+    return bin;
 }
 
 var theWorld = {

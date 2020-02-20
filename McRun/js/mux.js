@@ -8,73 +8,81 @@ var MUX = {
 	}
 	, "x": {
 		  "Name": "MUX"
-		, "Group": "Register"
+		, "Group": "Logic"
 		, "Interface": {
 			  "bus" : { "width": 16, "mode": "io" }
 			, "vcc" : { "width": 1, "mode": "i" }
 			, "gnd" : { "width": 1, "mode": "i" }
-			, "Clr" : { "width": 1, "mode": "i" }
-			, "Ld"  : { "width": 1, "mode": "i" }
-			, "Inc" : { "width": 1, "mode": "i" }
-			, "Out" : { "width": 1, "mode": "i" }	// Turn on Output on "bus"
+			, "00" : { "width": 8, "mode": "i" }
+			, "01" : { "width": 8, "mode": "i" }
+			, "10" : { "width": 8, "mode": "i" }
+			, "11" : { "width": 8, "mode": "i" }
+			, "Out" : { "width": 8, "mode": "o" }
+			, "Ctl" : { "width": 2, "mode": "i" }
 		}
-		, "_data_": 0
-		, "_InputBuffer_": 0
-		, "_OutputBuffer_": 0
-		, "_Clr_": null
-		, "_Ld_": null
-		, "_Inc_": null
+		, "_Ctl_0_": null
+		, "_Ctl_1_": null
+		, "_Ctl_": null
+		, "_00_": null
+		, "_01_": null
+		, "_10_": null
+		, "_11_": null
 		, "_Out_": null
 	}
 	, msg: function ( wire, val ) {
 		switch ( wire ) {
-		case "Clr": if ( val === 1 ) { MUX.x["_Clr_"] = 1; MUX.x["_data_"] = 0; }											MUX.TurnOn( "mux_Clr" );   MUX.Display( MUX.x["_data_"]); 						break;
-		case "Ld":  if ( val === 1 ) { MUX.x["_Ld_"] = 1; MUX.PullBus(true); MUX.x["_data_"] = MUX.x["_InputBuffer_"]; }	MUX.TurnOn( "mux_Ld"  );   MUX.Display( MUX.x["_data_"]); MUX.x["_Ld_"] = 1; 	break;
-		case "Inc": if ( val === 1 ) { MUX.x["_Inc_"] = 1; MUX.x["_data_"] = MUX.x["_data_"] + 1; }	    				MUX.TurnOn( "mux_Inc" );   MUX.Display( MUX.x["_data_"]); 						break;
-		case "Out": if ( val === 1 ) { MUX.x["_Out_"] = 1; MUX.x["_OutputBuffer_"] = MUX.x["_data_"]; MUX.PushBus(); }   	MUX.TurnOn( "mux_Out" );   MUX.Display( MUX.x["_data_"]); 						break;
-		// case "bus": if ( val === 1 && MUX.x["_Ld_"] === 1 ) { MUX.PullBus(); MUX.x["_data_"] = MUX.x["_InputBuffer_"]; } 							                          						break;
+		case "Ctl":
+			val = val & 3;
+			MUX.x["_Ctl_"] = val;
+			MUX.x["_Ctl_0_"] = val & 1;
+			MUX.x["_Ctl_1_"] = val & 2;
+		break;
+		case "Ctl_0":
+			MUX.x["_Ctl_0_"] = val & 1;
+		break;
+		case "Ctl_1":
+			MUX.x["_Ctl_1_"] = val & 1;
+		break;
 		default:
 			Error ( "Invalid Message", wire, val );
+		break;
 		}
+		// xyzzy - pull CTL from Inputs (Microcode?)
+		var c = MUX.x["_Ctl_1_"];
+		var d = MUX.x["_Ctl_0_"];
+		MUX.x["_Ctl_"] = c << 1 | d;
+		MUX.func();
+		var x = MUX.x["_Ctl_"];
+		MUX.Display( x );
 	}
 	, tick: function ( ) {
-		if ( MUX.x["_Ld_"] === 1 ) {
-			MUX.PullBus();
-			MUX.x["_data_"] = MUX.x["_InputBuffer_"];
-		}
-		if ( MUX.x["_Out_"] === 1 ) {
-			MUX.x["_OutputBuffer_"] = MUX.x["_data_"];
-			MUX.PushBus();
-		}
-		MUX.Display( MUX.x["_data_"] );
+		MUX.func();
+		var x = MUX.x["_Ctl_"];
+		MUX.Display( x );
 	}
+
+	, func: function() {
+		switch ( MUX.x["_Ctl_"] & 0x3 ) {
+		case 0:
+			MUX.x["_Out_"] = Mux.x["_00_"] & 0xff;
+		break;
+		case 1:
+			MUX.x["_Out_"] = Mux.x["_01_"] & 0xff;
+		break;
+		case 2:
+			MUX.x["_Out_"] = Mux.x["_10_"] & 0xff;
+		break;
+		case 3:
+			MUX.x["_Out_"] = Mux.x["_11_"] & 0xff;
+		break;
+		}
+	}
+
 	// After Tick Cleanup 
 	, rise: function ( ) {
-		MUX.x["_InputBuffer_"] = null;
-		MUX.x["_Clr_"] = null;
-		MUX.x["_Ld_"] = null;
-		MUX.x["_Inc_"] = null;
-		MUX.x["_Out_"] = null;
 	}
 	, err: function () {
 		return Error();
-	}
-	, test_peek: function() {
-		return ( MUX.x["_data_"] );
-	}
-
-	, PullBus: function () {
-		if(theWorld.Bus && typeof theWorld.Bus.State === "function") {
-			 MUX.x["_InputBuffer_"] = theWorld.Bus.State();
-console.log ( "MUX:PullBus", MUX.x["_InputBuffer_"] );
-		}
-	}
-
-	, PushBus: function () {
-		if(theWorld.Bus && typeof theWorld.Bus.SetState === "function") {
-console.log ( "MUX:PushBus", MUX.x["_OutputBuffer_"] );
-			theWorld.Bus.SetState( MUX.x["_OutputBuffer_"] );
-		}
 	}
 
 	// Turn on display of a wire with this ID
@@ -83,13 +91,9 @@ console.log ( "MUX:PushBus", MUX.x["_OutputBuffer_"] );
 	}
 
 	// Display text to inside of register box
-	, Display: function  ( val ) {
-		var sVal = toHex(val,4);
-		// console.log ( "Padded", sVal );
-		var a = sVal.substr(0,2);
-		var b = sVal.substr(2,2);
-		$("#h_mux_txt_0").text(a);
-		$("#h_mux_txt_1").text(b);
+	, Display: function  ( x ) {
+		var sVal = toBin(x,2);
+		$("#h_mux_txt").text(sVal);
 	}
 
 	// Return any errors generated in this "chip"
