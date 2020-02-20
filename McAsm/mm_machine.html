@@ -242,7 +242,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<line x1="502" y1="120" x2="507" y2="115" class="arrow-line" />
 			<line x1="502" y1="120" x2="507" y2="125" class="arrow-line" />
 
-		<text id="h_alu_txt_0" x="425" y="85" class="small"></text>
+		<text id="h_alu_txt" x="405" y="85" class="small"></text>
 
 	<rect id="id_ac" x="600" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_ac');"/>
 		<text x="600" y="25" class="small" onclick="infoOn('id_ac');">AC</text>
@@ -1391,6 +1391,8 @@ function ParseInput(data) {
 <script src="js/microcode_pc_reg.js?v=0002"></script>
 <script src="js/microcode_memory.js?v=0002"></script>
 <script src="js/main_memory.js?v=0002"></script>
+<script src="js/alu.js?v=0002"></script>
+<script src="js/mux.js?v=0002"></script>
 <script>
 console.log ( "PC=",PC, "RESULT=", RESULT);
 console.log ( "IR=",IR, "AC=", AC);
@@ -1399,6 +1401,8 @@ console.log ( "INPUT=",INPUT, "OUTPUT=", OUTPUT);
 console.log ( "MICROCODE_PC=",MICROCODE_PC);
 console.log ( "MICROCODE=",MICROCODE);
 console.log ( "MEMORY=",MEMORY);
+console.log ( "ALU=",ALU);
+console.log ( "MUX=",MUX);
 
 var test0001 = false;	// Turn on the line from the PC data
 var test0002 = false;	// Display value in the PC register

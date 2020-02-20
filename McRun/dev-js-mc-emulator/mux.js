@@ -2,104 +2,99 @@
 // MUX : 8 wide, 4 inputs to 1 output mux
 // ========
 
-var my;
-var theOutsideWorld;
-
-module.exports = {
-	setupSelf: function ( OutsideWorld ) {
-		console.log ( "Setup Self" );
-		theOutsideWorld = OutsideWorld;
-		my = {
-			  "Name": "MUX"
-			, "TalkTo": OutsideWorld
-			, "Group": "Register"
-			, "Interface": {
-				  "vcc" : { "width": 1, "mode": "i" }
-				, "gnd" : { "width": 1, "mode": "i" }
-				, "mux_ctl" : { "width": 2, "mode": "i" }
-				, "i00" : { "width": 8, "mode": "i" }
-				, "i01" : { "width": 8, "mode": "i" }
-				, "i10" : { "width": 8, "mode": "i" }
-				, "i11" : { "width": 8, "mode": "i" }
-				, "out" : { "width": 1, "mode": "i" }	// Turn on Output on "bus"
-			}
-			, "_data_": 0
-			, "_InputBuffer_": 0
-			, "_OutputBuffer_": 0
-			, "_ctl_": null
-			, "_out_": null
-			, "_i00": null
-			, "_i01": null
-			, "_i10": null
-			, "_i01": null
-			, "CurState": 0
-			, "NewState": 0
-		};
-		return ( my );
+var MUX = {
+	setupSelf: function ( ) {
+		console.log ( "Setup Self/MUX" );
+	}
+	, "x": {
+		  "Name": "MUX"
+		, "Group": "Register"
+		, "Interface": {
+			  "bus" : { "width": 16, "mode": "io" }
+			, "vcc" : { "width": 1, "mode": "i" }
+			, "gnd" : { "width": 1, "mode": "i" }
+			, "Clr" : { "width": 1, "mode": "i" }
+			, "Ld"  : { "width": 1, "mode": "i" }
+			, "Inc" : { "width": 1, "mode": "i" }
+			, "Out" : { "width": 1, "mode": "i" }	// Turn on Output on "bus"
+		}
+		, "_data_": 0
+		, "_InputBuffer_": 0
+		, "_OutputBuffer_": 0
+		, "_Clr_": null
+		, "_Ld_": null
+		, "_Inc_": null
+		, "_Out_": null
 	}
 	, msg: function ( wire, val ) {
 		switch ( wire ) {
-		case "mux_ctl": if ( val === 1 ) { my["_ctl_"] = val; }									TurnOn( "mux_ctl" );   Display( my["_data_"]); break;
+		case "Clr": if ( val === 1 ) { MUX.x["_Clr_"] = 1; MUX.x["_data_"] = 0; }											MUX.TurnOn( "mux_Clr" );   MUX.Display( MUX.x["_data_"]); 						break;
+		case "Ld":  if ( val === 1 ) { MUX.x["_Ld_"] = 1; MUX.PullBus(true); MUX.x["_data_"] = MUX.x["_InputBuffer_"]; }	MUX.TurnOn( "mux_Ld"  );   MUX.Display( MUX.x["_data_"]); MUX.x["_Ld_"] = 1; 	break;
+		case "Inc": if ( val === 1 ) { MUX.x["_Inc_"] = 1; MUX.x["_data_"] = MUX.x["_data_"] + 1; }	    				MUX.TurnOn( "mux_Inc" );   MUX.Display( MUX.x["_data_"]); 						break;
+		case "Out": if ( val === 1 ) { MUX.x["_Out_"] = 1; MUX.x["_OutputBuffer_"] = MUX.x["_data_"]; MUX.PushBus(); }   	MUX.TurnOn( "mux_Out" );   MUX.Display( MUX.x["_data_"]); 						break;
+		// case "bus": if ( val === 1 && MUX.x["_Ld_"] === 1 ) { MUX.PullBus(); MUX.x["_data_"] = MUX.x["_InputBuffer_"]; } 							                          						break;
 		default:
 			Error ( "Invalid Message", wire, val );
 		}
 	}
 	, tick: function ( ) {
-		if ( my["_Ld_"] === 1 ) {
-			PullBus();
-			my["_data_"] = my["_InputBuffer_"];
+		if ( MUX.x["_Ld_"] === 1 ) {
+			MUX.PullBus();
+			MUX.x["_data_"] = MUX.x["_InputBuffer_"];
 		}
-		if ( my["_Out_"] === 1 ) {
-			my["_OutputBuffer_"] = my["_data_"];
-			PushBus();
+		if ( MUX.x["_Out_"] === 1 ) {
+			MUX.x["_OutputBuffer_"] = MUX.x["_data_"];
+			MUX.PushBus();
 		}
-
-		Display( my["_data_"] );
-
-		// After Tick Cleanup 
-		my["_InputBuffer_"] = null;
-		my["_ctl_"] = null;
+		MUX.Display( MUX.x["_data_"] );
+	}
+	// After Tick Cleanup 
+	, rise: function ( ) {
+		MUX.x["_InputBuffer_"] = null;
+		MUX.x["_Clr_"] = null;
+		MUX.x["_Ld_"] = null;
+		MUX.x["_Inc_"] = null;
+		MUX.x["_Out_"] = null;
 	}
 	, err: function () {
 		return Error();
 	}
 	, test_peek: function() {
-		return ( my["_data_"] );
+		return ( MUX.x["_data_"] );
 	}
+
+	, PullBus: function () {
+		if(theWorld.Bus && typeof theWorld.Bus.State === "function") {
+			 MUX.x["_InputBuffer_"] = theWorld.Bus.State();
+console.log ( "MUX:PullBus", MUX.x["_InputBuffer_"] );
+		}
+	}
+
+	, PushBus: function () {
+		if(theWorld.Bus && typeof theWorld.Bus.SetState === "function") {
+console.log ( "MUX:PushBus", MUX.x["_OutputBuffer_"] );
+			theWorld.Bus.SetState( MUX.x["_OutputBuffer_"] );
+		}
+	}
+
+	// Turn on display of a wire with this ID
+	, TurnOn: function  ( id ) {
+		infoOn1 ( -1, "id_"+id );
+	}
+
+	// Display text to inside of register box
+	, Display: function  ( val ) {
+		var sVal = toHex(val,4);
+		// console.log ( "Padded", sVal );
+		var a = sVal.substr(0,2);
+		var b = sVal.substr(2,2);
+		$("#h_mux_txt_0").text(a);
+		$("#h_mux_txt_1").text(b);
+	}
+
+	// Return any errors generated in this "chip"
+	, Error: function  ( errorMsg, wire, val ) {
+		return ( [] );
+	}
+
 };
-
-function PullBus() {
-	if(theOutsideWorld.Bus && typeof theOutsideWorld.Bus.State === "function") {
-		 my["_InputBuffer_"] = theOutsideWorld.Bus.State();
-	}
-}
-
-function PushBus() {
-	if(theOutsideWorld.Bus && typeof theOutsideWorld.Bus.SetState === "function") {
-		theOutsideWorld.Bus.SetState( my["_OutputBuffer_"] );
-	}
-}
-
-// Turn on display of a wire with this ID
-function TurnOn ( id ) {
-	if(typeof theOutsideWorld.TurnOn === "function") {
-		theOutsideWorld.TurnOn ( my.Name, my, id );
-	} else {
-		console.log ( "Turn On ("+my.Name+")", id );
-	}
-}
-
-// Display text to inside of register box
-function Display ( val ) {
-	if(typeof theOutsideWorld.Display === "function") {
-		theOutsideWorld.Display ( my.Name, my, val );
-	} else {
-		console.log ( "Display ("+my.Name+")", val );
-	}
-}
-
-// Return any errors generated in this "chip"
-function Error ( errorMsg, wire, val ) {
-	return ( [] );
-}
-
