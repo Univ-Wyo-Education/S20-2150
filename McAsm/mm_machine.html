@@ -104,6 +104,9 @@ body {font-family: Arial, Helvetica, sans-serif;}
 <body>
 <svg width="1640" height="1480" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
  <g class="layer">
+	<text id="h_name_txt_0" x="525" y="75" class="small">MARIA</text>
+	<text id="h_name_txt_0" x="513" y="95" class="small">Microcode</text>
+
 	<title>Simple CPU - For Microcoding - CoSc 2150 2020-02-07</title>
 	<rect id="id_pc" x="75" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_pc');"/>
 		<text x="75" y="25" class="small" onclick="infoOn('id_pc');">PC</text>
@@ -171,6 +174,9 @@ body {font-family: Arial, Helvetica, sans-serif;}
 					11		22  / Common IR Decode
 			-->
 
+			<text id="h_ir_txt_0" x="185" y="55" class="small"></text>
+			<text id="h_ir_txt_1" x="185" y="75" class="small"></text>
+
 	<rect id="id_result" x="300" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_result');"/>
 		<text x="300" y="25" class="small" onclick="infoOn('id_result');">Result</text>
 		<rect id="id_result_Ld" x="350" y="40" width="20" height="1" class="input-line" />
@@ -232,6 +238,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<line x1="502" y1="120" x2="507" y2="115" class="arrow-line" />
 			<line x1="502" y1="120" x2="507" y2="125" class="arrow-line" />
 
+		<text id="h_alu_txt_0" x="425" y="85" class="small"></text>
+
 	<rect id="id_ac" x="600" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_ac');"/>
 		<text x="600" y="25" class="small" onclick="infoOn('id_ac');">AC</text>
 		<rect id="id_ac_Ld" x="650" y="40" width="20" height="1" class="input-line" />
@@ -254,10 +262,19 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<line x1="625" y1="132" x2="620" y2="137" class="arrow-line" />
 			<line x1="625" y1="132" x2="630" y2="137" class="arrow-line" />
 
+		<text id="h_ac_txt_0" x="610" y="55" class="small"></text>
+		<text id="h_ac_txt_1" x="610" y="75" class="small"></text>
+
 	<rect id="id_microcode" x="750" y="30" width="400" height="100" fill="#c0a0a0" stroke="#000000" stroke-width="3" onclick="infoOn('id_microcode');"/>
 		<text x="750" y="25" class="small" onclick="infoOn('id_microcode');">Microcode</text>
-		<text x="754" y="47" class="small">Address 256 Words</text>
-		<text x="754" y="67" class="small">Data 64 bits wide</text>
+		<text id="microcode_txt_0" x="754" y="47" class="small">Address 256 Words</text>
+		<text id="microcode_txt_1" x="754" y="67" class="small">Data 64 bits wide</text>
+
+		<text id="h_microcode_txt_0" x="760" y="50" class="small"></text>
+		<text id="h_microcode_txt_1" x="760" y="65" class="small"></text>
+		<text id="h_microcode_txt_2" x="760" y="80" class="small"></text>
+		<text id="h_microcode_txt_3" x="760" y="95" class="small"></text>
+		<text id="h_microcode_txt_4" x="760" y="115" class="small"></text>
 
 	<rect id="id_Microcode_PC" x="1200" y="30" width="100" height="50" fill="#ffd700" stroke="#000000" stroke-width="3" onclick="infoOn('id_Microcode_PC');"/>
 		<text x="1200" y="25" class="small" onclick="infoOn('id_Microcode_PC');">Microcode PC</text>
@@ -359,6 +376,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		<rect id="id_decoder_In[8]d"  x="1175"   y="240"  width="35"   height="1"     class="input-line" />
 			<text x="1182" y="238" class="vsmall">11</text>
 
+		<text id="h_microcode_pc_txt_0" x="1210" y="55" class="small"></text>
+
 	<!-- id="decoder_ctl_0" -->
 	<!-- id="decoder_ctl_1" -->
 	<polygon id="id_decoder"
@@ -367,13 +386,16 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<text x="1220" y="180" class="small">Decoder</text>
 			<!-- Decoder Output to Microcode_PC Input -->
 
-		<rect id="id_decoder_Ctl_0"  x="1215"   y="240"  width="1"   height="25"     class="input-line" />
+		<rect id="id_decoder_Ctl_0"  x="1215"   y="244"  width="1"   height="21"     class="input-line" />
 		<rect id="id_decoder_Ctl_1"  x="1225"   y="240"  width="1"   height="25"     class="input-line" />
 			<text x="1230" y="250" class="vsmall">Ctl</text>
 
+		<text id="h_mux_txt_0" x="1210" y="220" class="small"></text>
 
 	<rect id="id_main_bus" x="25" y="290" width="1380" height="3" fill="#000000" stroke="#000000" stroke-width="1" />
 		<text x="25" y="285" class="small">Bus</text>
+
+		<text id="h_bus_txt_0" x="1280" y="280" class="small"></text>
 
 	<rect id="id_mar" x="275" y="324" width="100" height="50" class="yellow-box" onclick="infoOn('id_mar');" />
 		<text x="275" y="319" class="small" onclick="infoOn('id_mar');">MAR</text>
@@ -395,6 +417,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<!-- arrow down from MAR register to Main Memory -->
 			<line x1="335" y1="420" x2="330" y2="415" class="arrow-line" />
 			<line x1="335" y1="420" x2="340" y2="415" class="arrow-line" />
+
+		<text id="h_mar_txt_0" x="285" y="350" class="small"></text>
 
 	<rect id="id_mdr" x="520" y="324" width="100" height="50" class="yellow-box" onclick="infoOn('id_mdr');" />
 		<text x="520" y="319" class="small" onclick="infoOn('id_mdr');">MDR</text>
@@ -420,14 +444,34 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<line x1="570" y1="420" x2="565" y2="415" class="arrow-line" />
 			<line x1="570" y1="420" x2="575" y2="415" class="arrow-line" />
 
-	<rect id="id_memory" x="250" y="420" width="400" height="300" fill="#d0d0d0" stroke="#000000" stroke-width="1" onclick="infoOn('id_memory',254,480,400,860);"/>
+		<text id="h_mdr_txt_0" x="530" y="350" class="small"></text>
+
+	<rect id="id_memory" x="250" y="420" width="400" height="350" fill="#d0d0d0" stroke="#000000" stroke-width="1" onclick="infoOn('id_memory',254,480,400,860);"/>
 		<text x="400" y="415" class="small" onclick="infoOn('id_memory');">Main Memory</text>
-		<text x="254" y="440" class="small">Address 8K Words</text>
-		<text x="254" y="460" class="small">Data 16 bits wide</text>
+		<text id="memory_txt_0" x="254" y="440" class="small">Address 8K Words</text>
+		<text id="memory_txt_1" x="254" y="460" class="small">Data 16 bits wide</text>
 		<rect id="id_memory_Read" x="650" y="440" width="40" height="1" class="input-line" />
 			<text x="655" y="434" class="vsmall" onclick="infoOn('id_memory_Read');">Read</text>
 		<rect id="id_memory_Write" x="650" y="460" width="40" height="1" class="input-line" />
 			<text x="655" y="454" class="vsmall" onclick="infoOn('id_memory_Write');">Write</text>
+
+		<text id="h_memory_0"   x="254" y="435" class="small" ></text>
+		<text id="h_memory_1"   x="254" y="455" class="small" ></text>
+		<text id="h_memory_2"   x="254" y="475" class="small" ></text>
+		<text id="h_memory_3"   x="254" y="495" class="small" ></text>
+		<text id="h_memory_4"   x="254" y="515" class="small" ></text>
+		<text id="h_memory_5"   x="254" y="535" class="small" ></text>
+		<text id="h_memory_6"   x="254" y="555" class="small" ></text>
+		<text id="h_memory_7"   x="254" y="575" class="small" ></text>
+		<text id="h_memory_8"   x="254" y="595" class="small" ></text>
+		<text id="h_memory_9"   x="254" y="615" class="small" ></text>
+		<text id="h_memory_10"  x="254" y="635" class="small" ></text>
+		<text id="h_memory_11"  x="254" y="655" class="small" ></text>
+		<text id="h_memory_12"  x="254" y="675" class="small" ></text>
+		<text id="h_memory_13"  x="254" y="695" class="small" ></text>
+		<text id="h_memory_14"  x="254" y="715" class="small" ></text>
+		<text id="h_memory_15"  x="254" y="735" class="small" ></text>
+		<text id="h_memory_16"  x="254" y="755" class="small" ></text>
 
 	<rect id="id_output" x="1200" y="324" width="100" height="50" class="white-box" onclick="infoOn('id_output');" />
 		<text x="1200" y="319" class="small" onclick="infoOn('id_output');">Output</text>
@@ -445,6 +489,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<line x1="1270" y1="322" x2="1265" y2="317" class="arrow-line" />
 			<line x1="1270" y1="322" x2="1275" y2="317" class="arrow-line" />
 
+		<text id="h_input_txt_0" x="1210" y="350" class="small"></text>
+
 	<rect id="id_input" x="1000" y="324" width="100" height="50" class="white-box" onclick="infoOn('id_input');"/>
 		<text x="1000" y="319" class="small"onclick="infoOn('id_input');">Input</text>
 		<rect id="id_input_Ld" x="1100" y="340" width="20" height="1" class="input-line" />
@@ -461,11 +507,12 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<line x1="1050" y1="322" x2="1045" y2="317" class="arrow-line" />
 			<line x1="1050" y1="322" x2="1055" y2="317" class="arrow-line" />
 
+		<text id="h_output_txt_0" x="1010" y="350" class="small"></text>
 
 
 
-<!-- Text Output -->
-	<rect id="out_box" x="750" y="420" width="650" height="300" class="out-box" />
+<!-- Text Output Area -->
+	<rect id="out_box" x="750" y="420" width="650" height="350" class="out-box" />
 	<text id="line_0"  x="755" y="435" class="small" ></text>
 	<text id="line_1"  x="755" y="455" class="small" ></text>
 	<text id="line_2"  x="755" y="475" class="small" ></text>
@@ -1094,8 +1141,8 @@ var theWorld = {
 					ignore = arguments[0];
 				}
 				if ( ! ignore ) {
-					console.log ( "Warning: Pulling 'bus.State' when undefined" );
-					theWorld.IsZero._error_.push( "Warning: Pulling 'bus.State' when undefined" );
+					console.log ( "Warning: Pulling 'IsZero.State' when undefined" );
+					theWorld.IsZero._error_.push( "Warning: Pulling 'IsZero.State' when undefined" );
 				}
 				return ( theWorld.IsZero._data_ );
 			}
@@ -1112,6 +1159,105 @@ var theWorld = {
 		}
 		, "ClearError": function ( v ) {
 			theWorld.IsZero._error_ = [];
+		}
+	}
+	,"IR_15__12": {
+		"_data_": 0
+		, "_used_": false
+		, "_error_": []
+		, "State": function () {
+			if ( theWorld.IR_15__12._used_ ) {
+				return ( theWorld.IR_15__12._data_ );
+			} else {
+				var ignore = false;
+				if ( arguments.length > 0 ) {
+					ignore = arguments[0];
+				}
+				if ( ! ignore ) {
+					console.log ( "Warning: Pulling 'IR_15__12.State' when undefined" );
+					theWorld.IR_15__12._error_.push( "Warning: Pulling 'IR_15__12.State' when undefined" );
+				}
+				return ( theWorld.IR_15__12._data_ );
+			}
+		}
+		, "SetState": function ( v ) {
+			theWorld.IR_15__12._data_ = v;
+			theWorld.IR_15__12._used_ = true;
+		}
+		, "TickRise": function ( v ) {
+			theWorld.IR_15__12._used_ = false;
+		}
+		, "Error": function ( v ) {
+			return ( theWorld.IR_15__12._error_ );
+		}
+		, "ClearError": function ( v ) {
+			theWorld.IR_15__12._error_ = [];
+		}
+	}
+	,"IR_11__8": {
+		"_data_": 0
+		, "_used_": false
+		, "_error_": []
+		, "State": function () {
+			if ( theWorld.IR_11__8._used_ ) {
+				return ( theWorld.IR_11__8._data_ );
+			} else {
+				var ignore = false;
+				if ( arguments.length > 0 ) {
+					ignore = arguments[0];
+				}
+				if ( ! ignore ) {
+					console.log ( "Warning: Pulling 'IR_11__8.State' when undefined" );
+					theWorld.IR_11__8._error_.push( "Warning: Pulling 'IR_11__8.State' when undefined" );
+				}
+				return ( theWorld.IR_11__8._data_ );
+			}
+		}
+		, "SetState": function ( v ) {
+			theWorld.IR_11__8._data_ = v;
+			theWorld.IR_11__8._used_ = true;
+		}
+		, "TickRise": function ( v ) {
+			theWorld.IR_11__8._used_ = false;
+		}
+		, "Error": function ( v ) {
+			return ( theWorld.IR_11__8._error_ );
+		}
+		, "ClearError": function ( v ) {
+			theWorld.IR_11__8._error_ = [];
+		}
+	}
+	,"hand": {
+		"_data_": 0
+		, "_used_": false
+		, "_error_": []
+		, "State": function () {
+			if ( theWorld.hand._used_ ) {
+				return ( theWorld.hand._data_ );
+			} else {
+				var ignore = false;
+				if ( arguments.length > 0 ) {
+					ignore = arguments[0];
+				}
+				if ( ! ignore ) {
+					console.log ( "Warning: Pulling 'hand.State' when undefined" );
+					theWorld.hand._error_.push( "Warning: Pulling 'hand.State' when undefined" );
+				}
+				return ( theWorld.hand._data_ );
+			}
+		}
+		, "SetState": function ( v ) {
+			theWorld.hand._data_ = v;
+			theWorld.hand._used_ = true;
+		}
+		, "TickRise": function ( v ) {
+			theWorld.hand._used_ = false;
+		}
+		, "Error": function ( v ) {
+			return ( theWorld.hand._error_ );
+		}
+		, "ClearError": function ( v ) {
+			theWorld.hand._error_ = [];
 		}
 	}
 	,"MAR_to_Memory": {
@@ -1148,21 +1294,34 @@ var theWorld = {
 		}
 	}
 
-	//	theOutsideWorld.TurnOn ( my.Name, my, id );
-	,"TurnOn": function ( name, my, raw_id ) {
-		console.log ( "name=", name, "my=", my, "raw_id=", raw_id );
-		if ( $("id_"+raw_id) ) {
-			console.log ( "Found" );
-			infoOn ( "id_"+raw_id );
-		}
-	}
-	// theOutsideWorld.Display ( my.Name, my, val );
-	,"Display": function ( name, my, val ) {
-		console.log ( "name=", name, "my=", my, "val=", val );
-	}
-
 };
 
+function clearMicrocodeText() {
+	$("#microcode_txt_0").text("");
+	$("#microcode_txt_1").text("");
+}
+
+function displayMicrocodeText(t1,t2,t3,t4,t5) {
+	clearMicrocodeText();
+	$("#h_microcode_txt_0").text(t1);
+	$("#h_microcode_txt_1").text(t2);
+	$("#h_microcode_txt_2").text(t3);
+	$("#h_microcode_txt_3").text(t4);
+	$("#h_microcode_txt_4").text(t5);
+}
+
+function clearMemoryText() {
+	$("#memory_txt_0").text("");
+	$("#memory_txt_1").text("");
+}
+
+function displayMemoryText() {
+	clearMemoryText();
+	for ( var i = 0, mx = arguments.length; i < mx && i < 16; i++ ) {
+		var x = arguments[i];
+		$("#h_memory_"+i).html(arguments[i]);
+	}
+}
 
 // var module = {};
 // id_result_Out decoder_ctl_0 Microcode_PC_Ld2			// 0x3 on Decoder-CTL = will load address for a id_pc_Inc*    id_pc_Inc = result_eq_0
@@ -1182,24 +1341,40 @@ var test0001 = false;	// Turn on the line from the PC data
 var test0002 = false;	// Display value in the PC register
 var test0003 = false;	// Send message to PC and see it turn on.
 var test0004 = true;	// Send data from Result to PC and see it in both.
+var test0005 = false;	// PC -> IR (abnomral move, what could be better?)
 
 if ( test0001 ) {
-	PC.TurnOn( "pc_Clr" );
+	PC.x["_data_"] = "0123";	// 0x7b
+	PC.msg("Clr", 1);
+	// Just Display: PC.TurnOn( "pc_Clr" );
+	PC.Display(PC.x["_data_"]); 
 }
 if ( test0002 ) {
-	PC.x["_data_"] = "0123";
-	PC.Display(pc_my["_data_"]); 
+	PC.x["_data_"] = "0123";	// 0x7b
+	PC.Display(PC.x["_data_"]); 
 }
 if ( test0003 ) {
 	PC.x["_data_"] = 16;
 	PC.msg("Inc", 1);
 }
 if ( test0004 ) {
-	RESULT.x["_data_"] = 32;
-	PC.msg("Ld", 1);
 	RESULT.msg("Out", 1);
-	PC.tick();
-	RESULT.tick();
+	PC.msg("Ld", 1);
+	RESULT.x["_data_"] = 32;
+	for ( var ii = 0; ii < 2; ii++ ) {	// Tick to depth of propgation of signals
+		PC.tick();
+		RESULT.tick();
+	}
+}
+if ( test0005 ) {
+	RESULT.msg("Ld", 1);
+	PC.msg("Out", 1);
+	PC.x["_data_"] = 4428;
+	RESULT.x["_data_"] = 32;
+	for ( var ii = 0; ii < 2; ii++ ) {	// Tick to depth of propgation of signals
+		PC.tick();
+		RESULT.tick();
+	}
 }
 
 </script>

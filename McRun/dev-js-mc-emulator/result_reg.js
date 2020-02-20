@@ -87,16 +87,16 @@ console.log ( "Result:Tick Out: _OutputBuffer =", RESULT.x["_OutputBuffer_"] );
 			RESULT.PushBus();
 		}
 		// xyzzy IsZero
-
 		RESULT.Display( RESULT.x["_data_"] );
-
-		// After Tick Cleanup 
-//		RESULT.x["_InputBuffer_"] = null;
-//		RESULT.x["_Clr_"] = null;
-//		RESULT.x["_Ld_"] = null;
-//		RESULT.x["_Inc_"] = null;
-//		RESULT.x["_Out_"] = null;
+	}
+	// After Tick Cleanup 
+	, rise: function ( ) {
 		// xyzzy IsZero
+		RESULT.x["_InputBuffer_"] = null;
+		RESULT.x["_Clr_"] = null;
+		RESULT.x["_Ld_"] = null;
+		RESULT.x["_Inc_"] = null;
+		RESULT.x["_Out_"] = null;
 	}
 	, err: function () {
 		return Error();
