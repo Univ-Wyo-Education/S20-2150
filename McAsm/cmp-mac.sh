@@ -17,8 +17,10 @@ fi
 # export AWS_ACCESS_KEY_ID=X
 # export AWS_SECRET_ACCESS_KEY="X"
 # export AWS_SECRET_KEY="X"
-# export AWS_S3_BUCKET="X"
+export AWS_S3_BUCKET="s3://uw-s20-2015"
+export AWS_S3_BUCKET="uw-s20-2015"
 
+zsh:1: command not found: s3cmd
 cat >ver.go <<XxXx
 package main
 
@@ -27,6 +29,8 @@ func init() {
 	S3_BUCKET = "${AWS_S3_BUCKET}"
 }
 XxXx
+
+cat ver.go
 
 export GIT_COMMIT=`git rev-list -1 HEAD` && \
 	echo "Version: ${GIT_COMMIT}" && \

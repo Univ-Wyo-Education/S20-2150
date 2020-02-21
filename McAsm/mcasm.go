@@ -253,10 +253,11 @@ Microcode Emulator:
 		hashHex := HashByesReturnHex(data)
 
 		err = os.Mkdir("./tmp", 0755)
-		if err != nil {
-			fmt.Printf("Error: (Unable to Upload to S3) failed create temporary directory ./tmp error:%s\n", err)
-			os.Exit(1)
-		}
+		_ = err
+		//if err != nil {
+		//	fmt.Printf("Error: (Unable to Upload to S3) failed create temporary directory ./tmp error:%s\n", err)
+		//	os.Exit(1)
+		//}
 		fn := fmt.Sprintf("./tmp/%s", hashHex)
 		// toFile := fmt.Sprintf("data/%s", hashHex)
 		toFile := hashHex
@@ -277,6 +278,14 @@ Microcode Emulator:
 		err = os.RemoveAll("./tmp")
 		if err != nil {
 			fmt.Printf("Error: %s\nManually remove ./tmp directory.", err)
+		}
+
+		if filelib.Exists("../McRun/data") {
+			fn := fmt.Sprintf("../McRun/data/%s.txt", hashHex)
+			err = ioutil.WriteFile(fn, data, 0644)
+			if err != nil {
+				fmt.Printf("Error: (Unable to Upload to S3) failed create temporary directory ./tmp error:%s\n", err)
+			}
 		}
 	}
 

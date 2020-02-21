@@ -27,6 +27,7 @@ function OldPushBus() {
 var MICROCODE = {
 	setupSelf: function ( ) {
 		console.log ( "Setup Self/MICROCODE" );
+
 	}
 	, "x": {
 		  "Name": "MICROCODE"
@@ -41,8 +42,8 @@ var MICROCODE = {
 		, "_Addr_": null
 		, "_Out_": null
 		, "_OutputBufferList_": []
+		, "_Output_Lines_": {}
 	}
-	, "my": {}
 	, msg: function ( wire, val ) {
 		var addr = MICROCODE_PC.x["_OutputBuffer_"];
 		if ( addr === null ) {
@@ -58,9 +59,9 @@ var MICROCODE = {
 				//	- for each one - lookup the line that needs to be turned on 
 				//  - turn it on.
 				// 	-- Append to _OutputBufferList_ for later use --
-				for ( key in MICROCODE.my["_Output_Lines_"] ) {
-					var def = MICROCODE.my["_Output_Lines_"][key];
-					var mcWord = MICROCODE.my[def.DataArray][addr];
+				for ( key in MICROCODE.x["_Output_Lines_"] ) {
+					var def = MICROCODE.x["_Output_Lines_"][key];
+					var mcWord = MICROCODE.x[def.DataArray][addr];
 					var val = !!( mcWord & ( 1 << def.NthBit ) );	
 					MICROCODE.TurnOn( key );
 					MICROCODE.x[key] = 1;
@@ -82,9 +83,9 @@ var MICROCODE = {
 		}
 		MICROCODE.x["_Addr_"] = addr;
 		if ( MICROCODE.x["_Addr_"] === 1 ) {
-			for ( key in MICROCODE.my["_Output_Lines_"] ) {
-				var def = MICROCODE.my["_Output_Lines_"][key];
-				var mcWord = MICROCODE.my[def.DataArray][addr];
+			for ( key in MICROCODE.x["_Output_Lines_"] ) {
+				var def = MICROCODE.x["_Output_Lines_"][key];
+				var mcWord = MICROCODE.x[def.DataArray][addr];
 				var val = !!( mcWord & ( 1 << def.NthBit ) );	
 				MICROCODE.TurnOn( key );
 			}
@@ -126,3 +127,4 @@ var MICROCODE = {
 	}
 
 };
+

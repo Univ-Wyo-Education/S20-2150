@@ -744,7 +744,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<input id="modal-input-code-hash" spellcheck="false" name="i_hash" class="hash-input">
 		</div>
 		<div class="modal-footer">
-			<button class="modal-submit" type="button" id="modal-submit">Load Code</button>
+			<button class="modal-submit" type="button" id="modal-submit" onclick="LoadMC();">Load Code</button>
 		</div>
 	</div>
 
@@ -1333,13 +1333,45 @@ function displayMemoryText() {
 	}
 }
 
+
+
+
+
+// id_result_Out decoder_ctl_0 Microcode_PC_Ld2			// 0x3 on Decoder-CTL = will load address for a id_pc_Inc*    id_pc_Inc = result_eq_0
+
+</script>
+<script src="js/pc_reg.js?v=0004"></script>
+<script src="js/ir_reg.js?v=0004"></script>
+<script src="js/result_reg.js?v=0004"></script>
+<script src="js/ac_reg.js?v=0004"></script>
+<script src="js/mar_reg.js?v=0004"></script>
+<script src="js/mdr_reg.js?v=0004"></script>
+<script src="js/input_reg.js?v=0004"></script>
+<script src="js/output_reg.js?v=0004"></script>
+<script src="js/microcode_pc_reg.js?v=0004"></script>
+<script src="js/microcode_memory.js?v=0004"></script>
+<script src="js/main_memory.js?v=0004"></script>
+<script src="js/alu.js?v=0004"></script>
+<script src="js/mux.js?v=0004"></script>
+<script>
+
+console.log ( "PC=",PC, "RESULT=", RESULT);
+console.log ( "IR=",IR, "AC=", AC);
+console.log ( "MAR=",MAR, "MDR=", MDR);
+console.log ( "INPUT=",INPUT, "OUTPUT=", OUTPUT);
+console.log ( "MICROCODE_PC=",MICROCODE_PC);
+console.log ( "MICROCODE=",MICROCODE);
+console.log ( "MEMORY=",MEMORY);
+console.log ( "ALU=",ALU);
+console.log ( "MUX=",MUX);
+
 /*
 0000000430000001 000
 0000000144000000 001
 0000000008c00008 002
 436f646520427920 003
 */
-function ParseInput(data) {
+var ParseInput = function (data) {
 	var array = data.toString().split("\n");
 	var pc = 0;
 	var st = 0;
@@ -1357,58 +1389,46 @@ function ParseInput(data) {
 			console.log("p1 ->"+p1+"<- p2 ->"+p2+"<-");
 			const p1x = parseInt(p1,16);
 			const p2x = parseInt(p2,26);
-			my["_data1_"][pc] = p1x;
-			my["_data2_"][pc] = p2x;
+			MICROCODE.x["_data1_"][pc] = p1x;
+			MICROCODE.x["_data2_"][pc] = p2x;
 			pc++;
 		} else if ( st === 1 ) {
 			// Associate bit with "line" that is turned on.
 			const words = str.split(' ');
-			const str2 = words[0];		// LineName ####
-			const pos = 0 + words[1];
+			const id = words[0];		// Name ####
+			const pos = parseInt(words[1]);
 			var da = "_data1_";
 			var nb = pos;
-			if ( pos > 32 ) {
+			if ( pos >= 32 ) {
 				da = "_data2_";
 				nb = pos - 32;
-			}	
-			my["_Output_Lines_"][words[0]] = {
+			}
+			if ( ! MICROCODE.x_Output_Lines_ ) {
+				MICROCODE.x_Output_Lines_ = {};
+			}
+			MICROCODE.x["_Output_Lines_"][id] = {
 				Loc: pos,
 				NthBit: nb,
-				Name: words[0],
+				Name: id,
 				DataArray: da
 			};
 		}
     }
-	console.log ( JSON.stringify ( my) );
+	console.log ( JSON.stringify ( MICROCODE ) );
+};
+
+// <button class="modal-submit" type="button" id="modal-submit" onclick="LoadMC();">Load Code</button>
+// <input id="modal-input-code-hash" spellcheck="false" name="i_hash" class="hash-input">
+function LoadMC() {
+	hideModal();
+	var v = $("#modal-input-code-hash").val();
+	console.log ( "v=", v );
+	$.get ( "./data/"+v+".txt", function(data){
+		// console.log ( "Got It: ", data );
+		ParseInput(data);
+	});
 }
 
-
-// id_result_Out decoder_ctl_0 Microcode_PC_Ld2			// 0x3 on Decoder-CTL = will load address for a id_pc_Inc*    id_pc_Inc = result_eq_0
-
-</script>
-<script src="js/pc_reg.js?v=0002"></script>
-<script src="js/ir_reg.js?v=0002"></script>
-<script src="js/result_reg.js?v=0002"></script>
-<script src="js/ac_reg.js?v=0002"></script>
-<script src="js/mar_reg.js?v=0002"></script>
-<script src="js/mdr_reg.js?v=0002"></script>
-<script src="js/input_reg.js?v=0002"></script>
-<script src="js/output_reg.js?v=0002"></script>
-<script src="js/microcode_pc_reg.js?v=0002"></script>
-<script src="js/microcode_memory.js?v=0002"></script>
-<script src="js/main_memory.js?v=0002"></script>
-<script src="js/alu.js?v=0002"></script>
-<script src="js/mux.js?v=0002"></script>
-<script>
-console.log ( "PC=",PC, "RESULT=", RESULT);
-console.log ( "IR=",IR, "AC=", AC);
-console.log ( "MAR=",MAR, "MDR=", MDR);
-console.log ( "INPUT=",INPUT, "OUTPUT=", OUTPUT);
-console.log ( "MICROCODE_PC=",MICROCODE_PC);
-console.log ( "MICROCODE=",MICROCODE);
-console.log ( "MEMORY=",MEMORY);
-console.log ( "ALU=",ALU);
-console.log ( "MUX=",MUX);
 
 var test0001 = false;	// Turn on the line from the PC data
 var test0002 = false;	// Display value in the PC register
@@ -1461,6 +1481,7 @@ if ( test0007 ) {
 	MEMORY.msg("Write", 1);
 }
 
+// 0ad7f1aef0bc1918380360372de72ff3de68d1001966a7b60ac437d60bdbfd0c
 </script>
 </body>
 </html>

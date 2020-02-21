@@ -9,7 +9,9 @@ linux:
 	GOOS=linux go build -o McAsm.linux . 
 
 run1:
-	go build
+	./cmp-mac.sh
 	./McAsm --in microcode.m2 --out microcode.hex 
 
-
+run2:
+	./cmp-mac.sh
+	./McAsm --in microcode.m2 --out microcode.hex  --upload
