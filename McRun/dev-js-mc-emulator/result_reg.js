@@ -117,6 +117,21 @@ console.log ( "Result:PullBus", RESULT.x["_InputBuffer_"] );
 			theWorld.Bus.SetState( RESULT.x["_OutputBuffer_"] );
 console.log ( "Result:PushBus", RESULT.x["_OutputBuffer_"] );
 		}
+
+		var dd = IR.x["_data_"];
+	
+		// Xyzzy ??  -- do you need to run on an output to do this?
+		MUX.msg("01_1", ( dt != 0 ) ? 1 : 0 );
+
+//	, "McJmp_7": { Name: "MUX", 					Op: ["00_7","01_7","10_7","11_7"] }
+//	, "McJmp_6": { Name: "MUX", 					Op: ["00_6","01_6","10_6"       ] }
+//	, "McJmp_5": { Name: "MUX", 					Op: ["00_5","01_5"              ] }
+//	, "McJmp_4": { Name: "MUX", 					Op: ["00_4","01_4"              ] }
+//	, "McJmp_3": { Name: "MUX", 					Op: ["00_3","01_3"              ] }
+//	, "McJmp_2": { Name: "MUX", 					Op: ["00_2","01_2"       ,"11_2"] }	
+//	, "McJmp_1": { Name: "MUX", 					Op: ["00_1"       ,"10_1","11_1"] }
+//	, "McJmp_0": { Name: "MUX", 					Op: ["00_0","01_0","10_0","11_0"] }
+
 	}
 
 	, SendMsg: function ( x, y, val ) {

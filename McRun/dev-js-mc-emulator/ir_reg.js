@@ -25,7 +25,15 @@ var IR = {
 	, msg: function ( wire, val ) {
 		switch ( wire ) {
 		case "Ld":  if ( val === 1 ) { IR.x["_Ld_"] = 1; IR.PullBus(true); IR.x["_data_"] = IR.x["_InputBuffer_"]; }	IR.TurnOn( "ir_Ld"  );   IR.Display( IR.x["_data_"]); IR.x["_Ld_"] = 1; 	break;
-		case "Out": if ( val === 1 ) { IR.x["_Out_"] = 1; IR.x["_OutputBuffer_"] = IR.x["_data_"]; IR.PushBus(); }   	IR.TurnOn( "ir_Out" );   IR.Display( IR.x["_data_"]); 						break;
+		case "Out":
+			if ( val === 1 ) {
+				IR.x["_Out_"] = 1;
+				IR.x["_OutputBuffer_"] = IR.x["_data_"];
+				IR.PushBus();
+				IR.TurnOn( "ir_Out" );
+			} 
+			IR.Display( IR.x["_data_"]);
+		break;
 		default:
 			Error ( "Invalid Message", wire, val );
 		}
@@ -62,8 +70,36 @@ var IR = {
 
 	, PushBus: function () {
 		if(theWorld.Bus && typeof theWorld.Bus.SetState === "function") {
-			theWorld.Bus.SetState( IR.x["_OutputBuffer_"] );
+			if ( theWorld.hand_out && theWorld.hand_out === 1 ) {
+				theWorld.Bus.SetState( ( IR.x["_OutputBuffer_"] & 0xfff ) );
+			} else {
+				theWorld.Bus.SetState( IR.x["_OutputBuffer_"] );
+			}
 		}
+
+		var ir = IR.x["_data_"];
+		var irA = ( ir & 0xf000 ) >> 12;
+		var irB = ( ir & 0x0f00 ) >> 8;
+
+		MUX.msg("11_6", ( (irA & 0x8) != 0 ) ? 1 : 0 );
+		MUX.msg("11_5", ( (irA & 0x4) != 0 ) ? 1 : 0 );
+		MUX.msg("11_4", ( (irA & 0x2) != 0 ) ? 1 : 0 );
+		MUX.msg("11_3", ( (irA & 0x1) != 0 ) ? 1 : 0 );
+
+		MUX.msg("10_5", ( (irB & 0x8) != 0 ) ? 1 : 0 );
+		MUX.msg("10_4", ( (irB & 0x4) != 0 ) ? 1 : 0 );
+		MUX.msg("10_3", ( (irB & 0x2) != 0 ) ? 1 : 0 );
+		MUX.msg("10_2", ( (irB & 0x1) != 0 ) ? 1 : 0 );
+
+//	, "McJmp_7": { Name: "MUX", 					Op: ["00_7","01_7","10_7","11_7"] }
+//	, "McJmp_6": { Name: "MUX", 					Op: ["00_6","01_6","10_6"       ] }
+//	, "McJmp_5": { Name: "MUX", 					Op: ["00_5","01_5"              ] }
+//	, "McJmp_4": { Name: "MUX", 					Op: ["00_4","01_4"              ] }
+//	, "McJmp_3": { Name: "MUX", 					Op: ["00_3","01_3"              ] }
+//	, "McJmp_2": { Name: "MUX", 					Op: ["00_2","01_2"       ,"11_2"] }	
+//	, "McJmp_1": { Name: "MUX", 					Op: ["00_1"       ,"10_1","11_1"] }
+//	, "McJmp_0": { Name: "MUX", 					Op: ["00_0","01_0","10_0","11_0"] }
+
 	}
 
 	// Turn on display of a wire with this ID

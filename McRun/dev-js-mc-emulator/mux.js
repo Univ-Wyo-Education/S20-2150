@@ -39,17 +39,75 @@ var MUX = {
 		break;
 		case "Ctl_0":
 			MUX.x["_Ctl_0_"] = val & 1;
+			MUX.x["_Ctl_"] = MUX.x["_Ctl_"] & 2 | MUX.x["_Ctl_0_"] ;
 		break;
 		case "Ctl_1":
 			MUX.x["_Ctl_1_"] = val & 1;
+			MUX.x["_Ctl_"] = MUX.x["_Ctl_"] & 1 | ( MUX.x["_Ctl_0_"] << 1 );
 		break;
 		default:
-console.log ( "  MUX: Op="+wire )
-			// Error ( "Invalid Message", wire, val );
 			// 00_x
 			// 01_x
 			// 10_x
 			// 11_x
+			var nTh = wire.substr(3,1);
+			nTh = parseInt(nTh);
+			var b0 = ( wire.substr(0,1) == '0' ) ? 0 : 1;	// Ctl_1
+			var b1 = ( wire.substr(1,1) == '0' ) ? 0 : 1;	// Ctl_0
+			var bb = (b1&0x1) << 1 | (b0&0x1);				// Ctl (as a number)
+console.log ( "  MUX: Op="+wire, 'nTh=', nTh, b0, b1, bb );
+			MUX.x["_"+wire+"_"] = val;
+
+			var c = MUX.x["_Ctl_1_"];
+			var d = MUX.x["_Ctl_0_"];
+			MUX.x["_Ctl_"] = c << 1 | d;
+
+			switch ( MUX.x["_Ctl_"] & 0x3 ) {
+			case 0:
+				MUX.x["_Out_"] = MUX.x["_00_"] = 
+					( MUX.x["_00_0_"] & 0x1 ) 		|
+					( MUX.x["_00_1_"] & 0x1 ) << 1 	|
+					( MUX.x["_00_2_"] & 0x1 ) << 2 	|
+					( MUX.x["_00_3_"] & 0x1 ) << 3 	|
+					( MUX.x["_00_4_"] & 0x1 ) << 4 	|
+					( MUX.x["_00_5_"] & 0x1 ) << 5 	|
+					( MUX.x["_00_6_"] & 0x1 ) << 6 	|
+					( MUX.x["_00_7_"] & 0x1 ) << 7 	;
+			break;
+			case 1:
+				MUX.x["_Out_"] = MUX.x["_01_"] = 
+					( MUX.x["_01_0_"] & 0x1 ) 		|
+					( MUX.x["_01_1_"] & 0x1 ) << 1 	|
+					( MUX.x["_01_2_"] & 0x1 ) << 2 	|
+					( MUX.x["_01_3_"] & 0x1 ) << 3 	|
+					( MUX.x["_01_4_"] & 0x1 ) << 4 	|
+					( MUX.x["_01_5_"] & 0x1 ) << 5 	|
+					( MUX.x["_01_6_"] & 0x1 ) << 6 	|
+					( MUX.x["_01_7_"] & 0x1 ) << 7 	;
+			break;
+			case 2:
+				MUX.x["_Out_"] = MUX.x["_10_"] = 
+					( MUX.x["_10_0_"] & 0x1 ) 		|
+					( MUX.x["_10_1_"] & 0x1 ) << 1 	|
+					( MUX.x["_10_2_"] & 0x1 ) << 2 	|
+					( MUX.x["_10_3_"] & 0x1 ) << 3 	|
+					( MUX.x["_10_4_"] & 0x1 ) << 4 	|
+					( MUX.x["_10_5_"] & 0x1 ) << 5 	|
+					( MUX.x["_10_6_"] & 0x1 ) << 6 	|
+					( MUX.x["_10_7_"] & 0x1 ) << 7 	;
+			break;
+			case 3:
+				MUX.x["_Out_"] = MUX.x["_11_"] = 
+					( MUX.x["_11_0_"] & 0x1 ) 		|
+					( MUX.x["_11_1_"] & 0x1 ) << 1 	|
+					( MUX.x["_11_2_"] & 0x1 ) << 2 	|
+					( MUX.x["_11_3_"] & 0x1 ) << 3 	|
+					( MUX.x["_11_4_"] & 0x1 ) << 4 	|
+					( MUX.x["_11_5_"] & 0x1 ) << 5 	|
+					( MUX.x["_11_6_"] & 0x1 ) << 6 	|
+					( MUX.x["_11_7_"] & 0x1 ) << 7 	;
+			break;
+			}
 		break;
 		}
 		// xyzzy - pull CTL from Inputs (Microcode?)
@@ -64,23 +122,30 @@ console.log ( "  MUX: Op="+wire )
 		MUX.func();
 		var x = MUX.x["_Ctl_"];
 		MUX.Display( x );
+
+		var out = MUX.x["_Out_"];
+		MICROCODE_PC.x["_InputBuffer_"] = out;
+		MICROCODE_PC.msg("Ld",1);
 	}
 
 	, func: function() {
 		switch ( MUX.x["_Ctl_"] & 0x3 ) {
 		case 0:
-			MUX.x["_Out_"] = Mux.x["_00_"] & 0xff;
+			MUX.x["_Out_"] = MUX.x["_00_"] & 0xff;
 		break;
 		case 1:
-			MUX.x["_Out_"] = Mux.x["_01_"] & 0xff;
+			MUX.x["_Out_"] = MUX.x["_01_"] & 0xff;
 		break;
 		case 2:
-			MUX.x["_Out_"] = Mux.x["_10_"] & 0xff;
+			MUX.x["_Out_"] = MUX.x["_10_"] & 0xff;
 		break;
 		case 3:
-			MUX.x["_Out_"] = Mux.x["_11_"] & 0xff;
+			MUX.x["_Out_"] = MUX.x["_11_"] & 0xff;
 		break;
 		}
+		var out = MUX.x["_Out_"];
+		MICROCODE_PC.x["_InputBuffer_"] = out;
+		MICROCODE_PC.msg("Ld",1);
 	}
 
 	// After Tick Cleanup 
