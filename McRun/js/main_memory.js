@@ -28,8 +28,9 @@ var MEMORY = {
 		case "Read": 
 			if ( val === 1 ) {
 				MEMORY.x["_Read_"] = 1;
-				MEMORY.PullMDR(true);
-				MEMORY.x["_data_"][addr] = MEMORY.x["_InputBuffer_"];
+				MEMORY.x["_OutputBuffer_"] = MEMORY.x["_data_"][addr];
+				MEMORY.PushMDR();
+console.log ( "Doing a Memory Read:,  addr=", addr, " value=(hex)", MEMORY.x["_OutputBuffer_"].toString(16) );
 				MEMORY.TurnOn( "memory_Read"  );  
 			}
 			MEMORY.Display( addr );
@@ -37,8 +38,8 @@ var MEMORY = {
 		case "Write":
 			if ( val === 1 ) {
 				MEMORY.x["_Write_"] = 1;
-				MEMORY.x["_OutputBuffer_"] = MEMORY.x["_data_"];
-				MEMORY.PushMDR();
+				MEMORY.PullMDR();
+				MEMORY.x["_data_"][addr] = MEMORY.x["_InputBuffer_"];
 				MEMORY.TurnOn( "memory_Write" );  
 			}
 			MEMORY.Display( addr );
@@ -51,18 +52,19 @@ var MEMORY = {
 		var addr = MAR.x["_data_"];
 		MEMORY.x["_Addr_"] = addr;
 		if ( MEMORY.x["_Read)_"] === 1 ) {
-			MEMORY.PullMDR();
-			MEMORY.x["_data_"][addr] = MEMORY.x["_InputBuffer_"];
-		}
-		if ( MEMORY.x["_Write_"] === 1 ) {
 			MEMORY.x["_OutputBuffer_"] = MEMORY.x["_data_"][addr];
 			MEMORY.PushMDR();
+		}
+		if ( MEMORY.x["_Write_"] === 1 ) {
+			MEMORY.PullMDR();
+			MEMORY.x["_data_"][addr] = MEMORY.x["_InputBuffer_"];
 		}
 		MEMORY.Display( addr );
 	}
 	// After Tick Cleanup 
 	, rise: function ( ) {
 		MEMORY.x["_InputBuffer_"] = null;
+		MEMORY.x["_OutputBuffer_"] = null;
 		MEMORY.x["_Addr_"] = null;
 		MEMORY.x["_Read_"] = null;
 		MEMORY.x["_Write_"] = null;

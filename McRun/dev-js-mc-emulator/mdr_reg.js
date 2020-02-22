@@ -28,11 +28,64 @@ var MDR = {
 	}
 	, msg: function ( wire, val ) {
 		switch ( wire ) {
-		case "Clr": if ( val === 1 ) { MDR.x["_Clr_"] = 1; MDR.x["_data_"] = 0; }											MDR.TurnOn( "mdr_Clr" );   MDR.Display( MDR.x["_data_"]); 						break;
-		case "Ld":  if ( val === 1 ) { MDR.x["_Ld_"] = 1; MDR.PullBus(true); MDR.x["_data_"] = MDR.x["_InputBuffer_"]; }	MDR.TurnOn( "mdr_Ld"  );   MDR.Display( MDR.x["_data_"]); MDR.x["_Ld_"] = 1; 	break;
-		case "Inc": if ( val === 1 ) { MDR.x["_Inc_"] = 1; MDR.x["_data_"] = MDR.x["_data_"] + 1; }	    				MDR.TurnOn( "mdr_Inc" );   MDR.Display( MDR.x["_data_"]); 						break;
-		case "Out": if ( val === 1 ) { MDR.x["_Out_"] = 1; MDR.x["_OutputBuffer_"] = MDR.x["_data_"]; MDR.PushBus(); }   	MDR.TurnOn( "mdr_Out" );   MDR.Display( MDR.x["_data_"]); 						break;
-		// case "bus": if ( val === 1 && MDR.x["_Ld_"] === 1 ) { MDR.PullBus(); MDR.x["_data_"] = MDR.x["_InputBuffer_"]; } 							                          						break;
+		case "Clr":
+			if ( val === 1 ) {
+				MDR.x["_Clr_"] = 1;
+				MDR.x["_data_"] = 0;
+				MDR.TurnOn( "mdr_Clr" );
+			}
+			MDR.Display( MDR.x["_data_"]); 						
+		break;
+		case "Ld": 
+			if ( val === 1 ) {
+				MDR.x["_Ld_"] = 1;
+				MDR.PullBus();
+				MDR.x["_data_"] = MDR.x["_InputBuffer_"];
+				MDR.TurnOn( "mdr_Ld"  );
+			}
+			MDR.Display( MDR.x["_data_"]);
+			MDR.x["_Ld_"] = 1;
+		break;
+		case "Inc":
+			if ( val === 1 ) {
+				MDR.x["_Inc_"] = 1;
+				MDR.x["_data_"] = MDR.x["_data_"] + 1;
+				MDR.TurnOn( "mdr_Inc" );
+			}	    				
+			MDR.Display( MDR.x["_data_"]); 						
+		break;
+		case "Out":
+			if ( val === 1 ) {
+				MDR.x["_Out_"] = 1;
+				MDR.x["_OutputBuffer_"] = MDR.x["_data_"];
+				MDR.PushBus();
+				MDR.TurnOn( "mdr_Out" );
+			}
+			MDR.Display( MDR.x["_data_"]); 						
+		break;
+		// , "id_memory_Write": [ { Name:"MEMORY",				Op: ["Write"]      	}, { Name:"MDR", Op:["Out_To_Memory"]  } ]
+		case "Out_To_Memory":
+			if ( val === 1 ) {
+				MDR.x["_Out_To_Memory_"] = 1;
+				MDR.x["_OutputBuffer_"] = MDR.x["_data_"];
+				var addr = MAR.x["_data_"];
+				MEMORY.x["_data_"][addr] = MDR.x["_OutputBuffer_"];
+				// MDR.TurnOn( "mdr_Out" );		// xyzzy - turn on line betwen MDR and Memory
+			}
+			MDR.Display( MDR.x["_data_"]); 						
+		break;
+		// , "id_memory_Read": [ { Name:"MEMORY",				Op: ["Read"]      	}, { Name:"MDR", Op:["Ld_From_Memory"] } ]
+		case "Ld_From_Memory": 
+			if ( val === 1 ) {
+				MDR.x["_Ld_From_Memory_"] = 1;
+				var addr = MAR.x["_data_"];
+				MDR.x["_InputBuffer_"] = MEMORY.x["_data_"][addr];
+				MDR.x["_data_"] = MDR.x["_InputBuffer_"];
+				// MDR.TurnOn( "mdr_Ld"  );		// xyzzy - turn on the line betwen MDR and Memory
+			}
+			MDR.Display( MDR.x["_data_"]);
+			MDR.x["_Ld_"] = 1;
+		break;
 		default:
 			Error ( "Invalid Message", wire, val );
 		}
@@ -45,6 +98,18 @@ var MDR = {
 		if ( MDR.x["_Out_"] === 1 ) {
 			MDR.x["_OutputBuffer_"] = MDR.x["_data_"];
 			MDR.PushBus();
+		}
+		if ( MDR.x["_Out_To_Memory_"] === 1 ) {
+			MDR.x["_OutputBuffer_"] = MDR.x["_data_"];
+			var addr = MAR.x["_data_"];
+			MEMORY.x["_data_"][addr] = MDR.x["_OutputBuffer_"];
+			// MDR.TurnOn( "mdr_Out" );		// xyzzy - turn on line betwen MDR and Memory
+		}
+		if ( MDR.x["_Ld_From_Memory_"] === 1 ) {
+			var addr = MAR.x["_data_"];
+			MDR.x["_InputBuffer_"] = MEMORY.x["_data_"][addr];
+			MDR.x["_data_"] = MDR.x["_InputBuffer_"];
+			// MDR.TurnOn( "mdr_Ld"  );		// xyzzy - turn on the line betwen MDR and Memory
 		}
 		MDR.Display( MDR.x["_data_"] );
 	}

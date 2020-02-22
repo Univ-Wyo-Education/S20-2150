@@ -597,12 +597,16 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		d="M 225 250   L 700 250  700 280 1020 280 1020 130  "
 		/>
 
+	<g id="ir_decode_g1">
 	<path id="ir_15_12_to_decoder_11" class="blue-line"
 		d="M 200 170   L  705 170  705 280   1170 280 1170 240  1200 240 "
 		/>
+	</g>
+	<g id="ir_decode_g2">
 	<path id="ir_11_8_to_decoder_10" class="blue-line"
 		d="M 200 200   L  705 200  705 280   1170 280 1170 225  1200 225 "
 		/>
+	</g>
 
 	<g id="alu_ctl_4_to_microcode">
 		<rect id="id_ALU_ctl_0" x="420" y="108" width="1" height="45" class="blue-line-1" />
@@ -1478,52 +1482,52 @@ var theWorld = {
 };
 
 var Connections = {
-	  "id_pc_Out": { Name:"PC",						Op: ["Out"]      	}
-	, "id_pc_Ld": { Name:"PC",						Op: ["Ld"]      	}
-	, "id_pc_Inc": { Name:"PC",						Op: ["Inc"]      	}
-	, "id_Microcode_PC_Clr": { Name:"MICROCODE_PC",	Op: ["Clr"]      	} 
-	, "id_Microcode_PC_Ld": { Name:"MICROCODE_PC",	Op: ["Ld"]      	}
-	, "id_Microcode_PC_Inc": { Name:"MICROCODE_PC", Op: ["Inc"]      	}
-	, "id_ac_Clr": { Name:"AC",						Op: ["Clr"]      	}
-	, "id_ac_Inc": { Name:"AC",						Op: ["Inc"]      	}
-	, "id_ac_Ld": { Name:"AC",						Op: ["Ld"]      	}
-	, "id_ac_Out": { Name:"AC",						Op: ["Out"]      	}
-	, "id_ac_Out_to_ALU": { Name:"AC",				Op: ["Out_to_ALU"] 	}
-	, "id_input_Out": { Name:"INPUT",				Op: ["Out"]      	}
-	, "id_input_Ld": { Name:"INPUT",				Op: ["Ld"]      	}
-	, "id_ir_Ld": { Name:"IR",						Op: ["Ld"]      	}
-	, "id_ir_Out": { Name:"IR",						Op: ["Out"]      	}
-	, "id_mar_Ld": { Name:"MAR",					Op: ["Ld"]      	}
-	, "id_mar_Out": { Name:"MAR",					Op: ["Out"]      	}
-	, "id_mdr_Ld": { Name:"MDR",					Op: ["Ld"]      	}
-	, "id_mdr_Out": { Name:"MDR",					Op: ["Out"]      	}
-	, "id_memory_Read": { Name:"MEMORY",			Op: ["Read"]      	}
-	, "id_memory_Write": { Name:"MEMORY",			Op: ["Write"]      	}
-	, "id_output_Ld": { Name:"OUTPUT",				Op: ["Ld"]      	}
-	, "id_output_Out": { Name:"OUTPUT",				Op: ["Out"]      	}
-	, "id_result_Ld": { Name:"RESULT",				Op: ["Ld"]      	}
-	, "id_result_Out": { Name:"RESULT",				Op: ["Out"]      	}
-	
-	//                                                   Always Jump -- All Bits
-	//                                                          IsZero - one bit
-	//                                                                  2nd Decode - Instruction IR Bits 11..8
-	//                                                                         1st Decode - Instruction MSB 15..12 of IR
-	, "McJmp_7": { Name: "MUX", 					Op: ["00_7","01_7","10_7","11_7"] }
-	, "McJmp_6": { Name: "MUX", 					Op: ["00_6","01_6","10_6"       ] }
-	, "McJmp_5": { Name: "MUX", 					Op: ["00_5","01_5"              ] }
-	, "McJmp_4": { Name: "MUX", 					Op: ["00_4","01_4"              ] }
-	, "McJmp_3": { Name: "MUX", 					Op: ["00_3","01_3"              ] }
-	, "McJmp_2": { Name: "MUX", 					Op: ["00_2","01_2"       ,"11_2"] }	
-	, "McJmp_1": { Name: "MUX", 					Op: ["00_1"       ,"10_1","11_1"] }
-	, "McJmp_0": { Name: "MUX", 					Op: ["00_0","01_0","10_0","11_0"] }
+	  "id_pc_Out": [ { Name:"PC",						Op: ["Out"]      	} ]
+	, "id_pc_Ld": [ { Name:"PC",						Op: ["Ld"]      	} ]
+	, "id_pc_Inc": [ { Name:"PC",						Op: ["Inc"]      	} ]
+	, "id_Microcode_PC_Clr": [ { Name:"MICROCODE_PC",	Op: ["Clr"]      	} ]
+	, "id_Microcode_PC_Ld": [ { Name:"MICROCODE_PC",	Op: ["Ld"]      	} ]
+	, "id_Microcode_PC_Inc": [ { Name:"MICROCODE_PC", 	Op: ["Inc"]      	} ]
+	, "id_ac_Clr": [ { Name:"AC",						Op: ["Clr"]      	} ]
+	, "id_ac_Inc": [ { Name:"AC",						Op: ["Inc"]      	} ]
+	, "id_ac_Ld": [ { Name:"AC",						Op: ["Ld"]      	} ]
+	, "id_ac_Out": [ { Name:"AC",						Op: ["Out"]      	} ]
+	, "id_ac_Out_to_ALU": [ { Name:"AC",				Op: ["Out_to_ALU"] 	} ]
+	, "id_input_Out": [ { Name:"INPUT",					Op: ["Out"]      	} ]
+	, "id_input_Ld": [ { Name:"INPUT",					Op: ["Ld"]      	} ]
+	, "id_ir_Ld": [ { Name:"IR",						Op: ["Ld"]      	} ]
+	, "id_ir_Out": [ { Name:"IR",						Op: ["Out"]      	} ]
+	, "id_mar_Ld": [ { Name:"MAR",						Op: ["Ld"]      	} ]
+	, "id_mar_Out": [ { Name:"MAR",						Op: ["Out"]      	} ]
+	, "id_mdr_Ld": [ { Name:"MDR",						Op: ["Ld"]      	} ]
+	, "id_mdr_Out": [ { Name:"MDR",						Op: ["Out"]      	} ]
+	, "id_memory_Read": [ { Name:"MEMORY",				Op: ["Read"]      	}, { Name:"MDR", Op:["Ld_From_Memory"] } ]
+	, "id_memory_Write": [ { Name:"MEMORY",				Op: ["Write"]      	}, { Name:"MDR", Op:["Out_To_Memory"]  } ]
+	, "id_output_Ld": [ { Name:"OUTPUT",				Op: ["Ld"]      	} ]
+	, "id_output_Out": [ { Name:"OUTPUT",				Op: ["Out"]      	} ]
+	, "id_result_Ld": [ { Name:"RESULT",				Op: ["Ld"]      	} ]
+	, "id_result_Out": [ { Name:"RESULT",				Op: ["Out"]      	} ]
+	 
+	//                                                   Always Jump -- All Bits 
+	//                                                          IsZero - one bit 
+	//                                                                  2nd Decode - Instruction IR Bits 11..8 
+	//                                                                         1st Decode - Instruction MSB 15..12 of IR 
+	, "McJmp_7": [ { Name: "MUX", 						Op: ["00_7","01_7","10_7","11_7"] } ]
+	, "McJmp_6": [ { Name: "MUX", 						Op: ["00_6","01_6","10_6"       ] } ]
+	, "McJmp_5": [ { Name: "MUX", 						Op: ["00_5","01_5"              ] } ]
+	, "McJmp_4": [ { Name: "MUX", 						Op: ["00_4","01_4"              ] } ]
+	, "McJmp_3": [ { Name: "MUX", 						Op: ["00_3","01_3"              ] } ]
+	, "McJmp_2": [ { Name: "MUX", 						Op: ["00_2","01_2"       ,"11_2"] }	]
+	, "McJmp_1": [ { Name: "MUX", 						Op: ["00_1"       ,"10_1","11_1"] } ]
+	, "McJmp_0": [ { Name: "MUX", 						Op: ["00_0","01_0","10_0","11_0"] } ]
+ 
+	, "id_decoder_Ctl_0": [ {Name: "MUX",				Op: ["Ctl_0"] } ]
+	, "id_decoder_Ctl_1": [ {Name: "MUX",				Op: ["Ctl_1"] } ]
 
-	, "id_decoder_Ctl_0": {Name: "MUX",				Op: ["Ctl_0"] }
-	, "id_decoder_Ctl_1": {Name: "MUX",				Op: ["Ctl_1"] }
-
-	, "id_ALU_Ctl_0": { Name: "ALU",				Op: ["Ctl_0"] }
-	, "id_ALU_Ctl_1": { Name: "ALU",				Op: ["Ctl_1"] }
-	, "id_ALU_Ctl_2": { Name: "ALU",				Op: ["Ctl_2"] }
-	, "id_ALU_Ctl_3": { Name: "ALU",				Op: ["Ctl_3"] }
+	, "id_ALU_Ctl_0": [ { Name: "ALU",					Op: ["Ctl_0"] } ]
+	, "id_ALU_Ctl_1": [ { Name: "ALU",					Op: ["Ctl_1"] } ]
+	, "id_ALU_Ctl_2": [ { Name: "ALU",					Op: ["Ctl_2"] } ]
+	, "id_ALU_Ctl_3": [ { Name: "ALU",					Op: ["Ctl_3"] } ]
 
 //Microcode_PC_Ld2 4
 //hand_out 24
@@ -1535,14 +1539,13 @@ function SetupTheWorld() {
 		if ( theWorld[key] ) {
 			console.log ( "Already Defined:", key );
 		} else {
-			var fx = function(key,name,op) { 
+			var fx = function(key,con) { 
 				return {
-					"_data_": 0
+					  "_data_": 0
 					, "_used_": false
 					, "_error_": []
 					, "__key": key
-					, "__name": name
-					, "__op": op
+					, "__con": con
 					, "State": function () {
 						if ( theWorld[key]._used_ ) {
 							return ( theWorld[key]._data_ );
@@ -1561,15 +1564,22 @@ function SetupTheWorld() {
 					, "SetState": function ( v ) {
 						theWorld[key]._data_ = v;
 						theWorld[key]._used_ = true;
-			console.log ( name+".msg('"+op+"') -- Called -- ** An Array ** " );
-						for ( var kk = 0, mx = op.length; kk < mx; kk++ ) {
-							window[name].msg ( op[kk], 1 );						// connection from "wire" to chip.
+			console.log ( "For "+key+" con=", con );
+						for ( var ww = 0, my = con.length; ww < my; ww++ ) {
+							var name = con[ww].Name;
+							var op = con[ww].Op;
+							for ( var kk = 0, mx = op.length; kk < mx; kk++ ) {
+								window[name].msg ( op[kk], 1 );						// connection from "wire" to chip.
+							}
 						}
 					}
 					, "TickRise": function ( v ) {
 						theWorld[key]._data_ = underfined;
 						theWorld[key]._used_ = false;
-						window[name].rise();
+						for ( var ww = 0, my = con.length; ww < my; ww++ ) {
+							var name = con[ww].Name;
+							window[name].rise();
+						}
 					}
 					, "Error": function ( v ) {
 						return ( theWorld[key]._error_ );
@@ -1579,7 +1589,7 @@ function SetupTheWorld() {
 					}
 				};
 			}
-			theWorld[key] = fx(key,Connections[key].Name,Connections[key].Op);
+			theWorld[key] = fx(key,Connections[key]);
 		}
 	}
 }
@@ -1803,17 +1813,19 @@ OnStartupReloadMainMemory();
 // ---------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------
 function ResetMachine() {
+	clearOtherLine();
 	PC.msg("Clr", 1);
 	MICROCODE_PC.msg("Clr", 1);
 	PC.tick();
 	MICROCODE_PC.tick();
+	clearOtherLine();
+	if ( mc_hash && mc_hash != "" ) {
+		$("#modal-input-code-hash").val(mc_hash);
+		LoadMC();
+	}
 	if ( mm_hash && mm_hash != "" ) {
 		$("#modal-input-mm-hash").val(mm_hash);
 		LoadMM();
-	}
-	if ( mc_hash && mc_hash != "" ) {
-		$("#modal-input-code-hash").val(v);
-		LoadMC();
 	}
 }
 
@@ -1878,7 +1890,7 @@ if ( test0008 ) {
 }
 
 function test0009() {
-	MICROCODE.msg("Addr", 1);
+	MICROCODE.msg("Addr", 1);	// Simulate the RUN clock on the Microcode_PC
 	// MAR.msg('Ld', 1);
 }
 
@@ -1886,8 +1898,6 @@ function test000A() {
 	clearOtherLine();
 	MICROCODE.rise();
 }
-
-// 0ad7f1aef0bc1918380360372de72ff3de68d1001966a7b60ac437d60bdbfd0c
 
 </script>
 </body>
