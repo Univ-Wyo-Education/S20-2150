@@ -95,6 +95,7 @@ var MICROCODE_PC = {
 
 	, PullBus: function () {
 		// Pull in from MicrocodeMemory - Ld / Inc lines, IN from Decoder
+		MICROCODE_PC.x["_data_"] = MICROCODE_PC.x["_InputBuffer_"];
 	}
 
 	, PushBus: function () {
