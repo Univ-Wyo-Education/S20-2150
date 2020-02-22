@@ -302,7 +302,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<rect id="id_Microcode_Out[8]dec_b"  x="1135"   y="155"  width="40"   height="1"     class="input-line" />
 			<rect id="id_Microcode_Out[8]dec_c"  x="1175"   y="155"  width="1"    height="40"    class="input-line" />
 			<rect id="id_Microcode_Out[8]dec_d"  x="1175"   y="195"  width="35"   height="1"     class="input-line" />
-				<text x="1140" y="144" class="vsmall">Out[8] </text>
+				<text x="1140" y="144" class="vsmall" onclick="infoOn('mm_to_dec');">Out[8] </text>
 				<text x="1182" y="190" class="vsmall">00</text>
 		</g>
 		<rect id="id_Microcode_Out[2]deccoder_ctl_a"  x="1120"   y="130"   width="1"    height="135"     class="input-line" />
@@ -540,12 +540,36 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 
 
+<!-- MM to Dec input - mixed with other inputs. -->
+	<!--
+		<g id="McJmp[8]">
+			<rect id="id_Microcode_Out[8]dec_a"  x="1135"   y="130"  width="1"    height="25"    class="input-line" />
+			<rect id="id_Microcode_Out[8]dec_b"  x="1135"   y="155"  width="40"   height="1"     class="input-line" />
+			<rect id="id_Microcode_Out[8]dec_c"  x="1175"   y="155"  width="1"    height="40"    class="input-line" />
+			<rect id="id_Microcode_Out[8]dec_d"  x="1175"   y="195"  width="35"   height="1"     class="input-line" />
+				<text x="1140" y="144" class="vsmall">Out[8] </text>
+				<text x="1182" y="190" class="vsmall">00</text>
+		</g>
+		showLine("#ir_15_12_to_decoder_11","#mm_to_dec_11");
+	-->
+	<path id="mm_to_dec_11" class="blue-line"
+		d="M 1135 130   L 1135 155  1170 155  1170 240  1200 240  "
+		/>
+	<path id="mm_to_dec_10" class="blue-line"
+		d="M 1135 130   L 1135 155  1170 155  1170 225  1200 225 "
+		/>
+	<path id="mm_to_dec_01" class="blue-line"
+		d="M 1135 130   L 1135 155  1170 155  1170 210  1200 210 "
+		/>
+	<path id="mm_to_dec_00" class="blue-line"
+		d="M 1135 130   L 1135 155  1170 155  1170 195  1200 195 "
+		/>
+<!-- Blue Connection Lines ==== 900 is 1st line out on MM -->
 	<!--
 		<g id="x_id_Microcode_PC_Inc">
 			<rect id="id_Microcode_PC_to_Microcode_PC_Inc_out_a"  x="1150"   y="120"   width="85"   height="1"     class="input-line" />
 			<rect id="id_Microcode_PC_to_Microcode_PC_Inc_out_b"  x="1235"   y="80"   width="1"   height="40"     class="input-line" />
 	-->
-<!-- Blue Connection Lines ==== 900 is 1st line out on MM -->
 	<path id="id_Microcode_PC_Inc" class="blue-line"
 		d="M 1150 120   L 1150 120  1235 120 1235 80 "
 		/>
@@ -574,10 +598,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		/>
 
 	<path id="ir_15_12_to_decoder_11" class="blue-line"
-		d="M 200 170   L  705 170  705 280   1175 280 1175 240  1200 240 "
+		d="M 200 170   L  705 170  705 280   1170 280 1170 240  1200 240 "
 		/>
 	<path id="ir_11_8_to_decoder_10" class="blue-line"
-		d="M 200 200   L  705 200  705 280   1175 280 1175 225  1200 225 "
+		d="M 200 200   L  705 200  705 280   1170 280 1170 225  1200 225 "
 		/>
 
 	<g id="alu_ctl_4_to_microcode">
@@ -606,7 +630,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		d="M 350 100  L  390 100 390 280     1000 280 1000 130  "
 		/>
 	<path id="result_zero_out" class="blue-line"
-		d="M 350 120  L  390 120  390 280    1175 280 1175 210  1200 210 "
+		d="M 350 120  L  390 120  390 280    1170 280 1170 210  1200 210 "
 		/>
 
 
@@ -828,6 +852,10 @@ var lineOn = [
 	,"#hand_out"
 	,"#microcode_to_decoder_ctl"
 	,"#id_Microcode_PC_Inc" 
+	,"#mm_to_dec_11" 
+	,"#mm_to_dec_10" 
+	,"#mm_to_dec_01" 
+	,"#mm_to_dec_00" 
 ];	// List of IDs of lines that are turned-on
 
 function clearOtherLine() {
@@ -842,8 +870,12 @@ clearOtherLine();
 
 function showLine(id) {
 	// clearOtherLine()
-	$(id).show();
-	lineOn.push(id);
+	var i = 0;
+	for ( var j = 0, mx = arguments.length; j < mx && i < 16; i++, j++ ) {
+		id = arguments[j];
+		$(id).show();
+		lineOn.push(id);
+	}
 }
 
 var textCur = 0;
@@ -965,7 +997,7 @@ function infoOn1(i,x) {
 		showLine("#result_Clr_to_microcode");
 		break;
 	case "id_result_zero_out":
-		showLine("#result_zero_out");
+		showLine("#result_zero_out","#mm_to_dec_01");
 		showTextInOutputBox("Connects 1 bit to decoder input 01.","The other addresses come from the McJmp_X");
 		break;
 
@@ -1075,7 +1107,7 @@ function infoOn1(i,x) {
 
 
 	case "ir_decode_g1":
-		showLine("#ir_15_12_to_decoder_11");
+		showLine("#ir_15_12_to_decoder_11","#mm_to_dec_11");
 		showTextInOutputBox("Instruction decode uses 1 bit of output from the Microcode Out[8] (Out_7)"
 			,"then 4 bits of the IR, the 3 bits of Out[8] (Out_2, Out_1, Out_0)."
 			,""
@@ -1090,10 +1122,16 @@ function infoOn1(i,x) {
 			);
 		break;
 	case "ir_decode_g2":
-		showLine("#ir_11_8_to_decoder_10");	// xyzzy
+		showLine("#ir_11_8_to_decoder_10","#mm_to_dec_10");	// xyzzy
 		showTextInOutputBox("Instruction decode use 01 bit of output from the Microcode Out[8] (Out_7, Out_6)","then 4 bits of the IR, the 2 bits of Out[8] (Out_1, Out_0).");
 			// xyzzy - add addressing example
 		break;
+
+	case "mm_to_dec":
+		showLine( "#mm_to_dec_11" ,"#mm_to_dec_10" ,"#mm_to_dec_01" ,"#mm_to_dec_00" );
+		showTextInOutputBox("Output from the microcode is mixed with other output to produce a microcode jump address.");
+		break;
+		
 	}
 }
 
@@ -1402,40 +1440,45 @@ console.log ( "PC.msg('Out') -- Called --" );
 };
 
 var Connections = {
-	  "id_pc_Out": { Name:"PC",						Op: "Out" }
-	, "id_pc_Ld": { Name:"PC",						Op: "Ld" }
-	, "id_pc_Inc": { Name:"PC",						Op: "Inc" }
-	, "id_Microcode_PC_Clr": { Name:"MICROCODE_PC",	Op: "Clr" } 
-	, "id_Microcode_PC_Ld": { Name:"MICROCODE_PC",	Op: "Ld" }
-	, "id_Microcode_PC_Inc": { Name:"MICROCODE_PC", Op: "Inc" }
-	, "id_ac_Clr": { Name:"AC",						Op: "Clr" }
-	, "id_ac_Inc": { Name:"AC",						Op: "Inc" }
-	, "id_ac_Ld": { Name:"AC",						Op: "Ld" }
-	, "id_ac_Out": { Name:"AC",						Op: "Out" }
-	, "id_ac_Out_to_ALU": { Name:"AC",				Op: "Out_to_ALU" }
-	, "id_input_Out": { Name:"INPUT",				Op: "Out" }
-	, "id_input_Ld": { Name:"INPUT",				Op: "Ld" }
-	, "id_ir_Ld": { Name:"IR",						Op: "Ld" }
-	, "id_ir_Out": { Name:"IR",						Op: "Out" }
-	, "id_mar_Ld": { Name:"MAR",					Op: "Ld" }
-	, "id_mar_Out": { Name:"MAR",					Op: "Out" }
-	, "id_mdr_Ld": { Name:"MDR",					Op: "Ld" }
-	, "id_mdr_Out": { Name:"MDR",					Op: "Out" }
-	, "id_memory_Read": { Name:"MEMORY",			Op: "Read" }
-	, "id_memory_Write": { Name:"MEMORY",			Op: "Write" }
-	, "id_output_Ld": { Name:"OUTPUT",				Op: "Ld" }
-	, "id_output_Out": { Name:"OUTPUT",				Op: "Out" }
-	, "id_result_Ld": { Name:"RESULT",				Op: "Ld" }
-	, "id_result_Out": { Name:"RESULT",				Op: "Out" }
+	  "id_pc_Out": { Name:"PC",						Op: ["Out"]      	}
+	, "id_pc_Ld": { Name:"PC",						Op: ["Ld"]      	}
+	, "id_pc_Inc": { Name:"PC",						Op: ["Inc"]      	}
+	, "id_Microcode_PC_Clr": { Name:"MICROCODE_PC",	Op: ["Clr"]      	} 
+	, "id_Microcode_PC_Ld": { Name:"MICROCODE_PC",	Op: ["Ld"]      	}
+	, "id_Microcode_PC_Inc": { Name:"MICROCODE_PC", Op: ["Inc"]      	}
+	, "id_ac_Clr": { Name:"AC",						Op: ["Clr"]      	}
+	, "id_ac_Inc": { Name:"AC",						Op: ["Inc"]      	}
+	, "id_ac_Ld": { Name:"AC",						Op: ["Ld"]      	}
+	, "id_ac_Out": { Name:"AC",						Op: ["Out"]      	}
+	, "id_ac_Out_to_ALU": { Name:"AC",				Op: ["Out_to_ALU"] 	}
+	, "id_input_Out": { Name:"INPUT",				Op: ["Out"]      	}
+	, "id_input_Ld": { Name:"INPUT",				Op: ["Ld"]      	}
+	, "id_ir_Ld": { Name:"IR",						Op: ["Ld"]      	}
+	, "id_ir_Out": { Name:"IR",						Op: ["Out"]      	}
+	, "id_mar_Ld": { Name:"MAR",					Op: ["Ld"]      	}
+	, "id_mar_Out": { Name:"MAR",					Op: ["Out"]      	}
+	, "id_mdr_Ld": { Name:"MDR",					Op: ["Ld"]      	}
+	, "id_mdr_Out": { Name:"MDR",					Op: ["Out"]      	}
+	, "id_memory_Read": { Name:"MEMORY",			Op: ["Read"]      	}
+	, "id_memory_Write": { Name:"MEMORY",			Op: ["Write"]      	}
+	, "id_output_Ld": { Name:"OUTPUT",				Op: ["Ld"]      	}
+	, "id_output_Out": { Name:"OUTPUT",				Op: ["Out"]      	}
+	, "id_result_Ld": { Name:"RESULT",				Op: ["Ld"]      	}
+	, "id_result_Out": { Name:"RESULT",				Op: ["Out"]      	}
+	
+	//                                                   Always Jump -- All Bits
+	//                                                          IsZero - one bit
+	//                                                                  2nd Decode - Instruction IR Bits 11..8
+	//                                                                         1st Decode - Instruction MSB 15..12 of IR
+	, "McJmp_0": { Name: "MUX", 					Op: ["00_0","01_0","10_0","11_0"] }
+	, "McJmp_1": { Name: "MUX", 					Op: ["00_1","01_1","10_1",      ] }
+	, "McJmp_2": { Name: "MUX", 					Op: ["00_2","01_2"              ] }
+	, "McJmp_3": { Name: "MUX", 					Op: ["00_3","01_3"              ] }
+	, "McJmp_4": { Name: "MUX", 					Op: ["00_4","01_4"              ] }
+	, "McJmp_5": { Name: "MUX", 					Op: ["00_5","01_5"       ,"11_5"] }	
+	, "McJmp_6": { Name: "MUX", 					Op: ["00_6"       ,"10_6","11_6"] }
+	, "McJmp_7": { Name: "MUX", 					Op: ["00_7","01_6","10_7","11_7"] }
 
-//McJmp_0 10
-//McJmp_1 11
-//McJmp_2 12
-//McJmp_3 13
-//McJmp_4 14
-//McJmp_5 15
-//McJmp_6 16
-//McJmp_7 17
 //Microcode_PC_Ld2 4
 //hand_Out 24
 //id_ALU_Ctl_0 18
@@ -1477,8 +1520,10 @@ function SetupTheWorld() {
 					, "SetState": function ( v ) {
 						theWorld[key]._data_ = v;
 						theWorld[key]._used_ = true;
-			console.log ( name+".msg('"+op+"') -- Called --" );
-						window[name].msg ( op, 1 );						// connection from "wire" to chip.
+			console.log ( name+".msg('"+op+"') -- Called -- ** An Array ** " );
+						for ( var kk = 0, mx = op.length; kk < mx; kk++ ) {
+							window[name].msg ( op[kk], 1 );						// connection from "wire" to chip.
+						}
 					}
 					, "TickRise": function ( v ) {
 						theWorld[key]._data_ = underfined;
@@ -1578,9 +1623,11 @@ var ParseInput = function (data) {
 	var pc = 0;
 	var st = 0;
     for(i in array) {
-        // console.log(array[i]);
+        // console.log("->"+array[i]+"<-");
 		const str = array[i];
-		if ( str === "##1" ) {
+		if ( str.length === 0 ) {
+			console.log ( "Skipping 0 length line" )
+		} else if ( str === "##1" ) {
 			st = 1;
 		} else if ( st === 0 ) {
 			const words = str.split(' ');
@@ -1710,7 +1757,7 @@ if ( test0008 ) {
 
 function test0009() {
 	MICROCODE.msg("Addr", 1);
-	MAR.msg('Ld', 1);
+	// MAR.msg('Ld', 1);
 }
 
 function test000A() {

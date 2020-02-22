@@ -64,12 +64,11 @@ console.log ( "Microcode: Turn On:", "->"+key+"<-", val, 'def.NthBit=', def.NthB
 					if ( isNaN(def.NthBit) ) {
 						console.log ( "Microcode: Turn On: isNaN => True" );
 					} else if ( val == 1 && "-"+key+"-" != "--" && ! isNaN(def.NthBit) ) {
-						if (obj.hasOwnProperty(key)) {
-							MICROCODE.TurnOn( key );
-							MICROCODE.x[key] = 1;
-							MICROCODE.x._OutputBufferList_.push ( key );
-							MICROCODE.PushBus( key );
-						}
+console.log ( "    Do It - Push:", key, def );
+						MICROCODE.TurnOn( key );
+						MICROCODE.x[key] = 1;
+						MICROCODE.x._OutputBufferList_.push ( key );
+						MICROCODE.PushBus( key );
 					}
 				}
 			}

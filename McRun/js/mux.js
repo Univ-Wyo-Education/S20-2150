@@ -44,7 +44,12 @@ var MUX = {
 			MUX.x["_Ctl_1_"] = val & 1;
 		break;
 		default:
-			Error ( "Invalid Message", wire, val );
+console.log ( "  MUX: Op="+wire )
+			// Error ( "Invalid Message", wire, val );
+			// 00_x
+			// 01_x
+			// 10_x
+			// 11_x
 		break;
 		}
 		// xyzzy - pull CTL from Inputs (Microcode?)
