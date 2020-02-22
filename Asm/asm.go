@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/hex"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -13,6 +14,7 @@ import (
 	"strings"
 
 	"github.com/Univ-Wyo-Education/S20-2150/Mac"
+	"github.com/pschlump/HashStrings"
 	"github.com/pschlump/MiscLib"
 	"github.com/pschlump/filelib"
 	"github.com/pschlump/godebug"
@@ -35,6 +37,7 @@ import (
 var In = flag.String("in", "", "Input File - assembly code.")
 var Out = flag.String("out", "", "Output in hex.")
 var DbFlag = flag.String("db-flag", "", "debug flags.") // xyzzy401 - TODO
+var Upload = flag.Bool("upload", false, "Upload the code.hex to Amazon S3://")
 var St = flag.String("st", "", "Output symbol table to file")
 
 var stOut = os.Stdout
@@ -57,6 +60,20 @@ func main() {
 	if len(fns) > 0 {
 		fmt.Fprintf(os.Stderr, "Invalid arguments\n")
 		os.Exit(1)
+	}
+
+	if db20 {
+		fmt.Printf("Upload = %v S3_BUCKET=[%s] S3_REGION=[%s]\n", *Upload, S3_BUCKET, S3_REGION)
+	}
+	if *Upload {
+		if S3_REGION == "" {
+			fmt.Fprintf(os.Stderr, "Executable not compiled correctly (1) - fatal.\n")
+			os.Exit(1)
+		}
+		if S3_BUCKET == "" {
+			fmt.Fprintf(os.Stderr, "Executable not compiled correctly (2) - fatal.\n")
+			os.Exit(1)
+		}
 	}
 
 	// xyzzy401 - ImplementDebugFlags
@@ -443,6 +460,51 @@ func main() {
 	if n_err > 0 {
 		os.Exit(3)
 	}
+
+	if *Upload {
+		data, err := ioutil.ReadFile(out)
+		if err != nil {
+			fmt.Printf("Error: (Unable to Upload to S3) failed to re-read output: file: %s error:%s\n", out, err)
+			os.Exit(1)
+		}
+		hashHex := HashByesReturnHex(data)
+
+		err = os.Mkdir("./tmp", 0755)
+		_ = err
+		//if err != nil {
+		//	fmt.Printf("Error: (Unable to Upload to S3) failed create temporary directory ./tmp error:%s\n", err)
+		//	os.Exit(1)
+		//}
+		fn := fmt.Sprintf("./tmp/%s", hashHex)
+		// toFile := fmt.Sprintf("data/%s", hashHex)
+		toFile := hashHex
+		err = ioutil.WriteFile(fn, data, 0644)
+		if err != nil {
+			fmt.Printf("Error: (Unable to Upload to S3) failed to write temporary data: %s error:%s\n", fn, err)
+			os.Exit(1)
+		}
+		s := SetupS3()
+		err = AddFileToS3(s, fn, toFile)
+		if err != nil {
+			fmt.Printf("Error: (Unable to Upload to S3) failed to upload to S3 error:%s\n", err)
+			os.Exit(1)
+		}
+
+		fmt.Printf("Hash To Enter to Load the hex file into the Emulator:\n\t%s\n\n", hashHex)
+
+		err = os.RemoveAll("./tmp")
+		if err != nil {
+			fmt.Printf("Error: %s\nManually remove ./tmp directory.", err)
+		}
+
+		if filelib.Exists("../McRun/data") {
+			fn := fmt.Sprintf("../McRun/data/%s.txt", hashHex)
+			err = ioutil.WriteFile(fn, data, 0644)
+			if err != nil {
+				fmt.Printf("Error: (Unable to save locally to ../McRun/data) failed create file error:%s\n", err)
+			}
+		}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -682,6 +744,12 @@ func MaxAddress(a, b Mac.AddressType) Mac.AddressType {
 	return b
 }
 
+func HashByesReturnHex(data []byte) (s string) {
+	h := HashStrings.HashByte(data)
+	s = hex.EncodeToString(h)
+	return
+}
+
 var db1 = true  // Leave True
 var db2 = false // Debug of Parsing code		// xyzzy
 var db8 = false
@@ -690,3 +758,4 @@ var db5 = false  // HEX directive w/ hex output
 var db10 = false // test STR directive
 var db12 = false // test STR directive
 var db14 = true  // DOS
+var db20 = true  // Upload flags
