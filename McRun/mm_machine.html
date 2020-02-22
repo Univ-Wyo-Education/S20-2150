@@ -1384,11 +1384,11 @@ var ParseInput = function (data) {
 			const words = str.split(' ');
 			const str2 = words[0];
 			console.log(words[0]);
-			const p1 = str2.substr(0, 8)
-			const p2 = str2.substr(8)
+			const p2 = str2.substr(0, 8)
+			const p1 = str2.substr(8)
 			console.log("p1 ->"+p1+"<- p2 ->"+p2+"<-");
 			const p1x = parseInt(p1,16);
-			const p2x = parseInt(p2,26);
+			const p2x = parseInt(p2,16);
 			MICROCODE.x["_data1_"][pc] = p1x;
 			MICROCODE.x["_data2_"][pc] = p2x;
 			pc++;
@@ -1435,8 +1435,10 @@ var test0002 = false;	// Display value in the PC register
 var test0003 = false;	// Send message to PC and see it turn on.
 var test0004 = false;	// Send data from Result to PC and see it in both.
 var test0005 = false;	// PC -> IR (abnomral move, what could be better?)
-var test0006 = true;	// Show Memory Read Line - via MEMORY.msg
+var test0006 = false;	// Show Memory Read Line - via MEMORY.msg
 var test0007 = false;	// Show Memory Write Line - via MEMORY.msg
+var test0008 = true;	// MC: Set to address 0, test output - see that they are turned on.
+						// id_mar_Ld id_pc_Out id_mdr_Ld id_memory_Read  
 
 if ( test0001 ) {
 	PC.x["_data_"] = "0123";	// 0x7b
@@ -1480,8 +1482,13 @@ if ( test0006 ) {
 if ( test0007 ) {
 	MEMORY.msg("Write", 1);
 }
+if ( test0008 ) {
+	MICROCODE_PC.msg("Clr", 1);
+	MICROCODE.msg("Addr", 1);
+}
 
 // 0ad7f1aef0bc1918380360372de72ff3de68d1001966a7b60ac437d60bdbfd0c
+
 </script>
 </body>
 </html>

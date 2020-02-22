@@ -21,18 +21,49 @@ var MICROCODE_PC = {
 		, "_data_": 0
 		, "_InputBuffer_": 0
 		, "_OutputBuffer_": 0
-		, "_Clr_": null
-		, "_Ld_": null
+		, "_Clr_": null , "_Ld_": null
 		, "_Inc_": null
 		, "_Out_": null
 	}
 	, msg: function ( wire, val ) {
 		switch ( wire ) {
-		case "Clr": if ( val === 1 ) { MICROCODE_PC.x["_Clr_"] = 1; MICROCODE_PC.x["_data_"] = 0; }											MICROCODE_PC.TurnOn( "microcode_pc_Clr" );   MICROCODE_PC.Display( MICROCODE_PC.x["_data_"]); 						break;
-		case "Ld":  if ( val === 1 ) { MICROCODE_PC.x["_Ld_"] = 1; MICROCODE_PC.PullBus(true); MICROCODE_PC.x["_data_"] = MICROCODE_PC.x["_InputBuffer_"]; }	MICROCODE_PC.TurnOn( "microcode_pc_Ld"  );   MICROCODE_PC.Display( MICROCODE_PC.x["_data_"]); MICROCODE_PC.x["_Ld_"] = 1; 	break;
-		case "Inc": if ( val === 1 ) { MICROCODE_PC.x["_Inc_"] = 1; MICROCODE_PC.x["_data_"] = MICROCODE_PC.x["_data_"] + 1; }	    				MICROCODE_PC.TurnOn( "microcode_pc_Inc" );   MICROCODE_PC.Display( MICROCODE_PC.x["_data_"]); 						break;
-		case "Out": if ( val === 1 ) { MICROCODE_PC.x["_Out_"] = 1; MICROCODE_PC.x["_OutputBuffer_"] = MICROCODE_PC.x["_data_"]; MICROCODE_PC.PushBus(); }   	MICROCODE_PC.TurnOn( "microcode_pc_Out" );   MICROCODE_PC.Display( MICROCODE_PC.x["_data_"]); 						break;
-		// case "bus": if ( val === 1 && MICROCODE_PC.x["_Ld_"] === 1 ) { MICROCODE_PC.PullBus(); MICROCODE_PC.x["_data_"] = MICROCODE_PC.x["_InputBuffer_"]; } 							                          						break;
+		case "Clr":
+			if ( val === 1 ) {
+				MICROCODE_PC.x["_Clr_"] = 1;
+				MICROCODE_PC.x["_data_"] = 0;
+				MICROCODE_PC.PushBus();
+				MICROCODE_PC.TurnOn( "microcode_pc_Clr" );
+			}
+			MICROCODE_PC.Display( MICROCODE_PC.x["_data_"]);
+		break;
+		case "Ld": 
+			if ( val === 1 ) {
+				MICROCODE_PC.x["_Ld_"] = 1;
+				MICROCODE_PC.PullBus();
+				MICROCODE_PC.PushBus();
+				MICROCODE_PC.TurnOn( "microcode_pc_Ld"  );
+			}
+			MICROCODE_PC.Display( MICROCODE_PC.x["_data_"]);
+			MICROCODE_PC.x["_Ld_"] = 1; 	
+		break;
+		case "Inc":
+			if ( val === 1 ) {
+				MICROCODE_PC.x["_Inc_"] = 1;
+				MICROCODE_PC.x["_data_"] = MICROCODE_PC.x["_data_"] + 1;
+				MICROCODE_PC.PushBus();
+				MICROCODE_PC.TurnOn( "microcode_pc_Inc" );
+			}	    				
+			MICROCODE_PC.Display( MICROCODE_PC.x["_data_"]); 											
+		break;
+		case "Out":
+			if ( val === 1 ) {
+				MICROCODE_PC.x["_Out_"] = 1;
+				MICROCODE_PC.x["_OutputBuffer_"] = MICROCODE_PC.x["_data_"];
+				MICROCODE_PC.PushBus();
+				MICROCODE_PC.TurnOn( "microcode_pc_Out" );
+			}
+			MICROCODE_PC.Display( MICROCODE_PC.x["_data_"]); 								
+		break;
 		default:
 			Error ( "Invalid Message", wire, val );
 		}
@@ -43,7 +74,6 @@ var MICROCODE_PC = {
 			MICROCODE_PC.x["_data_"] = MICROCODE_PC.x["_InputBuffer_"];
 		}
 		if ( MICROCODE_PC.x["_Out_"] === 1 ) {
-			MICROCODE_PC.x["_OutputBuffer_"] = MICROCODE_PC.x["_data_"];
 			MICROCODE_PC.PushBus();
 		}
 		MICROCODE_PC.Display( MICROCODE_PC.x["_data_"] );
@@ -64,17 +94,11 @@ var MICROCODE_PC = {
 	}
 
 	, PullBus: function () {
-		if(theWorld.Bus && typeof theWorld.Bus.State === "function") {
-			 MICROCODE_PC.x["_InputBuffer_"] = theWorld.Bus.State();
-console.log ( "MICROCODE_PC:PullBus", MICROCODE_PC.x["_InputBuffer_"] );
-		}
+		// Pull in from MicrocodeMemory - Ld / Inc lines, IN from Decoder
 	}
 
 	, PushBus: function () {
-		if(theWorld.Bus && typeof theWorld.Bus.SetState === "function") {
-console.log ( "MICROCODE_PC:PushBus", MICROCODE_PC.x["_OutputBuffer_"] );
-			theWorld.Bus.SetState( MICROCODE_PC.x["_OutputBuffer_"] );
-		}
+		MICROCODE_PC.x["_OutputBuffer_"] = MICROCODE_PC.x["_data_"];
 	}
 
 	// Turn on display of a wire with this ID
@@ -84,12 +108,9 @@ console.log ( "MICROCODE_PC:PushBus", MICROCODE_PC.x["_OutputBuffer_"] );
 
 	// Display text to inside of register box
 	, Display: function  ( val ) {
+clearMicrocodeText() ;
 		var sVal = toHex(val,4);
-		// console.log ( "Padded", sVal );
-		var a = sVal.substr(0,2);
-		var b = sVal.substr(2,2);
-		$("#h_microcode_pc_txt_0").text(a);
-		$("#h_microcode_pc_txt_1").text(b);
+		$("#h_microcode_pc_txt_0").text(sVal);
 	}
 
 	// Return any errors generated in this "chip"

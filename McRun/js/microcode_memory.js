@@ -45,12 +45,11 @@ var MICROCODE = {
 		, "_Output_Lines_": {}
 	}
 	, msg: function ( wire, val ) {
-		var addr = MICROCODE_PC.x["_OutputBuffer_"];
+		var addr = MICROCODE_PC.x["_OutputBuffer_"];		// Pull in the microcode_pc's output.
 		if ( addr === null ) {
 			console.log ( "MC Memory: No _addr_ to use." )
 			addr = 255;
 		}
-		MICROCODE.x["_Addr_"] = addr;
 		switch ( wire ) {
 		case "Addr":	// This is the "output" from the Microcode_PC
 			if ( val === 1 ) {
@@ -62,10 +61,13 @@ var MICROCODE = {
 				for ( key in MICROCODE.x["_Output_Lines_"] ) {
 					var def = MICROCODE.x["_Output_Lines_"][key];
 					var mcWord = MICROCODE.x[def.DataArray][addr];
-					var val = !!( mcWord & ( 1 << def.NthBit ) );	
-					MICROCODE.TurnOn( key );
-					MICROCODE.x[key] = 1;
-					MICROCODE.x._OutputBufferList_.push ( key );
+					var val = ( !!( mcWord & ( 1 << def.NthBit ) ) ) ? 1 : 0;	
+console.log ( "Microcode: Turn On:", key, val, 'def.NthBit=', def.NthBit, "mcWord =", Number(mcWord).toString(16), def.DataArray );
+					if ( val == 1 ) {
+						MICROCODE.TurnOn( key );
+						MICROCODE.x[key] = 1;
+						MICROCODE.x._OutputBufferList_.push ( key );
+					}
 				}
 			}
 			MICROCODE.Display( addr );
@@ -108,17 +110,22 @@ var MICROCODE = {
 
 	// Turn on display of a wire with this ID
 	, TurnOn: function  ( id ) {
-		infoOn1 ( -1, "id_"+id );
+		if ( id.substr ( 0, 3 ) === "id_" ) {
+			infoOn1 ( -1, id );
+		} else {
+			infoOn1 ( -1, "id_"+id );
+		}
 	}
 
 	// Display text to inside of register box
 	, Display: function  ( val ) {
-		var sVal = toHex(val,4);
-		// console.log ( "Padded", sVal );
-		var a = sVal.substr(0,2);
-		var b = sVal.substr(2,2);
-		$("#h_microcode_txt_0").text(a);
-		$("#h_microcode_txt_1").text(b);
+clearMicrocodeText() ;
+//		var sVal = toHex(val,4);
+//		// console.log ( "Padded", sVal );
+//		var a = sVal.substr(0,2);
+//		var b = sVal.substr(2,2);
+//		$("#h_microcode_txt_0").text(a);
+//		$("#h_microcode_txt_1").text(b);
 	}
 
 	// Return any errors generated in this "chip"
