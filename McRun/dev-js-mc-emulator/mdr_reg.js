@@ -83,11 +83,7 @@ var MDR = {
 	// Display text to inside of register box
 	, Display: function  ( val ) {
 		var sVal = toHex(val,4);
-		// console.log ( "Padded", sVal );
-		var a = sVal.substr(0,2);
-		var b = sVal.substr(2,2);
-		$("#h_mdr_txt_0").text(a);
-		$("#h_mdr_txt_1").text(b);
+		$("#h_mdr_txt_0").text(sVal);
 	}
 
 	// Return any errors generated in this "chip"

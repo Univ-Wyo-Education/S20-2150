@@ -45,15 +45,12 @@ var MICROCODE = {
 		, "_Output_Lines_": {}
 	}
 	, msg: function ( wire, val ) {
-		var addr = MICROCODE_PC.x["_OutputBuffer_"];		// Pull in the microcode_pc's output.
-		if ( addr === null ) {
-			console.log ( "MC Memory: No _addr_ to use." )
-			addr = 255;
-		}
+		MICROCODE.PullBus();
+		var addr = MICROCODE.x["_Addr_"];
 		switch ( wire ) {
 		case "Addr":	// This is the "output" from the Microcode_PC
 			if ( val === 1 ) {
-				MICROCODE.x["_Addr_"] = 1;
+				MICROCODE.x["_Addr_used_"] = 1;
 				// Walk across all the values in the microcode 
 				//	- for each one - lookup the line that needs to be turned on 
 				//  - turn it on.
@@ -67,6 +64,7 @@ console.log ( "Microcode: Turn On:", key, val, 'def.NthBit=', def.NthBit, "mcWor
 						MICROCODE.TurnOn( key );
 						MICROCODE.x[key] = 1;
 						MICROCODE.x._OutputBufferList_.push ( key );
+						MICROCODE.PushBus( key );
 					}
 				}
 			}
@@ -78,18 +76,17 @@ console.log ( "Microcode: Turn On:", key, val, 'def.NthBit=', def.NthBit, "mcWor
 		}
 	}
 	, tick: function ( ) {
-		var addr = MICROCODE_PC.x["_OutputBuffer_"];
-		if ( addr === null ) {
-			console.log ( "MC Memory: No _addr_ to use." )
-			addr = 255;
-		}
-		MICROCODE.x["_Addr_"] = addr;
-		if ( MICROCODE.x["_Addr_"] === 1 ) {
+		MICROCODE.PullBus();
+		var addr = MICROCODE.x["_Addr_"];
+		if ( MICROCODE.x["_Addr_used_"] === 1 ) {
 			for ( key in MICROCODE.x["_Output_Lines_"] ) {
 				var def = MICROCODE.x["_Output_Lines_"][key];
 				var mcWord = MICROCODE.x[def.DataArray][addr];
-				var val = !!( mcWord & ( 1 << def.NthBit ) );	
-				MICROCODE.TurnOn( key );
+				var val = ( !!( mcWord & ( 1 << def.NthBit ) ) ) ? 1 : 0;	
+				if ( val == 1 ) {
+					MICROCODE.TurnOn( key );
+					MICROCODE.PushBus( key );
+				}
 			}
 		}
 		MICROCODE.Display( addr );
@@ -106,6 +103,27 @@ console.log ( "Microcode: Turn On:", key, val, 'def.NthBit=', def.NthBit, "mcWor
 	}
 	, test_peek: function() {
 		return ( MICROCODE.x["_data_"] );
+	}
+
+	, PullBus: function () {
+		// Pull in the address.
+		var addr = MICROCODE_PC.x["_OutputBuffer_"];		// Pull in the microcode_pc's output.
+		if ( addr === null ) {
+			console.log ( "MC Memory: No _addr_ to use." )
+			addr = 255;
+		}
+		MICROCODE.x["_Addr_"] = addr;
+	}
+
+	, PushBus: function ( key ) {
+		// --------------------------------------------------------------------------------------------
+		// Majic Happens !
+		// --------------------------------------------------------------------------------------------
+		if ( theWorld[key] && typeof theWorld[key].SetState === "function" ) {
+			// theWorld[key].SetState( 1 );
+console.log ( "Found a PushBus for ", key, " - SetState Called -" );
+			theWorld[key].SetState( MICROCODE.x[key] );
+		}
 	}
 
 	// Turn on display of a wire with this ID
