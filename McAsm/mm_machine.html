@@ -765,7 +765,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 </svg>
 
 <!-- The Modal ======================================================== -->
-<div id="myModal" class="modal">
+<div id="myModal1" class="modal">
 
 	<!-- Modal content -->
 	<div class="modal-content">
@@ -784,28 +784,61 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 </div>
 
+<!-- The Modal : Code Load ======================================================== -->
+<div id="myModal2" class="modal">
+
+	<!-- Modal content -->
+	<div class="modal-content">
+		<div class="modal-header">
+			<span class="close" onclick="hideModal();">&times;</span>
+			<h4>Load Hex Code Into Main Memory</h4>
+		</div>
+		<div class="modal-body">
+			<p>Enter the hash printed out by Asm with the --upload flag.</p>
+			<input id="modal-input-mm-hash" spellcheck="false" name="i_hash" class="hash-input">
+		</div>
+		<div class="modal-footer">
+			<button class="modal-submit" type="button" id="modal-submit2" onclick="LoadMM();">Load Hex File</button>
+		</div>
+	</div>
+
+</div>
+
 <script>
 
 // Get the modal
-var modal = document.getElementById("myModal");
+var modal1 = document.getElementById("myModal1");
+var modal2 = document.getElementById("myModal2");
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+// var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal 
 function displayModal () {
-  modal.style.display = "block";
+	// modal.style.display = "block";
+	$("#myModal1").css ( { "display":"block" } );
+}
+function displayModalMM () {
+	// modal.style.display = "block";
+	$("#myModal2").css ( { "display":"block" } );
 }
 
 // When the user clicks on <span> (x), close the modal
 function hideModal() {
-  modal.style.display = "none";
+	// modal.style.display = "none";
+	$("#myModal1").css ( { "display":"none" } );
+	$("#myModal2").css ( { "display":"none" } );
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-	if (event.target == modal) {
-		modal.style.display = "none";
+	if (event.target == modal1) {
+		//modal.style.display = "none";
+		hideModal();
+	}
+	if (event.target == modal2) {
+		//modal.style.display = "none";
+		hideModal();
 	}
 }
 
@@ -921,6 +954,7 @@ function infoOn1(i,x) {
 			,""
 			,"Click on a line to see where the input connects to.  Try Ld near the PC register."
 			);
+		displayModalMM() ;
 		break;
 	case "load-mc":
 		console.log ( "load-mc - load microcode" );
@@ -1479,14 +1513,17 @@ var Connections = {
 	, "McJmp_1": { Name: "MUX", 					Op: ["00_1"       ,"10_1","11_1"] }
 	, "McJmp_0": { Name: "MUX", 					Op: ["00_0","01_0","10_0","11_0"] }
 
+	, "id_decoder_Ctl_0": {Name: "MUX",				Op: ["Ctl_0"] }
+	, "id_decoder_Ctl_1": {Name: "MUX",				Op: ["Ctl_1"] }
+
+	, "id_ALU_Ctl_0": { Name: "ALU",				Op: ["Ctl_0"] }
+	, "id_ALU_Ctl_1": { Name: "ALU",				Op: ["Ctl_1"] }
+	, "id_ALU_Ctl_2": { Name: "ALU",				Op: ["Ctl_2"] }
+	, "id_ALU_Ctl_3": { Name: "ALU",				Op: ["Ctl_3"] }
+
 //Microcode_PC_Ld2 4
-//hand_Out 24
-//id_ALU_Ctl_0 18
-//id_ALU_Ctl_1 19
-//id_ALU_Ctl_2 20
-//id_ALU_Ctl_3 21
-//id_decoder_Ctl_0 22
-//id_decoder_Ctl_1 23
+//hand_out 24
+
 };
 
 function SetupTheWorld() {
@@ -1612,6 +1649,9 @@ console.log ( "MEMORY=",MEMORY);
 console.log ( "ALU=",ALU);
 console.log ( "MUX=",MUX);
 
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------
+
 /*
 0000000430000001 000
 0000000144000000 001
@@ -1672,6 +1712,8 @@ var ParseInput = function (data) {
 	// console.log ( JSON.stringify ( MICROCODE ) );
 };
 
+
+
 // <button class="modal-submit" type="button" id="modal-submit" onclick="LoadMC();">Load Code</button>
 // <input id="modal-input-code-hash" spellcheck="false" name="i_hash" class="hash-input">
 function LoadMC() {
@@ -1697,6 +1739,64 @@ function OnStartupReloadMicrocode() {
 }
 
 OnStartupReloadMicrocode();
+
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------
+
+
+var ParseInputHexMM = function (data) {
+	var array = data.toString().split("\n");
+	var pc = 0;
+    for(i in array) {
+        // console.log("->"+array[i]+"<-");
+		const str = array[i];
+		if ( str.length === 0 ) {
+			console.log ( "Skipping 0 length line" )
+		} else {
+			const p1x = parseInt(str,16);
+			MEMORY.x["_data_"][pc] = p1x;
+			pc++;
+		}
+    }
+//	displayMicrocodeText(
+//		"Address 256 Words",
+//		"Data 64 bits wide",
+//		"Microcode Loaded... "+mc_hash.substr(0,10)+"...",
+//		"",
+//		"");
+	console.log ( JSON.stringify ( MEMORY ) );
+};
+
+
+
+function LoadMM() {
+	hideModal();
+	var v = $("#modal-input-mm-hash").val();
+	console.log ( "v=", v );
+	$.get ( "./data/"+v+".txt", function(data){
+		console.log ( "Got It: ", data );
+		localStorage.setItem('main_memory_data',v);
+		ParseInputHexMM(data);
+	});
+}
+
+var mm_hash = "";
+
+function OnStartupReloadMainMemory() {
+	var v = localStorage.getItem('main_memory_data');
+	if ( v ) {
+		mm_hash = v;
+		$("#modal-input-mm-hash").val(v);
+		LoadMM();
+	}
+}
+
+OnStartupReloadMainMemory();
+
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------
 
 var test0001 = false;	// Turn on the line from the PC data
 var test0002 = false;	// Display value in the PC register

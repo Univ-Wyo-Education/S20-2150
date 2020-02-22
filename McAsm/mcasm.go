@@ -284,7 +284,7 @@ Microcode Emulator:
 			fn := fmt.Sprintf("../McRun/data/%s.txt", hashHex)
 			err = ioutil.WriteFile(fn, data, 0644)
 			if err != nil {
-				fmt.Printf("Error: (Unable to Upload to S3) failed create temporary directory ./tmp error:%s\n", err)
+				fmt.Printf("Error: (Unable to save locally to ../McRun/data) failed create file error:%s\n", err)
 			}
 		}
 	}
