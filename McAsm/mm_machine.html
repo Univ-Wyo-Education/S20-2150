@@ -1364,7 +1364,7 @@ var theWorld = {
 				}
 				if ( ! ignore ) {
 					console.log ( "Warning: Pulling 'bus.State' when undefined" );
-					theWorld.id_pc_Out._error_.push( "Warning: Pulling 'bus.State' when undefined" );
+					theWorld.id_pc_Out._error_.push( "Warning: Pulling 'bus.State' when undefined" );		// xyzzy - 
 				}
 				return ( theWorld.id_pc_Out._data_ );
 			}
@@ -1389,6 +1389,104 @@ console.log ( "PC.msg('Out') -- Called --" );
 	}
 
 };
+
+var Connections = {
+	  "id_pc_Out": { Name:"PC",						Op: "Out" }
+	, "id_pc_Ld": { Name:"PC",						Op: "Ld" }
+	, "id_pc_Inc": { Name:"PC",						Op: "Inc" }
+	, "id_Microcode_PC_Clr": { Name:"Microcode_PC",	Op: "Clr" } 
+	, "id_Microcode_PC_Ld": { Name:"Microcode_PC",	Op: "Ld" }
+	, "id_ac_Clr": { Name:"AC",						Op: "Clr" }
+	, "id_ac_Inc": { Name:"AC",						Op: "Inc" }
+	, "id_ac_Ld": { Name:"AC",						Op: "Ld" }
+	, "id_ac_Out": { Name:"AC",						Op: "Out" }
+	, "id_ac_Out_to_ALU": { Name:"AC",				Op: "Out_to_ALU" }
+	, "id_input_Out": { Name:"INPUT",				Op: "Out" }
+	, "id_input_Ld": { Name:"INPUT",				Op: "Ld" }
+	, "id_ir_Ld": { Name:"IR",						Op: "Ld" }
+	, "id_ir_Out": { Name:"IR",						Op: "Out" }
+	, "id_mar_Ld": { Name:"MAR",					Op: "Ld" }
+	, "id_mar_Out": { Name:"MAR",					Op: "Out" }
+	, "id_mdr_Ld": { Name:"MDR",					Op: "Ld" }
+	, "id_mdr_Out": { Name:"MDR",					Op: "Out" }
+	, "id_memory_Read": { Name:"MEMORY",			Op: "Read" }
+	, "id_memory_Write": { Name:"MEMORY",			Op: "Write" }
+	, "id_output_Ld": { Name:"OUTPUT",				Op: "Ld" }
+	, "id_output_Out": { Name:"OUTPUT",				Op: "Out" }
+	, "id_result_Ld": { Name:"RESULT",				Op: "Ld" }
+	, "id_result_Out": { Name:"RESULT",				Op: "Out" }
+
+//McJmp_0 10
+//McJmp_1 11
+//McJmp_2 12
+//McJmp_3 13
+//McJmp_4 14
+//McJmp_5 15
+//McJmp_6 16
+//McJmp_7 17
+//Microcode_PC_Ld2 4
+//hand_Out 24
+//id_ALU_Ctl_0 18
+//id_ALU_Ctl_1 19
+//id_ALU_Ctl_2 20
+//id_ALU_Ctl_3 21
+//id_decoder_Ctl_0 22
+//id_decoder_Ctl_1 23
+};
+
+function SetupTheWorld() {
+	for ( var key in Connections ) {
+		if ( theWorld[key] ) {
+			console.log ( "Already Defined:", key );
+		} else {
+			var fx = function(key,name,op) { 
+				return {
+					"_data_": 0
+					, "_used_": false
+					, "_error_": []
+					, "__key": key
+					, "__name": name
+					, "__op": op
+					, "State": function () {
+						if ( theWorld[key]._used_ ) {
+							return ( theWorld[key]._data_ );
+						} else {
+							var ignore = false;
+							if ( arguments.length > 0 ) {
+								ignore = arguments[0];
+							}
+							if ( ! ignore ) {
+								console.log ( "Warning: Pulling 'bus.State' when undefined" );
+								theWorld[key]._error_.push( "Warning: Pulling 'bus.State' when undefined" );		// xyzzy - 
+							}
+							return ( theWorld[key]._data_ );
+						}
+					}
+					, "SetState": function ( v ) {
+						theWorld[key]._data_ = v;
+						theWorld[key]._used_ = true;
+			console.log ( name+".msg('"+op+"') -- Called --" );
+						window[name].msg ( op, 1 );						// connection from "wire" to chip.
+					}
+					, "TickRise": function ( v ) {
+						theWorld[key]._data_ = underfined;
+						theWorld[key]._used_ = false;
+						window[name].rise();
+					}
+					, "Error": function ( v ) {
+						return ( theWorld[key]._error_ );
+					}
+					, "ClearError": function ( v ) {
+						theWorld[key]._error_ = [];
+					}
+				};
+			}
+			theWorld[key] = fx(key,Connections[key].Name,Connections[key].Op);
+		}
+	}
+}
+
+SetupTheWorld();
 
 function clearMicrocodeText() {
 	$("#microcode_txt_0").text("");
@@ -1596,6 +1694,11 @@ if ( test0007 ) {
 if ( test0008 ) {
 	MICROCODE_PC.msg("Clr", 1);
 	MICROCODE.msg("Addr", 1);
+}
+
+function test0009() {
+	MICROCODE.msg("Addr", 1);
+	MAR.msg('Ld', 1);
 }
 
 // 0ad7f1aef0bc1918380360372de72ff3de68d1001966a7b60ac437d60bdbfd0c
