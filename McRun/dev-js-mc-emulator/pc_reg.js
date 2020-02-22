@@ -29,7 +29,7 @@ var PC = {
 	, msg: function ( wire, val ) {
 		switch ( wire ) {
 		case "Clr": if ( val === 1 ) { PC.x["_Clr_"] = 1; PC.x["_data_"] = 0; }											PC.TurnOn( "pc_Clr" );   PC.Display( PC.x["_data_"]); 						break;
-		case "Ld":  if ( val === 1 ) { PC.x["_Ld_"] = 1; PC.PullBus(true); PC.x["_data_"] = PC.x["_InputBuffer_"]; }	PC.TurnOn( "pc_Ld"  );   PC.Display( PC.x["_data_"]); PC.x["_Ld_"] = 1; 	break;
+		case "Ld":  if ( val === 1 ) { PC.x["_Ld_"] = 1; PC.PullBus(); PC.x["_data_"] = PC.x["_InputBuffer_"]; }		PC.TurnOn( "pc_Ld"  );   PC.Display( PC.x["_data_"]); PC.x["_Ld_"] = 1; 	break;
 		case "Inc": if ( val === 1 ) { PC.x["_Inc_"] = 1; PC.x["_data_"] = PC.x["_data_"] + 1; }	    				PC.TurnOn( "pc_Inc" );   PC.Display( PC.x["_data_"]); 						break;
 		case "Out": if ( val === 1 ) { PC.x["_Out_"] = 1; PC.x["_OutputBuffer_"] = PC.x["_data_"]; PC.PushBus(); }   	PC.TurnOn( "pc_Out" );   PC.Display( PC.x["_data_"]); 						break;
 		default:
@@ -99,3 +99,4 @@ console.log ( "PC:PushBus", PC.x["_OutputBuffer_"] );
 
 };
 
+console.log ( "PC v.1.0.1" );

@@ -2,5 +2,5 @@
 all:
 
 run2:
-	~/bin/go-server -p :9000 -d .
+	~/bin/go-server -p :9000 -d . -k abc
 	

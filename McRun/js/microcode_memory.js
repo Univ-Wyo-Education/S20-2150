@@ -56,15 +56,20 @@ var MICROCODE = {
 				//  - turn it on.
 				// 	-- Append to _OutputBufferList_ for later use --
 				for ( key in MICROCODE.x["_Output_Lines_"] ) {
+					var obj = MICROCODE.x["_Output_Lines_"];
 					var def = MICROCODE.x["_Output_Lines_"][key];
 					var mcWord = MICROCODE.x[def.DataArray][addr];
 					var val = ( !!( mcWord & ( 1 << def.NthBit ) ) ) ? 1 : 0;	
-console.log ( "Microcode: Turn On:", key, val, 'def.NthBit=', def.NthBit, "mcWord =", Number(mcWord).toString(16), def.DataArray );
-					if ( val == 1 ) {
-						MICROCODE.TurnOn( key );
-						MICROCODE.x[key] = 1;
-						MICROCODE.x._OutputBufferList_.push ( key );
-						MICROCODE.PushBus( key );
+console.log ( "Microcode: Turn On:", "->"+key+"<-", val, 'def.NthBit=', def.NthBit, "mcWord =", Number(mcWord).toString(16), def.DataArray );
+					if ( isNaN(def.NthBit) ) {
+						console.log ( "Microcode: Turn On: isNaN => True" );
+					} else if ( val == 1 && "-"+key+"-" != "--" && ! isNaN(def.NthBit) ) {
+						if (obj.hasOwnProperty(key)) {
+							MICROCODE.TurnOn( key );
+							MICROCODE.x[key] = 1;
+							MICROCODE.x._OutputBufferList_.push ( key );
+							MICROCODE.PushBus( key );
+						}
 					}
 				}
 			}
@@ -80,10 +85,13 @@ console.log ( "Microcode: Turn On:", key, val, 'def.NthBit=', def.NthBit, "mcWor
 		var addr = MICROCODE.x["_Addr_"];
 		if ( MICROCODE.x["_Addr_used_"] === 1 ) {
 			for ( key in MICROCODE.x["_Output_Lines_"] ) {
+				var obj = MICROCODE.x["_Output_Lines_"];
 				var def = MICROCODE.x["_Output_Lines_"][key];
 				var mcWord = MICROCODE.x[def.DataArray][addr];
 				var val = ( !!( mcWord & ( 1 << def.NthBit ) ) ) ? 1 : 0;	
-				if ( val == 1 ) {
+				if ( isNaN(def.NthBit) ) {
+					console.log ( "Microcode/tick: Turn On: isNaN => True" );
+				} else if ( val == 1 && "-"+key+"-" != "--" && ! isNaN(def.NthBit) ) {
 					MICROCODE.TurnOn( key );
 					MICROCODE.PushBus( key );
 				}
