@@ -954,7 +954,6 @@ function infoOn1(i,x) {
 			,""
 			,"Click on a line to see where the input connects to.  Try Ld near the PC register."
 			);
-		displayModalMM() ;
 		break;
 	case "load-mc":
 		console.log ( "load-mc - load microcode" );
@@ -976,7 +975,12 @@ function infoOn1(i,x) {
 			);
 		break;
 		// <g transform="rotate(90 1000 400) translate(-350 14)" onclick="infoOn('decoder-info');">
-
+	case "load-memory":
+		displayModalMM() ;
+		break;
+	case "reset":
+		ResetMachine();
+		break;
 
 	case "id_pc":
 		$("#"+x).css("fill","#ff0000");
@@ -1741,9 +1745,10 @@ function OnStartupReloadMicrocode() {
 OnStartupReloadMicrocode();
 
 
-// ---------------------------------------------------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------------------------------------------------
 
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------
 
 var ParseInputHexMM = function (data) {
 	var array = data.toString().split("\n");
@@ -1759,13 +1764,12 @@ var ParseInputHexMM = function (data) {
 			pc++;
 		}
     }
-//	displayMicrocodeText(
-//		"Address 256 Words",
-//		"Data 64 bits wide",
-//		"Microcode Loaded... "+mc_hash.substr(0,10)+"...",
-//		"",
-//		"");
-	console.log ( JSON.stringify ( MEMORY ) );
+	displayMemoryText(
+		"Address 8K Words",
+		"Data 16 bits wide",
+		"Hex Code Loaded... "+mm_hash.substr(0,10)+"..."
+	);
+//	console.log ( JSON.stringify ( MEMORY ) );
 };
 
 
@@ -1773,9 +1777,9 @@ var ParseInputHexMM = function (data) {
 function LoadMM() {
 	hideModal();
 	var v = $("#modal-input-mm-hash").val();
-	console.log ( "v=", v );
+	// console.log ( "v=", v );
 	$.get ( "./data/"+v+".txt", function(data){
-		console.log ( "Got It: ", data );
+		// console.log ( "Got It: ", data );
 		localStorage.setItem('main_memory_data',v);
 		ParseInputHexMM(data);
 	});
@@ -1794,6 +1798,24 @@ function OnStartupReloadMainMemory() {
 
 OnStartupReloadMainMemory();
 
+
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------
+function ResetMachine() {
+	PC.msg("Clr", 1);
+	MICROCODE_PC.msg("Clr", 1);
+	PC.tick();
+	MICROCODE_PC.tick();
+	if ( mm_hash && mm_hash != "" ) {
+		$("#modal-input-mm-hash").val(mm_hash);
+		LoadMM();
+	}
+	if ( mc_hash && mc_hash != "" ) {
+		$("#modal-input-code-hash").val(v);
+		LoadMC();
+	}
+}
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------
