@@ -24,7 +24,15 @@ var IR = {
 	}
 	, msg: function ( wire, val ) {
 		switch ( wire ) {
-		case "Ld":  if ( val === 1 ) { IR.x["_Ld_"] = 1; IR.PullBus(true); IR.x["_data_"] = IR.x["_InputBuffer_"]; }	IR.TurnOn( "ir_Ld"  );   IR.Display( IR.x["_data_"]); IR.x["_Ld_"] = 1; 	break;
+		case "Ld": 
+			if ( val === 1 ) {
+				IR.x["_Ld_"] = 1;
+				IR.PullBus(true);
+				IR.x["_data_"] = IR.x["_InputBuffer_"];
+				IR.TurnOn( "ir_Ld"  );
+			}
+			IR.Display( IR.x["_data_"]);
+		break;
 		case "Out":
 			if ( val === 1 ) {
 				IR.x["_Out_"] = 1;
@@ -36,6 +44,7 @@ var IR = {
 		break;
 		default:
 			Error ( "Invalid Message", wire, val );
+		break;
 		}
 	}
 	, tick: function ( ) {

@@ -121,7 +121,7 @@ console.log ( "Result:PushBus", RESULT.x["_OutputBuffer_"] );
 		var dd = IR.x["_data_"];
 	
 		// Xyzzy ??  -- do you need to run on an output to do this?
-		MUX.msg("01_1", ( dt != 0 ) ? 1 : 0 );
+		MUX.msg("01_1", ( dd != 0 ) ? 1 : 0 );
 
 //	, "McJmp_7": { Name: "MUX", 					Op: ["00_7","01_7","10_7","11_7"] }
 //	, "McJmp_6": { Name: "MUX", 					Op: ["00_6","01_6","10_6"       ] }

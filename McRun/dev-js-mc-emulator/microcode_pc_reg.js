@@ -109,7 +109,7 @@ var MICROCODE_PC = {
 
 	// Display text to inside of register box
 	, Display: function  ( val ) {
-		var sVal = toHex(val,4);
+		var sVal = toHex(val,2);
 		$("#h_microcode_pc_txt_0").text(sVal);
 	}
 
