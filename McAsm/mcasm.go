@@ -26,6 +26,8 @@ import (
 // xyzzy421 - Add in --version
 // xyzzy401 - ImplementDebugFlags
 
+var cfgAwsUsed = false
+
 // ---------------------------------------------------------------------------------
 // asm - MARIA assembler.
 // ---------------------------------------------------------------------------------
@@ -87,17 +89,19 @@ Microcode Emulator:
 		os.Exit(1)
 	}
 
-	if db20 {
-		fmt.Printf("Upload = %v S3_BUCKET=[%s] S3_REGION=[%s]\n", *Upload, S3_BUCKET, S3_REGION)
-	}
-	if *Upload {
-		if S3_REGION == "" {
-			fmt.Fprintf(os.Stderr, "Executable not compiled correctly (1) - fatal.\n")
-			os.Exit(1)
+	if cfgAwsUsed {
+		if db20 {
+			fmt.Printf("Upload = %v S3_BUCKET=[%s] S3_REGION=[%s]\n", *Upload, S3_BUCKET, S3_REGION)
 		}
-		if S3_BUCKET == "" {
-			fmt.Fprintf(os.Stderr, "Executable not compiled correctly (2) - fatal.\n")
-			os.Exit(1)
+		if *Upload {
+			if S3_REGION == "" {
+				fmt.Fprintf(os.Stderr, "Executable not compiled correctly (1) - fatal.\n")
+				os.Exit(1)
+			}
+			if S3_BUCKET == "" {
+				fmt.Fprintf(os.Stderr, "Executable not compiled correctly (2) - fatal.\n")
+				os.Exit(1)
+			}
 		}
 	}
 
@@ -266,11 +270,13 @@ Microcode Emulator:
 			fmt.Printf("Error: (Unable to Upload to S3) failed to write temporary data: %s error:%s\n", fn, err)
 			os.Exit(1)
 		}
-		s := SetupS3()
-		err = AddFileToS3(s, fn, toFile)
-		if err != nil {
-			fmt.Printf("Error: (Unable to Upload to S3) failed to upload to S3 error:%s\n", err)
-			os.Exit(1)
+		if cfgAwsUsed {
+			s := SetupS3()
+			err = AddFileToS3(s, fn, toFile)
+			if err != nil {
+				fmt.Printf("Error: (Unable to Upload to S3) failed to upload to S3 error:%s\n", err)
+				os.Exit(1)
+			}
 		}
 
 		fmt.Printf("Hash To Enter to Load the Microcode into the Emulator:\n\t%s\n\n", hashHex)
