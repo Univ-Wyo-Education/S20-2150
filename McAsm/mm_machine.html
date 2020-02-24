@@ -734,22 +734,22 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		<text id="b-load-memory-txt" x="45" y="377" class="small" onclick="infoOn('load-memory');">Load Memory</text>
 
 		<rect id="b-step"            x="40" y="390" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('step');"/>
-		<text id="b-step-txt"        x="45" y="407" class="small" onclick="infoOn('step');">Step Tick</text>
+		<text id="b-step-txt"        x="45" y="407" class="small" onclick="infoOn('load-mc');">Load Microcode</text>
 
 		<rect id="b-run"             x="40" y="420" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('run');"/>
-		<text id="b-run-txt"         x="45" y="437" class="small" onclick="infoOn('run');">Run</text>
+		<text id="b-run-txt"         x="45" y="437" class="small" onclick="infoOn('step');">Step Tick</text>
 
 		<rect id="b-input"           x="40" y="450" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('input');"/>
-		<text id="b-input-txt"       x="45" y="467" class="small" onclick="infoOn('input');">Input</text>
+		<text id="b-input-txt"       x="45" y="467" class="small" onclick="infoOn('step-ins');">Step Instruction</text>
 
 		<rect id="b-reset"           x="40" y="480" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('reset');"/>
-		<text id="b-reset-txt"       x="45" y="497" class="small" onclick="infoOn('reset');">Reset</text>
+		<text id="b-reset-txt"       x="45" y="497" class="small" onclick="infoOn('run');">Run</text>
 
 		<rect id="b-load-mc"         x="40" y="510" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('load-mc');"/>
-		<text id="b-load-mc-txt"     x="45" y="527" class="small" onclick="infoOn('load-mc');">Load Microcode</text>
+		<text id="b-load-mc-txt"     x="45" y="527" class="small" onclick="infoOn('reset');">Reset</text>
 
 		<rect id="b-step-ins"        x="40" y="540" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('step-ins');"/>
-		<text id="b-step-ins-txt"    x="45" y="557" class="small" onclick="infoOn('step-ins');">Step Instruction</text>
+		<text id="b-step-ins-txt"    x="45" y="557" class="small" onclick="infoOn('input');">Input</text>
 
 		<rect id="b-setup-cfg"       x="40" y="570" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('setup-cfg');"/>
 		<text id="b-setup-cfg-txt"   x="45" y="587" class="small" onclick="infoOn('setup-cfg');">Setup</text>
@@ -1841,6 +1841,8 @@ function ClockRunner() {
 	// Start Process.
 	MICROCODE.msg("Addr", 1);	
 
+	// IR.tick();
+	// MDR.msg('Out',1);
 
 	// End Process.
 	clearOtherLine();
