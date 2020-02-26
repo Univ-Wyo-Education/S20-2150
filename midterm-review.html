@@ -708,23 +708,30 @@ ol {
 
 <div class="markdown-body">
 
+<style>
+.pagebreak { page-break-before: always; }
+.half { height: 200px; }
+</style>
+
 <ol>
-<li>For simple regular expressions - be able to produce the state diagram that matches with the regular expression and identify
+<li value="1">For simple regular expressions - be able to produce the state diagram that matches with the regular expression and identify
 what strings will be matched and if a string will be rejected by the regular expression.  Know that regular expressions are equivalent to
 some deterministic or non-deterministic automata.  Know that you can&rsquo;t use a regular expression to find matching (balanced) parenthesis.</li>
 </ol>
 
 <p>Examples:</p>
 
-<pre><code>^a$					Matches the letter a on a line by itslf
-^ab*$				Matches the letter a followed by any number of b's on a line
-^abc				Matches a line that starts with abc 
-abc$				Matches a line that ends with abc
-[0-7]				Matches an octal digit 0, 1, 2, 3, 4, 5, 6, 7
-[a-f]				Matches a lower case a, b, c, d, e, f
-[0-9a-fa-F]			Matches a hex digits both upper and lower case
-[0-9][0-9]*			Matches 1 or more decimal digits
-[-+][0-9][0-9]*		Matches a plus or minus followed by a decimal number atleast 1 long
+<pre><code>^a$                Matches the letter a on a line by itslf
+^ab*$              Matches the letter a followed by any number of
+                   b's on a line
+^abc               Matches a line that starts with abc 
+abc$               Matches a line that ends with abc
+[0-7]              Matches an octal digit 0, 1, 2, 3, 4, 5, 6, 7
+[a-f]              Matches a lower case a, b, c, d, e, f
+[0-9a-fa-F]        Matches a hex digits both upper and lower case
+[0-9][0-9]*        Matches 1 or more decimal digits
+[-+][0-9][0-9]*    Matches a plus or minus followed by a decimal number
+                   atleast 1 long
 </code></pre>
 
 <p>Be able to draw out a Non-Deterministic Finite State Automata (NDFA) for these regular expressions.
@@ -733,39 +740,48 @@ Use &ldquo;BOL&rdquo; for beginning of line, <code>^</code> and EOL for end of l
 <p>Use &lsquo;a-f&rsquo; or similar to for matching a range of characters in your NDFA.</p>
 
 <ol>
-<li><p>List the different kinds of machines, Logic, Finite Automata, Push Down Automata, Turning Complete.</p></li>
+<li value="2"><p>List the different kinds of machines, Logic, Finite Automata, Push Down Automata, Turning Complete.</p></li>
 
-<li><p>Know that a regular expression (or the corresponding Finite Automata (DFA, NDFA)) can not match
+<li value="3"><p>Know that a regular expression (or the corresponding Finite Automata (DFA, NDFA)) can not match
 parenthesis or parse HTML because it requires matching and counting.   To do these tasks requires
 a Push Down Acceptor.</p></li>
 
-<li><p>Know that you can not write a program that will test other programs and find out if they
+<li value="4"><p>Know that you can not write a program that will test other programs and find out if they
 complete.</p></li>
 
-<li><p>Know how to take a set of boolean logic and generate the corresponding and/or/not gates in
+<li value="5"><p>Know how to take a set of boolean logic and generate the corresponding and/or/not gates in
 a diagram.</p></li>
 
-<li><p>Know how to take a simple diagram with some and/or/not (or nand/nor/not) gates and extract
+<li value="6"><p>Know how to take a simple diagram with some and/or/not (or nand/nor/not) gates and extract
 the boolean logic from it.</p></li>
 
-<li><p>Be able to read a truth table and derive the set of equations from it.  Read a truth table
+<li value="7"><p>Be able to read a truth table and derive the set of equations from it.  Read a truth table
 and determine what output are turned &ldquo;on&rdquo; for a given input.</p></li>
 
-<li><p>Convert decimal to hex and hex to decimal.  Know that 0b001 is in binary and that 0x0A is
+<li value="8"><p>Convert decimal to hex and hex to decimal.  Know that 0b001 is in binary and that 0x0A is
 in hex.</p></li>
 
-<li><p>Know that Unix/Linux uses <code>\n</code> for an end of line and that Microsoft Windows uses both
+<li value="9"><p>Know that Unix/Linux uses <code>\n</code> for an end of line and that Microsoft Windows uses both
 <code>\n</code> and <code>\r</code> for an end of line.</p></li>
 
-<li><p>Know how to use an ASCII table to look up characters.</p></li>
+<li value="10"><p>Know how to use an ASCII table to look up characters.</p></li>
 
-<li><p>Know that there are more characters than just ASCII - be aware of Unicode.</p></li>
+<li value="11"><p>Know that there are more characters than just ASCII - be aware of Unicode.</p></li>
 
-<li><p>Be able to look through a simple program in MARIA (our assembly language) and figure
+<li value="12"><p>Be able to look through a simple program in MARIA (our assembly language) and figure
 out what the program will do.</p></li>
 
-<li><p>For a simple MARIA program be able to trace through what the program will do.
-For example, what is the expected output for:</p></li>
+<li value="13"><p>Be able to look at the output of an <code>od -c</code> (octal dump) and identify &ldquo;bad stuff&rdquo; - characters that are
+hidden - or that it is not in the correct format for the system that you are on.</p></li>
+
+<li value="14"><p>Be able to take the 1s and 2s compliment of a number.</p></li>
+</ol>
+
+<div class="pagebreak"></div>
+
+<ol>
+<li value="15">For a simple MARIA program be able to trace through what the program will do.
+For example, what is the expected output for:</li>
 </ol>
 
 <pre><code>     Load X          // Tmp = X
@@ -776,7 +792,7 @@ For example, what is the expected output for:</p></li>
 L0,  Load Tmp        // Tmp = Tmp - 1
      Subt _1
      Store Tmp
-     SkipGt0         // Skipcond 400 - If AC &gt; 0 goto  L1
+     SkipGt0         // Skipcond 400 - If AC &lt;= 0 goto  L1
      Jump L1
      Load t2         // t2 = t2 + Y
      Add Y
@@ -784,7 +800,7 @@ L0,  Load Tmp        // Tmp = Tmp - 1
      Jump L0         // Goto Top Of Loop L0
 L1,  Load t2         // Output t2
      Output
-     Halt			 // End of Program Running
+     Halt             // End of Program Running
 
     
 X,     DEC    2
@@ -794,10 +810,33 @@ Tmp,   DEC    20
 t2,    DEC    0
 </code></pre>
 
-<ol>
-<li>Be able to look at the output of an <code>od -c</code> (octal dump) and identify &ldquo;bad stuff&rdquo; - characters that are
-hidden - or that it is not in the correct format for the system that you are on.</li>
-</ol>
+<div class="pagebreak"></div>
+
+<p>The output that I get from running the emulator is:</p>
+
+<pre><code>PC[0000/0x0000] AC[0000/0000] Mem[]=0x1010 Instruction: 0x1000 | Load       Operhand: 010
+PC[0001/0x0001] AC[0002/0002] Mem[]=0x2013 Instruction: 0x2000 | Store      Operhand: 013
+PC[0002/0x0002] AC[0002/0002] Mem[]=0x1011 Instruction: 0x1000 | Load       Operhand: 011
+PC[0003/0x0003] AC[0008/0008] Mem[]=0x2014 Instruction: 0x2000 | Store      Operhand: 014
+PC[0004/0x0004] AC[0008/0008] Mem[]=0x1013 Instruction: 0x1000 | Load       Operhand: 013
+PC[0005/0x0005] AC[0002/0002] Mem[]=0x4012 Instruction: 0x4000 | Subt       Operhand: 012
+PC[0006/0x0006] AC[0001/0001] Mem[]=0x2013 Instruction: 0x2000 | Store      Operhand: 013
+PC[0007/0x0007] AC[0001/0001] Mem[]=0x8800 Instruction: 0x8800 | SkipGt0    Operhand: 800
+PC[0009/0x0009] AC[0001/0001] Mem[]=0x1014 Instruction: 0x1000 | Load       Operhand: 014
+PC[0010/0x000a] AC[0008/0008] Mem[]=0x3011 Instruction: 0x3000 | Add        Operhand: 011
+PC[0011/0x000b] AC[0016/0010] Mem[]=0x2014 Instruction: 0x2000 | Store      Operhand: 014
+PC[0012/0x000c] AC[0016/0010] Mem[]=0x9004 Instruction: 0x9000 | Jump       Operhand: 004
+PC[0004/0x0004] AC[0016/0010] Mem[]=0x1013 Instruction: 0x1000 | Load       Operhand: 013
+PC[0005/0x0005] AC[0001/0001] Mem[]=0x4012 Instruction: 0x4000 | Subt       Operhand: 012
+PC[0006/0x0006] AC[0000/0000] Mem[]=0x2013 Instruction: 0x2000 | Store      Operhand: 013
+PC[0007/0x0007] AC[0000/0000] Mem[]=0x8800 Instruction: 0x8800 | SkipGt0    Operhand: 800
+PC[0008/0x0008] AC[0000/0000] Mem[]=0x900d Instruction: 0x9000 | Jump       Operhand: 00d
+PC[0013/0x000d] AC[0000/0000] Mem[]=0x1014 Instruction: 0x1000 | Load       Operhand: 014
+PC[0014/0x000e] AC[0016/0010] Mem[]=0x6000 Instruction: 0x6000 | Output     Operhand: 000
+Output: 16/0x10 Char -&gt;&lt;-
+PC[0015/0x000f] AC[0016/0010] Mem[]=0x7000 Instruction: 0x7000 | Halt       Operhand: 000
+
+</code></pre>
 
 </div>
 

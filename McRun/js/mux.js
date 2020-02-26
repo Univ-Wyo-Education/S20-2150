@@ -125,7 +125,7 @@ console.log ( "  MUX: Op="+wire, 'nTh=', nTh, b0, b1, bb );
 
 		var out = MUX.x["_Out_"];
 		MICROCODE_PC.x["_InputBuffer_"] = out;
-		MICROCODE_PC.msg("Ld",1);
+		// MICROCODE_PC.msg("Ld",1);
 	}
 
 	, func: function() {
@@ -145,7 +145,7 @@ console.log ( "  MUX: Op="+wire, 'nTh=', nTh, b0, b1, bb );
 		}
 		var out = MUX.x["_Out_"];
 		MICROCODE_PC.x["_InputBuffer_"] = out;
-		MICROCODE_PC.msg("Ld",1);
+		// MICROCODE_PC.msg("Ld",1);
 	}
 
 	// After Tick Cleanup 

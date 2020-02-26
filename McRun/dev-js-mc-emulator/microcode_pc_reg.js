@@ -30,8 +30,9 @@ var MICROCODE_PC = {
 		case "Clr":
 			if ( val === 1 ) {
 				MICROCODE_PC.x["_Clr_"] = 1;
+console.log ( "++++++++++ MSG Microcode PC CLR !!! ++++++++++" );
 				MICROCODE_PC.x["_data_"] = 0;
-				MICROCODE_PC.PushBus();
+				MICROCODE_PC.x["_OutputBuffer_"] = MICROCODE_PC.x["_data_"];
 				MICROCODE_PC.TurnOn( "microcode_pc_Clr" );
 			}
 			MICROCODE_PC.Display( MICROCODE_PC.x["_data_"]);
@@ -39,8 +40,9 @@ var MICROCODE_PC = {
 		case "Ld": 
 			if ( val === 1 ) {
 				MICROCODE_PC.x["_Ld_"] = 1;
-				MICROCODE_PC.PullBus();
-				MICROCODE_PC.PushBus();
+				MICROCODE_PC.x["_data_"] = MICROCODE_PC.x["_InputBuffer_"];
+console.log ( "++++++++++ Msg Microcode PC LOAD !!! ++++++++++", MICROCODE_PC.x["_data_"] );
+				MICROCODE_PC.x["_OutputBuffer_"] = MICROCODE_PC.x["_data_"];
 				MICROCODE_PC.TurnOn( "microcode_pc_Ld"  );
 			}
 			MICROCODE_PC.Display( MICROCODE_PC.x["_data_"]);
@@ -49,8 +51,7 @@ var MICROCODE_PC = {
 		case "Inc":
 			if ( val === 1 ) {
 				MICROCODE_PC.x["_Inc_"] = 1;
-				MICROCODE_PC.x["_data_"] = MICROCODE_PC.x["_data_"] + 1;
-				MICROCODE_PC.PushBus();
+				MICROCODE_PC.x["_OutputBuffer_"] = MICROCODE_PC.x["_data_"];
 				MICROCODE_PC.TurnOn( "microcode_pc_Inc" );
 			}	    				
 			MICROCODE_PC.Display( MICROCODE_PC.x["_data_"]); 											
@@ -59,7 +60,6 @@ var MICROCODE_PC = {
 			if ( val === 1 ) {
 				MICROCODE_PC.x["_Out_"] = 1;
 				MICROCODE_PC.x["_OutputBuffer_"] = MICROCODE_PC.x["_data_"];
-				MICROCODE_PC.PushBus();
 				MICROCODE_PC.TurnOn( "microcode_pc_Out" );
 			}
 			MICROCODE_PC.Display( MICROCODE_PC.x["_data_"]); 								
@@ -70,16 +70,26 @@ var MICROCODE_PC = {
 	}
 	, tick: function ( ) {
 		if ( MICROCODE_PC.x["_Ld_"] === 1 ) {
-			MICROCODE_PC.PullBus();
 			MICROCODE_PC.x["_data_"] = MICROCODE_PC.x["_InputBuffer_"];
+console.log ( "++++++++++ Tick Microcode PC LOAD !!! ++++++++++", MICROCODE_PC.x["_data_"] );
+		}
+		if ( MICROCODE_PC.x["_Clr_"] === 1 ) {
+			MICROCODE_PC.x["_data_"] = 0;
+console.log ( "++++++++++ Tick of Microcode PC CLR !!! ++++++++++", MICROCODE_PC.x["_data_"] );
+			MICROCODE_PC.x["_OutputBuffer_"] = MICROCODE_PC.x["_data_"];
 		}
 		if ( MICROCODE_PC.x["_Out_"] === 1 ) {
-			MICROCODE_PC.PushBus();
+			MICROCODE_PC.x["_OutputBuffer_"] = MICROCODE_PC.x["_data_"];
 		}
 		MICROCODE_PC.Display( MICROCODE_PC.x["_data_"] );
 	}
 	// After Tick Cleanup 
 	, rise: function ( ) {
+		if ( MICROCODE_PC.x["_Inc_"] === 1 ) {
+console.log ( "++++++++++ !!!! Rise !!!! Inc of Microcode PC ++++++++++" );
+			MICROCODE_PC.x["_data_"] = MICROCODE_PC.x["_data_"] + 1;
+			MICROCODE_PC.Display( MICROCODE_PC.x["_data_"]); 											
+		}
 		MICROCODE_PC.x["_InputBuffer_"] = null;
 		MICROCODE_PC.x["_Clr_"] = null;
 		MICROCODE_PC.x["_Ld_"] = null;
@@ -91,15 +101,6 @@ var MICROCODE_PC = {
 	}
 	, test_peek: function() {
 		return ( MICROCODE_PC.x["_data_"] );
-	}
-
-	, PullBus: function () {
-		// Pull in from MicrocodeMemory - Ld / Inc lines, IN from Decoder
-		MICROCODE_PC.x["_data_"] = MICROCODE_PC.x["_InputBuffer_"];
-	}
-
-	, PushBus: function () {
-		MICROCODE_PC.x["_OutputBuffer_"] = MICROCODE_PC.x["_data_"];
 	}
 
 	// Turn on display of a wire with this ID

@@ -47,6 +47,7 @@ var MICROCODE = {
 	, msg: function ( wire, val ) {
 		MICROCODE.PullBus();
 		var addr = MICROCODE.x["_Addr_"];
+console.log ( "Microcode/msg: addr=", addr );
 		switch ( wire ) {
 		case "Addr":	// This is the "output" from the Microcode_PC
 			if ( val === 1 ) {
@@ -60,11 +61,10 @@ var MICROCODE = {
 					var def = MICROCODE.x["_Output_Lines_"][key];
 					var mcWord = MICROCODE.x[def.DataArray][addr];
 					var val = ( !!( mcWord & ( 1 << def.NthBit ) ) ) ? 1 : 0;	
-console.log ( "Microcode: Turn On:", "->"+key+"<-", val, 'def.NthBit=', def.NthBit, "mcWord =", Number(mcWord).toString(16), def.DataArray );
 					if ( isNaN(def.NthBit) ) {
 						console.log ( "Microcode: Turn On: isNaN => True" );
 					} else if ( val == 1 && "-"+key+"-" != "--" && ! isNaN(def.NthBit) ) {
-console.log ( "    Do It - Push:", key, def );
+console.log ( "Microcode: Turn On:", "->"+key+"<-", val, 'def.NthBit=', def.NthBit, "mcWord =", Number(mcWord).toString(16), def.DataArray, "    Do It - Push:", key, def );
 						MICROCODE.TurnOn( key );
 						MICROCODE.x[key] = 1;
 						MICROCODE.x._OutputBufferList_.push ( key );
@@ -80,8 +80,9 @@ console.log ( "    Do It - Push:", key, def );
 		}
 	}
 	, tick: function ( ) {
-		MICROCODE.PullBus();
+		// MICROCODE.PullBus();
 		var addr = MICROCODE.x["_Addr_"];
+console.log ( "Microcode/rise: addr=", addr );
 		if ( MICROCODE.x["_Addr_used_"] === 1 ) {
 			for ( key in MICROCODE.x["_Output_Lines_"] ) {
 				var obj = MICROCODE.x["_Output_Lines_"];
@@ -92,6 +93,7 @@ console.log ( "    Do It - Push:", key, def );
 					console.log ( "Microcode/tick: Turn On: isNaN => True" );
 				} else if ( val == 1 && "-"+key+"-" != "--" && ! isNaN(def.NthBit) ) {
 					MICROCODE.TurnOn( key );
+console.log ( "Microcode/Rise:  Will Call PushBus on:", key );
 					MICROCODE.PushBus( key );
 				}
 			}
@@ -135,6 +137,7 @@ console.log ( "Found a PushBus for ", key, " - SetState Called -" );
 
 	// Turn on display of a wire with this ID
 	, TurnOn: function  ( id ) {
+console.log ( "MICROCOE.TurnOn(",id,");");
 		if ( id.substr ( 0, 3 ) === "id_" ) {
 			infoOn1 ( -1, id );
 		} else {

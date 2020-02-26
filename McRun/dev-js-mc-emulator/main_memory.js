@@ -23,11 +23,13 @@ var MEMORY = {
 	}
 	, msg: function ( wire, val ) {
 		var addr = MAR.x["_data_"];
+		addr = ( addr >= 0 && addr < mm_max ) ? addr : 0;
 		MEMORY.x["_Addr_"] = addr;
 		switch ( wire ) {
 		case "Read": 
 			if ( val === 1 ) {
 				MEMORY.x["_Read_"] = 1;
+console.log ( "addr=", addr );
 				MEMORY.x["_OutputBuffer_"] = MEMORY.x["_data_"][addr];
 				MEMORY.PushMDR();
 console.log ( "Doing a Memory Read:,  addr=", addr, " value=(hex)", MEMORY.x["_OutputBuffer_"].toString(16) );
@@ -50,8 +52,9 @@ console.log ( "Doing a Memory Read:,  addr=", addr, " value=(hex)", MEMORY.x["_O
 	}
 	, tick: function ( ) {
 		var addr = MAR.x["_data_"];
+		addr = ( addr >= 0 && addr < mm_max ) ? addr : 0;
 		MEMORY.x["_Addr_"] = addr;
-		if ( MEMORY.x["_Read)_"] === 1 ) {
+		if ( MEMORY.x["_Read_"] === 1 ) {
 			MEMORY.x["_OutputBuffer_"] = MEMORY.x["_data_"][addr];
 			MEMORY.PushMDR();
 		}

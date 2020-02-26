@@ -943,9 +943,13 @@ function infoOn(x) {
 	}
 }
 
+var yyy = [];
+
 function infoOn1(i,x) {
 
-	console.log("svg/id["+i+"]:"+x);
+	yyy.push ( x );
+
+	console.log("infoOn1: svg/id["+i+"]:"+x);
 	switch ( x ) {
 
 	case "clear-line":
@@ -1202,6 +1206,7 @@ var theWorld = {
 		, "_error_": []
 		, "State": function () {
 			if ( theWorld.Bus._used_ ) {
+console.log ( "Called Bus.State, returing", theWorld.Bus._data_ );
 				return ( theWorld.Bus._data_ );
 			} else {
 				var ignore = false;
@@ -1216,6 +1221,10 @@ var theWorld = {
 			}
 		}
 		, "SetState": function ( v ) {		//xyzzy - add in who is setting!
+console.log ( "****************** SetState:", v );
+			if (typeof(v) === "undefined" ) {
+				return
+			}
 			// if ( theWorld.Bus._used_ ) {
 			// 	theWorld.Bus._error_.push ( "Multiple SetState on the bus!" );
 			// }
@@ -1256,6 +1265,9 @@ var theWorld = {
 			}
 		}
 		, "SetState": function ( v ) {
+			if (typeof(v) === "undefined" ) {
+				return
+			}
 			theWorld.IsZero._data_ = v;
 			theWorld.IsZero._used_ = true;
 		}
@@ -1290,6 +1302,9 @@ var theWorld = {
 			}
 		}
 		, "SetState": function ( v ) {
+			if (typeof(v) === "undefined" ) {
+				return
+			}
 			theWorld.IR_15__12._data_ = v;
 			theWorld.IR_15__12._used_ = true;
 		}
@@ -1324,6 +1339,9 @@ var theWorld = {
 			}
 		}
 		, "SetState": function ( v ) {
+			if (typeof(v) === "undefined" ) {
+				return
+			}
 			theWorld.IR_11__8._data_ = v;
 			theWorld.IR_11__8._used_ = true;
 		}
@@ -1358,6 +1376,9 @@ var theWorld = {
 			}
 		}
 		, "SetState": function ( v ) {
+			if (typeof(v) === "undefined" ) {
+				return
+			}
 			theWorld.hand._data_ = v;
 			theWorld.hand._used_ = true;
 		}
@@ -1392,6 +1413,9 @@ var theWorld = {
 			}
 		}
 		, "SetState": function ( v ) {
+			if (typeof(v) === "undefined" ) {
+				return
+			}
 			theWorld.MAR_to_Memory._data_ = v;
 			theWorld.MAR_to_Memory._used_ = true;
 		}
@@ -1426,6 +1450,9 @@ var theWorld = {
 			}
 		}
 		, "SetState": function ( v ) {
+			if (typeof(v) === "undefined" ) {
+				return
+			}
 			theWorld.MDR_to_Memory._data_ = v;
 			theWorld.MDR_to_Memory._used_ = true;
 		}
@@ -1562,6 +1589,9 @@ function SetupTheWorld() {
 						}
 					}
 					, "SetState": function ( v ) {
+						if (typeof(v) === "undefined" ) {
+							return
+						}
 						theWorld[key]._data_ = v;
 						theWorld[key]._used_ = true;
 			console.log ( "For "+key+" con=", con );
@@ -1680,7 +1710,7 @@ var ParseInput = function (data) {
         // console.log("->"+array[i]+"<-");
 		const str = array[i];
 		if ( str.length === 0 ) {
-			console.log ( "Skipping 0 length line" )
+			// console.log ( "Skipping 0 length line" )
 		} else if ( str === "##1" ) {
 			st = 1;
 		} else if ( st === 0 ) {
@@ -1733,7 +1763,7 @@ var ParseInput = function (data) {
 function LoadMC() {
 	hideModal();
 	var v = $("#modal-input-code-hash").val();
-	console.log ( "v=", v );
+	// console.log ( "v=", v );
 	$.get ( "./data/"+v+".txt", function(data){
 		// console.log ( "Got It: ", data );
 		localStorage.setItem('microcode_data',v);
@@ -1759,6 +1789,7 @@ OnStartupReloadMicrocode();
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------
+var mm_max = 0;
 
 var ParseInputHexMM = function (data) {
 	var array = data.toString().split("\n");
@@ -1767,13 +1798,14 @@ var ParseInputHexMM = function (data) {
         // console.log("->"+array[i]+"<-");
 		const str = array[i];
 		if ( str.length === 0 ) {
-			console.log ( "Skipping 0 length line" )
+			// console.log ( "Skipping 0 length line" )
 		} else {
 			const p1x = parseInt(str,16);
 			MEMORY.x["_data_"][pc] = p1x;
 			pc++;
 		}
     }
+	mm_max = pc;
 	displayMemoryText(
 		"Address 8K Words",
 		"Data 16 bits wide",
@@ -1830,23 +1862,81 @@ function ResetMachine() {
 }
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
+//		Microcode_PC
+//		Microcode
+//		Input
+//		PC
+//		MAR
+//		Memory
+//		MDR
+//		IR
+//		AC
+//		ALU
+//		Result
+//		Decoder
+//		Output
 // ---------------------------------------------------------------------------------------------------------------------------------------
 var StopMcTick = 0;
 var StopTick = 0;
 
 function ClockRunner() {
+	clearOtherLine();
+
 	var old_mc_pc = MICROCODE_PC.x._data_;
 	var old_pc = PC.x._data_;
 
+console.log("");
+console.log(" Start ");
+console.log("");
 	// Start Process.
+	MICROCODE_PC.msg("Out", 1);		
 	MICROCODE.msg("Addr", 1);	
+	ALU.msg();
 
-	// IR.tick();
-	// MDR.msg('Out',1);
+console.log("");
+console.log(" Tick... ");
+console.log("");
+	for ( var qq = 0; qq < 5; qq++ ) {
+console.log("    qq =", qq);
+		MICROCODE_PC.tick();
+		MICROCODE.tick();
+		// INPUT.tick();
+		PC.tick();
+		MAR.tick();
+		MEMORY.tick();
+		MDR.tick();
+		IR.tick();
+		// AC.tick();
+		// ALU.tick();
+		// RESULT.tick();
+console.log ( "MUX" );
+		MUX.tick();
+		// OUTPUT.tick();
+	}
 
-	// End Process.
-	clearOtherLine();
+console.log("");
+console.log(" End... Rise... ");
+console.log("");
+
+// End Process.
+console.log ( "A" );
 	MICROCODE.rise();
+console.log ( "B" );
+	MICROCODE_PC.rise();
+console.log ( "C" );
+	PC.rise();
+console.log ( "D" );
+	MAR.rise();
+console.log ( "E" );
+	MDR.rise();
+console.log ( "F" );
+	IR.rise();
+console.log ( "G" );
+	MUX.rise();
+
+
+
+
 }
 
 // ---------------------------------------------------------------------------------------------------------------------------------------

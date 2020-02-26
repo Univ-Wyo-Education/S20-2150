@@ -80,8 +80,10 @@ var IR = {
 	, PushBus: function () {
 		if(theWorld.Bus && typeof theWorld.Bus.SetState === "function") {
 			if ( theWorld.hand_out && theWorld.hand_out === 1 ) {
+console.log ( "IR:PushBus", AC.x["_OutputBuffer_"] );
 				theWorld.Bus.SetState( ( IR.x["_OutputBuffer_"] & 0xfff ) );
 			} else {
+console.log ( "IR:PushBus", AC.x["_OutputBuffer_"] );
 				theWorld.Bus.SetState( IR.x["_OutputBuffer_"] );
 			}
 		}

@@ -43,6 +43,7 @@ var DbFlag = flag.String("db-flag", "", "debug flags.") // xyzzy401 - TODO
 var St = flag.String("st", "", "Output symbol table to file")
 var Upload = flag.Bool("upload", false, "Upload the microcode.hex to Amazon S3://")
 var Help = flag.Bool("help", false, "Help Printout")
+var Version = flag.Bool("version", false, "Print out version of build and exit.")
 
 var stOut = os.Stdout
 
@@ -65,6 +66,11 @@ func main() {
 
 	fns := flag.Args()
 
+	if *Version {
+		fmt.Printf("Version: %s\n", GitCommit)
+		os.Exit(0)
+	}
+
 	if *Help {
 		fmt.Printf("Version: %s\n", GitCommit)
 		fmt.Printf(`
@@ -76,6 +82,7 @@ func main() {
 --upload		If specified then the file will be upload so that you can use it in the
 				microcode emulator.  Brows to the URL and click on Load Microcode then
 				enter the hash that is output by this tool:
+--version		Print version and exit
 
 Microcode Emulator:
 				http://uw-s20-2015.s3-website-us-east-1.amazonaws.com/

@@ -136,6 +136,7 @@ var MDR = {
 
 	, PushBus: function () {
 		if(theWorld.Bus && typeof theWorld.Bus.SetState === "function") {
+console.log ( "MDR:PushBus", AC.x["_OutputBuffer_"] );
 			theWorld.Bus.SetState( MDR.x["_OutputBuffer_"] );
 		}
 	}

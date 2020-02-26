@@ -39,6 +39,9 @@ var Out = flag.String("out", "", "Output in hex.")
 var DbFlag = flag.String("db-flag", "", "debug flags.") // xyzzy401 - TODO
 var Upload = flag.Bool("upload", false, "Upload the code.hex to Amazon S3://")
 var St = flag.String("st", "", "Output symbol table to file")
+var Version = flag.Bool("version", false, "Print out version of build and exit.")
+
+var GitCommit string
 
 var stOut = os.Stdout
 
@@ -60,6 +63,11 @@ func main() {
 	if len(fns) > 0 {
 		fmt.Fprintf(os.Stderr, "Invalid arguments\n")
 		os.Exit(1)
+	}
+
+	if *Version {
+		fmt.Printf("Version: %s\n", GitCommit)
+		os.Exit(0)
 	}
 
 	if db20 {
@@ -223,7 +231,7 @@ func main() {
 			continue
 		}
 
-		_ /*label*/, _ /*op_s*/, op, hand, err := ParseLine(line, -line_no)
+		_ /*label*/, op_s, op, hand, err := ParseLine(line, -line_no)
 		if err != nil {
 			// done in pass 1
 			continue
@@ -316,27 +324,34 @@ func main() {
 				memBuf[pc] = ComposeInstruction(Mac.OpClear, handVal)
 				pc++
 			case Mac.OpSkipcond:
-				handVal, err := ConvHand(hand, 0)
-				if err != nil {
-					fmt.Fprintf(os.Stderr, "%s\n", err)
-					continue
+				fmt.Printf("%sop_s ->%s<- at:%s%s\n", MiscLib.ColorRed, op_s, godebug.LF(), MiscLib.ColorReset)
+				if op_s == "skiplt0" {
+					//case Mac.OpSkipLt0:
+					memBuf[pc] = ComposeInstruction(Mac.OpSkipLt0, 0)
+					pc++
+				} else {
+					handVal, err := ConvHand(hand, 0)
+					fmt.Printf("    handval=%x %d\n", handVal, handVal)
+					if err != nil {
+						fmt.Fprintf(os.Stderr, "%s\n", err)
+						continue
+					}
+					memBuf[pc] = ComposeInstruction(Mac.OpSkipcond, handVal)
+					if db7 {
+						fmt.Printf("%sOpSkipGt0 - instruction: %x at:%s%s\n", MiscLib.ColorYellow, ComposeInstruction(Mac.OpSkipGt0, 0), godebug.LF(), MiscLib.ColorReset)
+					}
+					pc++
 				}
-				memBuf[pc] = ComposeInstruction(Mac.OpSkipcond, handVal)
-				if db7 {
-					fmt.Printf("%sOpSkipGt0 - instruction: %x at:%s%s\n", MiscLib.ColorYellow, ComposeInstruction(Mac.OpSkipGt0, 0), godebug.LF(), MiscLib.ColorReset)
-				}
-				pc++
-				//case Mac.OpSkipLt0:
-				//	memBuf[pc] = ComposeInstruction(Mac.OpSkipLt0, 0)
-				//	pc++
 
 			case Mac.OpSkipEq0:
+				fmt.Printf("%sop_s ->%s<- at:%s%s\n", MiscLib.ColorRed, op_s, godebug.LF(), MiscLib.ColorReset)
 				memBuf[pc] = ComposeInstruction(Mac.OpSkipEq0, 0)
 				if db7 {
 					fmt.Printf("%sOpSkipGt0 - instruction: %x at:%s%s\n", MiscLib.ColorYellow, ComposeInstruction(Mac.OpSkipGt0, 0), godebug.LF(), MiscLib.ColorReset)
 				}
 				pc++
 			case Mac.OpSkipGt0:
+				fmt.Printf("%sop_s ->%s<- at:%s%s\n", MiscLib.ColorRed, op_s, godebug.LF(), MiscLib.ColorReset)
 				memBuf[pc] = ComposeInstruction(Mac.OpSkipGt0, 0)
 				if db7 {
 					fmt.Printf("%sOpSkipGt0 - instruction: %x at:%s%s\n", MiscLib.ColorYellow, ComposeInstruction(Mac.OpSkipGt0, 0), godebug.LF(), MiscLib.ColorReset)
@@ -676,7 +691,7 @@ func DumpSymbolTable(fp *os.File) {
 
 func ConvHand(hand string, base int) (handVal Mac.HandType, err error) {
 	hand = strings.TrimRight(hand, "\r\n \t")
-	handVal = Mac.HandType(-1)
+	handVal = Mac.HandType(0)
 	if hand != "" {
 		st, e1 := LookupSymbol(hand)
 		if e1 == nil {
@@ -756,6 +771,6 @@ var db8 = false
 var db7 = false
 var db5 = false  // HEX directive w/ hex output
 var db10 = false // test STR directive
-var db12 = false // test STR directive
+var db12 = true  // test STR directive
 var db14 = true  // DOS
 var db20 = true  // Upload flags

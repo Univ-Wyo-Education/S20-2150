@@ -25,6 +25,7 @@ var MAR = {
 		, "_Out_": null
 	}
 	, msg: function ( wire, val ) {
+		console.log ( "Called By", MAR.msg.caller );
 		switch ( wire ) {
 		case "Ld":  if ( val === 1 ) { MAR.x["_Ld_"] = 1; MAR.PullBus(true); MAR.x["_data_"] = MAR.x["_InputBuffer_"]; }	MAR.TurnOn( "mar_Ld"  );   MAR.Display( MAR.x["_data_"]); MAR.x["_Ld_"] = 1; 	break;
 		case "Inc": if ( val === 1 ) { MAR.x["_Inc_"] = 1; MAR.x["_data_"] = MAR.x["_data_"] + 1; }	    				MAR.TurnOn( "mar_Inc" );   MAR.Display( MAR.x["_data_"]); 						break;
@@ -74,6 +75,7 @@ console.log ( "MAR:PushBus", MAR.x["_OutputBuffer_"] );
 
 	// Turn on display of a wire with this ID
 	, TurnOn: function  ( id ) {
+console.log ( "MAR: turn on the line", id );
 		infoOn1 ( -1, "id_"+id );
 	}
 

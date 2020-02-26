@@ -12,6 +12,12 @@ hw2.hex: hw2.mas
 	./cmp-mac.sh
 	./Asm --in hw2.mas --out hw2.hex --upload
 
+mid_1.hex: mid_1.mas asm.go
+	./cmp-mac.sh
+	./Asm --in mid_1.mas --out mid_1.hex 
+	( cd ../FeSim ; go build )
+	../FeSim/FeSim --in mid_1.hex
+
 test: test003 test004 test005
 
 test002:

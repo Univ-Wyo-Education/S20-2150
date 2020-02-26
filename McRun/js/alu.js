@@ -24,24 +24,40 @@ var ALU = {
 		, "_A_": null
 		, "_B_": null
 		, "_Out_": null
-		, "_func_name_": ""
+		, "_func_txt_": ""
+		, "__debug__": false
 	}
 	, msg: function ( wire, val ) {
 		// xyzzy - pull CTL from Inputs (Microcode?)
-		var a = ALU.x["_Ctl_3_"];
-		var b = ALU.x["_Ctl_2_"];
-		var c = ALU.x["_Ctl_1_"];
-		var d = ALU.x["_Ctl_0_"];
+		var a = ( ALU.x["_Ctl_3_"] > 0 ) ? 1 : 0;
+		var b = ( ALU.x["_Ctl_2_"] > 0 ) ? 1 : 0;
+		var c = ( ALU.x["_Ctl_1_"] > 0 ) ? 1 : 0;
+		var d = ( ALU.x["_Ctl_0_"] > 0 ) ? 1 : 0;
 		ALU.x["_Ctl_"] = a << 3 | b << 2 | c << 1 | d;
+		//if ( ALU.x["_Ctl_"] == null ) {
+		//	ALU.x["_Ctl_"] = 0;
+		//}
 		ALU.func();
 		var x = ALU.x["_Ctl_"];
-		var y = ALU.x["_func_name_"];
+		var y = ALU.x["_func_txt_"];
+		if ( ALU.x.__debug__ ) { console.log ( "x=", x, "y=", y ); }
 		ALU.Display( x, y );
 	}
 	, tick: function ( ) {
+		// xyzzy - pull CTL from Inputs (Microcode?)
+		var a = ( ALU.x["_Ctl_3_"] > 0 ) ? 1 : 0;
+		var b = ( ALU.x["_Ctl_2_"] > 0 ) ? 1 : 0;
+		var c = ( ALU.x["_Ctl_1_"] > 0 ) ? 1 : 0;
+		var d = ( ALU.x["_Ctl_0_"] > 0 ) ? 1 : 0;
+		ALU.x["_Ctl_"] = a << 3 | b << 2 | c << 1 | d;
+		//if ( ALU.x["_Ctl_"] == null ) {
+		//	ALU.x["_Ctl_"] = 0;
+		//}
+		ALU.func();
 		ALU.func();
 		var x = ALU.x["_Ctl_"];
-		var y = ALU.x["_func_name_"];
+		var y = ALU.x["_func_txt_"];
+		if ( ALU.x.__debug__ ) { console.log ( "x=", x, "y=", y ); }
 		ALU.Display( x, y );
 	}
 	// After Tick Cleanup 
@@ -54,7 +70,7 @@ var ALU = {
 		ALU.x["_A_"] = null;
 		ALU.x["_B_"] = null;
 		ALU.x["_Out_"] = null;
-		ALU.x["_func_name_"] = "";
+		ALU.x["_func_txt_"] = "";
 	}
 	/*
 		Our ALU has 4 control inputs.
@@ -84,67 +100,70 @@ var ALU = {
 		switch ( ALU.x["_Ctl_"] ) {
 		case 0: // 0x0
 			o = -ALU.x["_A_"];
-			ALU.x["_func_name_"] = "Unary -";
+			ALU.x["_func_txt_"] = "Unary -";
 		break;
 		case 1: // 0x1
 			// ??? xyzzy ??? NOP?
-			ALU.x["_func_name_"] = "NOP";
+			ALU.x["_func_txt_"] = "NOP";
 		break;
 		case 2: // 0x2
 			o = ALU.x["_A_"] + 1;
-			ALU.x["_func_name_"] = "Inc";
+			ALU.x["_func_txt_"] = "Inc";
 		break;
 		case 3: // 0x3
 			o = ALU.x["_A_"] - 1;
-			ALU.x["_func_name_"] = "Dec";
+			ALU.x["_func_txt_"] = "Dec";
 		break;
 		case 4: // 0x4
 			o = ALU.x["_A_"] + ALU.x["_B_"];
-			ALU.x["_func_name_"] = "(A+B)";
+			ALU.x["_func_txt_"] = "(A+B)";
 		break;
 		case 5: // 0x5
 			o = ALU.x["_A_"] - ALU.x["_B_"];
-			ALU.x["_func_name_"] = "(A-B)";
+			ALU.x["_func_txt_"] = "(A-B)";
 		break;
 		case 6: // 0x6
 			o = ALU.x["_A_"] >> ALU.x["_B_"];
-			ALU.x["_func_name_"] = "(A>>B)";
+			ALU.x["_func_txt_"] = "(A>>B)";
 		break;
 		case 7: // 0x7
 			o = ( ALU.x["_A_"] == ALU.x["_B_"] ) ? 1 : 0;
-			ALU.x["_func_name_"] = "(A==B)";
+			ALU.x["_func_txt_"] = "(A==B)";
 		break;
 		case 8: // 0x8
 			o = ~ ALU.x["_A_"];
-			ALU.x["_func_name_"] = "~A";
+			ALU.x["_func_txt_"] = "~A";
 		break;
 		case 9: // 0x9
 			o = ( ALU.x["_A_"] < 0 ) ? 1 : 0;
-			ALU.x["_func_name_"] = "(A<B)=>1";
+			ALU.x["_func_txt_"] = "(A<B)=>1";
 		break;
 		case 10: // 0xa
 			o = ( ALU.x["_A_"] > 0 ) ? 1 : 0;
-			ALU.x["_func_name_"] = "(A>B)=>1";
+			ALU.x["_func_txt_"] = "(A>B)=>1";
 		break;
 		case 11: // 0xb
 			o = ALU.x["_A_"] & ALU.x["_B_"];
-			ALU.x["_func_name_"] = "(A&B)";
+			ALU.x["_func_txt_"] = "(A&B)";
 		break;
 		case 12: // 0xc
 			o = ALU.x["_A_"] | ALU.x["_B_"];
-			ALU.x["_func_name_"] = "(A|B)";
+			ALU.x["_func_txt_"] = "(A|B)";
 		break;
 		case 13: // 0xd
 			o = ALU.x["_A_"] ^ ALU.x["_B_"];
-			ALU.x["_func_name_"] = "(A^B)";
+			ALU.x["_func_txt_"] = "(A^B)";
 		break;
 		case 14: // 0xe
 			o = ALU.x["_A_"] >> ALU.x["_B_"];	// xyzzy - logical
-			ALU.x["_func_name_"] = "(A>>B)L";
+			ALU.x["_func_txt_"] = "(A>>B)L";
 		break;
 		case 15: // 0xf
 			o = ALU.x["_A_"] << ALU.x["_B_"];	// xyzzy - logical
-			ALU.x["_func_name_"] = "(A<<B)L";
+			ALU.x["_func_txt_"] = "(A<<B)L";
+		break;
+		default:
+			ALU.x["_func_txt_"] = ALU.x._Ctl_;
 		break;
 		}
 		ALU.x["_Out_"] = o;

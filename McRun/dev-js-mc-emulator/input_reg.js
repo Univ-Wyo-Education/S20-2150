@@ -70,6 +70,7 @@ var INPUT = {
 
 	, PushBus: function () {
 		if(theWorld.Bus && typeof theWorld.Bus.SetState === "function") {
+console.log ( "INPUT:PushBus", AC.x["_OutputBuffer_"] );
 			theWorld.Bus.SetState( INPUT.x["_OutputBuffer_"] );
 		}
 	}
@@ -82,11 +83,7 @@ var INPUT = {
 	// Display text to inside of register box
 	, Display: function  ( val ) {
 		var sVal = toHex(val,4);
-		// console.log ( "Padded", sVal );
-		var a = sVal.substr(0,2);
-		var b = sVal.substr(2,2);
-		$("#h_input_txt_0").text(a);
-		$("#h_input_txt_1").text(b);
+		$("#h_input_txt_0").text(sVal);
 	}
 
 	// Return any errors generated in this "chip"
