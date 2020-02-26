@@ -1,12 +1,14 @@
 
 all:
-	go build
+	./cmp-mac.sh
 
+# GOOS=windows go build -o FeSim.pc.exe . 
 windows:
-	GOOS=windows go build -o FeSim.pc.exe . 
+	./cmp-windows.sh
 
+# GOOS=linux go build -o FeSim.linux . 
 linux:
-	GOOS=linux go build -o FeSim.linux . 
+	./cmp-linux.sh
 
 install: all windows linux
 	cp FeSim FeSim.* ../Download
