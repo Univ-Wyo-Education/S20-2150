@@ -55,7 +55,9 @@ var MUX = {
 			var b0 = ( wire.substr(0,1) == '0' ) ? 0 : 1;	// Ctl_1
 			var b1 = ( wire.substr(1,1) == '0' ) ? 0 : 1;	// Ctl_0
 			var bb = (b1&0x1) << 1 | (b0&0x1);				// Ctl (as a number)
-console.log ( "  MUX: parse of 'wire'="+wire, 'nTh=', nTh, "(_Ctl_0_)b0=", b0, "(_Ctl_1_)b1=", b1, "(_Ctl_)bb=", bb, ' wire=',wire, 'set-to', val );
+			if ( MUX.debug01 ) {
+				console.log ( "  MUX: parse of 'wire'="+wire, 'nTh=', nTh, "(_Ctl_0_)b0=", b0, "(_Ctl_1_)b1=", b1, "(_Ctl_)bb=", bb, ' wire=',wire, 'set-to', val );
+			}
 			MUX.x["_"+wire+"_"] = val;
 
 			var c = MUX.x["_Ctl_1_"];
@@ -113,7 +115,9 @@ console.log ( "  MUX: parse of 'wire'="+wire, 'nTh=', nTh, "(_Ctl_0_)b0=", b0, "
 			}
 			// var _Out_ = MUX.x._Out_.toString(16);
 			var _Out_ = MUX.x._Out_;
-console.log ( "  MUX: _Out_ =", _Out_ );
+			if ( MUX.debug01 ) {
+				console.log ( "  MUX: _Out_ =", _Out_ );
+			}
 			//	// <text id="mux_to_mpc" x="1280" y="140" class="vsmall"></text>
 			var sVal = toHex(_Out_,2);
 			$("#mux_to_mpc").text(sVal);

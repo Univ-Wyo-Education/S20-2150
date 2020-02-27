@@ -1,44 +1,33 @@
-
-0. hand_out flag is not correct - not working - we get d014 on buss/MAR instead of 0014 from Load instruction at PC == 01 in program.
-
+1. Add opeation (ALU) not working correctly
+	1. Display ALU control liens with text out.
+	2. Verify ALU operation
+	3. Get the Add 1 to pointer to work
+	4. Verify we are updating the pointer
+	5. Stop over-writing the code with data.
+Stuck at MPC = 80, PC = 0x0004, Store in program.
+	- IR has a 0 in it - should be a 0x2xxx (Store)a
 1. Issue: ran for a bit then address 5 got overwritten?
 	MEMORY.x._data_[5].toString(16)
 	Should be 0xd014, became 0x0014 - odd. 
 
 
-(45min)
-1. Need to display microcode + Address in Microcode
-
-
-
-(2hr)
-0. Display mem[MAR] HEX / DEC / Ch : +-4, and Disassembled Instruction at that point
-	1. Need to display memory as it is used.
-	1. Need to display code as it runs - to demo test of code.
-	Show Memory - Modal for Address Range, then display values hex/dec/char for that set of addresses.
 
 
 
 
 
-
-(1hr)
-	Display the MUX/colored-input-if-config input lines and where data is from as it is "turned" on.
-
-
+(20min)
+when 'hand_out' is on then id_hand_out shall be blue - to the tag hand_out
+	To reproduce - step to the first 'hand_out' on, 4 steps, then
+	add in the line - and show it.
 
 (2hr)
 Output Reg
-	+3. Hook up 7-seg display - to "Output"
+	++3. Hook up 7-seg display - to "Output"
 
 
 (2hr)
 Buttons:
-
-	(ip)
-	Step Tick -- Stop after 1 microcode instruction until the next "step".
-		1. Put in a "Fetch-Stop" input -> microcode. (Fetch Cycle) (In "Inc" in Microcode_PC in ./js/microcode_pc_reg.js)
-		"ClockRunner()" - rename and make it Step1Tick()
 
 	(ip)
 	Step Instruction - Step just 1 instruction.  Stop after.
@@ -56,7 +45,18 @@ Buttons:
 
 
 
+- Instruction 0x0 (JnS) probably broken.
 
+
+(2hr)
+	A listing from ./Asm/Asm that has addresses
+	A listing from ../McAsm/McAsm that has addresses
+
+(1hr)
+	Display the MUX/colored-input-if-config input lines and where data is from as it is "turned" on.
+
+(1hr)
+	Show Memory - Modal for Address Range, then display values hex/dec/char for that set of addresses.
 
 (2hr)
 Input Reg
@@ -79,7 +79,6 @@ Setup - Config Stuff
 
 (15hrs)
 	Logic Probe - show the logic probe - 	Modal for config of lines - then display??								Probably Hard
-
 
 
 
@@ -168,4 +167,15 @@ Would be nice to have a Fetch/Execute flag that is shown. (Similar to Halt)  LED
 +++ (ip)
 	Run - Jump to 0, start running.																				Easy
 		- Clear flats that prevent run, do Reset op - let it go!
+
+0. Display mem[MAR] HEX / DEC / Ch : +-4, and Disassembled Instruction at that point
+	1. Need to display memory as it is used.
+	1. Need to display code as it runs - to demo test of code.
+(45min)
+1. Need to display microcode + Address in Microcode
+0. hand_out flag is not correct - not working - we get d014 on buss/MAR instead of 0014 from Load instruction at PC == 01 in program.
+	(ip)
+	+++Step Tick -- Stop after 1 microcode instruction until the next "step".
+		+++1. Put in a "Fetch-Stop" input -> microcode. (Fetch Cycle) (In "Inc" in Microcode_PC in ./js/microcode_pc_reg.js)
+		"ClockRunner()" - rename and make it Step1Tick()
 

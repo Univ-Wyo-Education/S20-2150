@@ -274,11 +274,11 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		<text id="microcode_txt_0" x="754" y="47" class="small">Address 256 Words</text>
 		<text id="microcode_txt_1" x="754" y="67" class="small">Data 64 bits wide</text>
 
-		<text id="h_microcode_txt_0" x="760" y="50" class="small"></text>
-		<text id="h_microcode_txt_1" x="760" y="65" class="small"></text>
-		<text id="h_microcode_txt_2" x="760" y="80" class="small"></text>
-		<text id="h_microcode_txt_3" x="760" y="95" class="small"></text>
-		<text id="h_microcode_txt_4" x="760" y="115" class="small"></text>
+		<text id="h_microcode_txt_0" x="754"  y="50" class="small"></text>
+		<text id="h_microcode_txt_1" x="754"  y="70" class="small"></text>
+		<text id="h_microcode_txt_2" x="754"  y="85" class="small"></text>
+		<text id="h_microcode_txt_3" x="754" y="100" class="small"></text>
+		<text id="h_microcode_txt_4" x="754" y="115" class="small"></text>
 
 	<rect id="id_Microcode_PC" x="1200" y="30" width="100" height="50" fill="#ffd700" stroke="#000000" stroke-width="3" onclick="infoOn('id_Microcode_PC');"/>
 		<text x="1200" y="25" class="small" onclick="infoOn('id_Microcode_PC');">Microcode PC</text>
@@ -499,7 +499,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 		<text id="h_input_txt_0" x="1010" y="350" class="small"></text>
 
-		<g transform="translate(1210 385) scale(1.5)">
+		<g transform="translate(1210 380) scale(1.8)">
 			<g id="dig0_0_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
 			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#ff0000"/>
 			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#ff0000"/>
@@ -511,7 +511,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			</g>
 		</g>
 
-		<g transform="translate(1230 385) scale(1.5)">
+		<g transform="translate(1232 380) scale(1.8)">
 			<g id="dig1_0_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
 			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#ff0000"/>
 			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#ff0000"/>
@@ -523,7 +523,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			</g>
 		</g>
 
-		<g transform="translate(1250 385) scale(1.5)">
+		<g transform="translate(1254 380) scale(1.8)">
 			<g id="dig2_0_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
 			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#ff0000"/>
 			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#ff0000"/>
@@ -535,7 +535,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			</g>
 		</g>
 
-		<g transform="translate(1270 385) scale(1.5)">
+		<g transform="translate(1276 380) scale(1.8)">
 			<g id="dig3_0_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
 			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#ff0000"/>
 			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#ff0000"/>
@@ -783,22 +783,22 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		<rect id="b-load-memory"     x="40" y="360" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('load-memory');"/>
 		<text id="b-load-memory-txt" x="45" y="377" class="small" onclick="infoOn('load-memory');">Load Memory</text>
 
-		<rect id="b-step"            x="40" y="390" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('step');"/>
+		<rect id="b-step"            x="40" y="390" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('load-mc');"/>
 		<text id="b-step-txt"        x="45" y="407" class="small" onclick="infoOn('load-mc');">Load Microcode</text>
 
-		<rect id="b-run"             x="40" y="420" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('run');"/>
+		<rect id="b-run"             x="40" y="420" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('step');"/>
 		<text id="b-run-txt"         x="45" y="437" class="small" onclick="infoOn('step');">Step Tick</text>
 
-		<rect id="b-input"           x="40" y="450" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('input');"/>
+		<rect id="b-input"           x="40" y="450" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('step-ins');"/>
 		<text id="b-input-txt"       x="45" y="467" class="small" onclick="infoOn('step-ins');">Step Instruction</text>
 
-		<rect id="b-reset"           x="40" y="480" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('reset');"/>
+		<rect id="b-reset"           x="40" y="480" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('run');"/>
 		<text id="b-reset-txt"       x="45" y="497" class="small" onclick="infoOn('run');">Run</text>
 
-		<rect id="b-load-mc"         x="40" y="510" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('load-mc');"/>
+		<rect id="b-load-mc"         x="40" y="510" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('reset');"/>
 		<text id="b-load-mc-txt"     x="45" y="527" class="small" onclick="infoOn('reset');">Reset</text>
 
-		<rect id="b-step-ins"        x="40" y="540" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('step-ins');"/>
+		<rect id="b-step-ins"        x="40" y="540" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('input');"/>
 		<text id="b-step-ins-txt"    x="45" y="557" class="small" onclick="infoOn('input');">Input</text>
 
 		<rect id="b-setup-cfg"       x="40" y="570" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('setup-cfg');"/>
@@ -1032,6 +1032,7 @@ function showFetch ( isFetch ) {
 		$("#set_execute").hide();
 		$("#is_fetch").show();
 	} else {
+		showMemoryAtPC ( PC.x._data_ - 1 );
 		$("#is_fetch").hide();
 		$("#set_execute").show();
 	}
@@ -1048,6 +1049,14 @@ function showIsError ( isError ) {
 }
 
 
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// Globals
+// ---------------------------------------------------------------------------------------------------------------------------------------
+var mm_max = 0;
+
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------
 
 function infoOn(x) {
 	clearOtherLine();
@@ -1070,12 +1079,15 @@ function infoOn1(i,x) {
 	case "clear-line":
 		break;
 	case "help":
-		showTextInOutputBox("MARIA Microcode Emulator: Version v0.3.0"
+		showTextInOutputBox("MARIA Microcode Emulator: Version v1.3.5"
 			,"Load assembled microcode and assembled instructions, then step or run."
 			,""
 			,"https://github.com/Univ-Wyo-Education/S20-2150/McDocs/ for more detailed help."
 			,""
 			,"Click on a line to see where the input connects to.  Try Ld near the PC register."
+			,""
+			,"Developed for the Deptatmentment of Computer Science 2150 Machine Architecture class."
+			,"Copyright (C) University of Wyoming, 2019-2020." 
 			);
 		break;
 	case "load-mc":
@@ -1104,10 +1116,15 @@ function infoOn1(i,x) {
 	case "reset":
 		ResetMachine();
 		break;
-	//case "mux_out":
-	//	$("#mux_to_mpc").text(a);
-	//	// <text id="mux_to_mpc" x="1280" y="140" class="vsmall"></text>
-	//	break;
+	case "step":	// Step Tick
+		Step1Tick();
+		break;
+
+
+	// step-ins
+
+	// logic-probe
+
 
 	case "id_pc":
 		$("#"+x).css("fill","#ff0000");
@@ -1314,6 +1331,19 @@ function toHex(d, padding) {
     }
     return hex;
 }
+function toDec(d, padding) {
+	var hex;
+	if ( typeof d === "string" ) {
+		hex = d;
+	} else {
+		hex = Number(d).toString(10);
+	}
+    padding = typeof (padding) === "undefined" || padding === null ? padding = 2 : padding;
+    while (hex.length < padding) {
+        hex = "0" + hex;
+    }
+    return hex;
+}
 function toBin(d, padding) {
 	var bin;
 	if ( typeof d === "string" ) {
@@ -1485,13 +1515,13 @@ console.log ( "****************** SetState:", v );
 			theWorld.IR_11__8._error_ = [];
 		}
 	}
-	,"hand": {
+	,"hand_out": {
 		"_data_": 0
 		, "_used_": false
 		, "_error_": []
 		, "State": function () {
-			if ( theWorld.hand._used_ ) {
-				return ( theWorld.hand._data_ );
+			if ( theWorld.hand_out._used_ ) {
+				return ( theWorld.hand_out._data_ );
 			} else {
 				var ignore = false;
 				if ( arguments.length > 0 ) {
@@ -1499,7 +1529,7 @@ console.log ( "****************** SetState:", v );
 				}
 				if ( ! ignore ) {
 					console.log ( "Warning: Pulling 'hand.State' when undefined" );
-					theWorld.hand._error_.push( "Warning: Pulling 'hand.State' when undefined" );
+					theWorld.hand_out._error_.push( "Warning: Pulling 'hand.State' when undefined" );
 				}
 				return ( theWorld.hand._data_ );
 			}
@@ -1508,18 +1538,18 @@ console.log ( "****************** SetState:", v );
 			if (typeof(v) === "undefined" ) {
 				return
 			}
-			theWorld.hand._data_ = v;
-			theWorld.hand._used_ = true;
+			theWorld.hand_out._data_ = v;
+			theWorld.hand_out._used_ = true;
 		}
 		, "TickRise": function ( v ) {
-			theWorld.hand._data_ = undefined;
-			theWorld.hand._used_ = false;
+			theWorld.hand_out._data_ = undefined;
+			theWorld.hand_out._used_ = false;
 		}
 		, "Error": function ( v ) {
-			return ( theWorld.hand._error_ );
+			return ( theWorld.hand_out._error_ );
 		}
 		, "ClearError": function ( v ) {
-			theWorld.hand._error_ = [];
+			theWorld.hand_out._error_ = [];
 		}
 	}
 	,"MAR_to_Memory": {
@@ -1769,16 +1799,87 @@ function displayMicrocodeText(t1,t2,t3,t4,t5) {
 	$("#h_microcode_txt_4").text(t5);
 }
 
+function displayMicrocodeData(addr,v1,v2,lst) {
+	var s1 = toHex(v1,8);
+	var s2 = toHex(v2,8);
+	var s1a = s1.substr(0,4);
+	var s1b = s1.substr(4);
+	var s2a = s2.substr(0,4);
+	var s2b = s2.substr(4);
+	var s = toHex(addr,2) + ": "+ s1a + " " + s1b + " " + s2a + " " + s2b;
+	var a = "";
+	var b = "";
+	var c = "";
+	var d = "";
+	var maxLen = 45;
+	var ii = 0, mx = lst.length;
+	for ( ; ii < mx; ii++ ) {
+		if ( a.length+lst[ii].length < maxLen ) {
+			a = a + " " + lst[ii] + " ";
+		} else {
+			b = lst[ii];
+			break;
+		}
+	}
+	for ( ; ii < mx; ii++ ) {
+		if ( b.length+lst[ii].length < maxLen ) {
+			b = b + " " + lst[ii] + " ";
+		} else {
+			c = lst[ii];
+			break;
+		}
+	}
+	for ( ; ii < mx; ii++ ) {
+		if ( c.length+lst[ii].length < maxLen ) {
+			c = c + " " +  lst[ii] + " ";
+		} else {
+			d = lst[ii];
+			break;
+		}
+	}
+	for ( ; ii < mx; ii++ ) {
+		if ( d.length+lst[ii].length < (maxLen-5) ) {
+			d = d + " " + lst[ii] + " ";
+		} else {
+			d = "..."
+			break;
+		}
+	}
+	//d = "abcdefghij";
+	//d += "012345678";
+	//d += "abcdefghi";
+	//d += "012345678";
+	//d += "abcdefghi";
+	//d += "01234";
+	displayMicrocodeText(s,a,b,c,d);
+}
+
 function clearMemoryText() {
-	$("#memory_txt_0").text("");
-	$("#memory_txt_1").text("");
+	for ( var i = 0; i < 16; i++ ) { 
+		$("#memory_txt_"+i).text("");
+	}
 }
 
 function displayMemoryText() {
 	clearMemoryText();
-	for ( var i = 0, mx = arguments.length; i < mx && i < 16; i++ ) {
+	var i = 0;
+	for ( var mx = arguments.length; i < mx && i < 16; i++ ) {
 		var x = arguments[i];
 		$("#h_memory_"+i).html(arguments[i]);
+	}
+	for ( ; i < 16; i++ ) {
+		$("#h_memory_"+i).html("");
+	}
+}
+function displayMemoryTextArr(arr) {
+	clearMemoryText();
+	var i = 0;
+	for ( var mx = arr.length; i < mx && i < 16; i++ ) {
+		var x = arr[i];
+		$("#h_memory_"+i).html(arr[i]);
+	}
+	for ( ; i < 16; i++ ) {
+		$("#h_memory_"+i).html("");
 	}
 }
 
@@ -1812,15 +1913,19 @@ function displayMainBus(s) {
 <script src="js/mux.js?v=0008"></script>
 <script>
 
-console.log ( "PC=",PC, "RESULT=", RESULT);
-console.log ( "IR=",IR, "AC=", AC);
-console.log ( "MAR=",MAR, "MDR=", MDR);
-console.log ( "INPUT=",INPUT, "OUTPUT=", OUTPUT);
-console.log ( "MICROCODE_PC=",MICROCODE_PC);
-console.log ( "MICROCODE=",MICROCODE);
-console.log ( "MEMORY=",MEMORY);
-console.log ( "ALU=",ALU);
-console.log ( "MUX=",MUX);
+//console.log ( "PC=",PC, "RESULT=", RESULT);
+//console.log ( "IR=",IR, "AC=", AC);
+//console.log ( "MAR=",MAR, "MDR=", MDR);
+//console.log ( "INPUT=",INPUT, "OUTPUT=", OUTPUT);
+//console.log ( "MICROCODE_PC=",MICROCODE_PC);
+//console.log ( "MICROCODE=",MICROCODE);
+//console.log ( "MEMORY=",MEMORY);
+//console.log ( "ALU=",ALU);
+//console.log ( "MUX=",MUX);
+
+console.log ( "Version v.1.3.5 - Thu Feb 27 06:52:35 MST 2020." );
+console.log ( "Developed for the Deptatmentment of Computer Science 2150 Machine Architecture class.");
+console.log ( "Copyright (C) University of Wyoming, 2019-2020." );
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------
@@ -1921,7 +2026,6 @@ OnStartupReloadMicrocode();
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------
-var mm_max = 0;
 
 var ParseInputHexMM = function (data) {
 	var array = data.toString().split("\n");
@@ -2014,14 +2118,15 @@ function ResetMachine() {
 var StopMcTick = 0;
 var StopTick = 0;
 
-function ClockRunner() {
+// Formerly: ClockRunner() {
+function Step1Tick() {
 	clearOtherLine();
 
 	var old_mc_pc = MICROCODE_PC.x._data_;
 	var old_pc = PC.x._data_;
 
 console.log("");
-console.log(" Start ");
+console.log(" Start -------------------------------------------------------------------------------------- ");
 console.log("");
 	// Start Process.
 	MICROCODE_PC.msg("Out", 1);		
@@ -2147,6 +2252,107 @@ function test0009() {
 function test000A() {
 	clearOtherLine();
 	MICROCODE.rise();
+}
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------
+function DisAssembler ( xIns ) {
+	var op = xIns & 0xF000;
+	var hand = xIns & 0x0fff;
+	op = ( op >> 12 ) & 0xf;
+
+	var s = "";
+	switch ( op ) {
+	case 0x0: // JnS
+		s = "JnS      " + toHex(hand,4)
+	break;
+	case 0x1: // Load
+		s = "Load     " + toHex(hand,4)
+	break;
+	case 0x2: // Store
+		s = "Store    " + toHex(hand,4)
+	break;
+	case 0x3: // Add
+		s = "Add      " + toHex(hand,4)
+	break;
+	case 0x4: // Subt
+		s = "Subt     " + toHex(hand,4)
+	break;
+	case 0x5: // Input
+		s = "Input    " 
+	break;
+	case 0x6: // Output
+		s = "Output   " 
+	break;
+	case 0x7: // Halt
+		s = "Halt    " 
+	break;
+	case 0x8: // Skipcond
+		if ( ( ( hand & 0x0f00 ) >> 8 ) == 0x0 ) {
+			// OpSkipLt0     // 00
+			s = "SkipLt0    " 
+		} else if ( ( ( hand & 0x0f00 ) >> 8 ) == 0x4 ) {
+			// OpSkipEq0     // 01
+			s = "SkipEq0    " 
+		} else if ( ( ( hand & 0x0f00 ) >> 8 ) == 0x8 ) {
+			// OpSkipGt0     // 10
+			s = "SkipGt0    " 
+		} else {
+			s = "Skip? Inv. " 
+		}
+	break;
+	case 0x9: // Jump
+		s = "Jump     " + toHex(hand,4)
+	break;
+	case 0xA: // Clear
+		s = "Clear     " 
+	break;
+	case 0xB: // AddI
+		s = "AddI     " + toHex(hand,4)
+	break;
+	case 0xc: // JumpI
+		s = "JumpI    " + toHex(hand,4)
+	break;
+	case 0xd: // LoadI
+		s = "LoadI    " + toHex(hand,4)
+	break;
+	case 0xe: // StoreI
+		s = "StoreI   " + toHex(hand,4)
+	break;
+	default:
+			s = "Invalid    "
+	break;
+	}
+
+	return s;
+
+}
+
+function Dis1Word(pc) {
+	var s, sPc = toHex(pc,4);
+	if ( pc >= 0 && pc < mm_max ) {
+		var mm = MEMORY.x._data_[pc];
+		s = sPc + ": " + toHex(mm,4) + "/" + toDec(mm,5) + " : " + DisAssembler ( mm );
+	} else {
+		s = sPc + " out of range."
+	}
+	return s;
+}
+
+function showMemoryAtPC ( pc ) {
+	var xpc = pc - 6;
+	if ( xpc < 0 ) {
+		xpc = 0;
+	}
+	var pa = [];
+	for ( var ii = xpc ; ii < (pc+6) && ii < mm_max ; ii++ ) {
+		var s = Dis1Word(ii);
+		if ( ii === pc ) {
+			s += " <<==--- ";
+		}
+		pa.push ( s );
+	}
+	displayMemoryTextArr(pa);
 }
 
 </script>

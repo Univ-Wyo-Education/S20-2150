@@ -78,12 +78,18 @@ var IR = {
 	}
 
 	, PushBus: function () {
+		if ( IR.debug01 ) {
+			console.log ( "IR:PushBus [][][][]", IR.x["_OutputBuffer_"] );
+			console.log ( "  IR:PushBus [][][][]", IR.x["_OutputBuffer_"] );
+			console.log ( "    IR:PushBus [][][][]", IR.x["_OutputBuffer_"] );
+			console.log ( "      IR:PushBus [][][][]", IR.x["_OutputBuffer_"] );
+		}
 		if(theWorld.Bus && typeof theWorld.Bus.SetState === "function") {
-			if ( theWorld.hand_out && theWorld.hand_out === 1 ) {
-console.log ( "IR:PushBus", AC.x["_OutputBuffer_"] );
-				theWorld.Bus.SetState( ( IR.x["_OutputBuffer_"] & 0xfff ) );
+			if ( theWorld.hand_out && theWorld.hand_out._data_ === 1 ) {
+console.log ( "IR:PushBus/hand_out [][][][]", IR.x["_OutputBuffer_"] );
+				theWorld.Bus.SetState( ( IR.x["_OutputBuffer_"] & 0x0fff ) );
 			} else {
-console.log ( "IR:PushBus", AC.x["_OutputBuffer_"] );
+console.log ( "IR:PushBus", IR.x["_OutputBuffer_"] );
 				theWorld.Bus.SetState( IR.x["_OutputBuffer_"] );
 			}
 		}
@@ -92,12 +98,14 @@ console.log ( "IR:PushBus", AC.x["_OutputBuffer_"] );
 		var irA = ( ir & 0xf000 ) >> 12;
 		var irB = ( ir & 0x0f00 ) >> 8;
 
-console.log ( "irA", irA.toString(16) );
-console.log ( "irB", irB.toString(16) );
-console.log ( "11_6", ( (irA & 0x8) != 0 ) ? 1 : 0 );
-console.log ( "11_5", ( (irA & 0x4) != 0 ) ? 1 : 0 );
-console.log ( "11_4", ( (irA & 0x2) != 0 ) ? 1 : 0 );
-console.log ( "11_3", ( (irA & 0x1) != 0 ) ? 1 : 0 ); 
+		if ( IR.debug01 ) {
+			console.log ( "irA", irA.toString(16) );
+			console.log ( "irB", irB.toString(16) );
+			console.log ( "11_6", ( (irA & 0x8) != 0 ) ? 1 : 0 );
+			console.log ( "11_5", ( (irA & 0x4) != 0 ) ? 1 : 0 );
+			console.log ( "11_4", ( (irA & 0x2) != 0 ) ? 1 : 0 );
+			console.log ( "11_3", ( (irA & 0x1) != 0 ) ? 1 : 0 ); 
+		}
 
 		MUX.msg("11_6", ( (irA & 0x8) != 0 ) ? 1 : 0 );
 		MUX.msg("11_5", ( (irA & 0x4) != 0 ) ? 1 : 0 );

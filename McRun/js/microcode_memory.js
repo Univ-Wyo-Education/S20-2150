@@ -68,7 +68,9 @@ console.log ( "Microcode/msg: addr=", addr );
 					var obj = MICROCODE.x["_Output_Lines_"];
 					var def = MICROCODE.x["_Output_Lines_"][key];
 					var mcWord = MICROCODE.x[def.DataArray][addr];
-					if ( MICROCODE.x["_data1_"][addr] === 0 && MICROCODE.x["_data2_"][addr] === 0 ) {
+					var v2 = MICROCODE.x["_data1_"][addr];
+					var v1 = MICROCODE.x["_data2_"][addr];
+					if ( v1 === 0 && v2 === 0 ) {
 						showIsError ( true );
 					}
 					var val = ( !!( mcWord & ( 1 << def.NthBit ) ) ) ? 1 : 0;	
@@ -81,6 +83,7 @@ console.log ( "Microcode: Turn On:", "->"+key+"<-", val, 'def.NthBit=', def.NthB
 						MICROCODE.x._OutputBufferList_.push ( key );
 						MICROCODE.PushBus( key );
 					}
+displayMicrocodeData(addr, v1, v2, MICROCODE.x._OutputBufferList_);
 				}
 			}
 			MICROCODE.Display( addr );

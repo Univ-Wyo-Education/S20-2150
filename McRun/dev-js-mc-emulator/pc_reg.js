@@ -105,4 +105,3 @@ console.log ( "PC:PushBus", PC.x["_OutputBuffer_"] );
 
 };
 
-console.log ( "PC v.1.0.1" );
