@@ -23,6 +23,14 @@ function OldPushBus() {
 }
 */
 
+var MicrocodeFunctions = {
+	"is_halted": showHalt
+	,"is_fetch": showFetch
+	,"set_execute": function() { showFetch(false); }
+	,"is_error": showIsError
+};
+
+// function showIsError ( isError ) {
 
 var MICROCODE = {
 	setupSelf: function ( ) {
@@ -60,6 +68,9 @@ console.log ( "Microcode/msg: addr=", addr );
 					var obj = MICROCODE.x["_Output_Lines_"];
 					var def = MICROCODE.x["_Output_Lines_"][key];
 					var mcWord = MICROCODE.x[def.DataArray][addr];
+					if ( MICROCODE.x["_data1_"][addr] === 0 && MICROCODE.x["_data2_"][addr] === 0 ) {
+						showIsError ( true );
+					}
 					var val = ( !!( mcWord & ( 1 << def.NthBit ) ) ) ? 1 : 0;	
 					if ( isNaN(def.NthBit) ) {
 						console.log ( "Microcode: Turn On: isNaN => True" );
@@ -103,6 +114,11 @@ console.log ( "Microcode/Rise:  Will Call PushBus on:", key );
 	// After Tick Cleanup 
 	, rise: function ( ) {
 		for ( key in MICROCODE.x._OutputBufferList_ ) {
+			if ( MicrocodeFunctions[key] ) {
+				var fx = MicrocodeFunctions[key];
+console.log ( "<><> TurnOff: ", key );
+				fx(false);
+			}
 			MICROCODE.x[key] = 0;
 		}
 		MICROCODE.x._OutputBufferList_ = [];
@@ -138,7 +154,10 @@ console.log ( "Found a PushBus for ", key, " - SetState Called -" );
 	// Turn on display of a wire with this ID
 	, TurnOn: function  ( id ) {
 console.log ( "MICROCOE.TurnOn(",id,");");
-		if ( id.substr ( 0, 3 ) === "id_" ) {
+		if ( MicrocodeFunctions[key] ) {
+			var fx = MicrocodeFunctions[key];
+			fx(true);
+		} else if ( id.substr ( 0, 3 ) === "id_" ) {
 			infoOn1 ( -1, id );
 		} else {
 			infoOn1 ( -1, "id_"+id );

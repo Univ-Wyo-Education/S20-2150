@@ -1,16 +1,22 @@
 
+
+1. Issue: ran for a bit then address 5 got overwritten?
+	MEMORY.x._data_[5].toString(16)
+	Should be 0xd014, became 0x0014 - odd. 
+
+
+2. hand_out flag is not correct - not working - we get d014 on buss/MAR instead of 0014 from Load instruction at PC == 01 in program.
+
+
 (2hr)
 0. Display mem[MAR] HEX / DEC / Ch : +-4, and Disassembled Instruction at that point
 	1. Need to display memory as it is used.
 	1. Need to display code as it runs - to demo test of code.
+	Show Memory - Modal for Address Range, then display values hex/dec/char for that set of addresses.
 
 
 (45min)
 1. Need to display microcode + Address in Microcode
-
-(30min)
-2. Catch Errors
-	1. A microcode _data1_ === 0 && _data2_ === 0 should produce an ERROR! - No Output Turned On at Address X
 
 
 
@@ -35,6 +41,35 @@ Input Reg
 
 
 
+Setup - Config Stuff 
+	- Turn on "Dispaly" of Mux Input Lines as set.
+		Lt Green if piced to be input
+		Lt Mag if not piced but what is input
+		Both Hex/Bin display
+
+
+
+
+Buttons:
+
+	(ip)
+	Step Tick -- Stop after 1 microcode instruction until the next "step".
+		1. Put in a "Fetch-Stop" input -> microcode. (Fetch Cycle) (In "Inc" in Microcode_PC in ./js/microcode_pc_reg.js)
+		"ClockRunner()" - rename and make it Step1Tick()
+
+	(ip)
+	Step Instruction - Step just 1 instruction.  Stop after.
+		1. Put in a "Fetch-Stop" in PC? 	In Microcode? (Fetch Cycle) (In "Inc" in PC? ./js/pc_reg.js)
+		Step1Instruction()
+
+
+
+
+	+++ (ip)
+	Run - Jump to 0, start running.																				Easy
+		- Clear flats that prevent run, do Reset op - let it go!
+
+	Logic Probe - show the logic probe - 	Modal for config of lines - then display??								Probably Hard
 
 
 
@@ -89,8 +124,9 @@ Input Reg
 
 
 
-
-
+Test of Halt instruction and light:
+	MEMORY.x._data_[1] = 0x7000
+	Then run pgroam
 
 
 --fixed--
@@ -110,3 +146,13 @@ Input Reg
 +++1. Microcode at b0 is stuck - no address advance.
 	MAR 1, MDR 6000
 2. Getting "Output" instruction putting data in Input
+Add an "output" line from Microcode that shows "IsHalted" -> A """LED""" output.
+	Make a Red/Green LED output.
+	Make a Red/Green LED - Error.  Use for the All zero microcode state.
+(30min)
+2. Catch Errors
+	1. A microcode _data1_ === 0 && _data2_ === 0 should produce an ERROR! - No Output Turned On at Address X
+	Make a Red/Green LED - Error.  Use for the All zero microcode state.
+	Place LEDs / Switch On left of machine near PC
+	(See ./led-0.html -has "PATH" for the display in it)
+Would be nice to have a Fetch/Execute flag that is shown. (Similar to Halt)  LED

@@ -9,6 +9,7 @@ fi
 
 if [ "$*" ==  "" ] ; then
 	:
+	OUT=" -o McAsm.linux "
 else
 	OUT=" -o $* "
 fi
@@ -34,7 +35,7 @@ cat ver.go
 export GIT_COMMIT=`git rev-list -1 HEAD` && \
 	echo "Version: ${GIT_COMMIT}" && \
 	echo "AWS Region: ${AWS_REGION}" && \
-	go build \
+	GOOS=linux go build \
 		-ldflags "-X main.GitCommit=${GIT_COMMIT}-$(date|sed -e 's/ /-/g')" \
 		${OUT} && \
 	echo "local:  " ${GIT_COMMIT} `date` >>build-log.txt 

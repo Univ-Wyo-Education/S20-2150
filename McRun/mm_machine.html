@@ -764,6 +764,37 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 
 
+	<g id="is_halted">
+		<text x="20" y="35" class="small">Halt</text>
+		<circle cx="35" cy="50" r="10" stroke="black" stroke-width="1" fill="#ee4040" />
+	</g>
+	<g id="set_run">
+		<text x="20" y="35" class="small">Run</text>
+		<circle cx="35" cy="50" r="10" stroke="black" stroke-width="1" fill="#00f040" />
+	</g>
+
+
+
+	<g id="is_fetch">
+		<text x="14" y="80" class="small">Fetch</text>
+		<circle cx="35" cy="95" r="10" stroke="black" stroke-width="1" fill="#40bdff" />
+	</g>
+	<g id="set_execute">
+		<text x="9" y="80" class="small">Execute</text>
+		<circle cx="35" cy="95" r="10" stroke="black" stroke-width="1" fill="#00f040" />
+	</g>
+
+
+
+	<g id="is_error">
+		<text x="18" y="126" class="small">Error</text>
+		<circle cx="35" cy="140" r="10" stroke="black" stroke-width="1" fill="#ee4040" />
+	</g>
+	<g id="set_ok">
+		<text x="22" y="126" class="small">OK</text>
+		<circle cx="35" cy="140" r="10" stroke="black" stroke-width="1" fill="#00f040" />
+	</g>
+
 
 
 
@@ -895,6 +926,9 @@ var lineOn = [
 	,"#mm_to_dec_10" 
 	,"#mm_to_dec_01" 
 	,"#mm_to_dec_00" 
+	,"#is_halted"
+	,"#is_fetch"
+	,"#is_error"
 ];	// List of IDs of lines that are turned-on
 
 function clearOtherLine() {
@@ -935,6 +969,38 @@ function showTextInOutputBox(text) {
 		textCur++;
 	}
 }
+
+function showHalt ( isHalted ) {
+	if ( isHalted ) {
+		$("#set_run").hide();
+		$("#is_halted").show();
+	} else {
+		$("#is_halted").hide();
+		$("#set_run").show();
+	}
+}
+
+function showFetch ( isFetch ) {
+	if ( isFetch ) {
+		$("#set_execute").hide();
+		$("#is_fetch").show();
+	} else {
+		$("#is_fetch").hide();
+		$("#set_execute").show();
+	}
+}
+
+function showIsError ( isError ) {
+	if ( isError ) {
+		$("#set_ok").hide();
+		$("#is_error").show();
+	} else {
+		$("#is_error").hide();
+		$("#set_ok").show();
+	}
+}
+
+
 
 function infoOn(x) {
 	clearOtherLine();
@@ -1729,6 +1795,8 @@ var ParseInput = function (data) {
 			// console.log ( "Skipping 0 length line" )
 		} else if ( str === "##1" ) {
 			st = 1;
+		} else if ( str === "##2" ) {
+			st = 2;
 		} else if ( st === 0 ) {
 			const words = str.split(' ');
 			const str2 = words[0];
@@ -1862,6 +1930,9 @@ OnStartupReloadMainMemory();
 // ---------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------
 function ResetMachine() {
+	showHalt ( false );
+	showFetch ( true );
+	showIsError ( false );
 	clearOtherLine();
 	PC.msg("Clr", 1);
 	MICROCODE_PC.msg("Clr", 1);
@@ -1932,11 +2003,11 @@ console.log ( "MUX" );
 	}
 
 console.log("");
-console.log(" End... Rise... ");
+console.log(" End... Now Rise... ");
 console.log("");
 
 // End Process.
-console.log ( "A" );
+console.log ( "A", MICROCODE.x._OutputBufferList_ );
 	MICROCODE.rise();
 console.log ( "B" );
 	MICROCODE_PC.rise();

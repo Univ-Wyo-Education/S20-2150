@@ -34,7 +34,7 @@ var AC = {
 		case "Ld":  if ( val === 1 ) { AC.x["_Ld_"] = 1; AC.PullBus(true); AC.x["_data_"] = AC.x["_InputBuffer_"]; }	AC.TurnOn( "ac_Ld"  );   AC.Display( AC.x["_data_"]); AC.x["_Ld_"] = 1; 	break;
 		case "Inc": if ( val === 1 ) { AC.x["_Inc_"] = 1; AC.x["_data_"] = AC.x["_data_"] + 1; }	    				AC.TurnOn( "ac_Inc" );   AC.Display( AC.x["_data_"]); 						break;
 		case "Out": if ( val === 1 ) { AC.x["_Out_"] = 1; AC.x["_OutputBuffer_"] = AC.x["_data_"]; AC.PushBus(); }   	AC.TurnOn( "ac_Out" );   AC.Display( AC.x["_data_"]); 						break;
-		case "Out_to_ALU": if ( val === 1 ) { AC.x["_ALUOutputBuffer_"] = AC.x["_data_"]; PushBus(); }   TurnOn( "ac_Out_to_ALU" );   Display( AC.x["_data_"]); break;
+		case "Out_to_ALU": if ( val === 1 ) { AC.x["_ALUOutputBuffer_"] = AC.x["_data_"]; AC.PushBus(); }   AC.TurnOn( "ac_Out_to_ALU" );   AC.Display( AC.x["_data_"]); break;
 		default:
 			Error ( "Invalid Message", wire, val );
 		}

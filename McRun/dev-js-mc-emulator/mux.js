@@ -111,7 +111,8 @@ console.log ( "  MUX: parse of 'wire'="+wire, 'nTh=', nTh, "(_Ctl_0_)b0=", b0, "
 				MUX.x["_Out_"] = MUX.x["_11_"] = 0;
 			break;
 			}
-			var _Out_ = MUX.x._Out_.toString(16);
+			// var _Out_ = MUX.x._Out_.toString(16);
+			var _Out_ = MUX.x._Out_;
 console.log ( "  MUX: _Out_ =", _Out_ );
 			//	// <text id="mux_to_mpc" x="1280" y="140" class="vsmall"></text>
 			var sVal = toHex(_Out_,2);

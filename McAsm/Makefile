@@ -1,12 +1,15 @@
 
 all:
-	go build
+	./cmp-mac.sh McAsm
 
+
+# GOOS=windows go build -o McAsm.pc.exe . 
 windows:
-	GOOS=windows go build -o McAsm.pc.exe . 
+	./cmp-windows.sh
 
+# GOOS=linux go build -o McAsm.linux . 
 linux:
-	GOOS=linux go build -o McAsm.linux . 
+	./cmp-linux.sh 
 
 run1:
 	./cmp-mac.sh

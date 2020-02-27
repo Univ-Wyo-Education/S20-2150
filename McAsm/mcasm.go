@@ -14,6 +14,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/Univ-Wyo-Education/S20-2150/Mac"
 	"github.com/pschlump/HashStrings"
@@ -247,6 +248,10 @@ Microcode Emulator:
 	}
 	fmt.Fprintf(outFp, "##1\n")
 	DumpSymbolTableForHexFile(outFp)
+	fmt.Fprintf(outFp, "##2\n")
+	fmt.Fprintf(outFp, "// Input File: %s\n", *In)
+	t := time.Now()
+	fmt.Fprintf(outFp, "// Assembled At: %s\n", t.Format("2006-01-02T15:04:05-0700"))
 
 	outFp.Close()
 	if n_err > 0 {
