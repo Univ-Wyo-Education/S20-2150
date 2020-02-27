@@ -1,11 +1,14 @@
 
+0. hand_out flag is not correct - not working - we get d014 on buss/MAR instead of 0014 from Load instruction at PC == 01 in program.
 
 1. Issue: ran for a bit then address 5 got overwritten?
 	MEMORY.x._data_[5].toString(16)
 	Should be 0xd014, became 0x0014 - odd. 
 
 
-2. hand_out flag is not correct - not working - we get d014 on buss/MAR instead of 0014 from Load instruction at PC == 01 in program.
+(45min)
+1. Need to display microcode + Address in Microcode
+
 
 
 (2hr)
@@ -15,41 +18,21 @@
 	Show Memory - Modal for Address Range, then display values hex/dec/char for that set of addresses.
 
 
-(45min)
-1. Need to display microcode + Address in Microcode
 
 
 
 
 (1hr)
-Display the mux input lines and where data is from as it is "turned" on.
+	Display the MUX/colored-input-if-config input lines and where data is from as it is "turned" on.
 
 
-(1hr)
-Output Box
-	1. Output cleanup [ output box ]
 
 (2hr)
 Output Reg
-	3. Hook up 7-seg display - to "Output"
+	+3. Hook up 7-seg display - to "Output"
+
 
 (2hr)
-Input Reg
-	4. Add Input modal / w/ Push-Button to Load
-
-
-
-
-
-Setup - Config Stuff 
-	- Turn on "Dispaly" of Mux Input Lines as set.
-		Lt Green if piced to be input
-		Lt Mag if not piced but what is input
-		Both Hex/Bin display
-
-
-
-
 Buttons:
 
 	(ip)
@@ -65,10 +48,36 @@ Buttons:
 
 
 
-	+++ (ip)
-	Run - Jump to 0, start running.																				Easy
-		- Clear flats that prevent run, do Reset op - let it go!
 
+
+
+
+
+
+
+
+
+
+(2hr)
+Input Reg
+	4. Add Input modal / w/ Push-Button to Load
+
+
+(1hr)
+Output Box
+	1. Output cleanup [ output box ]
+
+Setup - Config Stuff 
+	- Turn on "Dispaly" of Mux Input Lines as set.
+		Lt Green if piced to be input
+		Lt Mag if not piced but what is input
+		Both Hex/Bin display
+
+
+
+
+
+(15hrs)
 	Logic Probe - show the logic probe - 	Modal for config of lines - then display??								Probably Hard
 
 
@@ -156,3 +165,7 @@ Add an "output" line from Microcode that shows "IsHalted" -> A """LED""" output.
 	Place LEDs / Switch On left of machine near PC
 	(See ./led-0.html -has "PATH" for the display in it)
 Would be nice to have a Fetch/Execute flag that is shown. (Similar to Halt)  LED
++++ (ip)
+	Run - Jump to 0, start running.																				Easy
+		- Clear flats that prevent run, do Reset op - let it go!
+
