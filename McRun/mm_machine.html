@@ -390,7 +390,9 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		points=" 1200,180	1200,250 1280,220       1200,180 "
 		fill="#f0fff0" stroke="#ff0000" stroke-width="3" />
 			<text x="1220" y="180" class="small">Decoder</text>
+			<text x="1250" y="200" class="small">MUX</text>
 			<!-- Decoder Output to Microcode_PC Input -->
+			<text id="mux_to_mpc" x="1280" y="140" class="vsmall"></text>
 
 		<rect id="id_decoder_Ctl_0"  x="1215"   y="244"  width="1"   height="21"     class="input-line" />
 		<rect id="id_decoder_Ctl_1"  x="1225"   y="240"  width="1"   height="25"     class="input-line" />
@@ -495,7 +497,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<line x1="1270" y1="322" x2="1265" y2="317" class="arrow-line" />
 			<line x1="1270" y1="322" x2="1275" y2="317" class="arrow-line" />
 
-		<text id="h_input_txt_0" x="1210" y="350" class="small"></text>
+		<text id="h_input_txt_0" x="1010" y="350" class="small"></text>
 
 	<rect id="id_input" x="1000" y="324" width="100" height="50" class="white-box" onclick="infoOn('id_input');"/>
 		<text x="1000" y="319" class="small"onclick="infoOn('id_input');">Input</text>
@@ -513,7 +515,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<line x1="1050" y1="322" x2="1045" y2="317" class="arrow-line" />
 			<line x1="1050" y1="322" x2="1055" y2="317" class="arrow-line" />
 
-		<text id="h_output_txt_0" x="1010" y="350" class="small"></text>
+		<text id="h_output_txt_0" x="1210" y="350" class="small"></text>
 
 
 
@@ -989,6 +991,10 @@ function infoOn1(i,x) {
 	case "reset":
 		ResetMachine();
 		break;
+	//case "mux_out":
+	//	$("#mux_to_mpc").text(a);
+	//	// <text id="mux_to_mpc" x="1280" y="140" class="vsmall"></text>
+	//	break;
 
 	case "id_pc":
 		$("#"+x).css("fill","#ff0000");
@@ -1183,7 +1189,12 @@ function infoOn1(i,x) {
 
 
 function toHex(d, padding) {
-    var hex = Number(d).toString(16);
+	var hex;
+	if ( typeof d === "string" ) {
+		hex = d;
+	} else {
+		hex = Number(d).toString(16);
+	}
     padding = typeof (padding) === "undefined" || padding === null ? padding = 2 : padding;
     while (hex.length < padding) {
         hex = "0" + hex;
@@ -1191,7 +1202,12 @@ function toHex(d, padding) {
     return hex;
 }
 function toBin(d, padding) {
-    var bin = Number(d).toString(2);
+	var bin;
+	if ( typeof d === "string" ) {
+		bin = d;
+	} else {
+		bin = Number(d).toString(2);
+	}
     padding = typeof (padding) === "undefined" || padding === null ? padding = 2 : padding;
     while (bin.length < padding) {
         bin = "0" + bin;
@@ -1757,21 +1773,22 @@ var ParseInput = function (data) {
 };
 
 
+var mc_hash = "";
 
 // <button class="modal-submit" type="button" id="modal-submit" onclick="LoadMC();">Load Code</button>
 // <input id="modal-input-code-hash" spellcheck="false" name="i_hash" class="hash-input">
-function LoadMC() {
+function LoadMC() {		// LoadMicrocode
 	hideModal();
 	var v = $("#modal-input-code-hash").val();
 	// console.log ( "v=", v );
 	$.get ( "./data/"+v+".txt", function(data){
 		// console.log ( "Got It: ", data );
 		localStorage.setItem('microcode_data',v);
+		mc_hash = v;
 		ParseInput(data);
 	});
 }
 
-var mc_hash = "";
 
 function OnStartupReloadMicrocode() {
 	var v = localStorage.getItem('microcode_data');
@@ -1815,6 +1832,7 @@ var ParseInputHexMM = function (data) {
 };
 
 
+var mm_hash = "";
 
 function LoadMM() {
 	hideModal();
@@ -1823,11 +1841,10 @@ function LoadMM() {
 	$.get ( "./data/"+v+".txt", function(data){
 		// console.log ( "Got It: ", data );
 		localStorage.setItem('main_memory_data',v);
+		mm_hash = v;
 		ParseInputHexMM(data);
 	});
 }
-
-var mm_hash = "";
 
 function OnStartupReloadMainMemory() {
 	var v = localStorage.getItem('main_memory_data');

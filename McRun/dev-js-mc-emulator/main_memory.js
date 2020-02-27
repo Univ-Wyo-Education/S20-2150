@@ -80,11 +80,15 @@ console.log ( "Doing a Memory Read:,  addr=", addr, " value=(hex)", MEMORY.x["_O
 	}
 
 	, PullMDR: function () {
-		MEMORY.x["_InputBuffer_"] = MDR.x["_data_"];
+console.log ( "Memory:/PullMDR" );
+		MDR.msg( "Out_To_Memory", 1 );
+		// MEMORY.x["_InputBuffer_"] = MDR.x["_data_"];
 	}
 
 	, PushMDR: function () {
-		MDR.x["_data_"] = MEMORY.x["_OutputBuffer_"];
+console.log ( "Memory:/PushMDR ** !! ** !!" );
+		MDR.msg( "Ld_From_Memory", 1 ); 
+		// MDR.x["_data_"] = MEMORY.x["_OutputBuffer_"];
 	}
 
 	// Turn on display of a wire with this ID

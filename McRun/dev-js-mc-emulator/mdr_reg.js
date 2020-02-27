@@ -69,6 +69,7 @@ var MDR = {
 				MDR.x["_Out_To_Memory_"] = 1;
 				MDR.x["_OutputBuffer_"] = MDR.x["_data_"];
 				var addr = MAR.x["_data_"];
+				addr = ( addr >= 0 && addr < mm_max ) ? addr : 0;
 				MEMORY.x["_data_"][addr] = MDR.x["_OutputBuffer_"];
 				// MDR.TurnOn( "mdr_Out" );		// xyzzy - turn on line betwen MDR and Memory
 			}
@@ -79,6 +80,7 @@ var MDR = {
 			if ( val === 1 ) {
 				MDR.x["_Ld_From_Memory_"] = 1;
 				var addr = MAR.x["_data_"];
+				addr = ( addr >= 0 && addr < mm_max ) ? addr : 0;
 				MDR.x["_InputBuffer_"] = MEMORY.x["_data_"][addr];
 				MDR.x["_data_"] = MDR.x["_InputBuffer_"];
 				// MDR.TurnOn( "mdr_Ld"  );		// xyzzy - turn on the line betwen MDR and Memory
@@ -102,11 +104,13 @@ var MDR = {
 		if ( MDR.x["_Out_To_Memory_"] === 1 ) {
 			MDR.x["_OutputBuffer_"] = MDR.x["_data_"];
 			var addr = MAR.x["_data_"];
+			addr = ( addr >= 0 && addr < mm_max ) ? addr : 0;
 			MEMORY.x["_data_"][addr] = MDR.x["_OutputBuffer_"];
 			// MDR.TurnOn( "mdr_Out" );		// xyzzy - turn on line betwen MDR and Memory
 		}
 		if ( MDR.x["_Ld_From_Memory_"] === 1 ) {
 			var addr = MAR.x["_data_"];
+			addr = ( addr >= 0 && addr < mm_max ) ? addr : 0;
 			MDR.x["_InputBuffer_"] = MEMORY.x["_data_"][addr];
 			MDR.x["_data_"] = MDR.x["_InputBuffer_"];
 			// MDR.TurnOn( "mdr_Ld"  );		// xyzzy - turn on the line betwen MDR and Memory

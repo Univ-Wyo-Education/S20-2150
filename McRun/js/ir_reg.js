@@ -92,6 +92,13 @@ console.log ( "IR:PushBus", AC.x["_OutputBuffer_"] );
 		var irA = ( ir & 0xf000 ) >> 12;
 		var irB = ( ir & 0x0f00 ) >> 8;
 
+console.log ( "irA", irA.toString(16) );
+console.log ( "irB", irB.toString(16) );
+console.log ( "11_6", ( (irA & 0x8) != 0 ) ? 1 : 0 );
+console.log ( "11_5", ( (irA & 0x4) != 0 ) ? 1 : 0 );
+console.log ( "11_4", ( (irA & 0x2) != 0 ) ? 1 : 0 );
+console.log ( "11_3", ( (irA & 0x1) != 0 ) ? 1 : 0 ); 
+
 		MUX.msg("11_6", ( (irA & 0x8) != 0 ) ? 1 : 0 );
 		MUX.msg("11_5", ( (irA & 0x4) != 0 ) ? 1 : 0 );
 		MUX.msg("11_4", ( (irA & 0x2) != 0 ) ? 1 : 0 );
