@@ -1,0 +1,112 @@
+
+(2hr)
+0. Display mem[MAR] HEX / DEC / Ch : +-4, and Disassembled Instruction at that point
+	1. Need to display memory as it is used.
+	1. Need to display code as it runs - to demo test of code.
+
+
+(45min)
+1. Need to display microcode + Address in Microcode
+
+(30min)
+2. Catch Errors
+	1. A microcode _data1_ === 0 && _data2_ === 0 should produce an ERROR! - No Output Turned On at Address X
+
+
+
+
+(1hr)
+Display the mux input lines and where data is from as it is "turned" on.
+
+
+(1hr)
+Output Box
+	1. Output cleanup [ output box ]
+
+(2hr)
+Output Reg
+	3. Hook up 7-seg display - to "Output"
+
+(2hr)
+Input Reg
+	4. Add Input modal / w/ Push-Button to Load
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--fixed--
+2. The text for the Bus needs to move up by 5 to 10 px
+2. Input/Ouptut only displaying 2 digits
+3. Invalid data in output-turn on from Microcode
+1. On 2nd new load of microcode - area hash not updated. 
+	+- after dialog -
+	+- Probably same for memory load
+	Needs test.
+		set mc_hash, mm_hash after fetch of new data, before conv. of text -> storage.
+1. Read of Memory -> MDR caus 0Nan - in display of MDR, address in Microcode is "e9" - so beginning of execute after jmp.
+	4 ticks into run of machine.
+	> ClockRunner() * 4 times. e9 address is loaded at beginning of execute.
+	MDR.x._data_ === undefined
+	MAR.x._data_ is out of range, loaded with 0xd014 == 53268
++++1. Microcode at b0 is stuck - no address advance.
+	MAR 1, MDR 6000
+2. Getting "Output" instruction putting data in Input
