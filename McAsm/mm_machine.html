@@ -1821,7 +1821,7 @@ function displayMicrocodeData(addr,v1,v2,lst) {
 			break;
 		}
 	}
-	for ( ; ii < mx; ii++ ) {
+	for ( ii++; ii < mx; ii++ ) {
 		if ( b.length+lst[ii].length < maxLen ) {
 			b = b + " " + lst[ii] + " ";
 		} else {
@@ -1829,7 +1829,7 @@ function displayMicrocodeData(addr,v1,v2,lst) {
 			break;
 		}
 	}
-	for ( ; ii < mx; ii++ ) {
+	for ( ii++; ii < mx; ii++ ) {
 		if ( c.length+lst[ii].length < maxLen ) {
 			c = c + " " +  lst[ii] + " ";
 		} else {
@@ -1837,7 +1837,7 @@ function displayMicrocodeData(addr,v1,v2,lst) {
 			break;
 		}
 	}
-	for ( ; ii < mx; ii++ ) {
+	for ( ii++; ii < mx; ii++ ) {
 		if ( d.length+lst[ii].length < (maxLen-5) ) {
 			d = d + " " + lst[ii] + " ";
 		} else {
@@ -1893,9 +1893,66 @@ function displayMainBus(s) {
 }
 
 
+// ----------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------
+
+var theWorld2 = [];			// Values
+var theWorld2WhoSet = [];	// Who set like PC
+var theWorld2DepOn = [];	// Functions depending on inputs.
 
 
-// id_result_Out decoder_ctl_0 Microcode_PC_Ld2			// 0x3 on Decoder-CTL = will load address for a id_pc_Inc*    id_pc_Inc = result_eq_0
+// AddMsg ( PC.x.Name, "Bus", "Out", PC.x._OutputBuffer );		// Resovles Bus							
+function AddMsg ( Name, Resolves, Type, Value ) {
+	if ( Type == "Out" || Type == "I/O" ) {
+		theWorld2[Resolves] = Value;
+		theWorld2WhoSet[Resolves] = Name;
+	} else {
+	}
+}
+
+// AddDep ( PC.x.Name, [ "Bus" ], "In", function ( v ) {
+function AddDep ( Name, depOn, Type, Fx) {
+	theWorld2DepOn.push ( { 
+		"State": "Pending",
+		"Type": Type,
+		"DepOn": depOn,
+		"SentFrom": Name,
+		"Fx": Fx
+	} );
+}
+
+function hasPending () {
+	for ( var ll = 0, my = theWorld2DepOn.length; ll < my; ll++ ) {
+		if ( theWorld2DepOn[ll].State == "Pending" ) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function dependenciesMet ( tw ) {
+	// xyzzy // xyzzy // xyzzy // xyzzy // xyzzy // xyzzy // xyzzy // xyzzy
+	// xyzzy // xyzzy // xyzzy // xyzzy // xyzzy // xyzzy // xyzzy // xyzzy
+}
+
+function PropogateSignals () {
+	for ( var nIter = 0; hasPending(); nIter++ ) {
+		if ( nIter > 50 ) {
+			console.log ( "Out of Gas..." );
+			break;
+		}
+		for ( var kk = 0, mx = theWorld2DepOn.length; kk < mx; kk++ ) {
+			var tw = theWorldDepOn[kk];
+			if ( tw.State === "Pending" ) {
+				if ( dependenciesMet ( tw ) ) {
+					tw.Fx ( /* ??? */ );
+					theWorldDepOn[kk].State = "Done";
+				}
+			}
+		}
+	}
+}
+
 
 </script>
 <script src="js/pc_reg.js?v=0008"></script>
@@ -1911,6 +1968,9 @@ function displayMainBus(s) {
 <script src="js/main_memory.js?v=0008"></script>
 <script src="js/alu.js?v=0008"></script>
 <script src="js/mux.js?v=0008"></script>
+
+
+<script src="js/show-memory.js?v=0008"></script>
 <script>
 
 //console.log ( "PC=",PC, "RESULT=", RESULT);
@@ -2082,7 +2142,7 @@ OnStartupReloadMainMemory();
 // ---------------------------------------------------------------------------------------------------------------------------------------
 function ResetMachine() {
 	showHalt ( false );
-	showFetch ( true );
+	showFetch ( false );
 	showIsError ( false );
 	clearOtherLine();
 	PC.msg("Clr", 1);
@@ -2136,7 +2196,7 @@ console.log("");
 console.log("");
 console.log(" Tick... ");
 console.log("");
-	for ( var qq = 0; qq < 5; qq++ ) {
+	for ( var qq = 0; qq < 1; qq++ ) {
 console.log("    qq =", qq);
 		MICROCODE_PC.tick();
 		MICROCODE.tick();
@@ -2149,7 +2209,7 @@ console.log("    qq =", qq);
 		// AC.tick();
 		// ALU.tick();
 		// RESULT.tick();
-console.log ( "MUX" );
+// console.log ( "MUX" );
 		MUX.tick();
 		// OUTPUT.tick();
 	}
@@ -2179,180 +2239,112 @@ console.log ( "G" );
 
 }
 
+
 // ---------------------------------------------------------------------------------------------------------------------------------------
+// Tests to build
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// 1000. PC
+// 1001. PC -> MAR
+// 1002. PC -> MAR -> Memory Read -> MDR
+// Logic (hand_out)
+// Mux ( Input + Mux_Ctl )
+// MDR -> Bus -> MAR 
+// MDR -> Bus -> MAR -> Memory Read -> MDR
+// MAR -> Memory Read -> AC
+// IR + hand_out -> Bus
+// Output -> 7-seg
+// LEDs
+// Mcrocode_PC -> Microcode (address)
+// MAR + MDR -> Memory Write 					Verify that display shows this properly (show-memory.js)
+// AC + MDR -> ALU -> Result
+// Result -> AC
+// Input -> AC
+// Input -> Output
+// Input -> MAR + MDR -> Memory Write 
+// IR -> Mux(decoder) -> Microcode_PC
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// Tests using full code. (Requires load of microcode - so has to have the current "hash" for the Microcode.)
+// 2000.  Test Load, Halt
+// 2001.  Test Store, Halt
+// 2002.  Test Load, Add, Halt
+// 2003.  Test Load, Subt, Halt
+// 2004.  Test Jump
+// 2005.  Test Load, SkipLt0, Jump, Halt
+// 2006.  Test Load, SkipEq0, Jump, Halt
+// 2007.  Test Load, SkipGt0, Jump, Halt
+// 2008.  Test JnS
+//
+// 2020.  Test LoadI
+// 2021.  Test AddI
+// 2022.  Test SubtI
+// 2023.  Test JumpI
+// 2024.  Test DEC 0 - Invalid Instruction
+//
+// ** Test each of the instructions with a simple test that verifies that that each one works.
 // ---------------------------------------------------------------------------------------------------------------------------------------
 
-var test0001 = false;	// Turn on the line from the PC data
-var test0002 = false;	// Display value in the PC register
-var test0003 = false;	// Send message to PC and see it turn on.
-var test0004 = false;	// Send data from Result to PC and see it in both.
-var test0005 = false;	// PC -> IR (abnomral move, what could be better?)
-var test0006 = false;	// Show Memory Read Line - via MEMORY.msg
-var test0007 = false;	// Show Memory Write Line - via MEMORY.msg
-var test0008 = true;	// MC: Set to address 0, test output - see that they are turned on.
-						// id_mar_Ld id_pc_Out id_mdr_Ld id_memory_Read  
+var nErr = 0;
 
-if ( test0001 ) {
-	PC.x["_data_"] = "0123";	// 0x7b
-	PC.msg("Clr", 1);
-	// Just Display: PC.TurnOn( "pc_Clr" );
-	PC.Display(PC.x["_data_"]); 
-}
-if ( test0002 ) {
-	PC.x["_data_"] = "0123";	// 0x7b
-	PC.Display(PC.x["_data_"]); 
-}
-if ( test0003 ) {
-	PC.x["_data_"] = 16;
-	PC.msg("Inc", 1);
-}
-if ( test0004 ) {
-	RESULT.msg("Out", 1);
-	PC.msg("Ld", 1);
-	RESULT.x["_data_"] = 32;
-	for ( var ii = 0; ii < 2; ii++ ) {	// Tick to depth of propgation of signals
-		PC.tick();
-		RESULT.tick();
+// 1000. PC
+function test1000() {
+	PC.msg("Clr",1);
+	PC.msg("Inc",1);
+	if ( PC.x._Inc_ !== 1 ) {
+		console.log ( "Error test1000: pc.x._Inc_ != 1" );
+		nErr++;
 	}
-	PC.rise();
-}
-if ( test0005 ) {
-	RESULT.msg("Ld", 1);
-	PC.msg("Out", 1);
-	PC.x["_data_"] = 4428;	// 0x114c
-	RESULT.x["_data_"] = 32;
-	for ( var ii = 0; ii < 2; ii++ ) {	// Tick to depth of propgation of signals
-		PC.tick();
-		RESULT.tick();
+	if ( PC.x._data_ !== 0 ) {
+		console.log ( "Error test1000: pc != 0" );
+		nErr++;
 	}
-	PC.rise();
-	RESULT.rise();
-}
-if ( test0006 ) {
-	MEMORY.msg("Read", 1);
-}
-if ( test0007 ) {
-	MEMORY.msg("Write", 1);
-}
-if ( test0008 ) {
-	MICROCODE_PC.msg("Clr", 1);
-	MICROCODE.msg("Addr", 1);
-}
-
-function test0009() {
-	MICROCODE.msg("Addr", 1);	// Simulate the RUN clock on the Microcode_PC
-	// MAR.msg('Ld', 1);
-//	MAR.tick();
-//	PC.tick();
-//	IR.tick();
-//	AC.tick();
-//	RESULT.tick();
-}
-
-function test000A() {
-	clearOtherLine();
-	MICROCODE.rise();
-}
-
-// ---------------------------------------------------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------------------------------------------------
-function DisAssembler ( xIns ) {
-	var op = xIns & 0xF000;
-	var hand = xIns & 0x0fff;
-	op = ( op >> 12 ) & 0xf;
-
-	var s = "";
-	switch ( op ) {
-	case 0x0: // JnS
-		s = "JnS      " + toHex(hand,4)
-	break;
-	case 0x1: // Load
-		s = "Load     " + toHex(hand,4)
-	break;
-	case 0x2: // Store
-		s = "Store    " + toHex(hand,4)
-	break;
-	case 0x3: // Add
-		s = "Add      " + toHex(hand,4)
-	break;
-	case 0x4: // Subt
-		s = "Subt     " + toHex(hand,4)
-	break;
-	case 0x5: // Input
-		s = "Input    " 
-	break;
-	case 0x6: // Output
-		s = "Output   " 
-	break;
-	case 0x7: // Halt
-		s = "Halt    " 
-	break;
-	case 0x8: // Skipcond
-		if ( ( ( hand & 0x0f00 ) >> 8 ) == 0x0 ) {
-			// OpSkipLt0     // 00
-			s = "SkipLt0    " 
-		} else if ( ( ( hand & 0x0f00 ) >> 8 ) == 0x4 ) {
-			// OpSkipEq0     // 01
-			s = "SkipEq0    " 
-		} else if ( ( ( hand & 0x0f00 ) >> 8 ) == 0x8 ) {
-			// OpSkipGt0     // 10
-			s = "SkipGt0    " 
-		} else {
-			s = "Skip? Inv. " 
-		}
-	break;
-	case 0x9: // Jump
-		s = "Jump     " + toHex(hand,4)
-	break;
-	case 0xA: // Clear
-		s = "Clear     " 
-	break;
-	case 0xB: // AddI
-		s = "AddI     " + toHex(hand,4)
-	break;
-	case 0xc: // JumpI
-		s = "JumpI    " + toHex(hand,4)
-	break;
-	case 0xd: // LoadI
-		s = "LoadI    " + toHex(hand,4)
-	break;
-	case 0xe: // StoreI
-		s = "StoreI   " + toHex(hand,4)
-	break;
-	default:
-			s = "Invalid    "
-	break;
+	PC.msg("rise",1);
+	if ( PC.x._data_ !== 1 ) {
+		console.log ( "Error test1000: pc != 1" );
+		nErr++;
 	}
 
-	return s;
+	// ----------------------------------------------------------------------------
+	PC.msg("Ld",1);
+	if ! hasPending () {
+		console.log ( "Error test1000: hasPending() false after creation of pending item" );
+		nErr++;
+	}
 
-}
+	// ----------------------------------------------------------------------------
+	// xyzzy more. - Test Ld, Out, Bus, Resolver
+	// ----------------------------------------------------------------------------
 
-function Dis1Word(pc) {
-	var s, sPc = toHex(pc,4);
-	if ( pc >= 0 && pc < mm_max ) {
-		var mm = MEMORY.x._data_[pc];
-		s = sPc + ": " + toHex(mm,4) + "/" + toDec(mm,5) + " : " + DisAssembler ( mm );
+	if ( nErr > 0 ) {
+		console.log ( "FAIL: # of errors: "+nErr );
 	} else {
-		s = sPc + " out of range."
+		console.log ( "PASS" );
 	}
-	return s;
+
+	PC.msg("Clr",1);	// Cleanup: Reset to original value.
 }
 
-function showMemoryAtPC ( pc ) {
-	var xpc = pc - 6;
-	if ( xpc < 0 ) {
-		xpc = 0;
-	}
-	var pa = [];
-	for ( var ii = xpc ; ii < (pc+6) && ii < mm_max ; ii++ ) {
-		var s = Dis1Word(ii);
-		if ( ii === pc ) {
-			s += " <<==--- ";
-		}
-		pa.push ( s );
-	}
-	displayMemoryTextArr(pa);
+// Test the transfer of the PC to the MAR
+function test1001() {
+}
+
+// Test the transfer of the PC to the MAR, MAR Read Memory -> MDR
+function test1002() {
+}
+
+// test a 2 instruction program with 1 word of data.
+function test000D() {
+	// Plug in 2 instructions into Memory ( Load 5, Halt ), Plug in 23 -> mem[5]
+	// Clear Microcode
+	// Fetch ./data/test000b.mc.txt -> Microcode
+	// Fetch ./data/test000b.mm.txt -> Main Memory (2 words)
+	// Clear Registers
+	// Run it
+	// Verify that 
+	//		1. AC == 5
+	//		2. IR == Halt
+	//		3. PC == 1
+	//		4. M_PC == ?? for halt
+	//		5. Halt Light is on
 }
 
 </script>

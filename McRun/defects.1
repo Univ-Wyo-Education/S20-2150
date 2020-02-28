@@ -1,3 +1,109 @@
+MsgBuffer
+	- Outputs can be produced and discarded
+	- Inputs must be resovled and propogated (required) (pc_Ld) depends on Bus.x._data_ and Bus.x._used_
+	0. Set nReqInput = 0
+	1. Send a message to start
+		- Creates messages in buffer for ouptuts from original
+		- Microcode - generates more outputs ( some lead to pc_Ld as a input, 
+			- pc_Ld - generats a callback function(closure) that will run when Bus.x._used_ is set
+			  (nReqInput++)
+	2. Complete of "tick" when no more required inputs left???
+		(or done when set of outputs do not change?)
+
+
+var proc = [];
+
+IR Out
+addProc ( "IR", "Out", "Bus", 44 );
+
+PC Ld
+addProc ( "PC", "In", "Bus", function( v ) {
+	PC.x._InputBuffer_ = v;
+	PC.x._data_ = PC.x._InputBuffer_;
+	PC.Display( PC.x._data );
+} )
+
+
+Examle:
+	1. Addr message -> Microcode
+	2. Out message -> Microcode_PC
+											pcoc [ 
+												{ "MICROCODE", "In", func(){ See Step 3 }, "DepOn": "M_PC"/"Out" }
+											,   { "M_PC", "Out", 0, "resoves": "MPC"/"out" }
+											]
+
+	3. Microcode -> Messages
+		mar_Ld							
+		pc_Out
+		m_pc_Inc
+											proc [
+												{ "MICROCODE", "In", func(){ See Step 3 }"	DepOn: "M_PC"/"Out" }	// Resolved.
+											,   { "M_PC", "Out", 0, "resoves": "MPC"/"out" }
+											, 	{ "MAR", "In", func() {}, "DepOn": "Bus"/"data" }	
+											,	{ "PC", "Out", 0, "resoves": "Bus"/"data" }	
+											, 	{ "M_PC", "Act", func() { mpc = mpc + 1 } }
+											]
+
+	4. Loop
+
+											proc [
+												{ "MICROCODE", "In", func(){ See Step 3 }"	DepOn: "M_PC"/"Out" }	// Resolved.
+											,   { "M_PC", "Out", 0, "resoves": "MPC"/"out" }
+											, 	{ "MAR", "In", func() {}, "DepOn": "Bus"/"data" }		// Resolved.
+											,	{ "PC", "Out", 3, "resoves": "Bus"/"data" }	
+											,	{ "Bus", "I/O", 3, "resoves": "Bus"/"data" }	
+											, 	{ "M_PC", "Act", func() { mpc = mpc + 1 } }				// Resolved.
+											]
+
+	5. Final State:
+											proc [
+											    { "M_PC", "Out", 0, "resoves": "MPC"/"out" }
+											,	{ "PC", "Out", 0, "resoves": "Bus"/"data" }	
+											,	{ "Bus", "I/O", 3, "resoves": "Bus"/"data" }	
+											]
+
+
+
+
+
+	"Chip":		PC, AC, MUX, Bus etc.
+	"Status":	Done / Pending / Error
+	"Act": 		Actions are: In | Out | I/O | Act
+	"Resolves":	[ Names ]
+	"DepOn": [ Names ]
+	
+		
+
+
+
+
+0. LoadI at beginning not working - Not transferring MDR to MAR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0. Load Instruction - not working correct - 1014 (instruction) in AC (3rd CPU Instruction)
+
+
+
+
+
+
+
+
+
+
+
 1. Add opeation (ALU) not working correctly
 	1. Display ALU control liens with text out.
 	2. Verify ALU operation
@@ -9,6 +115,12 @@ Stuck at MPC = 80, PC = 0x0004, Store in program.
 1. Issue: ran for a bit then address 5 got overwritten?
 	MEMORY.x._data_[5].toString(16)
 	Should be 0xd014, became 0x0014 - odd. 
+
+
+
+
+
+
 
 
 
@@ -179,3 +291,6 @@ Would be nice to have a Fetch/Execute flag that is shown. (Similar to Halt)  LED
 		+++1. Put in a "Fetch-Stop" input -> microcode. (Fetch Cycle) (In "Inc" in Microcode_PC in ./js/microcode_pc_reg.js)
 		"ClockRunner()" - rename and make it Step1Tick()
 
+(fixed)
+0. MCM - labels not listed uniquely in list.
+		// console.log ( "Called By", MAR.msg.caller );

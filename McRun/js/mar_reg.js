@@ -8,15 +8,14 @@ var MAR = {
 	}
 	, "x": {
 		  "Name": "MAR"
-		, "Group": "Register"
-		, "Interface": {
-			  "bus" : { "width": 16, "mode": "io" }
-			, "vcc" : { "width": 1, "mode": "i" }
-			, "gnd" : { "width": 1, "mode": "i" }
-			, "Ld"  : { "width": 1, "mode": "i" }
-			, "Inc" : { "width": 1, "mode": "i" }
-			, "Out" : { "width": 1, "mode": "i" }	// Turn on Output on "bus"
-		}
+		//, "Interface": {
+		//	  "bus" : { "width": 16, "mode": "io" }
+		//	, "vcc" : { "width": 1, "mode": "i" }
+		//	, "gnd" : { "width": 1, "mode": "i" }
+		//	, "Ld"  : { "width": 1, "mode": "i" }
+		//	, "Inc" : { "width": 1, "mode": "i" }
+		//	, "Out" : { "width": 1, "mode": "i" }	// Turn on Output on "bus"
+		//}
 		, "_data_": 0
 		, "_InputBuffer_": 0
 		, "_OutputBuffer_": 0
@@ -25,13 +24,36 @@ var MAR = {
 		, "_Out_": null
 	}
 	, msg: function ( wire, val ) {
-		console.log ( "Called By", MAR.msg.caller );
 		switch ( wire ) {
-		case "Ld":  if ( val === 1 ) { MAR.x["_Ld_"] = 1; MAR.PullBus(true); MAR.x["_data_"] = MAR.x["_InputBuffer_"]; }	MAR.TurnOn( "mar_Ld"  );   MAR.Display( MAR.x["_data_"]); MAR.x["_Ld_"] = 1; 	break;
-		case "Inc": if ( val === 1 ) { MAR.x["_Inc_"] = 1; MAR.x["_data_"] = MAR.x["_data_"] + 1; }	    				MAR.TurnOn( "mar_Inc" );   MAR.Display( MAR.x["_data_"]); 						break;
-		case "Out": if ( val === 1 ) { MAR.x["_Out_"] = 1; MAR.x["_OutputBuffer_"] = MAR.x["_data_"]; MAR.PushBus(); }   	MAR.TurnOn( "mar_Out" );   MAR.Display( MAR.x["_data_"]); 						break;
+		case "Ld": 
+			if ( val === 1 ) {
+				MAR.x["_Ld_"] = 1;
+				MAR.PullBus();
+				MAR.x["_data_"] = MAR.x["_InputBuffer_"];
+				MAR.TurnOn( "mar_Ld"  );
+			}
+			MAR.Display( MAR.x["_data_"]);
+		break;
+		case "Inc":
+			if ( val === 1 ) {
+				MAR.x["_Inc_"] = 1;
+				MAR.x["_data_"] = MAR.x["_data_"] + 1;
+				MAR.TurnOn( "mar_Inc" );
+			}
+			MAR.Display( MAR.x["_data_"]); 						
+		break;
+		case "Out":
+			if ( val === 1 ) {
+				MAR.x["_Out_"] = 1;
+				MAR.x["_OutputBuffer_"] = MAR.x["_data_"];
+				MAR.PushBus();
+				MAR.TurnOn( "mar_Out" );   
+			}   	
+			MAR.Display( MAR.x["_data_"]);
+		break;
 		default:
-			Error ( "Invalid Message", wire, val );
+			MAR.Error ( "Invalid Message", wire, val );
+		break;
 		}
 	}
 	, tick: function ( ) {
@@ -47,13 +69,14 @@ var MAR = {
 	}
 	// After Tick Cleanup 
 	, rise: function ( ) {
+			// MAR.x["_data_"] = MAR.x["_InputBuffer_"];			// hm..................
 		MAR.x["_InputBuffer_"] = null;
 		MAR.x["_Ld_"] = null;
 		MAR.x["_Inc_"] = null;
 		MAR.x["_Out_"] = null;
 	}
 	, err: function () {
-		return Error();
+		return MAR.Error();
 	}
 	, test_peek: function() {
 		return ( MAR.x["_data_"] );

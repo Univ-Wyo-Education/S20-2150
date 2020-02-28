@@ -8,14 +8,14 @@ var IR = {
 	}
 	, "x": {
 		  "Name": "IR"
-		, "Group": "Register"
-		, "Interface": {
-			  "bus" : { "width": 16, "mode": "io" }
-			, "vcc" : { "width": 1, "mode": "i" }
-			, "gnd" : { "width": 1, "mode": "i" }
-			, "Ld"  : { "width": 1, "mode": "i" }
-			, "Out" : { "width": 1, "mode": "i" }	// Turn on Output on "bus"
-		}
+		//, "Group": "Register"
+		//, "Interface": {
+		//	  "bus" : { "width": 16, "mode": "io" }
+		//	, "vcc" : { "width": 1, "mode": "i" }
+		//	, "gnd" : { "width": 1, "mode": "i" }
+		//	, "Ld"  : { "width": 1, "mode": "i" }
+		//	, "Out" : { "width": 1, "mode": "i" }	// Turn on Output on "bus"
+		//}
 		, "_data_": 0
 		, "_InputBuffer_": 0
 		, "_OutputBuffer_": 0
@@ -27,7 +27,7 @@ var IR = {
 		case "Ld": 
 			if ( val === 1 ) {
 				IR.x["_Ld_"] = 1;
-				IR.PullBus(true);
+				IR.PullBus();
 				IR.x["_data_"] = IR.x["_InputBuffer_"];
 				IR.TurnOn( "ir_Ld"  );
 			}
@@ -43,7 +43,7 @@ var IR = {
 			IR.Display( IR.x["_data_"]);
 		break;
 		default:
-			Error ( "Invalid Message", wire, val );
+			IR.Error ( "Invalid Message", wire, val );
 		break;
 		}
 	}
@@ -65,7 +65,7 @@ var IR = {
 		IR.x["_Out_"] = null;
 	}
 	, err: function () {
-		return Error();
+		return IR.Error();
 	}
 	, test_peek: function() {
 		return ( IR.x["_data_"] );
