@@ -1896,7 +1896,7 @@ function displayMainBus(s) {
 // ----------------------------------------------------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------------------------------------
 
-var theWorld2 = [];			// Values
+var theWorld2 = {};			// Values
 var theWorld2WhoSet = [];	// Who set like PC
 var theWorld2DepOn = [];	// Functions depending on inputs.
 
@@ -1904,9 +1904,17 @@ var theWorld2DepOn = [];	// Functions depending on inputs.
 // AddMsg ( PC.x.Name, "Bus", "Out", PC.x._OutputBuffer );		// Resovles Bus							
 function AddMsg ( Name, Resolves, Type, Value ) {
 	if ( Type == "Out" || Type == "I/O" ) {
+		// console.log ( "Setting theWorld2['"+Resolves+"'] to "+Value );
 		theWorld2[Resolves] = Value;
 		theWorld2WhoSet[Resolves] = Name;
+		switch ( Resolves ) {
+		case "Bus":
+			var sVal = toHex(Value,4);
+			displayMainBus(sVal);
+		break;
+		}
 	} else {
+		console.error ( "AddMsg incorrect type: ", Type );
 	}
 }
 
@@ -1930,9 +1938,27 @@ function hasPending () {
 	return false;
 }
 
-function dependenciesMet ( tw ) {
-	// xyzzy // xyzzy // xyzzy // xyzzy // xyzzy // xyzzy // xyzzy // xyzzy
-	// xyzzy // xyzzy // xyzzy // xyzzy // xyzzy // xyzzy // xyzzy // xyzzy
+// tw is the row in theWorld2DepOn
+function depdendenciesMet ( tw ) {
+	if ( tw.State !== "Pending" ) {
+		console.log ( "Invalid data passed to depdendenciesMet()" );
+		return true;
+	}
+
+	var name = tw.DepOn;
+	if ( typeof name === "string" ) {
+		if ( theWorld2[ name ] === undefined ) {
+			return false;
+		}
+	}
+
+	for ( var ww = 0, mz = tw.DepOn.length; ww < mz; ww++ ) {
+		name = tw.DepOn[ww];
+		if ( theWorld2[ name ] === undefined ) {
+			return false;
+		}
+	}
+	return true;
 }
 
 function PropogateSignals () {
@@ -1942,11 +1968,11 @@ function PropogateSignals () {
 			break;
 		}
 		for ( var kk = 0, mx = theWorld2DepOn.length; kk < mx; kk++ ) {
-			var tw = theWorldDepOn[kk];
+			var tw = theWorld2DepOn[kk];
 			if ( tw.State === "Pending" ) {
-				if ( dependenciesMet ( tw ) ) {
-					tw.Fx ( /* ??? */ );
-					theWorldDepOn[kk].State = "Done";
+				if ( depdendenciesMet ( tw ) ) {
+					tw.Fx();
+					theWorld2DepOn[kk].State = "Done";
 				}
 			}
 		}
@@ -2287,6 +2313,8 @@ var nErr = 0;
 
 // 1000. PC
 function test1000() {
+	clearOtherLine(); 	
+
 	PC.msg("Clr",1);
 	PC.msg("Inc",1);
 	if ( PC.x._Inc_ !== 1 ) {
@@ -2304,14 +2332,86 @@ function test1000() {
 	}
 
 	// ----------------------------------------------------------------------------
+	theWorld2DepOn = [];	// Setup
+	theWorld2 = {};			// Values
+	theWorld2WhoSet = [];	// Who set like PC
+
+	// Create a pending action
 	PC.msg("Ld",1);
-	if ! hasPending () {
-		console.log ( "Error test1000: hasPending() false after creation of pending item" );
+	if ( ! hasPending () ) {
+		console.log ( "Error test1000: hasPending() false after creation of pending item." );
+		nErr++;
+	}
+
+	// Verify that the dependencies are not yet met.
+	var tw = theWorld2DepOn[0];	// is at 0 due to setup above.
+	if ( depdendenciesMet ( tw ) ) {
+		console.log ( "Error test1000: depdendenciesMet() true before any dependencies resolved." );
+		nErr++;
+	}
+
+	// Resolve the dependency
+	// theWorld2["Bus"] = 4;
+	AddMsg ( "test1000", "Bus", "Out", 44 ) ;
+
+	if ( theWorld2["Bus"] !== 44 ) {
+		console.log ( "Error test1000: Expecing 44 on bus, got: "+ theWorld2["Bus"] );
+		nErr++;
+	}
+
+	// Verify that it is met.
+	if ( ! depdendenciesMet ( tw ) ) {
+		console.log ( "Error test1000: depdendenciesMet() false when dependency has been met." );
+		nErr++;
+	}
+
+	if ( lineOn.length != 2 ) {
+		console.log ( "Error test1000: should have 2 blue liens on - did not find them." );
+		nErr++;
+	}
+
+	clearOtherLine(); 	
+	if ( lineOn.length != 0 ) {
+		console.log ( "Error test1000: should have 0 blue liens on - did not find them." );
+		nErr++;
+	}
+
+	// Run the Signal Propogator.
+	PropogateSignals();
+
+
+	// Check that no pending actions are left.
+	if ( hasPending () ) {
+		console.log ( "Error test1000: hasPending() true when all functions should have been run." );
+		nErr++;
+	}
+
+	// Validate value set.
+	if ( PC.x._data_ !== 44 ) {
+		console.log ( "Error test1000: should be 44, got:" +PC.x._data_ +" instead." );
+		nErr++;
+	}
+
+	if ( lineOn.length != 1 ) {
+		console.log ( "Error test1000: should have 1 blue liens on - did not find them." );
 		nErr++;
 	}
 
 	// ----------------------------------------------------------------------------
-	// xyzzy more. - Test Ld, Out, Bus, Resolver
+	PC.msg("rise",1);
+	PC.msg("Inc",1);
+	PC.msg("rise",1);
+	if ( PC.x._data_ !== 45 ) {
+		console.log ( "Error test1000: should be 45, got:" +PC.x._data_ +" instead." );
+		nErr++;
+	}
+
+	PC.msg("Out",1);
+	if ( theWorld2["Bus"] !== 45 ) {
+		console.log ( "Error test1000: 'Bus' should be 45, got: " +theWorld2["Bus"]+" instead." );
+		nErr++;
+	}
+
 	// ----------------------------------------------------------------------------
 
 	if ( nErr > 0 ) {
@@ -2319,8 +2419,6 @@ function test1000() {
 	} else {
 		console.log ( "PASS" );
 	}
-
-	PC.msg("Clr",1);	// Cleanup: Reset to original value.
 }
 
 // Test the transfer of the PC to the MAR

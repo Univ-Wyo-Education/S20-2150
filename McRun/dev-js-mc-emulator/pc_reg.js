@@ -81,7 +81,7 @@ var PC = {
 
 	, PullBus: function () {
 console.log ( "PC:PullBus New" );
-		AddDep ( PC.x.Name, [ "Bus" ], "In", function ( v ) {
+		AddDep ( PC.x.Name, [ "Bus" ], "In", function () {
 console.log ( "PC:PullBus Closure Added" );
 			 	PC.x["_InputBuffer_"] = theWorld2.Bus;
 				PC.x["_data_"] = PC.x["_InputBuffer_"];
@@ -95,7 +95,8 @@ console.log ( "PC:PullBus Closure Added" );
 	}
 
 	, PushBus: function () {
-		AddMsg ( PC.x.Name, "Bus", "Out", PC.x._OutputBuffer );		// Resovles Bus							<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+console.log ( "PC:PushBus New:", PC.x._OutputBuffer_ );		
+		AddMsg ( PC.x.Name, "Bus", "Out", PC.x._OutputBuffer_ );		// Resovles Bus							<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 //		if(theWorld.Bus && typeof theWorld.Bus.SetState === "function") {
 //console.log ( "PC:PushBus", PC.x["_OutputBuffer_"] );
 //			theWorld.Bus.SetState( PC.x["_OutputBuffer_"] );
