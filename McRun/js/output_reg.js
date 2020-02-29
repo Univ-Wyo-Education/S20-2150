@@ -1,7 +1,61 @@
 
-
 // OUTPUT Register (new)
 // ========
+
+//			<g id="dig0_0_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
+//			<g id="dig1_0_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
+//			<g id="dig2_0_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
+//			<g id="dig3_0_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
+
+// Set 7-seg display to notning - no LEDs on.
+function clear7seg () {
+	// <g id="dig0___7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
+	for ( var ii = 0; ii < 4; ii++ ) {
+		for ( jj = 0; jj <= 9; jj++ ) {
+			var id = "#dig"+ii+"_"+jj+"_7seg";
+			$(id).hide();
+		}
+		var id = "#dig"+ii+"___7seg";
+		$(id).show();
+	}
+}
+
+function zero7seg () {
+	for ( var ii = 0; ii < 4; ii++ ) {
+		for ( jj = 0; jj <= 9; jj++ ) {
+			var id = "#dig"+ii+"_"+jj+"_7seg";
+			$(id).hide();
+		}
+		var id = "#dig"+ii+"___7seg";
+		$(id).hide();
+		var id = "#dig"+ii+"_0_7seg";
+		$(id).show();
+	}
+}
+
+
+// Set 7-seg display to show 'v'
+function show7seg ( v ) {
+	var sVar = toHex(v,4);
+	var a = sVar.substr(0,1);	// MSB
+	var b = sVar.substr(1,1);
+	var c = sVar.substr(2,1);
+	var d = sVar.substr(3,1);	// LSB
+	var x = [ a, b, c, d ];
+console.log ( "x=", x );
+
+	for ( var ii = 0; ii < 4; ii++ ) {
+		for ( jj = 0; jj <= 9; jj++ ) {
+			var id = "#dig"+ii+"_"+jj+"_7seg";
+			$(id).hide();
+		}
+		var id = "#dig"+ii+"___7seg";
+		$(id).hide();
+		var id = "#dig"+ii+"_"+x[ii]+"_7seg";
+		$(id).show();
+	}
+}
+
 
 var OUTPUT = {
 	  "x": {
@@ -106,6 +160,7 @@ console.log ( "OUTPUT:PushBus New/Out:", OUTPUT.x._OutputBuffer_ );
 	, Display: function  ( val ) {
 		var sVal = toHex(val,4);
 		$("#h_output_txt_0").text(sVal);
+		show7seg ( val );
 	}
 
 	// Return any errors generated in this "chip"
