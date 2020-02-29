@@ -1,80 +1,100 @@
 
 
-// OUTPUT Register 
+// OUTPUT Register (new)
 // ========
 
 var OUTPUT = {
-	setupSelf: function ( ) {
-		console.log ( "Setup Self/OUTPUT" );
-	}
-	, "x": {
+	  "x": {
 		  "Name": "OUTPUT"
-		, "Group": "Register"
-		, "Interface": {
-			  "bus" : { "width": 16, "mode": "io" }
-			, "vcc" : { "width": 1, "mode": "i" }
-			, "gnd" : { "width": 1, "mode": "i" }
-			, "Clr" : { "width": 1, "mode": "i" }
-			, "Ld"  : { "width": 1, "mode": "i" }
-			, "Inc" : { "width": 1, "mode": "i" }
-			, "Out" : { "width": 1, "mode": "i" }	// Turn on Output on "bus"
-		}
 		, "_data_": 0
 		, "_InputBuffer_": 0
 		, "_OutputBuffer_": 0
-		, "_Clr_": null
+		//, "_Clr_": null
 		, "_Ld_": null
-		, "_Inc_": null
+		//, "_Inc_": null
 		, "_Out_": null
+		, "_Error_": []
 	}
+	, debug0: 0
 	, msg: function ( wire, val ) {
 		switch ( wire ) {
-		case "Clr": if ( val === 1 ) { OUTPUT.x["_Clr_"] = 1; OUTPUT.x["_data_"] = 0; }											OUTPUT.TurnOn( "output_Clr" );   OUTPUT.Display( OUTPUT.x["_data_"]); 						break;
-		case "Ld":  if ( val === 1 ) { OUTPUT.x["_Ld_"] = 1; OUTPUT.PullBus(true); OUTPUT.x["_data_"] = OUTPUT.x["_InputBuffer_"]; }	OUTPUT.TurnOn( "output_Ld"  );   OUTPUT.Display( OUTPUT.x["_data_"]); OUTPUT.x["_Ld_"] = 1; 	break;
-		case "Inc": if ( val === 1 ) { OUTPUT.x["_Inc_"] = 1; OUTPUT.x["_data_"] = OUTPUT.x["_data_"] + 1; }	    				OUTPUT.TurnOn( "output_Inc" );   OUTPUT.Display( OUTPUT.x["_data_"]); 						break;
-		case "Out": if ( val === 1 ) { OUTPUT.x["_Out_"] = 1; OUTPUT.x["_OutputBuffer_"] = OUTPUT.x["_data_"]; OUTPUT.PushBus(); }   	OUTPUT.TurnOn( "output_Out" );   OUTPUT.Display( OUTPUT.x["_data_"]); 						break;
+		//case "Clr":				// Act
+		//	if ( val === 1 ) {
+		//		OUTPUT.x["_Clr_"] = 1;
+		//		OUTPUT.x["_data_"] = 0;
+		//		OUTPUT.TurnOn( "output_Clr" );
+		//	}
+		//	OUTPUT.Display( OUTPUT.x["_data_"]); 						
+		//break;
+		case "Ld": 				// In, DepOn Bus
+			if ( val === 1 ) {
+				OUTPUT.x["_Ld_"] = 1;
+				OUTPUT.PullBus();
+				// OUTPUT.x["_data_"] = OUTPUT.x["_InputBuffer_"];
+				// OUTPUT.TurnOn( "output_Ld" );
+			}
+			OUTPUT.Display( OUTPUT.x["_data_"]);
+		break;
+		//case "Inc":				// Act
+		//	if ( val === 1 ) {
+		//		OUTPUT.x["_Inc_"] = 1;
+		//		OUTPUT.TurnOn( "output_Inc" );
+		//	}
+		//	OUTPUT.Display( OUTPUT.x["_data_"]);
+		//break;
+		case "Out":				// Resolves Bus
+			if ( val === 1 ) {
+				OUTPUT.x["_Out_"] = 1;
+				OUTPUT.x["_OutputBuffer_"] = OUTPUT.x["_data_"];
+				OUTPUT.PushBus();
+				OUTPUT.TurnOn( "output_Out" );
+			}
+			OUTPUT.Display( OUTPUT.x["_data_"]);
+		break;
+		case 'rise':			// Act-CLeanup
+			OUTPUT.rise();
+		break;
 		default:
-			Error ( "Invalid Message", wire, val );
+			OUTPUT.Error ( "Invalid Message", wire, val );
+		break;
 		}
 	}
-	, tick: function ( ) {
-		if ( OUTPUT.x["_Ld_"] === 1 ) {
-			OUTPUT.PullBus();
-			OUTPUT.x["_data_"] = OUTPUT.x["_InputBuffer_"];
-		}
-		if ( OUTPUT.x["_Out_"] === 1 ) {
-			OUTPUT.x["_OutputBuffer_"] = OUTPUT.x["_data_"];
-			OUTPUT.PushBus();
-		}
-		OUTPUT.Display( OUTPUT.x["_data_"] );
-	}
+
 	// After Tick Cleanup 
 	, rise: function ( ) {
+		//if ( OUTPUT.x["_Clr_"] === 1 ) {
+		//	OUTPUT.x["_data_"] = 0;
+		//	OUTPUT.Display( OUTPUT.x["_data_"] );
+		//}
+		//if ( OUTPUT.x["_Inc_"] === 1 ) {
+		//	OUTPUT.x["_data_"] = OUTPUT.x["_data_"] + 1;
+		//	OUTPUT.Display( OUTPUT.x["_data_"] );
+		//}
+		if ( OUTPUT.x["_Ld_"] === 1 ) {
+			OUTPUT.Error ( "Failed To Resolve", "Ld", 1 );
+		}
 		OUTPUT.x["_InputBuffer_"] = null;
-		OUTPUT.x["_Clr_"] = null;
+		//OUTPUT.x["_Clr_"] = null;
 		OUTPUT.x["_Ld_"] = null;
-		OUTPUT.x["_Inc_"] = null;
+		//OUTPUT.x["_Inc_"] = null;
 		OUTPUT.x["_Out_"] = null;
-	}
-	, err: function () {
-		return Error();
-	}
-	, test_peek: function() {
-		return ( OUTPUT.x["_data_"] );
 	}
 
 	, PullBus: function () {
-		if(theWorld.Bus && typeof theWorld.Bus.State === "function") {
-			 OUTPUT.x["_InputBuffer_"] = theWorld.Bus.State();
-console.log ( "OUTPUT:PullBus", OUTPUT.x["_InputBuffer_"] );
-		}
+console.log ( "OUTPUT:PullBus New / Add Closure" );
+		AddDep ( OUTPUT.x.Name, [ "Bus" ], "In", function () {
+console.log ( "OUTPUT:PullBus Closure Run" );
+			 	OUTPUT.x["_InputBuffer_"] = theWorld2.Bus;
+				OUTPUT.x["_data_"] = OUTPUT.x["_InputBuffer_"];
+				OUTPUT.Display( OUTPUT.x["_data_"]);
+				OUTPUT.TurnOn( "output_Ld"  );
+				OUTPUT.x["_Ld_"] = 2;
+		});													
 	}
 
 	, PushBus: function () {
-		if(theWorld.Bus && typeof theWorld.Bus.SetState === "function") {
-console.log ( "OUTPUT:PushBus", OUTPUT.x["_OutputBuffer_"] );
-			theWorld.Bus.SetState( OUTPUT.x["_OutputBuffer_"] );
-		}
+console.log ( "OUTPUT:PushBus New/Out:", OUTPUT.x._OutputBuffer_ );		
+		AddMsg ( OUTPUT.x.Name, "Bus", "Out", OUTPUT.x._OutputBuffer_ );
 	}
 
 	// Turn on display of a wire with this ID
@@ -90,7 +110,11 @@ console.log ( "OUTPUT:PushBus", OUTPUT.x["_OutputBuffer_"] );
 
 	// Return any errors generated in this "chip"
 	, Error: function  ( errorMsg, wire, val ) {
-		return ( [] );
+		if ( errorMsg ) {
+			OUTPUT.x._Error_.push ( errorMsg + " wire:"+wire + " val:" + toHex(val,4) );
+		}
+		return ( OUTPUT.x._Error );
 	}
 
 };
+

@@ -1,24 +1,10 @@
 
-// AC Register 
+// AC Register (new)
 // ========
 
 var AC = {
-	setupSelf: function ( ) {
-		console.log ( "Setup Self/AC" );
-	}
-	, "x": {
+	  "x": {
 		  "Name": "AC"
-		, "Group": "Register"
-		, "Interface": {
-			  "bus" : { "width": 16, "mode": "io" }
-			, "vcc" : { "width": 1, "mode": "i" }
-			, "gnd" : { "width": 1, "mode": "i" }
-			, "Clr" : { "width": 1, "mode": "i" }
-			, "Ld"  : { "width": 1, "mode": "i" }
-			, "Inc" : { "width": 1, "mode": "i" }
-			, "Out" : { "width": 1, "mode": "i" }	// Turn on Output on "bus"
-			, "Out_to_ALU" : { "width": 1, "mode": "i" }	// Turn on Output to the ALU
-		}
 		, "_data_": 0
 		, "_InputBuffer_": 0
 		, "_OutputBuffer_": 0
@@ -27,36 +13,72 @@ var AC = {
 		, "_Inc_": null
 		, "_Out_": null
 		, "_Out_to_ALU_": null
+		, "_Error_": []
 	}
+	, debug0: 0
 	, msg: function ( wire, val ) {
 		switch ( wire ) {
-		case "Clr": if ( val === 1 ) { AC.x["_Clr_"] = 1; AC.x["_data_"] = 0; }											AC.TurnOn( "ac_Clr" );   AC.Display( AC.x["_data_"]); 						break;
-		case "Ld":  if ( val === 1 ) { AC.x["_Ld_"] = 1; AC.PullBus(true); AC.x["_data_"] = AC.x["_InputBuffer_"]; }	AC.TurnOn( "ac_Ld"  );   AC.Display( AC.x["_data_"]); AC.x["_Ld_"] = 1; 	break;
-		case "Inc": if ( val === 1 ) { AC.x["_Inc_"] = 1; AC.x["_data_"] = AC.x["_data_"] + 1; }	    				AC.TurnOn( "ac_Inc" );   AC.Display( AC.x["_data_"]); 						break;
-		case "Out": if ( val === 1 ) { AC.x["_Out_"] = 1; AC.x["_OutputBuffer_"] = AC.x["_data_"]; AC.PushBus(); }   	AC.TurnOn( "ac_Out" );   AC.Display( AC.x["_data_"]); 						break;
-		case "Out_to_ALU": if ( val === 1 ) { AC.x["_ALUOutputBuffer_"] = AC.x["_data_"]; AC.PushBus(); }   AC.TurnOn( "ac_Out_to_ALU" );   AC.Display( AC.x["_data_"]); break;
+		case "Clr":				// Act
+			if ( val === 1 ) {
+				AC.x["_Clr_"] = 1;
+				AC.x["_data_"] = 0;
+				AC.TurnOn( "ac_Clr" );
+			}
+			AC.Display( AC.x["_data_"]); 						
+		break;
+		case "Ld": 				// In, DepOn Bus
+			if ( val === 1 ) {
+				AC.x["_Ld_"] = 1;
+				AC.PullBus();
+			}
+			AC.Display( AC.x["_data_"]);
+		break;
+		case "Inc":				// Act
+			if ( val === 1 ) {
+				AC.x["_Inc_"] = 1;
+				AC.TurnOn( "ac_Inc" );
+			}
+			AC.Display( AC.x["_data_"]);
+		break;
+		case "Out":				// Resolves Bus
+			if ( val === 1 ) {
+				AC.x["_Out_"] = 1;
+				AC.x["_OutputBuffer_"] = AC.x["_data_"];
+				AC.PushBus();
+				AC.TurnOn( "ac_Out" );
+			}
+			AC.Display( AC.x["_data_"]);
+		break;
+		case "Out_to_ALU":
+			if ( val === 1 ) {
+				AC.x["_ALUOutputBuffer_"] = AC.x["_data_"];
+				AC.PushBus();
+			  	AC.TurnOn( "ac_Out_to_ALU" );
+			}
+			AC.Display( AC.x["_data_"]);
+			break;
+		case 'rise':			// Act-CLeanup
+			AC.rise();
+		break;
 		default:
-			Error ( "Invalid Message", wire, val );
+			AC.Error ( "Invalid Message", wire, val );
+		break;
 		}
 	}
-	, tick: function ( ) {
-		if ( AC.x["_Ld_"] === 1 ) {
-			AC.PullBus();
-			AC.x["_data_"] = AC.x["_InputBuffer_"];
-		}
-		if ( AC.x["_Out_"] === 1 ) {
-			AC.x["_OutputBuffer_"] = AC.x["_data_"];
-			AC.PushBus();
-		}
-		if ( AC.x["_Out_to_ALU_"] === 1 ) {
-			AC.x["_ALUOutputBuffer_"] = AC.x["_data_"];
-			// xyzzy - AC.PushALU() ??
-			AC.PushBus();
-		}
-		AC.Display( AC.x["_data_"] );
-	}
+
 	// After Tick Cleanup 
 	, rise: function ( ) {
+		if ( AC.x["_Clr_"] === 1 ) {
+			AC.x["_data_"] = 0;
+			AC.Display( AC.x["_data_"] );
+		}
+		if ( AC.x["_Inc_"] === 1 ) {
+			AC.x["_data_"] = AC.x["_data_"] + 1;
+			AC.Display( AC.x["_data_"] );
+		}
+		if ( AC.x["_Ld_"] === 1 ) {
+			AC.Error ( "Failed To Resolve", "Ld", 1 );
+		}
 		AC.x["_InputBuffer_"] = null;
 		AC.x["_Clr_"] = null;
 		AC.x["_Ld_"] = null;
@@ -64,25 +86,22 @@ var AC = {
 		AC.x["_Out_"] = null;
 		AC.x["_Out_to_ALU_"] = null;
 	}
-	, err: function () {
-		return Error();
-	}
-	, test_peek: function() {
-		return ( AC.x["_data_"] );
-	}
 
 	, PullBus: function () {
-		if(theWorld.Bus && typeof theWorld.Bus.State === "function") {
-			 AC.x["_InputBuffer_"] = theWorld.Bus.State();
-console.log ( "AC:PullBus", AC.x["_InputBuffer_"] );
-		}
+console.log ( "AC:PullBus New / Add Closure" );
+		AddDep ( AC.x.Name, [ "Bus" ], "In", function () {
+console.log ( "AC:PullBus Closure Run" );
+			 	AC.x["_InputBuffer_"] = theWorld2.Bus;
+				AC.x["_data_"] = AC.x["_InputBuffer_"];
+				AC.Display( AC.x["_data_"]);
+				AC.TurnOn( "ac_Ld"  );
+				AC.x["_Ld_"] = 2;
+		});													
 	}
 
 	, PushBus: function () {
-		if(theWorld.Bus && typeof theWorld.Bus.SetState === "function") {
-console.log ( "AC:PushBus", AC.x["_OutputBuffer_"] );
-			theWorld.Bus.SetState( AC.x["_OutputBuffer_"] );
-		}
+console.log ( "AC:PushBus New/Out:", AC.x._OutputBuffer_ );		
+		AddMsg ( AC.x.Name, "Bus", "Out", AC.x._OutputBuffer_ );
 	}
 
 	// Turn on display of a wire with this ID
@@ -101,7 +120,10 @@ console.log ( "AC:PushBus", AC.x["_OutputBuffer_"] );
 
 	// Return any errors generated in this "chip"
 	, Error: function  ( errorMsg, wire, val ) {
-		return ( [] );
+		if ( errorMsg ) {
+			AC.x._Error_.push ( errorMsg + " wire:"+wire + " val:" + toHex(val,4) );
+		}
+		return ( AC.x._Error );
 	}
 
 };

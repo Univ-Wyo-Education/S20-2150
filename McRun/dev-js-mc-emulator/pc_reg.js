@@ -1,5 +1,5 @@
 
-// PC Register 
+// PC Register (new)
 // ========
 
 var PC = {
@@ -29,8 +29,6 @@ var PC = {
 			if ( val === 1 ) {
 				PC.x["_Ld_"] = 1;
 				PC.PullBus();
-				// PC.x["_data_"] = PC.x["_InputBuffer_"];
-				// PC.TurnOn( "pc_Ld" );
 			}
 			PC.Display( PC.x["_data_"]);
 		break;
@@ -88,7 +86,7 @@ console.log ( "PC:PullBus Closure Run" );
 				PC.Display( PC.x["_data_"]);
 				PC.TurnOn( "pc_Ld"  );
 				PC.x["_Ld_"] = 2;
-		} );													
+		});													
 	}
 
 	, PushBus: function () {

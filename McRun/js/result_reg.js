@@ -1,138 +1,106 @@
 
-// Result Register 
+// RESULT Register (new)
 // ========
 
 var RESULT = {
-	setupSelf: function ( ) {
-		console.log ( "Setup Self/Result" );
-	}
-	, "x": {
-		  "Name": "Result"
-		, "Group": "Register"
-		, "Interface": {
-			  "bus" : { "width": 16, "mode": "io" }
-			, "vcc" : { "width": 1, "mode": "i" }
-			, "gnd" : { "width": 1, "mode": "i" }
-			, "Clr" : { "width": 1, "mode": "i" }
-			, "Ld"  : { "width": 1, "mode": "i" }
-			, "Inc" : { "width": 1, "mode": "i" }
-			, "Out" : { "width": 1, "mode": "i" }	// Turn on Output on "bus"
-			, "IsZero" : { "width": 1, "mode": "o" }	// Turn on Output on "bus"
-		}
+	  "x": {
+		  "Name": "RESULT"
 		, "_data_": 0
 		, "_InputBuffer_": 0
 		, "_OutputBuffer_": 0
 		, "_Clr_": null
 		, "_Ld_": null
-		, "_Inc_": null
-		, "_Out_": 1
+//		, "_Inc_": null
+		, "_Out_": null
+		, "_Error_": []
 	}
+	, debug0: 0
 	, msg: function ( wire, val ) {
-		// xyzzy ALU Input
-		RESULT.x["_"+wire+"_"] = 1;
 		switch ( wire ) {
-		case "Clr":
+		case "Clr":				// Act
 			if ( val === 1 ) {
+				RESULT.x["_Clr_"] = 1;
 				RESULT.x["_data_"] = 0;
+				RESULT.TurnOn( "result_Clr" );
 			}
-			RESULT.TurnOn( "result_Clr" );
+			RESULT.Display( RESULT.x["_data_"]); 						
+		break;
+		case "Ld": 				// In, DepOn Bus
+			if ( val === 1 ) {
+				RESULT.x["_Ld_"] = 1;
+				RESULT.PullBus();
+			}
 			RESULT.Display( RESULT.x["_data_"]);
 		break;
-		case "Ld": 
+//		case "Inc":				// Act
+//			if ( val === 1 ) {
+//				RESULT.x["_Inc_"] = 1;
+//				RESULT.TurnOn( "result_Inc" );
+//			}
+//			RESULT.Display( RESULT.x["_data_"]);
+//		break;
+		case "Out":				// Resolves Bus
 			if ( val === 1 ) {
-				RESULT.PullBus(true);
-				RESULT.x["_data_"] = RESULT.x["_InputBuffer_"];
-			}	
-			RESULT.TurnOn( "result_Ld"  );  
-			RESULT.Display( RESULT.x["_data_"]);
-			RESULT.x["_Ld_"] = 1;
-		break;
-		case "Inc":
-			if ( val === 1 ) {
-				RESULT.x["_data_"] = RESULT.x["_data_"] + 1;
-			}	
-			RESULT.TurnOn( "result_Inc" );  
-			RESULT.Display( RESULT.x["_data_"]);
-		break;
-		case "Out":
-			if ( val === 1 ) {
-				console.log ( "msg.out", RESULT.x, wire, val );
-			 	RESULT.x["_OutputBuffer_"] = RESULT.x["_data_"];
+				RESULT.x["_Out_"] = 1;
+				RESULT.x["_OutputBuffer_"] = RESULT.x["_data_"];
 				RESULT.PushBus();
+				RESULT.TurnOn( "result_Out" );
 			}
-			RESULT.TurnOn( "result_Out" );
 			RESULT.Display( RESULT.x["_data_"]);
+		break;
+		case 'rise':			// Act-CLeanup
+			RESULT.rise();
 		break;
 		default:
-			Error ( "Invalid Message", wire, val );
+			RESULT.Error ( "Invalid Message", wire, val );
+		break;
 		}
 	}
-	, tick: function ( ) {
-console.log ( "Result:Tick", RESULT.x );
-		if ( RESULT.x["_Ld_"] === 1 ) {
-			RESULT.PullBus();
-console.log ( "Result:Tick Ld: _InputBuffer_ =", RESULT.x["_InputBuffer_"] );
-			RESULT.x["_data_"] = RESULT.x["_InputBuffer_"];
-		}
-		if ( RESULT.x["_Out_"] === 1 ) {
-			RESULT.x["_OutputBuffer_"] = RESULT.x["_data_"];
-console.log ( "Result:Tick Out: _OutputBuffer =", RESULT.x["_OutputBuffer_"] );
-			RESULT.PushBus();
-		}
-		// xyzzy IsZero
-		RESULT.Display( RESULT.x["_data_"] );
-	}
+
 	// After Tick Cleanup 
 	, rise: function ( ) {
-		// xyzzy IsZero
+		if ( RESULT.x["_Clr_"] === 1 ) {
+			RESULT.x["_data_"] = 0;
+			RESULT.Display( RESULT.x["_data_"] );
+		}
+//		if ( RESULT.x["_Inc_"] === 1 ) {
+//			RESULT.x["_data_"] = RESULT.x["_data_"] + 1;
+//			RESULT.Display( RESULT.x["_data_"] );
+//		}
+		if ( RESULT.x["_Ld_"] === 1 ) {
+			RESULT.Error ( "Failed To Resolve", "Ld", 1 );
+		}
 		RESULT.x["_InputBuffer_"] = null;
 		RESULT.x["_Clr_"] = null;
 		RESULT.x["_Ld_"] = null;
-		RESULT.x["_Inc_"] = null;
+//		RESULT.x["_Inc_"] = null;
 		RESULT.x["_Out_"] = null;
-	}
-	, err: function () {
-		return Error();
-	}
-	, test_peek: function() {
-		return ( RESULT.x["_data_"] );
 	}
 
 	, PullBus: function () {
-		if(theWorld.Bus && typeof theWorld.Bus.State === "function") {
-			 RESULT.x["_InputBuffer_"] = theWorld.Bus.State();
-console.log ( "Result:PullBus", RESULT.x["_InputBuffer_"] );
-		}
+console.log ( "RESULT:PullBus New / Add Closure" );
+		AddDep ( RESULT.x.Name, [ "Bus" ], "In", function () {
+console.log ( "RESULT:PullBus Closure Run" );
+			 	RESULT.x["_InputBuffer_"] = theWorld2.Bus;
+				RESULT.x["_data_"] = RESULT.x["_InputBuffer_"];
+				RESULT.Display( RESULT.x["_data_"]);
+				RESULT.TurnOn( "result_Ld"  );
+				RESULT.x["_Ld_"] = 2;
+		});													
 	}
 
 	, PushBus: function () {
-		if(theWorld.Bus && typeof theWorld.Bus.SetState === "function") {
-			// Implementation of LOGIC for output of IR
-			if ( MICROCODE.x["hand_out"] ) {
-console.log ( "Result:PushBus/hand_out", RESULT.x["_OutputBuffer_"] );
-				RESULT.x["_OutputBuffer_"] = RESULT.x["_OutputBuffer_"] & 0xFFF;
-				theWorld.Bus.SetState( RESULT.x["_OutputBuffer_"] );
-			} else if ( MICROCODE.x["ir_full_out"] ) {
-console.log ( "Result:PushBus/ir_full_out", RESULT.x["_OutputBuffer_"] );
-				theWorld.Bus.SetState( RESULT.x["_OutputBuffer_"] );
-			} else {
-console.log ( "Result:PushBus --- Skipped --- no hand_out/ir_full_out flag set ---");
-			}
-		}
-
+console.log ( "RESULT:PushBus New/Out:", RESULT.x._OutputBuffer_ );		
+		AddMsg ( RESULT.x.Name, "Bus", "Out", RESULT.x._OutputBuffer_ );
 
 		// IsZero Implementation - push data to the MUX/Decoder
-		var dd = IR.x["_data_"];
+		var dd = RESULT.x["_data_"];		// Should be _OutputBuffer_ ?
 		MUX.msg("01_1", ( dd != 0 ) ? 1 : 0 );
 		//	, "McJmp_7": { Name: "MUX", 					Op: ["00_7","01_7","10_7","11_7"] }
 		//	, "McJmp_6": { Name: "MUX", 					Op: ["00_6","01_6","10_6"       ] }
 		//	, "McJmp_5": { Name: "MUX", 					Op: ["00_5","01_5"              ] }
 		//	, "McJmp_4": { Name: "MUX", 					Op: ["00_4","01_4"              ] }
 		//	, "McJmp_3": { Name: "MUX", 					Op: ["00_3","01_3"              ] }
-		//	, "McJmp_2": { Name: "MUX", 					Op: ["00_2","01_2"       ,"11_2"] }	
-		//	, "McJmp_1": { Name: "MUX", 					Op: ["00_1"       ,"10_1","11_1"] }
-		//	, "McJmp_0": { Name: "MUX", 					Op: ["00_0","01_0","10_0","11_0"] }
-
 	}
 
 	// Turn on display of a wire with this ID
@@ -152,9 +120,11 @@ console.log ( "Result:PushBus --- Skipped --- no hand_out/ir_full_out flag set -
 
 	// Return any errors generated in this "chip"
 	, Error: function  ( errorMsg, wire, val ) {
-		return ( [] );	 // xyzzy - needs fix!
+		if ( errorMsg ) {
+			RESULT.x._Error_.push ( errorMsg + " wire:"+wire + " val:" + toHex(val,4) );
+		}
+		return ( RESULT.x._Error );
 	}
 
 };
-
 

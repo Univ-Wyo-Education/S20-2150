@@ -1,113 +1,5 @@
 
-// MAR Register 
-// ========
-
-var MAR_old = {
-	setupSelf: function ( ) {
-		console.log ( "Setup Self/MAR" );
-	}
-	, "x": {
-		  "Name": "MAR"
-		, "_data_": 0
-		, "_InputBuffer_": 0
-		, "_OutputBuffer_": 0
-		, "_Ld_": null
-		, "_Inc_": null
-		, "_Out_": null
-	}
-	, msg: function ( wire, val ) {
-		switch ( wire ) {
-		case "Ld": 
-			if ( val === 1 ) {
-				MAR.x["_Ld_"] = 1;
-				MAR.PullBus();
-				MAR.x["_data_"] = MAR.x["_InputBuffer_"];
-				MAR.TurnOn( "mar_Ld"  );
-			}
-			MAR.Display( MAR.x["_data_"]);
-		break;
-		case "Inc":
-			if ( val === 1 ) {
-				MAR.x["_Inc_"] = 1;
-				MAR.x["_data_"] = MAR.x["_data_"] + 1;
-				MAR.TurnOn( "mar_Inc" );
-			}
-			MAR.Display( MAR.x["_data_"]); 						
-		break;
-		case "Out":
-			if ( val === 1 ) {
-				MAR.x["_Out_"] = 1;
-				MAR.x["_OutputBuffer_"] = MAR.x["_data_"];
-				MAR.PushBus();
-				MAR.TurnOn( "mar_Out" );   
-			}   	
-			MAR.Display( MAR.x["_data_"]);
-		break;
-		default:
-			MAR.Error ( "Invalid Message", wire, val );
-		break;
-		}
-	}
-	, tick: function ( ) {
-		if ( MAR.x["_Ld_"] === 1 ) {
-			MAR.PullBus();
-			MAR.x["_data_"] = MAR.x["_InputBuffer_"];
-		}
-		if ( MAR.x["_Out_"] === 1 ) {
-			MAR.x["_OutputBuffer_"] = MAR.x["_data_"];
-			MAR.PushBus();
-		}
-		MAR.Display( MAR.x["_data_"] );
-	}
-	// After Tick Cleanup 
-	, rise: function ( ) {
-			// MAR.x["_data_"] = MAR.x["_InputBuffer_"];			// hm..................
-		MAR.x["_InputBuffer_"] = null;
-		MAR.x["_Ld_"] = null;
-		MAR.x["_Inc_"] = null;
-		MAR.x["_Out_"] = null;
-	}
-	, err: function () {
-		return MAR.Error();
-	}
-	, test_peek: function() {
-		return ( MAR.x["_data_"] );
-	}
-
-	, PullBus: function () {
-		if(theWorld.Bus && typeof theWorld.Bus.State === "function") {
-			 MAR.x["_InputBuffer_"] = theWorld.Bus.State();
-console.log ( "MAR:PullBus", MAR.x["_InputBuffer_"] );
-		}
-	}
-
-	, PushBus: function () {
-		if(theWorld.Bus && typeof theWorld.Bus.SetState === "function") {
-console.log ( "MAR:PushBus", MAR.x["_OutputBuffer_"] );
-			theWorld.Bus.SetState( MAR.x["_OutputBuffer_"] );
-		}
-	}
-
-	// Turn on display of a wire with this ID
-	, TurnOn: function  ( id ) {
-console.log ( "MAR: turn on the line", id );
-		infoOn1 ( -1, "id_"+id );
-	}
-
-	// Display text to inside of register box
-	, Display: function  ( val ) {
-		var sVal = toHex(val,4);
-		$("#h_mar_txt_0").text(sVal);
-	}
-
-	// Return any errors generated in this "chip"
-	, Error: function  ( errorMsg, wire, val ) {
-		return ( [] );
-	}
-
-};
-
-// MAR Register 
+// MAR Register  (new)
 // ========
 
 var MAR = {
@@ -137,8 +29,6 @@ var MAR = {
 			if ( val === 1 ) {
 				MAR.x["_Ld_"] = 1;
 				MAR.PullBus();
-				// MAR.x["_data_"] = MAR.x["_InputBuffer_"];
-				// MAR.TurnOn( "mar_Ld" );
 			}
 			MAR.Display( MAR.x["_data_"]);
 		break;
