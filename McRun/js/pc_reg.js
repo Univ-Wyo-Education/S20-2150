@@ -80,27 +80,20 @@ var PC = {
 	}
 
 	, PullBus: function () {
-console.log ( "PC:PullBus New" );
+console.log ( "PC:PullBus New / Add Closure" );
 		AddDep ( PC.x.Name, [ "Bus" ], "In", function () {
-console.log ( "PC:PullBus Closure Added" );
+console.log ( "PC:PullBus Closure Run" );
 			 	PC.x["_InputBuffer_"] = theWorld2.Bus;
 				PC.x["_data_"] = PC.x["_InputBuffer_"];
+				PC.Display( PC.x["_data_"]);
 				PC.TurnOn( "pc_Ld"  );
 				PC.x["_Ld_"] = 2;
-		} );														// Resovles Bus							<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-//		if(theWorld.Bus && typeof theWorld.Bus.State === "function") {
-//			 PC.x["_InputBuffer_"] = theWorld.Bus.State();
-//console.log ( "PC:PullBus", PC.x["_InputBuffer_"] );
-//		}
+		} );													
 	}
 
 	, PushBus: function () {
-console.log ( "PC:PushBus New:", PC.x._OutputBuffer_ );		
-		AddMsg ( PC.x.Name, "Bus", "Out", PC.x._OutputBuffer_ );		// Resovles Bus							<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-//		if(theWorld.Bus && typeof theWorld.Bus.SetState === "function") {
-//console.log ( "PC:PushBus", PC.x["_OutputBuffer_"] );
-//			theWorld.Bus.SetState( PC.x["_OutputBuffer_"] );
-//		}
+console.log ( "PC:PushBus New/Out:", PC.x._OutputBuffer_ );		
+		AddMsg ( PC.x.Name, "Bus", "Out", PC.x._OutputBuffer_ );
 	}
 
 	// Turn on display of a wire with this ID

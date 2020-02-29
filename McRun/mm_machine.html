@@ -1961,7 +1961,7 @@ function depdendenciesMet ( tw ) {
 	return true;
 }
 
-function PropogateSignals () {
+function PropagateSignals () {
 	for ( var nIter = 0; hasPending(); nIter++ ) {
 		if ( nIter > 50 ) {
 			console.log ( "Out of Gas..." );
@@ -2376,8 +2376,8 @@ function test1000() {
 		nErr++;
 	}
 
-	// Run the Signal Propogator.
-	PropogateSignals();
+	// Run the Signal Propagator.
+	PropagateSignals();
 
 
 	// Check that no pending actions are left.
@@ -2421,8 +2421,39 @@ function test1000() {
 	}
 }
 
+/*
+xyzzy
+*/
+// ----------------------------------------------------------------------------------------------------------------------------------------
 // Test the transfer of the PC to the MAR
 function test1001() {
+
+	PC.x._data_ = 0x1001;		// Test Number 	- Force the PC to have 1001 hex as data.
+	PC.msg("Out",1);
+
+	MAR.msg("Ld",1);			// Setup MAR to do a load.
+
+	if ( theWorld2["Bus"] !== 0x1001 ) {
+		console.log ( "Error test1001: 'Bus' should be 0x1001, got: " +theWorld2["Bus"]+" instead." );
+		nErr++;
+	}
+
+	PropagateSignals();
+
+	if ( MAR.x._data_ !== 0x1001 ) {
+		console.log ( "Error test1001: MAR.x._data_ should be 0x1001, got: " +theWorld2["Bus"]+" instead." );
+		nErr++;
+	}
+		
+
+
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.log ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
 }
 
 // Test the transfer of the PC to the MAR, MAR Read Memory -> MDR
