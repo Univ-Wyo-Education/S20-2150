@@ -92,6 +92,7 @@ console.log ( "MAR:PullBus Closure Run" );
 	, PushBus: function () {
 console.log ( "MAR:PushBus New/Out:", MAR.x._OutputBuffer_ );		
 		AddMsg ( MAR.x.Name, "Bus", "Out", MAR.x._OutputBuffer_ );		
+		AddMsg ( MAR.x.Name, "Memory_Addr", "Out", MAR.x._OutputBuffer_ );		
 	}
 
 	// Turn on display of a wire with this ID

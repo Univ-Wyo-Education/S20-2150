@@ -1,3 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title> MARIA Microcode Emulator </title>
+<!--
+MARIA Microcode Emulator: Version v1.3.6
+Copyright (C) University of Wyoming, 2019-2020.
+--> 
+
+<!-- Bootstrap CSS
+<link rel="stylesheet" href="/bootstrap-4.3.1-dist/css/bootstrap.css">
+<link rel="stylesheet" href="/css/bootstrap.curulean-theme.min.css">
+<link rel="stylesheet" href="/css/bootstrap-datepicker.min.css">
+-->
+
 <head>
 <style>
 	.small           { font: italic 15px sans-serif; }
@@ -1439,7 +1456,7 @@ function infoOn1(i,x) {
 	case "clear-line":
 		break;
 	case "help":
-		showTextInOutputBox("MARIA Microcode Emulator: Version v1.3.5"
+		showTextInOutputBox("MARIA Microcode Emulator: Version v1.3.6"
 			,"Load assembled microcode and assembled instructions, then step or run."
 			,""
 			,"https://github.com/Univ-Wyo-Education/S20-2150/McDocs/ for more detailed help."
@@ -2219,9 +2236,11 @@ function depdendenciesMet ( tw ) {
 }
 
 function PropagateSignals () {
+console.log ( "theWorld2      before:" + JSON.stringify ( theWorld2), ln() );
+console.log ( "theWorld2DepOn before:" + JSON.stringify ( theWorld2DepOn ) );
 	for ( var nIter = 0; hasPending(); nIter++ ) {
 		if ( nIter > 50 ) {
-			console.log ( "Out of Gas..." );
+			console.error ( "Out of Gas..." );
 			break;
 		}
 		for ( var kk = 0, mx = theWorld2DepOn.length; kk < mx; kk++ ) {
@@ -2234,6 +2253,8 @@ function PropagateSignals () {
 			}
 		}
 	}
+console.log ( "theWorld2      after:" + JSON.stringify ( theWorld2) );
+console.log ( "theWorld2DepOn after:" + JSON.stringify ( theWorld2DepOn ) );
 }
 
 
@@ -2522,22 +2543,510 @@ console.log ( "G" );
 
 }
 
+// From StackOverflow: Public Domain
+function ln() {
+  var e = new Error();
+  if (!e.stack) try {
+    // IE requires the Error to actually be throw or else the Error's 'stack'
+    // property is undefined.
+    throw e;
+  } catch (e) {
+    if (!e.stack) {
+      return 0; // IE < 10, likely
+    }
+  }
+  var stack = e.stack.toString().split(/\r\n|\n/);
+  // We want our caller's frame. It's index into |stack| depends on the
+  // browser and browser version, so we need to search for the second frame:
+  var frameRE = /:(\d+):(?:\d+)[^\d]*$/;
+  do {
+    var frame = stack.shift();
+  } while (!frameRE.exec(frame) && stack.length);
+  return frameRE.exec(stack.shift())[1];
+}
+
+
+var nErr = 0;
+
+
+
+
+
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// test a 2 instruction program with 1 word of data.
+// 2000.  Test Load, Halt
+function test2000() {
+	// Plug in 2 instructions into Memory ( Load 5, Halt ), Plug in 23 -> mem[5]
+	// Clear Microcode
+	// Fetch ./data/test000b.mc.txt -> Microcode
+	// Fetch ./data/test000b.mm.txt -> Main Memory (2 words)
+	// Clear Registers
+	// Run it
+	// Verify that 
+	//		1. AC == 5
+	//		2. IR == Halt
+	//		3. PC == 1
+	//		4. M_PC == ?? for halt
+	//		5. Halt Light is on
+
+	return ( nErr );
+}
+
+
+
+
+
+// 1000. PC
+function test1000() {
+	clearOtherLine(); 	
+
+	PC.msg("Clr",1);
+	PC.msg("Inc",1);
+	if ( PC.x._Inc_ !== 1 ) {
+		console.error ( "Error test1000: pc.x._Inc_ != 1" );
+		nErr++;
+	}
+	if ( PC.x._data_ !== 0 ) {
+		console.error ( "Error test1000: pc != 0" );
+		nErr++;
+	}
+	PC.msg("rise",1);
+	if ( PC.x._data_ !== 1 ) {
+		console.error ( "Error test1000: pc != 1" );
+		nErr++;
+	}
+
+	// ----------------------------------------------------------------------------
+	theWorld2DepOn = [];	// Setup
+	theWorld2 = {};			// Values
+	theWorld2WhoSet = [];	// Who set like PC
+
+	// Create a pending action
+	PC.msg("Ld",1);
+	if ( ! hasPending () ) {
+		console.error ( "Error test1000: hasPending() false after creation of pending item." );
+		nErr++;
+	}
+
+	// Verify that the dependencies are not yet met.
+	var tw = theWorld2DepOn[0];	// is at 0 due to setup above.
+	if ( depdendenciesMet ( tw ) ) {
+		console.error ( "Error test1000: depdendenciesMet() true before any dependencies resolved." );
+		nErr++;
+	}
+
+	// Resolve the dependency
+	// theWorld2["Bus"] = 4;
+	AddMsg ( "test1000", "Bus", "Out", 44 ) ;
+
+	if ( theWorld2["Bus"] !== 44 ) {
+		console.error ( "Error test1000: Expecing 44 on bus, got: "+ theWorld2["Bus"] );
+		nErr++;
+	}
+
+	// Verify that it is met.
+	if ( ! depdendenciesMet ( tw ) ) {
+		console.error ( "Error test1000: depdendenciesMet() false when dependency has been met." );
+		nErr++;
+	}
+
+	if ( lineOn.length != 2 ) {
+		console.error ( "Error test1000: should have 2 blue liens on - did not find them." );
+		nErr++;
+	}
+
+	clearOtherLine(); 	
+	if ( lineOn.length != 0 ) {
+		console.error ( "Error test1000: should have 0 blue liens on - did not find them." );
+		nErr++;
+	}
+
+	// Run the Signal Propagator.
+	PropagateSignals();
+
+
+	// Check that no pending actions are left.
+	if ( hasPending () ) {
+		console.error ( "Error test1000: hasPending() true when all functions should have been run." );
+		nErr++;
+	}
+
+	// Validate value set.
+	if ( PC.x._data_ !== 44 ) {
+		console.error ( "Error test1000: should be 44, got:" +PC.x._data_ +" instead." );
+		nErr++;
+	}
+
+	if ( lineOn.length != 1 ) {
+		console.error ( "Error test1000: should have 1 blue liens on - did not find them." );
+		nErr++;
+	}
+
+	// ----------------------------------------------------------------------------
+	PC.msg("rise",1);
+	PC.msg("Inc",1);
+	PC.msg("rise",1);
+	if ( PC.x._data_ !== 45 ) {
+		console.error ( "Error test1000: should be 45, got:" +PC.x._data_ +" instead." );
+		nErr++;
+	}
+
+	PC.msg("Out",1);
+	if ( theWorld2["Bus"] !== 45 ) {
+		console.error ( "Error test1000: 'Bus' should be 45, got: " +theWorld2["Bus"]+" instead." );
+		nErr++;
+	}
+
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
+}
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// Test the transfer of the PC to the MAR
+function test1001() {
+
+	PC.x._data_ = 0x1001;		// Test Number 	- Force the PC to have 1001 hex as data.
+	PC.msg("Out",1);
+
+	MAR.msg("Ld",1);			// Setup MAR to do a load.
+
+	if ( theWorld2["Bus"] !== 0x1001 ) {
+		console.error ( "Error test1001: 'Bus' should be 0x1001, got: " +theWorld2["Bus"]+" instead." );
+		nErr++;
+	}
+
+	PropagateSignals();
+
+	if ( MAR.x._data_ !== 0x1001 ) {
+		console.error ( "Error test1001: MAR.x._data_ should be 0x1001, got: " +MAR.x._data_+" instead." );
+		nErr++;
+	}
+
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// Test of "OUTPUT" to 7-seg
+// 1102. Output -> 7-seg
+function test1102() {
+	OUTPUT.x._data_ = 0x1234;				// Set data
+	OUTPUT.Display( OUTPUT.x._data_ );		// Display it
+	return ( nErr );
+}
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// Test the transfer of the PC to the OUTPUT
+// 1101. AC -> Output
+function test1101() {
+
+	PC.x._data_ = 0x1101;		// Test Number 	- Force the PC to have 1001 hex as data.
+	PC.msg("Out",1);
+
+	OUTPUT.msg("Ld",1);			// Setup OUTPUT to do a load.
+
+	if ( theWorld2["Bus"] !== 0x1101 ) {
+		console.error ( "Error test1001: 'Bus' should be 0x1001, got: " +theWorld2["Bus"]+" instead." );
+		nErr++;
+	}
+
+	PropagateSignals();
+
+	if ( OUTPUT.x._data_ !== 0x1101 ) {
+		console.error ( "Error test1101: OUTPUT.x._data_ should be 0x1101, got: " +OUTPUT.x._data_+" instead." );
+		nErr++;
+	}
+
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
+}
+
+
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// 1003. MDR -> Bus -> MAR 
+function test1003() {
+
+	MDR.x._data_ = 0x1003;		// Test Number 	- Force the MDR to have 1001 hex as data.
+	MDR.msg("Out",1);
+
+	MAR.msg("Ld",1);			// Setup MAR to do a load.
+
+	if ( theWorld2["Bus"] !== 0x1003 ) {
+		console.error ( "Error test1003: 'Bus' should be 0x1001, got: " +theWorld2["Bus"]+" instead." );
+		nErr++;
+	}
+
+	PropagateSignals();
+
+	if ( MAR.x._data_ !== 0x1003 ) {
+		console.error ( "Error test1003: MAR.x._data_ should be 0x1003, got: " +MAR.x._data_+" instead." );
+		nErr++;
+	}
+
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// 1104. Result -> AC
+function test1104() {
+
+	RESULT.x._data_ = 0x1103;		// Test Number 	- Force the RESULT to have 1001 hex as data.
+	RESULT.Display( RESULT.x._data_ );
+	RESULT.msg("Out",1);
+
+	AC.msg("Ld",1);			// Setup AC to do a load.
+
+	if ( theWorld2["Bus"] !== 0x1103 ) {
+		console.error ( "Error test1103: 'Bus' should be 0x1001, got: " +theWorld2["Bus"]+" instead." );
+		nErr++;
+	}
+
+	PropagateSignals();
+
+	if ( AC.x._data_ !== 0x1103 ) {
+		console.error ( "Error test1103: AC.x._data_ should be 0x1103, got: " +AC.x._data_+" instead." );
+		nErr++;
+	}
+
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
+}
+
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// 1105. Input -> AC
+function test1105() {
+
+	INPUT.x._data_ = 0x1105;		// Test Number 	- Force the INPUT to have 1001 hex as data.
+	INPUT.Display( INPUT.x._data_ );
+	INPUT.msg("Out",1);
+
+	AC.msg("Ld",1);			// Setup AC to do a load.
+
+	if ( theWorld2["Bus"] !== 0x1105 ) {
+		console.error ( "Error test1105: 'Bus' should be 0x1001, got: " +theWorld2["Bus"]+" instead." );
+		nErr++;
+	}
+
+	PropagateSignals();
+
+	if ( AC.x._data_ !== 0x1105 ) {
+		console.error ( "Error test1105: AC.x._data_ should be 0x1105, got: " +AC.x._data_+" instead." );
+		nErr++;
+	}
+
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
+}
+
+
+
+
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// Test the transfer of the PC to the MAR, MAR Read Memory -> MDR
+// 1002. PC -> MAR -> Memory Read -> IR
+// This tests mimics what will happen in the fetch cycle - where PC -> MAR -> Memory -> IR
+function test1002() {
+
+	// ----------------------------------------------------------------------------
+	// Data Setup
+	// ----------------------------------------------------------------------------
+	MEMORY.x._data_[0x1002] = 0xFace;		
+	mm_max = 1024*16;
+	PC.x._data_ = 0x1002;		// Test Number 	- Force the PC to have 1002 hex as data.
+	MAR.x._data_ = 0x0000;		// Test Number 	- Force the MAR to have 1002 hex as data.
+
+
+
+	// ----------------------------------------------------------------------------
+	// PC -> MAR - to setup of read of memory.
+	// ----------------------------------------------------------------------------
+	PC.msg("Out",1);
+	MAR.msg("Ld",1);
+
+	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+
+	PropagateSignals();
+	clearOtherLine(); 	
+
+	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+
+	if ( theWorld2["Bus"] !== 0x1002 ) {
+		console.error ( "Error test1002: 'Bus' should be 0x1002, got: " +theWorld2["Bus"]+" instead." );
+		nErr++;
+	}
+	if ( MAR.x._data_ !== 0x1002 ) {
+		console.error ( "Error test1002: 'MAR.x._data_' should be 0x1002, got: " +MAR.x._data_+" instead." );
+		nErr++;
+	}
+
+
+
+	// ----------------------------------------------------------------------------
+	// Read of Memory using MAR -> Memory -> MDR
+	// ----------------------------------------------------------------------------
+	MEMORY.msg("Read",1);			// Setup MAR to do a load.
+	MAR.msg("Out",1);
+	MDR.msg("Ld_From_Memory",1);
+
+	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+
+	PropagateSignals();
+	clearOtherLine(); 	
+
+	if ( theWorld2["Memory_to_MDR"] !== 0xFace ) {
+		console.error ( "Error testFace: 'Memory_to_MDR' should be 0xFace, got: " +theWorld2["Memory_to_MDR"]+" instead." );
+		nErr++;
+	}
+	if ( MAR.x._data_ !== 0x1002 ) {
+		console.error ( "Error test1002: MAR.x._data_ should be 0x1002, got: " +MAR.x._data_+" instead." );
+		nErr++;
+	}
+	if ( MDR.x._data_ !== 0xFace ) {
+		console.error ( "Error testFace: MDR.x._data_ should be 0xFace, got: " +MDR.x._data_+" instead." );
+		nErr++;
+	}
+
+
+
+	// ----------------------------------------------------------------------------
+	// Transfer of MDR to IR
+	// ----------------------------------------------------------------------------
+	MDR.msg("Out",1);
+	IR.msg("Ld",1);
+	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+
+	PropagateSignals();
+	clearOtherLine(); 	
+
+	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+
+	if ( theWorld2["Bus"] !== 0xFace ) {
+		console.error ( "Error testFace: 'Bus' should be 0xFace, got: " +theWorld2["Bus"]+" instead." );
+		nErr++;
+	}
+	if ( IR.x._data_ !== 0xFace ) {
+		console.error ( "Error testFace: 'IR.x._data_' should be 0xFace, got: " +IR.x._data_+" instead." );
+		nErr++;
+	}
+
+
+
+	// ----------------------------------------------------------------------------
+	// So... all done - did we get any errors?
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
+}
+
+
+
+
+
+
+
+
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// 1105. Memory Read - Verify what is used/set in signal prop.  Check names of signals.
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// Manual test - add in blue-paths for signals between MAR -> Memory and Memory <-> MDR - verify names.
+// Verify that you can show them "on" with TurnOn(...)
+// This test will just have to return 0, test must be run manually to check visual results.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
 // Tests to build
 // ---------------------------------------------------------------------------------------------------------------------------------------
-// 1000. PC
-// 1001. PC -> MAR
-// 1102. Output -> 7-seg
-// 1101. AC -> Output
-// 1003. MDR -> Bus -> MAR 
-// 1104. Result -> AC
-// 1105. Input -> AC
+// Built:
+// 		1000. PC
+// 		1001. PC -> MAR
+// 		1102. Output -> 7-seg
+// 		1101. AC -> Output
+// 		1003. MDR -> Bus -> MAR 
+// 		1104. Result -> AC
+// 		1105. Input -> AC
+// 		1002. PC -> MAR -> Memory Read -> IR
 // -
-// 1002. PC -> MAR -> Memory Read -> IR
-// 1004. MDR -> Bus -> MAR -> Memory Read -> MDR
-// 1005. MAR -> Memory Read -> AC
-// 1006. pulg -> MAR + RESULT -> Memory Write 
+// TODO:
+// 1004. MDR -> Bus -> MAR -> Memory Read -> MDR		(LoadI instruction)
+// 1005. MAR -> Memory Read -> AC						Probably Trivial
+// 1006. pulg -> MAR + RESULT -> Memory Write 			1st WRITE test.
 // -
 // Logic (hand_out)
 // IR + hand_out -> Bus
@@ -2572,331 +3081,39 @@ console.log ( "G" );
 // ** Test each of the instructions with a simple test that verifies that that each one works.
 // ---------------------------------------------------------------------------------------------------------------------------------------
 
-var nErr = 0;
-
-// 1000. PC
-function test1000() {
-	clearOtherLine(); 	
-
-	PC.msg("Clr",1);
-	PC.msg("Inc",1);
-	if ( PC.x._Inc_ !== 1 ) {
-		console.log ( "Error test1000: pc.x._Inc_ != 1" );
-		nErr++;
-	}
-	if ( PC.x._data_ !== 0 ) {
-		console.log ( "Error test1000: pc != 0" );
-		nErr++;
-	}
-	PC.msg("rise",1);
-	if ( PC.x._data_ !== 1 ) {
-		console.log ( "Error test1000: pc != 1" );
-		nErr++;
-	}
-
-	// ----------------------------------------------------------------------------
-	theWorld2DepOn = [];	// Setup
-	theWorld2 = {};			// Values
-	theWorld2WhoSet = [];	// Who set like PC
-
-	// Create a pending action
-	PC.msg("Ld",1);
-	if ( ! hasPending () ) {
-		console.log ( "Error test1000: hasPending() false after creation of pending item." );
-		nErr++;
-	}
-
-	// Verify that the dependencies are not yet met.
-	var tw = theWorld2DepOn[0];	// is at 0 due to setup above.
-	if ( depdendenciesMet ( tw ) ) {
-		console.log ( "Error test1000: depdendenciesMet() true before any dependencies resolved." );
-		nErr++;
-	}
-
-	// Resolve the dependency
-	// theWorld2["Bus"] = 4;
-	AddMsg ( "test1000", "Bus", "Out", 44 ) ;
-
-	if ( theWorld2["Bus"] !== 44 ) {
-		console.log ( "Error test1000: Expecing 44 on bus, got: "+ theWorld2["Bus"] );
-		nErr++;
-	}
-
-	// Verify that it is met.
-	if ( ! depdendenciesMet ( tw ) ) {
-		console.log ( "Error test1000: depdendenciesMet() false when dependency has been met." );
-		nErr++;
-	}
-
-	if ( lineOn.length != 2 ) {
-		console.log ( "Error test1000: should have 2 blue liens on - did not find them." );
-		nErr++;
-	}
-
-	clearOtherLine(); 	
-	if ( lineOn.length != 0 ) {
-		console.log ( "Error test1000: should have 0 blue liens on - did not find them." );
-		nErr++;
-	}
-
-	// Run the Signal Propagator.
-	PropagateSignals();
-
-
-	// Check that no pending actions are left.
-	if ( hasPending () ) {
-		console.log ( "Error test1000: hasPending() true when all functions should have been run." );
-		nErr++;
-	}
-
-	// Validate value set.
-	if ( PC.x._data_ !== 44 ) {
-		console.log ( "Error test1000: should be 44, got:" +PC.x._data_ +" instead." );
-		nErr++;
-	}
-
-	if ( lineOn.length != 1 ) {
-		console.log ( "Error test1000: should have 1 blue liens on - did not find them." );
-		nErr++;
-	}
-
-	// ----------------------------------------------------------------------------
-	PC.msg("rise",1);
-	PC.msg("Inc",1);
-	PC.msg("rise",1);
-	if ( PC.x._data_ !== 45 ) {
-		console.log ( "Error test1000: should be 45, got:" +PC.x._data_ +" instead." );
-		nErr++;
-	}
-
-	PC.msg("Out",1);
-	if ( theWorld2["Bus"] !== 45 ) {
-		console.log ( "Error test1000: 'Bus' should be 45, got: " +theWorld2["Bus"]+" instead." );
-		nErr++;
-	}
-
-	// ----------------------------------------------------------------------------
-
-	if ( nErr > 0 ) {
-		console.log ( "FAIL: # of errors: "+nErr );
-	} else {
-		console.log ( "PASS" );
-	}
-}
-
 // ----------------------------------------------------------------------------------------------------------------------------------------
-// Test the transfer of the PC to the MAR
-function test1001() {
+// TODO:
+// 1106. Memory Read - MAR + MDR(out) -> Memory Read - check that address is input to memory.
+// 1107. Memory Write - MAR + MDR(ld) -> Memory Read - check that data makes it to MDR.
+// 1108. AC -> MAR -> Memory Read -> IR (JumpI? like process)
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// console.log ( "AT:"+ln() );
+// 1004. MDR -> Bus -> MAR -> Memory Read -> MDR		(LoadI instruction)
+// 1005. MAR -> Memory Read -> AC						Probably Trivial
+// 1006. Plug -> MAR + RESULT -> Memory Write 			1st WRITE test.
 
-	PC.x._data_ = 0x1001;		// Test Number 	- Force the PC to have 1001 hex as data.
-	PC.msg("Out",1);
 
-	MAR.msg("Ld",1);			// Setup MAR to do a load.
-
-	if ( theWorld2["Bus"] !== 0x1001 ) {
-		console.log ( "Error test1001: 'Bus' should be 0x1001, got: " +theWorld2["Bus"]+" instead." );
-		nErr++;
+function testAll() {
+	var mNErr = 0;
+	var tt = [  test2000,   test1000,   test1001,   test1102,   test1101,   test1003,   test1104,   test1105,   test1002  ];
+	var ss = [ "test2000", "test1000", "test1001", "test1102", "test1101", "test1003", "test1104", "test1105", "test1002" ];
+	for ( var ii = 0, mx = tt.length; ii < mx; ii++ ) {
+		nErr = 0;
+		var t = tt[ii];
+		var x = t();
+		if ( x > 0 ) {
+			mNErr++;
+			console.error ( "Failed on test: "+ii+ " Function: "+ss[ii] );
+		}
 	}
-
-	PropagateSignals();
-
-	if ( MAR.x._data_ !== 0x1001 ) {
-		console.log ( "Error test1001: MAR.x._data_ should be 0x1001, got: " +MAR.x._data_+" instead." );
-		nErr++;
-	}
-
-	// ----------------------------------------------------------------------------
-
-	if ( nErr > 0 ) {
-		console.log ( "FAIL: # of errors: "+nErr );
+	if ( mNErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+mNErr );
 	} else {
 		console.log ( "PASS" );
 	}
 }
 
 
-
-
-// ----------------------------------------------------------------------------------------------------------------------------------------
-// Test of "OUTPUT" to 7-seg
-// 1102. Output -> 7-seg
-function test1102() {
-	OUTPUT.x._data_ = 0x1234;				// Set data
-	OUTPUT.Display( OUTPUT.x._data_ );		// Display it
-}
-
-// ----------------------------------------------------------------------------------------------------------------------------------------
-// Test the transfer of the PC to the OUTPUT
-// 1101. AC -> Output
-function test1101() {
-
-	PC.x._data_ = 0x1101;		// Test Number 	- Force the PC to have 1001 hex as data.
-	PC.msg("Out",1);
-
-	OUTPUT.msg("Ld",1);			// Setup OUTPUT to do a load.
-
-	if ( theWorld2["Bus"] !== 0x1101 ) {
-		console.log ( "Error test1001: 'Bus' should be 0x1001, got: " +theWorld2["Bus"]+" instead." );
-		nErr++;
-	}
-
-	PropagateSignals();
-
-	if ( OUTPUT.x._data_ !== 0x1001 ) {
-		console.log ( "Error test1001: OUTPUT.x._data_ should be 0x1001, got: " +OUTPUT.x._data_+" instead." );
-		nErr++;
-	}
-
-	// ----------------------------------------------------------------------------
-
-	if ( nErr > 0 ) {
-		console.log ( "FAIL: # of errors: "+nErr );
-	} else {
-		console.log ( "PASS" );
-	}
-}
-
-
-
-
-
-// ----------------------------------------------------------------------------------------------------------------------------------------
-// 1003. MDR -> Bus -> MAR 
-function test1003() {
-
-	MDR.x._data_ = 0x1003;		// Test Number 	- Force the MDR to have 1001 hex as data.
-	MDR.msg("Out",1);
-
-	MAR.msg("Ld",1);			// Setup MAR to do a load.
-
-	if ( theWorld2["Bus"] !== 0x1003 ) {
-		console.log ( "Error test1003: 'Bus' should be 0x1001, got: " +theWorld2["Bus"]+" instead." );
-		nErr++;
-	}
-
-	PropagateSignals();
-
-	if ( MAR.x._data_ !== 0x1003 ) {
-		console.log ( "Error test1003: MAR.x._data_ should be 0x1003, got: " +MAR.x._data_+" instead." );
-		nErr++;
-	}
-
-	// ----------------------------------------------------------------------------
-
-	if ( nErr > 0 ) {
-		console.log ( "FAIL: # of errors: "+nErr );
-	} else {
-		console.log ( "PASS" );
-	}
-}
-
-
-
-
-// ----------------------------------------------------------------------------------------------------------------------------------------
-// 1104. Result -> AC
-function test1104() {
-
-	RESULT.x._data_ = 0x1103;		// Test Number 	- Force the RESULT to have 1001 hex as data.
-	RESULT.Display( RESULT.x._data_ );
-	RESULT.msg("Out",1);
-
-	AC.msg("Ld",1);			// Setup AC to do a load.
-
-	if ( theWorld2["Bus"] !== 0x1103 ) {
-		console.log ( "Error test1103: 'Bus' should be 0x1001, got: " +theWorld2["Bus"]+" instead." );
-		nErr++;
-	}
-
-	PropagateSignals();
-
-	if ( AC.x._data_ !== 0x1103 ) {
-		console.log ( "Error test1103: AC.x._data_ should be 0x1103, got: " +AC.x._data_+" instead." );
-		nErr++;
-	}
-
-	// ----------------------------------------------------------------------------
-
-	if ( nErr > 0 ) {
-		console.log ( "FAIL: # of errors: "+nErr );
-	} else {
-		console.log ( "PASS" );
-	}
-}
-
-
-// ----------------------------------------------------------------------------------------------------------------------------------------
-// 1105. Input -> AC
-function test1105() {
-
-	INPUT.x._data_ = 0x1105;		// Test Number 	- Force the INPUT to have 1001 hex as data.
-	INPUT.Display( INPUT.x._data_ );
-	INPUT.msg("Out",1);
-
-	AC.msg("Ld",1);			// Setup AC to do a load.
-
-	if ( theWorld2["Bus"] !== 0x1105 ) {
-		console.log ( "Error test1105: 'Bus' should be 0x1001, got: " +theWorld2["Bus"]+" instead." );
-		nErr++;
-	}
-
-	PropagateSignals();
-
-	if ( AC.x._data_ !== 0x1105 ) {
-		console.log ( "Error test1105: AC.x._data_ should be 0x1105, got: " +AC.x._data_+" instead." );
-		nErr++;
-	}
-
-	// ----------------------------------------------------------------------------
-
-	if ( nErr > 0 ) {
-		console.log ( "FAIL: # of errors: "+nErr );
-	} else {
-		console.log ( "PASS" );
-	}
-}
-
-
-
-
-
-
-
-// ----------------------------------------------------------------------------------------------------------------------------------------
-// Test the transfer of the PC to the MAR, MAR Read Memory -> MDR
-// 1002. PC -> MAR -> Memory Read -> IR
-function test1002() {
-/*
-xyzzy
-*/
-}
-
-
-
-
-
-
-
-
-
-// test a 2 instruction program with 1 word of data.
-function test000D() {
-/*
-xyzzy
-*/
-	// Plug in 2 instructions into Memory ( Load 5, Halt ), Plug in 23 -> mem[5]
-	// Clear Microcode
-	// Fetch ./data/test000b.mc.txt -> Microcode
-	// Fetch ./data/test000b.mm.txt -> Main Memory (2 words)
-	// Clear Registers
-	// Run it
-	// Verify that 
-	//		1. AC == 5
-	//		2. IR == Halt
-	//		3. PC == 1
-	//		4. M_PC == ?? for halt
-	//		5. Halt Light is on
-}
 
 </script>
 </body>

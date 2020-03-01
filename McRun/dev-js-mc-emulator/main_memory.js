@@ -1,94 +1,102 @@
 
-// Main Memory 
+// MEMORY (new)
 // ========
 
 var MEMORY = {
-	setupSelf: function ( ) {
-		console.log ( "Setup Self/MEMORY" );
-	}
-	, "x": {
+	  "x": {
 		  "Name": "MEMORY"
-		, "Group": "Memory"
-		, "Interface": {
-			  "Out" : { "width": 16, "mode": "io" }
-			, "vcc" : { "width": 1, "mode": "i" }
-			, "gnd" : { "width": 1, "mode": "i" }
-		}
-		, "_data_": new Array(1024*2)	// 16 bits	- 2k of memory
+		, "_data_": new Array(1024*16)	// 16 bits	- 16k of memory
 		, "_InputBuffer_": 0
 		, "_OutputBuffer_": 0
-		, "_Addr_": null
 		, "_Write_": null
 		, "_Read_": null
+		, "_Addr_": null
+		, "_Error_": []
 	}
+	, debug0: 0
 	, msg: function ( wire, val ) {
 		var addr = MAR.x["_data_"];
 		addr = ( addr >= 0 && addr < mm_max ) ? addr : 0;
 		MEMORY.x["_Addr_"] = addr;
 		switch ( wire ) {
-		case "Read": 
+		case "Read": 				
 			if ( val === 1 ) {
 				MEMORY.x["_Read_"] = 1;
-console.log ( "addr=", addr );
-				MEMORY.x["_OutputBuffer_"] = MEMORY.x["_data_"][addr];
-				MEMORY.PushMDR();
-console.log ( "Doing a Memory Read:,  addr=", addr, " value=(hex)", MEMORY.x["_OutputBuffer_"].toString(16) );
-				MEMORY.TurnOn( "memory_Read"  );  
+				MEMORY.PullMAR();			// xyzzy - deps on MAR & MDR
+				MEMORY.TurnOn( "memory_Read" );
 			}
 			MEMORY.Display( addr );
 		break;
-		case "Write":
+		case "Write":				// Resolves MDR, uses MAR
 			if ( val === 1 ) {
 				MEMORY.x["_Write_"] = 1;
-				MEMORY.PullMDR();
-				MEMORY.x["_data_"][addr] = MEMORY.x["_InputBuffer_"];
-				MEMORY.TurnOn( "memory_Write" );  
+				MEMORY.PushMDR();
+				MEMORY.TurnOn( "memory_Write" );
 			}
 			MEMORY.Display( addr );
 		break;
+		case 'rise':			// Act-CLeanup
+			MEMORY.rise();
+		break;
 		default:
-			Error ( "Invalid Message", wire, val );
+			MEMORY.Error ( "Invalid Message", wire, val );
+		break;
 		}
 	}
-	, tick: function ( ) {
-		var addr = MAR.x["_data_"];
-		addr = ( addr >= 0 && addr < mm_max ) ? addr : 0;
-		MEMORY.x["_Addr_"] = addr;
-		if ( MEMORY.x["_Read_"] === 1 ) {
-			MEMORY.x["_OutputBuffer_"] = MEMORY.x["_data_"][addr];
-			MEMORY.PushMDR();
-		}
-		if ( MEMORY.x["_Write_"] === 1 ) {
-			MEMORY.PullMDR();
-			MEMORY.x["_data_"][addr] = MEMORY.x["_InputBuffer_"];
-		}
-		MEMORY.Display( addr );
-	}
+
 	// After Tick Cleanup 
 	, rise: function ( ) {
+		if ( MEMORY.x["_Write_"] === 1 ) {
+			MEMORY.Error ( "Failed To Resolve", "Write", 1 );
+		}
 		MEMORY.x["_InputBuffer_"] = null;
 		MEMORY.x["_OutputBuffer_"] = null;
-		MEMORY.x["_Addr_"] = null;
-		MEMORY.x["_Read_"] = null;
 		MEMORY.x["_Write_"] = null;
-	}
-	, err: function () {
-		return Error();
-	}
-	, test_peek: function(addr) {
-		return ( MEMORY.x["_data_"][addr] );
+		MEMORY.x["_Read_"] = null;
 	}
 
-	, PullMDR: function () {
-console.log ( "Memory:/PullMDR" );
-		MDR.msg( "Out_To_Memory", 1 );
-		// MEMORY.x["_InputBuffer_"] = MDR.x["_data_"];
+	, PullMAR: function () { // Memory Read
+console.log ( "MEMORY:PullMAR (read) New / Add Closure - Closure DEP on MAR and MDR" );
+		AddDep ( MEMORY.x.Name, [ "Memory_Addr" ], "Out", function () {
+			 	// Address Info In
+			 	// MEMORY.x["_Addr_"] = theWorld2.MAR;
+			 	MEMORY.x["_Addr_"] = theWorld2.Memory_Addr;
+				var addr = MEMORY.x["_Addr_"];
+console.log ( "MEMORY:PullMAR Memory Read addr=",addr.toString(16));
+				if ( addr < 0 || addr >= mm_max ) { MEMORY.Error ( "Address in Error", "PulMAR", addr ); }
+					// showIsError ( true );
+				addr = ( addr >= 0 && addr < mm_max ) ? addr : 0;
+			 	MEMORY.x["_Addr_"] = addr;
+			 	MEMORY.x["_OutputBuffer_"] = MEMORY.x["_data_"][addr];
+console.log ( "MEMORY:PullMAR Memory Read addr=",addr.toString(16),"Output=", MEMORY.x._OutputBuffer_.toString(16) );
+				MEMORY.Display( addr );
+				MEMORY.TurnOn( "memory_Read"  );
+				MEMORY.x["_Read_"] = 2;
+				AddMsg ( MEMORY.x.Name, "Memory_to_MDR", "Out", MEMORY.x._OutputBuffer_ );
+				AddMsg ( MEMORY.x.Name, "Ld_From_Memory", "Out", MEMORY.x._OutputBuffer_ );
+				// case "Ld_From_Memory": 	// Reaa From Memory
+		});													
 	}
 
-	, PushMDR: function () {
-console.log ( "Memory:/PushMDR ** !! ** !!" );
-		MDR.msg( "Ld_From_Memory", 1 ); 
-		// MDR.x["_data_"] = MEMORY.x["_OutputBuffer_"];
+	, PushMDR: function () {	// Memory Write
+console.log ( "MEMORY:PushMDR (write) New/Out:", MEMORY.x._OutputBuffer_ );		
+		AddDep ( MEMORY.x.Name, [ "MAR", "Memory_to_MDR" ], "Out", function () {
+console.log ( "MEMORY:PushMAR Closure Run" );
+			 	MEMORY.x["_InputBuffer_"] = theWorld2.Memory_to_MDR;
+			 	MEMORY.x["_Addr_"] = theWorld2.Memory_Addr;
+				var addr = MEMORY.x["_Addr_"];
+				if ( addr < 0 || addr >= mm_max ) { MEMORY.Error ( "Address in Error", "PushMDR", addr ); }
+				addr = ( addr >= 0 && addr < mm_max ) ? addr : 0;
+			 	MEMORY.x["_Addr_"] = addr;
+			 	// MEMORY.x["_OutputBuffer_"] = MEMORY.x["_data_"][addr];
+				MEMORY.x["_data_"][addr] = MEMORY.x["_InputBuffer_"];
+				MEMORY.Display( addr );
+				MEMORY.TurnOn( "memory_Write"  );
+				MEMORY.x["_Write_"] = 2;
+				AddMsg ( MEMORY.x.Name, "Memory_to_MDR", "Out", MEMORY.x._InputBuffer_ );
+				// AddMsg ( MEMORY.x.Name, "Out_To_Memory", "Out", MEMORY.x._InputBuffer_ );
+				// case "Out_To_Memory":		// Write to Memory
+		});													
 	}
 
 	// Turn on display of a wire with this ID
@@ -97,19 +105,18 @@ console.log ( "Memory:/PushMDR ** !! ** !!" );
 	}
 
 	// Display text to inside of register box
-	, Display: function  ( val ) {
-		var sVal = toHex(val,4);
-		// xyzzy - should show the address that is in MAR - as mid pos 7 of 16 in memory.
-		// console.log ( "Padded", sVal );
-		var a = sVal.substr(0,2);
-		var b = sVal.substr(2,2);
-		$("#h_memory_txt_0").text(a);
-		$("#h_memory_txt_1").text(b);
+	// show the address that is in MAR - as mid pos 7 of 16 in memory.
+	, Display: function  ( addr ) {
+		showMemoryAtPC ( addr );
 	}
 
 	// Return any errors generated in this "chip"
 	, Error: function  ( errorMsg, wire, val ) {
-		return ( [] );
+		if ( errorMsg ) {
+			MEMORY.x._Error_.push ( errorMsg + " wire:"+wire + " val:" + toHex(val,4) );
+		}
+		return ( MEMORY.x._Error );
 	}
 
 };
+

@@ -1,6 +1,7 @@
 package main
 
 // Microcode Assembler
+// Copyright (C) University of Wyoming, 2019-2020.
 
 import (
 	"encoding/hex"

@@ -49,34 +49,24 @@ var MDR = {
 			MDR.Display( MDR.x["_data_"]);
 		break;
 		// , "id_memory_Write": [ { Name:"MEMORY",				Op: ["Write"]      	}, { Name:"MDR", Op:["Out_To_Memory"]  } ]
-		case "Out_To_Memory":
+		case "Out_To_Memory":		// Write to Memory
 			if ( val === 1 ) {
 console.log ( "Out_To_Memory", MAR.x._data_ );
 				MDR.x["_Out_To_Memory_"] = 1;
 				MDR.x["_OutputBuffer_"] = MDR.x["_data_"];
-				var addr = MAR.x["_data_"];											// <<<<<<<<<<<<< Peek at MAR!
-				if ( addr < 0 || addr >= mm_max ) {
-					showIsError ( true );
-					MDR.Error ( "Invalid address", wire, addr );
-				}
-				addr = ( addr >= 0 && addr < mm_max ) ? addr : 0;
-				MEMORY.x["_data_"][addr] = MDR.x["_OutputBuffer_"];					// <<<<<<<<<<<<< Poke into Memory to set.
+				// xyzzy - Push Message
+				// MDR.PushBus();
+				AddMsg ( MDR.x.Name, "Out_To_Memory", "Out", MDR.x._OutputBuffer_ );
+				AddMsg ( MDR.x.Name, "Memory_to_MDR", "Out", MDR.x._OutputBuffer_ );
 			}
 			MDR.Display( MDR.x["_data_"]); 						
 		break;
 		// , "id_memory_Read": [ { Name:"MEMORY",				Op: ["Read"]      	}, { Name:"MDR", Op:["Ld_From_Memory"] } ]
-		case "Ld_From_Memory": 
+		case "Ld_From_Memory": 	// Reaa From Memory
 			if ( val === 1 ) {
 console.log ( "Ld_From_Memory", MAR.x._data_ );
 				MDR.x["_Ld_From_Memory_"] = 1;
-				var addr = MAR.x["_data_"];											// <<<<<<<<< Peek at MAR - Should this be the "_OutputBuffer_"
-				if ( addr < 0 || addr >= mm_max ) {
-					showIsError ( true );
-					MDR.Error ( "Invalid address", wire, addr );
-				}
-				addr = ( addr >= 0 && addr < mm_max ) ? addr : 0;
-				MDR.x["_InputBuffer_"] = MEMORY.x["_data_"][addr];					// <<<<<<<<< Peek at MEemory!
-				MDR.x["_data_"] = MDR.x["_InputBuffer_"];
+				MDR.PullMemory();
 			}
 			MDR.Display( MDR.x["_data_"]);
 		break;
@@ -104,22 +94,9 @@ console.log ( "Ld_From_Memory", MAR.x._data_ );
 		}
 		if ( MDR.x["_Out_To_Memory_"] === 1 ) {
 			MDR.x["_OutputBuffer_"] = MDR.x["_data_"];
-			var addr = MAR.x["_data_"];
-			if ( addr < 0 || addr >= mm_max ) {
-				showIsError ( true );
-				MDR.Error ( "Invalid address", wire, addr );
-			}
-			addr = ( addr >= 0 && addr < mm_max ) ? addr : 0;
-			MEMORY.x["_data_"][addr] = MDR.x["_OutputBuffer_"];
 		}
 		if ( MDR.x["_Ld_From_Memory_"] === 1 ) {
-			var addr = MAR.x["_data_"];
-			addr = ( addr >= 0 && addr < mm_max ) ? addr : 0;
-			if ( addr < 0 || addr >= mm_max ) {
-				showIsError ( true );
-				MDR.Error ( "Invalid address", wire, addr );
-			}
-			MDR.x["_InputBuffer_"] = MEMORY.x["_data_"][addr];
+			MDR.x["_InputBuffer_"] = MEMORY.x._OutputBuffer_;
 			MDR.x["_data_"] = MDR.x["_InputBuffer_"];
 		}
 		MDR.x["_InputBuffer_"] = null;
@@ -133,13 +110,25 @@ console.log ( "Ld_From_Memory", MAR.x._data_ );
 
 	, PullBus: function () {
 console.log ( "MDR:PullBus New / Add Closure" );
-		AddDep ( MDR.x.Name, [ "Bus" ], "In", function () {
+		AddDep ( MDR.x.Name, [ "Bus" ], "Out", function () {
 console.log ( "MDR:PullBus Closure Run" );
 			 	MDR.x["_InputBuffer_"] = theWorld2.Bus;
 				MDR.x["_data_"] = MDR.x["_InputBuffer_"];
 				MDR.Display( MDR.x["_data_"]);
 				MDR.TurnOn( "input_Ld"  );
 				MDR.x["_Ld_"] = 2;
+		});													
+	}
+
+	, PullMemory: function () {
+console.log ( "MDR:PullMemory New / Add Closure" );
+		AddDep ( MDR.x.Name, [ "Bus" ], "Out", function () {
+console.log ( "MDR:PullMemory Closure Run" );
+			 	MDR.x["_InputBuffer_"] = theWorld2.Ld_From_Memory;
+				MDR.x["_data_"] = MDR.x["_InputBuffer_"];
+				MDR.Display( MDR.x["_data_"]);
+				// MDR.TurnOn( "input_Ld"  );
+				MDR.x["_Ld_From_Memory_"] = 2;
 		});													
 	}
 
