@@ -166,9 +166,9 @@ body {font-family: Arial, Helvetica, sans-serif;}
 				<text x="205" y="185" class="vsmall" onclick="infoOn('ir_decode_g2');">IR(11..8)[4] to </text>
 				<text x="205" y="195" class="vsmall" onclick="infoOn('ir_decode_g2');">decoder 0b10</text>
 
-			<!-- xyzzy - IR MSB[4] to Decodeer_In_01 -->
-			<!-- xyzzy - IR other[4] to Decodeer_In_02 -->
-			<!-- xyzzy - Decoder == 11, connect to bus -->
+			<!-- Xyzzy - IR MSB[4] to Decodeer_In_01 -->
+			<!-- Xyzzy - IR other[4] to Decodeer_In_02 -->
+			<!-- Xyzzy - Decoder == 11, connect to bus -->
 			<!-- From microcode.m2
 				Decoer Inputs
 					CTL		Line/Instruction
@@ -497,7 +497,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<line x1="1270" y1="322" x2="1265" y2="317" class="arrow-line" />
 			<line x1="1270" y1="322" x2="1275" y2="317" class="arrow-line" />
 
-		<text id="h_input_txt_0" x="1010" y="350" class="small"></text>
+		<text id="h_output_txt_0" x="1210" y="350" class="small"></text>
 
 		<g transform="translate(1210 380) scale(1.8)">
 			<g id="dig0_0_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
@@ -923,7 +923,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<line x1="1050" y1="322" x2="1045" y2="317" class="arrow-line" />
 			<line x1="1050" y1="322" x2="1055" y2="317" class="arrow-line" />
 
-		<text id="h_output_txt_0" x="1210" y="350" class="small"></text>
+		<text id="h_input_txt_0" x="1010" y="350" class="small"></text>
 
 
 
@@ -1664,7 +1664,7 @@ function infoOn1(i,x) {
 			);
 		break;
 	case "ir_decode_g2":
-		showLine("#ir_11_8_to_decoder_10","#mm_to_dec_10");	// xyzzy
+		showLine("#ir_11_8_to_decoder_10","#mm_to_dec_10");	
 		showTextInOutputBox("Instruction decode use 01 bit of output from the Microcode Out[8] (Out_7, Out_6)","then 4 bits of the IR, the 2 bits of Out[8] (Out_1, Out_0).");
 			// xyzzy - add addressing example
 		break;
@@ -1739,7 +1739,7 @@ console.log ( "Called Bus.State, returing", theWorld.Bus._data_ );
 				return ( theWorld.Bus._data_ );
 			}
 		}
-		, "SetState": function ( v ) {		//xyzzy - add in who is setting!
+		, "SetState": function ( v ) {		//Xyzzy - add in who is setting!
 console.log ( "****************** SetState:", v );
 			if (typeof(v) === "undefined" ) {
 				return
@@ -1987,44 +1987,6 @@ console.log ( "****************** SetState:", v );
 		}
 	}
 
-//	,"id_pc_Out": {
-//		"_data_": 0
-//		, "_used_": false
-//		, "_error_": []
-//		, "State": function () {
-//			if ( theWorld.id_pc_Out._used_ ) {
-//				return ( theWorld.id_pc_Out._data_ );
-//			} else {
-//				var ignore = false;
-//				if ( arguments.length > 0 ) {
-//					ignore = arguments[0];
-//				}
-//				if ( ! ignore ) {
-//					console.log ( "Warning: Pulling 'bus.State' when undefined" );
-//					theWorld.id_pc_Out._error_.push( "Warning: Pulling 'bus.State' when undefined" );		// xyzzy - 
-//				}
-//				return ( theWorld.id_pc_Out._data_ );
-//			}
-//		}
-//		, "SetState": function ( v ) {
-//			theWorld.id_pc_Out._data_ = v;
-//			theWorld.id_pc_Out._used_ = true;
-//console.log ( "PC.msg('Out') -- Called --" );
-//			PC.msg ( "Out", 1 );						// connection from "wire" to chip.
-//		}
-//		, "TickRise": function ( v ) {
-//			theWorld.id_pc_Out._data_ = underfined;
-//			theWorld.id_pc_Out._used_ = false;
-//			PC.rise();
-//		}
-//		, "Error": function ( v ) {
-//			return ( theWorld.id_pc_Out._error_ );
-//		}
-//		, "ClearError": function ( v ) {
-//			theWorld.id_pc_Out._error_ = [];
-//		}
-//	}
-
 };
 
 var Connections = {
@@ -2075,75 +2037,10 @@ var Connections = {
 	, "id_ALU_Ctl_2": [ { Name: "ALU",					Op: ["Ctl_2"] } ]
 	, "id_ALU_Ctl_3": [ { Name: "ALU",					Op: ["Ctl_3"] } ]
 
-//Microcode_PC_Ld2 4
 //hand_out 24
 
 };
 
-function SetupTheWorld() {
-	for ( var key in Connections ) {
-		if ( theWorld[key] ) {
-			console.log ( "Already Defined:", key );
-		} else {
-			var fx = function(key,con) { 
-				return {
-					  "_data_": 0
-					, "_used_": false
-					, "_error_": []
-					, "__key": key
-					, "__con": con
-					, "State": function () {
-						if ( theWorld[key]._used_ ) {
-							return ( theWorld[key]._data_ );
-						} else {
-							var ignore = false;
-							if ( arguments.length > 0 ) {
-								ignore = arguments[0];
-							}
-							if ( ! ignore ) {
-								console.log ( "Warning: Pulling 'bus.State' when undefined" );
-								theWorld[key]._error_.push( "Warning: Pulling 'bus.State' when undefined" );		// xyzzy - 
-							}
-							return ( theWorld[key]._data_ );
-						}
-					}
-					, "SetState": function ( v ) {
-						if (typeof(v) === "undefined" ) {
-							return
-						}
-						theWorld[key]._data_ = v;
-						theWorld[key]._used_ = true;
-			console.log ( "For "+key+" con=", con );
-						for ( var ww = 0, my = con.length; ww < my; ww++ ) {
-							var name = con[ww].Name;
-							var op = con[ww].Op;
-							for ( var kk = 0, mx = op.length; kk < mx; kk++ ) {
-								window[name].msg ( op[kk], 1 );						// connection from "wire" to chip.
-							}
-						}
-					}
-					, "TickRise": function ( v ) {
-						theWorld[key]._data_ = underfined;
-						theWorld[key]._used_ = false;
-						for ( var ww = 0, my = con.length; ww < my; ww++ ) {
-							var name = con[ww].Name;
-							window[name].rise();
-						}
-					}
-					, "Error": function ( v ) {
-						return ( theWorld[key]._error_ );
-					}
-					, "ClearError": function ( v ) {
-						theWorld[key]._error_ = [];
-					}
-				};
-			}
-			theWorld[key] = fx(key,Connections[key]);
-		}
-	}
-}
-
-SetupTheWorld();
 
 function clearMicrocodeText() {
 	$("#microcode_txt_0").text("");
@@ -2359,15 +2256,15 @@ function PropagateSignals () {
 <script src="js/show-memory.js?v=0008"></script>
 <script>
 
-console.log ( "PC=",PC, "RESULT=", RESULT);
-console.log ( "IR=",IR, "AC=", AC);
-console.log ( "MAR=",MAR, "MDR=", MDR);
-console.log ( "INPUT=",INPUT, "OUTPUT=", OUTPUT);
-console.log ( "MICROCODE_PC=",MICROCODE_PC);
-console.log ( "MICROCODE=",MICROCODE);
-console.log ( "MEMORY=",MEMORY);
-console.log ( "ALU=",ALU);
-console.log ( "MUX=",MUX);
+//console.log ( "PC=",PC, "RESULT=", RESULT);
+//console.log ( "IR=",IR, "AC=", AC);
+//console.log ( "MAR=",MAR, "MDR=", MDR);
+//console.log ( "INPUT=",INPUT, "OUTPUT=", OUTPUT);
+//console.log ( "MICROCODE_PC=",MICROCODE_PC);
+//console.log ( "MICROCODE=",MICROCODE);
+//console.log ( "MEMORY=",MEMORY);
+//console.log ( "ALU=",ALU);
+//console.log ( "MUX=",MUX);
 
 console.log ( "Version v.1.4.0 - Sat Feb 29 05:13:21 MST 2020");
 console.log ( "Developed for the Deptatmentment of Computer Science 2150 Machine Architecture class.");
@@ -2631,22 +2528,27 @@ console.log ( "G" );
 // ---------------------------------------------------------------------------------------------------------------------------------------
 // 1000. PC
 // 1001. PC -> MAR
-// 1002. PC -> MAR -> Memory Read -> MDR
+// 1102. Output -> 7-seg
+// 1101. AC -> Output
+// 1003. MDR -> Bus -> MAR 
+// 1104. Result -> AC
+// 1105. Input -> AC
+// -
+// 1002. PC -> MAR -> Memory Read -> IR
+// 1004. MDR -> Bus -> MAR -> Memory Read -> MDR
+// 1005. MAR -> Memory Read -> AC
+// 1006. pulg -> MAR + RESULT -> Memory Write 
+// -
 // Logic (hand_out)
-// Mux ( Input + Mux_Ctl )
-// MDR -> Bus -> MAR 
-// MDR -> Bus -> MAR -> Memory Read -> MDR
-// MAR -> Memory Read -> AC
 // IR + hand_out -> Bus
-// Output -> 7-seg
-// LEDs
-// Mcrocode_PC -> Microcode (address)
 // MAR + MDR -> Memory Write 					Verify that display shows this properly (show-memory.js)
-// AC + MDR -> ALU -> Result
-// Result -> AC
-// Input -> AC
-// Input -> Output
+// IR (hand_out) -> MAR + AC -> Memory Write 
 // Input -> MAR + MDR -> Memory Write 
+// -
+// Mux ( Input + Mux_Ctl )
+// -
+// Mcrocode_PC -> Microcode (address)
+// AC + MDR -> ALU -> Result, Result -> AC
 // IR -> Mux(decoder) -> Microcode_PC
 // ---------------------------------------------------------------------------------------------------------------------------------------
 // Tests using full code. (Requires load of microcode - so has to have the current "hash" for the Microcode.)
@@ -2665,6 +2567,7 @@ console.log ( "G" );
 // 2022.  Test SubtI
 // 2023.  Test JumpI
 // 2024.  Test DEC 0 - Invalid Instruction
+// 2025.  Test Microcode 0 - Invalid Microcode
 //
 // ** Test each of the instructions with a simple test that verifies that that each one works.
 // ---------------------------------------------------------------------------------------------------------------------------------------
@@ -2798,11 +2701,9 @@ function test1001() {
 	PropagateSignals();
 
 	if ( MAR.x._data_ !== 0x1001 ) {
-		console.log ( "Error test1001: MAR.x._data_ should be 0x1001, got: " +theWorld2["Bus"]+" instead." );
+		console.log ( "Error test1001: MAR.x._data_ should be 0x1001, got: " +MAR.x._data_+" instead." );
 		nErr++;
 	}
-		
-
 
 	// ----------------------------------------------------------------------------
 
@@ -2813,28 +2714,162 @@ function test1001() {
 	}
 }
 
-// ----------------------------------------------------------------------------------------------------------------------------------------
-// Test the transfer of the PC to the MAR, MAR Read Memory -> MDR
-// 1002. PC -> MAR -> Memory Read -> MDR
-function test1002() {
-}
-
 
 
 
 // ----------------------------------------------------------------------------------------------------------------------------------------
 // Test of "OUTPUT" to 7-seg
+// 1102. Output -> 7-seg
 function test1102() {
-/*
-xyzzy
-*/
-	OUTPUT.x._data_ = 0x1234;
-	OUTPUT.Display( OUTPUT.x._data_ );
-	// <g id="dig0_0_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
+	OUTPUT.x._data_ = 0x1234;				// Set data
+	OUTPUT.Display( OUTPUT.x._data_ );		// Display it
+}
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// Test the transfer of the PC to the OUTPUT
+// 1101. AC -> Output
+function test1101() {
+
+	PC.x._data_ = 0x1101;		// Test Number 	- Force the PC to have 1001 hex as data.
+	PC.msg("Out",1);
+
+	OUTPUT.msg("Ld",1);			// Setup OUTPUT to do a load.
+
+	if ( theWorld2["Bus"] !== 0x1101 ) {
+		console.log ( "Error test1001: 'Bus' should be 0x1001, got: " +theWorld2["Bus"]+" instead." );
+		nErr++;
+	}
+
+	PropagateSignals();
+
+	if ( OUTPUT.x._data_ !== 0x1001 ) {
+		console.log ( "Error test1001: OUTPUT.x._data_ should be 0x1001, got: " +OUTPUT.x._data_+" instead." );
+		nErr++;
+	}
+
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.log ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
 }
 
 
 
+
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// 1003. MDR -> Bus -> MAR 
+function test1003() {
+
+	MDR.x._data_ = 0x1003;		// Test Number 	- Force the MDR to have 1001 hex as data.
+	MDR.msg("Out",1);
+
+	MAR.msg("Ld",1);			// Setup MAR to do a load.
+
+	if ( theWorld2["Bus"] !== 0x1003 ) {
+		console.log ( "Error test1003: 'Bus' should be 0x1001, got: " +theWorld2["Bus"]+" instead." );
+		nErr++;
+	}
+
+	PropagateSignals();
+
+	if ( MAR.x._data_ !== 0x1003 ) {
+		console.log ( "Error test1003: MAR.x._data_ should be 0x1003, got: " +MAR.x._data_+" instead." );
+		nErr++;
+	}
+
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.log ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// 1104. Result -> AC
+function test1104() {
+
+	RESULT.x._data_ = 0x1103;		// Test Number 	- Force the RESULT to have 1001 hex as data.
+	RESULT.Display( RESULT.x._data_ );
+	RESULT.msg("Out",1);
+
+	AC.msg("Ld",1);			// Setup AC to do a load.
+
+	if ( theWorld2["Bus"] !== 0x1103 ) {
+		console.log ( "Error test1103: 'Bus' should be 0x1001, got: " +theWorld2["Bus"]+" instead." );
+		nErr++;
+	}
+
+	PropagateSignals();
+
+	if ( AC.x._data_ !== 0x1103 ) {
+		console.log ( "Error test1103: AC.x._data_ should be 0x1103, got: " +AC.x._data_+" instead." );
+		nErr++;
+	}
+
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.log ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+}
+
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// 1105. Input -> AC
+function test1105() {
+
+	INPUT.x._data_ = 0x1105;		// Test Number 	- Force the INPUT to have 1001 hex as data.
+	INPUT.Display( INPUT.x._data_ );
+	INPUT.msg("Out",1);
+
+	AC.msg("Ld",1);			// Setup AC to do a load.
+
+	if ( theWorld2["Bus"] !== 0x1105 ) {
+		console.log ( "Error test1105: 'Bus' should be 0x1001, got: " +theWorld2["Bus"]+" instead." );
+		nErr++;
+	}
+
+	PropagateSignals();
+
+	if ( AC.x._data_ !== 0x1105 ) {
+		console.log ( "Error test1105: AC.x._data_ should be 0x1105, got: " +AC.x._data_+" instead." );
+		nErr++;
+	}
+
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.log ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+}
+
+
+
+
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// Test the transfer of the PC to the MAR, MAR Read Memory -> MDR
+// 1002. PC -> MAR -> Memory Read -> IR
+function test1002() {
+/*
+xyzzy
+*/
+}
 
 
 
@@ -2846,6 +2881,9 @@ xyzzy
 
 // test a 2 instruction program with 1 word of data.
 function test000D() {
+/*
+xyzzy
+*/
 	// Plug in 2 instructions into Memory ( Load 5, Halt ), Plug in 23 -> mem[5]
 	// Clear Microcode
 	// Fetch ./data/test000b.mc.txt -> Microcode

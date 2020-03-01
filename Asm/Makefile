@@ -52,8 +52,9 @@ test003:
 test004:
 	./cmp-mac.sh Asm
 	mkdir -p out ref
-	./asm --in test-code/test-STR.mas --out ./out/test-STR.hex 
+	./asm --in test-code/test-STR.mas --out ./out/test-STR.hex --list out/test-STR.list
 	diff ./out/test-STR.hex ./ref/test-STR.hex
+	diff ./out/test-STR.list ./ref/test-STR.list
 
 # test for CHR with hex values
 # Test for uppler lower op names (Case Insensitive)

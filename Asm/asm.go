@@ -1,5 +1,8 @@
 package main
 
+// Assembler
+// Copyright (C) University of Wyoming, 2019-2020.
+
 import (
 	"encoding/hex"
 	"flag"
@@ -29,13 +32,15 @@ import (
 // ---------------------------------------------------------------------------------
 // asm - MARIA assembler.
 // ---------------------------------------------------------------------------------
-// --in  FILE.mas	input .mas file
-// --out FILE.hex	output assembled code
-// --st  file.out   Symbol table output
+// --in    FILE.mas	input .mas file
+// --out   FILE.hex	output assembled code
+// --st    file.out   Symbol table output
+// --list  file.out   Listing output (includes symbol table)
 // ---------------------------------------------------------------------------------
 
 var In = flag.String("in", "", "Input File - assembly code.")
 var Out = flag.String("out", "", "Output in hex.")
+var List = flag.String("list", "", "Output Listing.")
 var DbFlag = flag.String("db-flag", "", "debug flags.") // xyzzy401 - TODO
 var Upload = flag.Bool("upload", false, "Upload the code.hex to Amazon S3://")
 var St = flag.String("st", "", "Output symbol table to file")
@@ -94,8 +99,24 @@ func main() {
 		os.Exit(1)
 	}
 
+	fpList := (*os.File)(nil)
+
 	fn := *In
 	out := *Out
+	if *List != "" {
+		var err error
+		fpList, err = filelib.Fopen(*List, "w")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Erorr oping listing output %s : error : %s\n", *List, err)
+			os.Exit(1)
+		}
+	} else {
+		if runtime.GOOS == "windows" {
+			fpList, _ = filelib.Fopen("NUL", "w")
+		} else {
+			fpList, _ = filelib.Fopen("/dev/null", "w")
+		}
+	}
 
 	if *St != "" {
 		var err error
@@ -137,6 +158,7 @@ func main() {
 		if err != nil {
 			n_err++
 			fmt.Fprintf(os.Stderr, "%s\n", err)
+			fmt.Fprintf(fpList, "%s\n", err)
 			continue
 		} else {
 			if label != "" {
@@ -212,11 +234,13 @@ func main() {
 		}
 	}
 
-	if db1 {
+	if stOut != nil {
 		DumpSymbolTable(stOut)
 	}
 
 	memBuf := make([]int, pc, pc)
+
+	fmt.Fprintf(fpList, "%-4s: %-6s %-4s %s\n", "Line", "Address", "Hex", "===============================================================")
 
 	// Pass 2
 	pc = 0
@@ -228,11 +252,14 @@ func main() {
 			line = strings.TrimRight(line, "\r\n")
 		}
 		if line == "" {
+			fmt.Fprintf(fpList, "%4d:\n", line_no)
 			continue
 		}
 
+		op_gen := -1
 		_ /*label*/, op_s, op, hand, err := ParseLine(line, -line_no)
 		if err != nil {
+			op_gen = -1
 			// done in pass 1
 			continue
 		} else {
@@ -242,101 +269,127 @@ func main() {
 				handVal, err := ConvHand(hand, 0)
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "%s\n", err)
+					fmt.Fprintf(fpList, "%s\n", err)
 					continue
 				}
 				if hand == "" {
 					fmt.Fprintf(os.Stderr, "Error: Line %d missing - should be an address\n", line_no)
+					fmt.Fprintf(fpList, "%s\n", err)
 					n_err++
 					continue
 				}
-				memBuf[pc] = ComposeInstruction(Mac.OpAdd, handVal)
+				op_gen = ComposeInstruction(Mac.OpAdd, handVal)
+				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpSubt:
 				handVal, err := ConvHand(hand, 0)
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "%s\n", err)
+					fmt.Fprintf(fpList, "%s\n", err)
 					continue
 				}
 				if hand == "" {
 					fmt.Fprintf(os.Stderr, "Error: Line %d missing - should be an address\n", line_no)
+					fmt.Fprintf(fpList, "%s\n", err)
 					n_err++
 					continue
 				}
-				memBuf[pc] = ComposeInstruction(Mac.OpSubt, handVal)
+				op_gen = ComposeInstruction(Mac.OpSubt, handVal)
+				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpHalt:
-				memBuf[pc] = ComposeInstruction(Mac.OpHalt, 0)
+				op_gen = ComposeInstruction(Mac.OpHalt, 0)
+				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpLoad:
 				handVal, err := ConvHand(hand, 0)
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "%s\n", err)
+					fmt.Fprintf(fpList, "%s\n", err)
 					continue
 				}
 				if hand == "" {
 					fmt.Fprintf(os.Stderr, "Error: Line %d missing - should be an address\n", line_no)
+					fmt.Fprintf(fpList, "%s\n", err)
 					n_err++
 					continue
 				}
-				memBuf[pc] = ComposeInstruction(Mac.OpLoad, handVal)
+				op_gen = ComposeInstruction(Mac.OpLoad, handVal)
+				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpStore:
 				handVal, err := ConvHand(hand, 0)
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "%s\n", err)
+					fmt.Fprintf(fpList, "%s\n", err)
 					continue
 				}
 				if hand == "" {
 					fmt.Fprintf(os.Stderr, "Error: Line %d missing - should be an address\n", line_no)
+					fmt.Fprintf(fpList, "%s\n", err)
 					n_err++
 					continue
 				}
-				memBuf[pc] = ComposeInstruction(Mac.OpStore, handVal)
+				op_gen = ComposeInstruction(Mac.OpStore, handVal)
+				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpInput:
-				memBuf[pc] = ComposeInstruction(Mac.OpInput, 0)
+				op_gen = ComposeInstruction(Mac.OpInput, 0)
+				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpOutput:
-				memBuf[pc] = ComposeInstruction(Mac.OpOutput, 0)
+				op_gen = ComposeInstruction(Mac.OpOutput, 0)
+				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpJump:
 				handVal, err := ConvHand(hand, 0)
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "%s\n", err)
+					fmt.Fprintf(fpList, "%s\n", err)
 					continue
 				}
-				memBuf[pc] = ComposeInstruction(Mac.OpJump, handVal)
+				op_gen = ComposeInstruction(Mac.OpJump, handVal)
+				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpJnS:
 				handVal, err := ConvHand(hand, 0)
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "%s\n", err)
+					fmt.Fprintf(fpList, "%s\n", err)
 					continue
 				}
-				memBuf[pc] = ComposeInstruction(Mac.OpJnS, handVal)
+				op_gen = ComposeInstruction(Mac.OpJnS, handVal)
+				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpClear:
 				handVal, err := ConvHand(hand, 0)
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "%s\n", err)
+					fmt.Fprintf(fpList, "%s\n", err)
 					continue
 				}
-				memBuf[pc] = ComposeInstruction(Mac.OpClear, handVal)
+				op_gen = ComposeInstruction(Mac.OpClear, handVal)
+				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpSkipcond:
-				fmt.Printf("%sop_s ->%s<- at:%s%s\n", MiscLib.ColorRed, op_s, godebug.LF(), MiscLib.ColorReset)
+				if db21 {
+					fmt.Printf("%sop_s ->%s<- at:%s%s\n", MiscLib.ColorRed, op_s, godebug.LF(), MiscLib.ColorReset)
+				}
 				if op_s == "skiplt0" {
 					//case Mac.OpSkipLt0:
-					memBuf[pc] = ComposeInstruction(Mac.OpSkipLt0, 0)
+					op_gen = ComposeInstruction(Mac.OpSkipLt0, 0)
+					memBuf[pc] = op_gen
 					pc++
 				} else {
 					handVal, err := ConvHand(hand, 0)
 					fmt.Printf("    handval=%x %d\n", handVal, handVal)
 					if err != nil {
 						fmt.Fprintf(os.Stderr, "%s\n", err)
+						fmt.Fprintf(fpList, "%s\n", err)
 						continue
 					}
-					memBuf[pc] = ComposeInstruction(Mac.OpSkipcond, handVal)
+					op_gen = ComposeInstruction(Mac.OpSkipcond, handVal)
+					memBuf[pc] = op_gen
 					if db7 {
 						fmt.Printf("%sOpSkipGt0 - instruction: %x at:%s%s\n", MiscLib.ColorYellow, ComposeInstruction(Mac.OpSkipGt0, 0), godebug.LF(), MiscLib.ColorReset)
 					}
@@ -344,15 +397,21 @@ func main() {
 				}
 
 			case Mac.OpSkipEq0:
-				fmt.Printf("%sop_s ->%s<- at:%s%s\n", MiscLib.ColorRed, op_s, godebug.LF(), MiscLib.ColorReset)
-				memBuf[pc] = ComposeInstruction(Mac.OpSkipEq0, 0)
+				if db21 {
+					fmt.Printf("%sop_s ->%s<- at:%s%s\n", MiscLib.ColorRed, op_s, godebug.LF(), MiscLib.ColorReset)
+				}
+				op_gen = ComposeInstruction(Mac.OpSkipEq0, 0)
+				memBuf[pc] = op_gen
 				if db7 {
 					fmt.Printf("%sOpSkipGt0 - instruction: %x at:%s%s\n", MiscLib.ColorYellow, ComposeInstruction(Mac.OpSkipGt0, 0), godebug.LF(), MiscLib.ColorReset)
 				}
 				pc++
 			case Mac.OpSkipGt0:
-				fmt.Printf("%sop_s ->%s<- at:%s%s\n", MiscLib.ColorRed, op_s, godebug.LF(), MiscLib.ColorReset)
-				memBuf[pc] = ComposeInstruction(Mac.OpSkipGt0, 0)
+				if db21 {
+					fmt.Printf("%sop_s ->%s<- at:%s%s\n", MiscLib.ColorRed, op_s, godebug.LF(), MiscLib.ColorReset)
+				}
+				op_gen = ComposeInstruction(Mac.OpSkipGt0, 0)
+				memBuf[pc] = op_gen
 				if db7 {
 					fmt.Printf("%sOpSkipGt0 - instruction: %x at:%s%s\n", MiscLib.ColorYellow, ComposeInstruction(Mac.OpSkipGt0, 0), godebug.LF(), MiscLib.ColorReset)
 				}
@@ -361,33 +420,41 @@ func main() {
 				handVal, err := ConvHand(hand, 0)
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "%s\n", err)
+					fmt.Fprintf(fpList, "%s\n", err)
 					continue
 				}
-				memBuf[pc] = ComposeInstruction(Mac.OpAddI, handVal)
+				op_gen = ComposeInstruction(Mac.OpAddI, handVal)
+				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpJumpI:
 				handVal, err := ConvHand(hand, 0)
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "%s\n", err)
+					fmt.Fprintf(fpList, "%s\n", err)
 					continue
 				}
-				memBuf[pc] = ComposeInstruction(Mac.OpJumpI, handVal)
+				op_gen = ComposeInstruction(Mac.OpJumpI, handVal)
+				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpLoadI:
 				handVal, err := ConvHand(hand, 0)
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "%s\n", err)
+					fmt.Fprintf(fpList, "%s\n", err)
 					continue
 				}
-				memBuf[pc] = ComposeInstruction(Mac.OpLoadI, handVal)
+				op_gen = ComposeInstruction(Mac.OpLoadI, handVal)
+				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpStoreI:
 				handVal, err := ConvHand(hand, 0)
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "%s\n", err)
+					fmt.Fprintf(fpList, "%s\n", err)
 					continue
 				}
-				memBuf[pc] = ComposeInstruction(Mac.OpStoreI, handVal)
+				op_gen = ComposeInstruction(Mac.OpStoreI, handVal)
+				memBuf[pc] = op_gen
 				pc++
 			case Mac.DirORG:
 				handVal, err := ConvHand(hand, 0)
@@ -397,6 +464,7 @@ func main() {
 				}
 				if hand == "" {
 					fmt.Fprintf(os.Stderr, "Error: Line %d missing value after ORG - should be an address\n", line_no)
+					fmt.Fprintf(fpList, "%s\n", err)
 					n_err++
 					continue
 				}
@@ -407,7 +475,8 @@ func main() {
 					fmt.Fprintf(os.Stderr, "%s\n", err)
 					continue
 				}
-				memBuf[pc] = int(handVal)
+				op_gen = int(handVal)
+				memBuf[pc] = op_gen
 				pc++
 			case Mac.DirHEX:
 				if db5 {
@@ -416,25 +485,31 @@ func main() {
 				handVal, err := ConvHand(hand, 16)
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "%s\n", err)
+					fmt.Fprintf(fpList, "%s\n", err)
 					continue
 				}
-				memBuf[pc] = int(handVal)
+				op_gen = int(handVal)
+				memBuf[pc] = op_gen
 				pc++
 			case Mac.DirOCT:
 				handVal, err := ConvHand(hand, 8)
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "%s\n", err)
+					fmt.Fprintf(fpList, "%s\n", err)
 					continue
 				}
-				memBuf[pc] = int(handVal)
+				op_gen = int(handVal)
+				memBuf[pc] = op_gen
 				pc++
 			case Mac.DirBIN:
 				handVal, err := ConvHand(hand, 2)
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "%s\n", err)
+					fmt.Fprintf(fpList, "%s\n", err)
 					continue
 				}
-				memBuf[pc] = int(handVal)
+				op_gen = int(handVal)
+				memBuf[pc] = op_gen
 				pc++
 			case Mac.DirSTR:
 				// xyzzy400 - convert bytes of string into 0 term set of values (ASCII in memory and store) at pc...
@@ -445,18 +520,29 @@ func main() {
 					if db10 {
 						fmt.Printf("\tPut in at [%04d/0x%04x] value [%02x][%c]\n", pc, pc, (xx & 0xff), rune(xx&0xff))
 					}
-					memBuf[pc] = int(xx & 0xff)
+					op_gen = int(xx & 0xff)
+					memBuf[pc] = op_gen
 					pc++
 				}
-				memBuf[pc] = 0
+				op_gen = 0
+				memBuf[pc] = op_gen
 				pc++
 			case Mac.DirCHR:
-				memBuf[pc] = int(hand[0] & 0xff)
+				op_gen = int(hand[0] & 0xff)
+				memBuf[pc] = op_gen
 				pc++
 			}
 			max_pc = MaxAddress(max_pc, pc)
 		}
+		if op_gen == -1 {
+			fmt.Fprintf(fpList, "%4d: 0x%04x %4s %s\n", line_no, pc, "", line)
+		} else {
+			fmt.Fprintf(fpList, "%4d: 0x%04x %04x %s\n", line_no, pc, op_gen&0xffff, line)
+		}
 	}
+
+	fmt.Fprintf(fpList, "\n")
+	DumpSymbolTable(fpList)
 
 	// Output
 	if n_err > 0 {
@@ -765,12 +851,12 @@ func HashByesReturnHex(data []byte) (s string) {
 	return
 }
 
-var db1 = true  // Leave True
 var db2 = false // Debug of Parsing code		// xyzzy
 var db8 = false
 var db7 = false
 var db5 = false  // HEX directive w/ hex output
 var db10 = false // test STR directive
-var db12 = true  // test STR directive
-var db14 = true  // DOS
-var db20 = true  // Upload flags
+var db12 = false // test STR directive
+var db14 = false // DOS
+var db20 = false // Upload flags
+var db21 = false // Upload flags

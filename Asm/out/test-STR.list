@@ -1,0 +1,28 @@
+Line: Address Hex  ===============================================================
+   1: 0x0001 d014 L1,     LoadI    X
+   2: 0x0002 6000         Output
+   3: 0x0003 1014         Load     X
+   4: 0x0004 3015         add      _1
+   5: 0x0005 2014         sTORe    X
+   6: 0x0006 d014         LoAdI    X
+   7: 0x0007 8800         SkipGt0            / OnLine use Skipins 0x400 - same instruction just different human representation.
+   8: 0x0008 9000         JUMP L1
+   9:
+  10: 0x0008      / All Done 
+  11:
+  12: 0x0009 7000         Halt
+  13:
+  14: 0x0014              ORG  20
+  15: 0x0015 0016 X,      Dec  22             / Counter of how many characters to output.
+  16: 0x0016 0001 _1,     dec  1
+  17: 0x001f 0000 hw,     STR  "hip hop!"
+  18:
+
+Symbol Table
+-------------------------------------------------------------
+L1: {"Name":"L1","LineNo":1,"Address":0}
+X: {"Name":"X","LineNo":15,"Address":20}
+_1: {"Name":"_1","LineNo":16,"Address":21}
+hw: {"Name":"hw","LineNo":17,"Address":22}
+-------------------------------------------------------------
+
