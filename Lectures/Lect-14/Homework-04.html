@@ -708,56 +708,155 @@ ol {
 
 <div class="markdown-body">
 
-<h1>Lecture 14 - Mon Mar  2</h1>
+<h1>Build a MARIA emulator</h1>
 
-<h2>Test Stats</h2>
+<p>Due: Mar 13. Friday before spring break.  Spring break 14th to 22nd
+will count as a single day for any late homework.  I will be available for
+appointments over spring break - but I am working some days.</p>
+
+<p>Pts: 400</p>
+
+<p>Use the fetch-execute cycle and build an emulator for the MARIA language.  Pick a language to
+implement this in.  C, C++, F#, Kotlin, Go, Python, Haskell.  (No Java, JavaScrip(node.js), Ruby).</p>
+
+<p>Command Line:  Process the command line for <code>--in &lt;fn&gt;</code> and <code>--out &lt;fn&gt;</code> and get the file names.
+They can be in either order.</p>
+
+<p>C Example:</p>
+
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main ( int argc, char *argv[] ) {
+
+    int i;
+    char *in, *out;
+
+    in = &quot;&quot;;
+    out = &quot;&quot;;
+
+    for ( i = 1; i &lt; argc; i++ ) {
+        if ( strcmp ( argv[i], &quot;--in&quot; ) == 0 ) {
+            if ( (i+1) &lt; argc ) {
+                in = argv[i];
+                i++;
+            } else {
+                fprintf ( stderr, &quot;Error: --in missing file name\n&quot; );
+                exit(1);
+            }
+        } else if ( strcmp ( argv[i], &quot;--out&quot; ) == 0 ) {
+            if ( (i+1) &lt; argc ) {
+                out = argv[i];
+                i++;
+            } else {
+                fprintf ( stderr, &quot;Error: --out missing file name\n&quot; );
+                exit(1);
+            }
+        } else {
+            fprintf ( stderr, &quot;Error: invalid paramter &gt;%s&lt;\n&quot;, argv[i] );
+            exit(1);
+        }
+    }
+
+    if ( strcmp(in,&quot;&quot;) == 0 ) {
+        fprintf ( stderr, &quot;Error: missing --in &lt;fn&gt; parameter\n&quot; );
+        exit(1);
+    }
+    if ( strcmp(out,&quot;&quot;) == 0 ) {
+        fprintf ( stderr, &quot;Error: missing --out &lt;fn&gt; parameter\n&quot; );
+        exit(1);
+    }
+
+    /* TODO: Add more code */
+
+    /* Read in Input file into `memory` */
+
+    /* Loop until 'Halt' instrcution */
+
+        /* Fetch */
+
+        /* Execute */
+
+}
+</code></pre>
+
+<h2>Input</h2>
+
+<p>Read in a file with hex values - one on each line.  If the line starts with &lsquo;#&rsquo; then it is a comment and
+should be skipped.   Skip empty lines.   Each line should have a 4 digit hex value on it.  Read it in and store
+it in the &ldquo;memory&rdquo; of the machine.   The addresses for reading start with 0 and increment.</p>
+
+<h2>Process</h2>
+
+<p>Start the <code>pc</code> at 0 and fetch an instruction into the <code>ir</code>.  Increment the <code>pc</code>.  Decode
+the instruction into it&rsquo;s individual processing.   Run some stuff to implement each instruction.
+Loop until you get a <code>Halt</code> ( 0x7000 ) instruction.  On Halt, then exit the loop.   Put in a counter
+that limits the number of instructions to 5000 - if exceeded then exit with an error.
+Print out the <code>pc</code> and the current instruction being run.  Make the <code>Output</code> instruction print
+the hex and decimal value of the output from the <code>ac</code> register and if the value is between (inclusive)
+a space and 127 (the end of the ASCII table) then print it out as a character also.</p>
+
+<p>The registers in the system are, <code>pc</code>, <code>ir</code>, <code>ac</code>, <code>mar</code>, <code>mdr</code>.  These should be declared as
+integer variables.  In the book <code>mdr</code> is the memory buffer register (MBR).  In von Naumann&rsquo;s
+original paper <code>ir</code> is current instruction register (CIR).</p>
+
+<h2>Testing</h2>
+
+<p>Write (at least 5) programs of your choice that demonstrate that all of the instructions in the
+MARIA instruction set work.  Run the multiply example from the midterm and verify that it works.</p>
+
+<h2>Turn in (via upload)</h2>
+
+<p>Your Code.  A 1 page outline of what the files are that you are turning in
+called <code>outline.txt</code> as a <em>TEXT</em> file (no word documents).   The outline says in 1 line what
+each file is.  Put all the files into a .zip or .tar file. So, for example:</p>
+
+<p>Put you name in the overview and in the comments in code.</p>
+
+<p>Put in a comment in each source file as to what is in that file.  If it is a test then specify
+what is getting tested and what the expected output is.</p>
+
+<pre><code>Overview of Homework 4
+By Philip Schlump
+
+Files           Description
+-------------   --------------------------------------------------
+overview.txt    This file
+main.c            main code
+lib.c            library functions
+
+test1.mas        assembler source for multiply
+test1.hex        hex file for test1.mas
+test1.out        output from run.
+
+test2.mas        test of LoadI, Jump, JumpI instruction
+test2.hex        hex of test2.mas
+test2.out        output from run.
+
+test3.mas        test of AddI instruction
+test3.hex        hex of test3.mas
+test3.out        output from run.
+
+test4.mas        test of StoreI instruction
+test4.hex        hex of test4.mas
+test4.out        output from run.
+
+test5.mas        test of Halt instruction
+test5.hex        hex of test5.mas
+test5.out        output from run.
+</code></pre>
+
+<h2>Grading</h2>
 
 <ol>
-<li><sup>1</sup>&frasl;<sub>2</sub> of you got it done in <sup>1</sup>&frasl;<sub>2</sub> the time - so not too long.</li>
-<li>Everybody managed to answer in the space given - so enough paper.</li>
-<li>Averag 264.3 out of 300 ( so high B ).</li>
-<li>Low 141, high 300 out of 300.</li>
-<li>It is graded - but I can&rsquo;t return it - I still have a couple of people that have yet to take it.  So hopefully by Wednesday.</li>
+<li>Did you test all the instructions?</li>
+<li>Do all the instructions work?</li>
+<li>Are your tests complete?</li>
+<li>Did you include an &lsquo;overview.txt&rsquo; file?</li>
+<li>If I run a testX.hex file that works will I get the correct output?</li>
+<li>Have you included your name in the comments?</li>
 </ol>
-
-<h2>Homework</h2>
-
-<ol>
-<li>Homework 2 is nearly done getting graded  - and will soon be return.</li>
-<li>Homework 3 .  Hm..</li>
-<li>Homework 4 - Build a MARIA emulator.</li>
-</ol>
-
-<h2>In the News</h2>
-
-<p>Tesla (using to-silicon AI chip): <a href="https://asia.nikkei.com/Business/Automobiles/Tesla-teardown-finds-electronics-6-years-ahead-of-Toyota-and-VW2">https://asia.nikkei.com/Business/Automobiles/Tesla-teardown-finds-electronics-6-years-ahead-of-Toyota-and-VW2</a></p>
-
-<p>Googles Overview of TPU: <a href="https://cloud.google.com/blog/products/gcp/an-in-depth-look-at-googles-first-tensor-processing-unit-tpu">https://cloud.google.com/blog/products/gcp/an-in-depth-look-at-googles-first-tensor-processing-unit-tpu</a></p>
-
-<h2>History of of the von Neumann architecture</h2>
-
-<p>From 1945 - first published.  From his 1945 description:</p>
-
-<table><tbody><tr><th>MAR</a></th><td>Memory Address Register</a></td><td>Holds the memory location of data that needs to be accessed</td></tr><tr><th>MDR</a></th><td>Memory Data Register</a></td><td>Holds data&nbsp;that is being transferred to or from&nbsp;memory</td></tr><tr><th>AC</a></th><td>Accumulator</a></td><td>Where intermediate arithmetic and logic results are stored</td></tr><tr><th>PC</a></th><td>Program Counter</a></td><td>Contains the address of the next instruction to be executed</td></tr><tr><th>CIR</a></th><td>Current Instruction Register</a></td><td>Contains the current instruction during processing</td></tr></tbody></table>
-
-<p>We are calling the CIR the IR.</p>
-
-<p>The Fetch-Execute cycle is the process where we get an instruction from memory into the IR, decode it in the control system, move and process data (the ALU or just movement)
-and then apply this to Input and Output.</p>
-
-<p>Used in Testing (For more complicated tests).   PostgreSQL (141281 tests), SQLite, Linux Network Stack, Ethereum.</p>
-
-<p>Used For Building interpreters.  Example:</p>
-
-<p>Overview of Fetch/Execute.</p>
-
-<h2>TPU&rsquo;s - non fetch-execute</h2>
-
-<p>How Tesla&rsquo;s processor and Google TPU works.</p>
-
-<p>What is a Tensor and how do they flow?</p>
-
-<p>What is a Neural Network?</p>
 
 <h1>Copyright</h1>
 

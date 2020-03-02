@@ -7,9 +7,12 @@
 3. Averag 264.3 out of 300 ( so high B ).
 4. Low 141, high 300 out of 300.
 5. It is graded - but I can't return it - I still have a couple of people that have yet to take it.  So hopefully by Wednesday. 
-6. Homework 2 is nearly done getting graded  - and will soon be return.
-7. Homework 3 .  Hm.. 
-8. Homework 4 - Build a MARIA emulator.
+
+## Homework
+
+1. Homework 2 is nearly done getting graded  - and will soon be return.
+2. Homework 3 .  Hm.. 
+3. Homework 4 - Build a MARIA emulator. 
 
 ## In the News
 
@@ -31,5 +34,25 @@ and then apply this to Input and Output.
 
 Used in Testing (For more complicated tests).   PostgreSQL (141281 tests), SQLite, Linux Network Stack, Ethereum.
 
-Used For Building interpreters.
+Used For Building interpreters.  Example:
+
+Overview of Fetch/Execute.
+
+## TPU's - non fetch-execute
+
+How Tesla's processor and Google TPU works.
+
+What is a Tensor and how do they flow?
+
+What is a Neural Network?
+
+
+
+# Copyright
+
+Copyright (C) University of Wyoming, 2020.
+
+
+
+
 
