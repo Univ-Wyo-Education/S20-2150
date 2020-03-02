@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title> MARIA Microcode Emulator </title>
 <!--
-MARIA Microcode Emulator: Version v1.3.6
+MARIA Microcode Emulator: Version v1.3.7
 Copyright (C) University of Wyoming, 2019-2020.
 --> 
 
@@ -31,6 +31,7 @@ Copyright (C) University of Wyoming, 2019-2020.
 	.red-line        { fill:#f00000; stroke:#000000; stroke-width:1; }
 	.out-box         { fill:#ffffff; stroke:#000000; stroke-width:1; }
 	.blue-line       { fill:#000000; stroke:#4040ff; stroke-width:3; fill:none }
+	.light-green-line       { fill:#000000; stroke:#20f020; stroke-width:3; fill:none }
 	.blue-line-1     { fill:#000000; stroke:#4040ff; stroke-width:2; fill:none }
 	.button-box      { fill:#b4c5fb; stroke:#000000; stroke-width:2; opacity:0.75 }
 	.arrow-line      { stroke:#000000; stroke-width:2; stroke-linecap: round; }
@@ -197,6 +198,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 			<text id="h_ir_txt_0" x="185" y="55" class="small"></text>
 			<text id="h_ir_txt_1" x="185" y="75" class="small"></text>
+
 
 	<rect id="id_result" x="300" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_result');"/>
 		<text x="300" y="25" class="small" onclick="infoOn('id_result');">Result</text>
@@ -1149,6 +1151,26 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		d="M 1120 130   L  1120 265  1225 265 1225 240 M 1215 245 L 1215 265"
 		/>
 
+<!--
+	Green Decoder Lines
+-->
+	<g id="ir_15_12_to_decoder_mux_11">
+		<path class="light-green-line"
+			d="M 1135 130   L 1135 155  1170 155  1170 240  1200 240  "
+			/>
+		<path class="light-green-line"
+			d="M 200 170   L 1135 170  1170 170  1170 240  1200 240  "
+			/>
+	</g>
+	<g id="ir_11_08_to_decoder_mux_10">
+		<path class="light-green-line"
+			d="M 1135 130   L 1135 155  1170 155  1170 228  1200 228  "
+			/>
+		<path class="light-green-line"
+			d="M 200 200   L 1135 200  1170 200  1170 228  1170 228  "
+			/>
+	</g>
+
 
 <!-- Buttons -->
 		<rect id="b-help"            x="40" y="300" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('help');"/>
@@ -1353,6 +1375,8 @@ var lineOn = [
 	,"#is_halted"
 	,"#is_fetch"
 	,"#is_error"
+	,"#ir_15_12_to_decoder_mux_11"
+	,"#ir_11_08_to_decoder_mux_10"
 ];	// List of IDs of lines that are turned-on
 
 function clearOtherLine() {
@@ -1456,10 +1480,10 @@ function infoOn1(i,x) {
 	case "clear-line":
 		break;
 	case "help":
-		showTextInOutputBox("MARIA Microcode Emulator: Version v1.3.6"
+		showTextInOutputBox("MARIA Microcode Emulator: Version v1.3.7"
 			,"Load assembled microcode and assembled instructions, then step or run."
 			,""
-			,"https://github.com/Univ-Wyo-Education/S20-2150/McDocs/ for more detailed help."
+			,"https://github.com/Univ-Wyo-Education/S20-2150/McRun/ for more detailed help."
 			,""
 			,"Click on a line to see where the input connects to.  Try Ld near the PC register."
 			,""
@@ -2945,7 +2969,7 @@ function test1002() {
 	clearOtherLine(); 	
 
 	if ( theWorld2["Memory_to_MDR"] !== 0xFace ) {
-		console.error ( "Error testFace: 'Memory_to_MDR' should be 0xFace, got: " +theWorld2["Memory_to_MDR"]+" instead." );
+		console.error ( "Error test1002: 'Memory_to_MDR' should be 0xFace, got: " +theWorld2["Memory_to_MDR"]+" instead." );
 		nErr++;
 	}
 	if ( MAR.x._data_ !== 0x1002 ) {
@@ -2953,7 +2977,7 @@ function test1002() {
 		nErr++;
 	}
 	if ( MDR.x._data_ !== 0xFace ) {
-		console.error ( "Error testFace: MDR.x._data_ should be 0xFace, got: " +MDR.x._data_+" instead." );
+		console.error ( "Error test1002: MDR.x._data_ should be 0xFace, got: " +MDR.x._data_+" instead." );
 		nErr++;
 	}
 
@@ -2972,11 +2996,11 @@ function test1002() {
 	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
 
 	if ( theWorld2["Bus"] !== 0xFace ) {
-		console.error ( "Error testFace: 'Bus' should be 0xFace, got: " +theWorld2["Bus"]+" instead." );
+		console.error ( "Error test1002: 'Bus' should be 0xFace, got: " +theWorld2["Bus"]+" instead." );
 		nErr++;
 	}
 	if ( IR.x._data_ !== 0xFace ) {
-		console.error ( "Error testFace: 'IR.x._data_' should be 0xFace, got: " +IR.x._data_+" instead." );
+		console.error ( "Error test1002: 'IR.x._data_' should be 0xFace, got: " +IR.x._data_+" instead." );
 		nErr++;
 	}
 
@@ -3005,98 +3029,106 @@ function test1002() {
 
 
 // ----------------------------------------------------------------------------------------------------------------------------------------
-// 1105. Memory Read - Verify what is used/set in signal prop.  Check names of signals.
-// ----------------------------------------------------------------------------------------------------------------------------------------
-// Manual test - add in blue-paths for signals between MAR -> Memory and Memory <-> MDR - verify names.
-// Verify that you can show them "on" with TurnOn(...)
-// This test will just have to return 0, test must be run manually to check visual results.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ---------------------------------------------------------------------------------------------------------------------------------------
-// Tests to build
-// ---------------------------------------------------------------------------------------------------------------------------------------
-// Built:
-// 		1000. PC
-// 		1001. PC -> MAR
-// 		1102. Output -> 7-seg
-// 		1101. AC -> Output
-// 		1003. MDR -> Bus -> MAR 
-// 		1104. Result -> AC
-// 		1105. Input -> AC
-// 		1002. PC -> MAR -> Memory Read -> IR
-// -
-// TODO:
-// 1004. MDR -> Bus -> MAR -> Memory Read -> MDR		(LoadI instruction)
 // 1005. MAR -> Memory Read -> AC						Probably Trivial
-// 1006. pulg -> MAR + RESULT -> Memory Write 			1st WRITE test.
-// -
-// Logic (hand_out)
-// IR + hand_out -> Bus
-// MAR + MDR -> Memory Write 					Verify that display shows this properly (show-memory.js)
-// IR (hand_out) -> MAR + AC -> Memory Write 
-// Input -> MAR + MDR -> Memory Write 
-// -
-// Mux ( Input + Mux_Ctl )
-// -
-// Mcrocode_PC -> Microcode (address)
-// AC + MDR -> ALU -> Result, Result -> AC
-// IR -> Mux(decoder) -> Microcode_PC
-// ---------------------------------------------------------------------------------------------------------------------------------------
-// Tests using full code. (Requires load of microcode - so has to have the current "hash" for the Microcode.)
-// 2000.  Test Load, Halt
-// 2001.  Test Store, Halt
-// 2002.  Test Load, Add, Halt
-// 2003.  Test Load, Subt, Halt
-// 2004.  Test Jump
-// 2005.  Test Load, SkipLt0, Jump, Halt
-// 2006.  Test Load, SkipEq0, Jump, Halt
-// 2007.  Test Load, SkipGt0, Jump, Halt
-// 2008.  Test JnS
-//
-// 2020.  Test LoadI
-// 2021.  Test AddI
-// 2022.  Test SubtI
-// 2023.  Test JumpI
-// 2024.  Test DEC 0 - Invalid Instruction
-// 2025.  Test Microcode 0 - Invalid Microcode
-//
-// ** Test each of the instructions with a simple test that verifies that that each one works.
-// ---------------------------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------------------
+function test1005() {
 
-// ----------------------------------------------------------------------------------------------------------------------------------------
-// TODO:
-// 1106. Memory Read - MAR + MDR(out) -> Memory Read - check that address is input to memory.
-// 1107. Memory Write - MAR + MDR(ld) -> Memory Read - check that data makes it to MDR.
-// 1108. AC -> MAR -> Memory Read -> IR (JumpI? like process)
-// ----------------------------------------------------------------------------------------------------------------------------------------
-// console.log ( "AT:"+ln() );
-// 1004. MDR -> Bus -> MAR -> Memory Read -> MDR		(LoadI instruction)
-// 1005. MAR -> Memory Read -> AC						Probably Trivial
-// 1006. Plug -> MAR + RESULT -> Memory Write 			1st WRITE test.
+	// ----------------------------------------------------------------------------
+	// Data Setup
+	// ----------------------------------------------------------------------------
+	MEMORY.x._data_[0x1005] = 0xBeef;		
+	mm_max = 1024*16;
+	MAR.x._data_ = 0x1005;		// Test Number 	- Force the MAR to have 1005 hex as data.
+
+
+
+	// ----------------------------------------------------------------------------
+	// Read of Memory using MAR -> Memory -> MDR
+	// ----------------------------------------------------------------------------
+	MEMORY.msg("Read",1);			// Setup MAR to do a load.
+	MAR.msg("Out",1);
+	MDR.msg("Ld_From_Memory",1);
+
+	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+
+	PropagateSignals();
+	clearOtherLine(); 	
+
+	if ( theWorld2["Memory_to_MDR"] !== 0xBeef ) {
+		console.error ( "Error test1005: 'Memory_to_MDR' should be 0xBeef, got: " +theWorld2["Memory_to_MDR"]+" instead." );
+		nErr++;
+	}
+	if ( MAR.x._data_ !== 0x1005 ) {
+		console.error ( "Error test1005: MAR.x._data_ should be 0x1005, got: " +MAR.x._data_+" instead." );
+		nErr++;
+	}
+	if ( MDR.x._data_ !== 0xBeef ) {
+		console.error ( "Error test1005: MDR.x._data_ should be 0xBeef, got: " +MDR.x._data_+" instead." );
+		nErr++;
+	}
+
+
+
+	// ----------------------------------------------------------------------------
+	// Transfer of MDR to AC
+	// ----------------------------------------------------------------------------
+	MDR.msg("Out",1);
+	AC.msg("Ld",1);
+	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+
+	PropagateSignals();
+	clearOtherLine(); 	
+
+	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+
+	if ( theWorld2["Bus"] !== 0xBeef ) {
+		console.error ( "Error test1005: 'Bus' should be 0xBeef, got: " +theWorld2["Bus"]+" instead." );
+		nErr++;
+	}
+	if ( AC.x._data_ !== 0xBeef ) {
+		console.error ( "Error test1005: 'AC.x._data_' should be 0xBeef, got: " +AC.x._data_+" instead." );
+		nErr++;
+	}
+
+
+
+	// ----------------------------------------------------------------------------
+	// So... all done - did we get any errors?
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function testAll() {
 	var mNErr = 0;
-	var tt = [  test2000,   test1000,   test1001,   test1102,   test1101,   test1003,   test1104,   test1105,   test1002  ];
-	var ss = [ "test2000", "test1000", "test1001", "test1102", "test1101", "test1003", "test1104", "test1105", "test1002" ];
+	var tt = [  test2000,   test1000,   test1001,   test1102,   test1101,   test1003,   test1104,   test1105,   test1002,   test1005  ];
+	var ss = [ "test2000", "test1000", "test1001", "test1102", "test1101", "test1003", "test1104", "test1105", "test1002", "test1005" ];
 	for ( var ii = 0, mx = tt.length; ii < mx; ii++ ) {
 		nErr = 0;
 		var t = tt[ii];
