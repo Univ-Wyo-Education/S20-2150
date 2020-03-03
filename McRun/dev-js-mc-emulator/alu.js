@@ -20,27 +20,27 @@ var ALU = {
 		switch ( wire ) {
 		case "Ctl":
 			val = val & 0xf;
-			MUX.x["_Ctl_"] = val;
-			MUX.x["_Ctl_0_"] = val & 1;
-			MUX.x["_Ctl_1_"] = ( val & 2 ) >> 1;
-			MUX.x["_Ctl_2_"] = ( val & 4 ) >> 2;
-			MUX.x["_Ctl_3_"] = ( val & 8 ) >> 3;
+			ALU.x["_Ctl_"] = val;
+			ALU.x["_Ctl_0_"] = val & 1;
+			ALU.x["_Ctl_1_"] = ( val & 2 ) >> 1;
+			ALU.x["_Ctl_2_"] = ( val & 4 ) >> 2;
+			ALU.x["_Ctl_3_"] = ( val & 8 ) >> 3;
 		break;
 		case "Ctl_0":
-			MUX.x["_Ctl_0_"] = val & 1;
-			MUX.x["_Ctl_"] = ( MUX.x["_Ctl_"] & 1 )  |  MUX.x["_Ctl_0_"] ;
+			ALU.x["_Ctl_0_"] = val & 1;
+			ALU.x["_Ctl_"] = ( ALU.x["_Ctl_"] & 1 )  |  ALU.x["_Ctl_0_"] ;
 		break;
 		case "Ctl_1":
-			MUX.x["_Ctl_1_"] = val & 1;
-			MUX.x["_Ctl_"] = ( MUX.x["_Ctl_"] & 2 )  |  ( MUX.x["_Ctl_1_"] << 1 );
+			ALU.x["_Ctl_1_"] = val & 1;
+			ALU.x["_Ctl_"] = ( ALU.x["_Ctl_"] & 2 )  |  ( ALU.x["_Ctl_1_"] << 1 );
 		break;
 		case "Ctl_2":
-			MUX.x["_Ctl_2_"] = val & 1;
-			MUX.x["_Ctl_"] = ( MUX.x["_Ctl_"] & 4 )  |  ( MUX.x["_Ctl_2_"] << 2 );
+			ALU.x["_Ctl_2_"] = val & 1;
+			ALU.x["_Ctl_"] = ( ALU.x["_Ctl_"] & 4 )  |  ( ALU.x["_Ctl_2_"] << 2 );
 		break;
 		case "Ctl_3":
-			MUX.x["_Ctl_3_"] = val & 1;
-			MUX.x["_Ctl_"] = ( MUX.x["_Ctl_"] & 8 )  |  ( MUX.x["_Ctl_3_"] << 3 );
+			ALU.x["_Ctl_3_"] = val & 1;
+			ALU.x["_Ctl_"] = ( ALU.x["_Ctl_"] & 8 )  |  ( ALU.x["_Ctl_3_"] << 3 );
 		break;
 		default:
 			ALU.PullBus();
@@ -161,8 +161,35 @@ var ALU = {
 	}
 
 	, PullBus: function () {
-		AddDep ( ALU.x.Name, [ "Bus", "ac_Out_to_ALU" ], "Out", function () { 				// xyzzy - should add in Ctl_3...Ctl_0 ???
+		// xyzzy4001 Proposed: AddDep ( ALU.x.Name, [ "Bus", "ac_Out_to_ALU" , [ [ "ALU_Ctl_0" , "ALU_Ctl_1" , "ALU_Ctl_2" , "ALU_Ctl_3" ], [ "ALU_Ctl" ] ] ], "Out", function () { 		
+		AddDep ( ALU.x.Name, [ "Bus", "ac_Out_to_ALU" , "ALU_Ctl_0" , "ALU_Ctl_1" , "ALU_Ctl_2" , "ALU_Ctl_3" ], "Out", function () { 		
 console.log ( "ALU:PullBus", ALU.x["_B_"] );
+			if ( ALU.x._Ctl_ === null ) {
+				console.log ( "AT:"+ln(), "Not Set _Ctl_" );
+				if ( ALU.x._Ctl_0_ === null ) {
+					console.log ( "AT:"+ln(), "Not Set _Ctl_0_" );
+					var a = theWorld2["ALU_Ctl_3"];
+					var b = theWorld2["ALU_Ctl_2"];
+					var c = theWorld2["ALU_Ctl_1"];
+					var d = theWorld2["ALU_Ctl_0"];
+					console.log ( "AT:"+ln(), "a",a, "b",b, "c",c, "d", d );
+					ALU.x["_Ctl_0_"] = d & 1;
+					ALU.x["_Ctl_1_"] = c & 1;
+					ALU.x["_Ctl_2_"] = b & 1;
+					ALU.x["_Ctl_3_"] = a & 1;
+					ALU.x["_Ctl_"] = ( a << 3 ) | ( b << 2 ) | ( c << 1 ) | d;
+				} else if ( typeof theWorld2["ALU_Ctl"] !== "undefined" ) {
+					console.log ( "AT:"+ln() );
+					var val = theWorld2["ALU_Ctl"] & 0xf;
+					ALU.x["_Ctl_"] = val;
+					ALU.x["_Ctl_0_"] = ( val & 1 );
+					ALU.x["_Ctl_1_"] = ( val & 2 ) >> 1;
+					ALU.x["_Ctl_2_"] = ( val & 4 ) >> 2;
+					ALU.x["_Ctl_3_"] = ( val & 8 ) >> 3;
+				} else {
+					console.error ( "AT:"+ln(), "Invalid config of ALU" );
+				}
+			}
 			ALU.x["_A_"] = AC.x["_data_"];
 			ALU.x["_B_"] = theWorld2["Bus"];
 			
@@ -192,6 +219,9 @@ console.log ( "ALU.x._Ctl_ =", ALU.x["_Ctl_"] );
 	, Display: function  ( x, y ) {
 		var sVal = toHex(x,1);
 		$("#h_alu_txt").text(sVal+":"+y);
+		// xyzzy4000 - Add to Dispaly - when function happens check for _func_A_ - if set, then show value above
+		// _A_ line, then check for _func_B_ if set then show value input for _B_ line, then show output between
+		// ALU and Result register.
 	}
 
 	// Return any errors generated in this "chip"

@@ -172,6 +172,7 @@ var MUX = {
 	, Display: function  ( x ) {
 		var sVal = toBin(x,2);
 		$("#h_mux_txt").text(sVal);
+		// xyzzy4000 -- beter display of in-to-out
 	}
 
 	// Return any errors generated in this "chip"

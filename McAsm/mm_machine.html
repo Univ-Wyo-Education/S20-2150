@@ -2031,7 +2031,8 @@ console.log ( "****************** SetState:", v );
 };
 
 var Connections = {
-	  "id_pc_Out": [ { Name:"PC",						Op: ["Out"]      	} ]
+	  "Microcode_PC_Addr": [ { Name:"MICROCODE",		Op: ["Addr"]      	} ]		// Kick start the process.
+	, "id_pc_Out": [ { Name:"PC",						Op: ["Out"]      	} ]
 	, "id_pc_Ld": [ { Name:"PC",						Op: ["Ld"]      	} ]
 	, "id_pc_Inc": [ { Name:"PC",						Op: ["Inc"]      	} ]
 	, "id_Microcode_PC_Clr": [ { Name:"MICROCODE_PC",	Op: ["Clr"]      	} ]
@@ -2081,6 +2082,29 @@ var Connections = {
 //hand_out 24
 
 };
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+function RunConnections () {
+	for ( var cur in theWorld2 ) {
+		// for ( var key in Connections ) {
+console.log ( "cur=", cur );
+		if ( typeof Connections[cur] !== "undefined" ) {
+			var wireTo = Connections[cur];
+			console.log ( "For "+cur+" wireTo=", wireTo );
+			for ( var ww = 0, my = wireTo.length; ww < my; ww++ ) {
+				var name = wireTo[ww].Name;
+				var op = wireTo[ww].Op;
+				for ( var kk = 0, mx = op.length; kk < mx; kk++ ) {
+					if ( window[name] && window[name].msg ) {
+						window[name].msg ( op[kk], 1 );						// connection from "wire" to chip.
+					} else {
+						console.error ( "RunConnections: failed for: ", name+".msg('"+op[kk]+"',1);" ); 
+					}
+				}
+			}
+		}
+	}
+}
 
 
 function clearMicrocodeText() {
@@ -2235,6 +2259,8 @@ function hasPending () {
 	}
 	return false;
 }
+
+// xyzzy4001 Proposed: AddDep ( ALU.x.Name, [ "Bus", "ac_Out_to_ALU" , [ [ "ALU_Ctl_0" , "ALU_Ctl_1" , "ALU_Ctl_2" , "ALU_Ctl_3" ], [ "ALU_Ctl" ] ] ], "Out", function () { 		
 
 // tw is the row in theWorld2DepOn
 function depdendenciesMet ( tw ) {
@@ -2474,9 +2500,11 @@ function ResetMachine() {
 	showIsError ( false );
 	clearOtherLine();
 	PC.msg("Clr", 1);
+	INPUT.msg("Clr", 1);
+	OUTPUT.msg("Clr", 1);
+	RESULT.msg("Clr", 1);
+	IR.msg("Clr", 1);
 	MICROCODE_PC.msg("Clr", 1);
-	PC.tick();
-	MICROCODE_PC.tick();
 	clearOtherLine();
 	if ( mc_hash && mc_hash != "" ) {
 		$("#modal-input-code-hash").val(mc_hash);
@@ -3107,50 +3135,6 @@ function test1005() {
 
 
 
-// ----------------------------------------------------------------------------------------------------------------------------------------
-// 2000.  Test Load, Halt
-// ----------------------------------------------------------------------------------------------------------------------------------------
-function test2000() {
-
-	// ----------------------------------------------------------------------------
-	// Data Setup
-	// ----------------------------------------------------------------------------
-	MEMORY.x._data_[0x0000] = 0x1002;			// Program 	Load X
-	MEMORY.x._data_[0x0001] = 0x7000;			//			Halt
-	MEMORY.x._data_[0x0002] = 0x1230;			// X,       HEX   1230 	
-	mm_max = 1024*16;
-	PC.x._data_ = 0x0000;		
-	MICROCODE_PC.x._data_ = 0x0000;				// Start Microcode Off
-
-
-
-
-	// Check that AC has 0x1230 in it
-	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
-	clearOtherLine(); 	
-
-	// Check that PC has 0x0002 in it
-	PropagateSignals();
-	clearOtherLine(); 	
-
-	// Check that we are at the `Halt` instruction in Microcode_PC
-	PropagateSignals();
-	clearOtherLine(); 	
-
-
-
-
-	// ----------------------------------------------------------------------------
-	// So... all done - did we get any errors?
-	// ----------------------------------------------------------------------------
-
-	if ( nErr > 0 ) {
-		console.error ( "FAIL: # of errors: "+nErr );
-	} else {
-		console.log ( "PASS" );
-	}
-	return ( nErr );
-}
 
 
 
@@ -3163,8 +3147,10 @@ function test3000() {
 	// ----------------------------------------------------------------------------
 	// Data Setup
 	// ----------------------------------------------------------------------------
-	MUX.x._Ctl_1_ = 1;
+	MUX.x._Ctl_1_ = 1;  // Should be set via theWorld2 - output bus from Microcode! xyzzy4004
 	MUX.x._Ctl_0_ = 1;
+	theWorld2["MUX_Ctl_1"] = 1;
+	theWorld2["MUX_Ctl_0"] = 1;
 
 	MUX.x._00_0_ = 0;	// 0x00
 	MUX.x._00_1_ = 0;
@@ -3202,7 +3188,7 @@ function test3000() {
 	MUX.x._11_6_ = 0;
 	MUX.x._11_7_ = 1;
 
-	MUX.msg("mux-logic",1);
+	MUX.msg("mux-logic",1);	// remove xyzzy4004
 
 	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
 	clearOtherLine(); 	
@@ -3249,14 +3235,18 @@ function test3001() {
 	// Data Setup
 	// ----------------------------------------------------------------------------
 	// |  0 | 1  |  0 |  0 |    *   |	Add: result = ac + bus (mdr usually)                 |
-	ALU.x._Ctl_0_ = 0;	// Setup to do an ADD
-	ALU.x._Ctl_1_ = 0;
-	ALU.x._Ctl_2_ = 1;
-	ALU.x._Ctl_3_ = 0;
+	//ALU.x._Ctl_0_ = 0;	// Setup to do an ADD
+	//ALU.x._Ctl_1_ = 0;
+	//ALU.x._Ctl_2_ = 1;
+	//ALU.x._Ctl_3_ = 0;
 
 	theWorld2["Bus"] = 7;			// _B_ 
 	AC.x["_data_"] = 5;				// _A_
 	theWorld2["ac_Out_to_ALU"] = 5;	// _A_
+	theWorld2["ALU_Ctl_0"] = 0;		// 0x4 = ADD
+	theWorld2["ALU_Ctl_1"] = 0;	
+	theWorld2["ALU_Ctl_2"] = 1;	
+	theWorld2["ALU_Ctl_3"] = 0;	
 
 	ALU.msg("alu-logic",1);
 
@@ -3285,6 +3275,117 @@ function test3001() {
 }
 
 
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// Test the ResetMachine function.
+// ----------------------------------------------------------------------------------------------------------------------------------------
+function test3800() {
+
+	PC.x._data_ = 1;
+	MICROCODE_PC.x._data_ = 2;
+
+	ResetMachine();
+
+	if ( PC.x._data_ !== 0 ) {
+		console.error ( "Error test3800: 'PC' should be 0, got: " +PC.x._data_+" instead." );
+		nErr++;
+	}
+	if ( MICROCODE_PC.x._data_ !== 0 ) {
+		console.error ( "Error test3800: 'MICROCODE_PC' should be 02, got: " +PC.x._data_+" instead." );
+		nErr++;
+	}
+
+	// ----------------------------------------------------------------------------
+	// So... all done - did we get any errors?
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
+}
+
+
+
+
+
+
+
+
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// 2000.  Test Load, Halt
+// ----------------------------------------------------------------------------------------------------------------------------------------
+//var ConnectionsWiredTogether = {	:1330
+//var Connections = {				:2033
+function test2000() {
+
+	// ----------------------------------------------------------------------------
+	// Data Setup
+	// ----------------------------------------------------------------------------
+	MEMORY.x._data_[0x0000] = 0x1002;			// Program 	Load X
+	MEMORY.x._data_[0x0001] = 0x7000;			//			Halt
+	MEMORY.x._data_[0x0002] = 0x1230;			// X,       HEX   1230 	
+	mm_max = 1024*16;
+	PC.x._data_ = 0x0000;						// So can check increment of PC
+	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
+
+	// theWorld2["Microcode_PC_Addr"] = 0;			// Simulate Microcode_PC pusing out an address to Microcode(memroy)
+
+	MICROCODE_PC.msg('Out',1);
+	MICROCODE.msg('Addr',1);					// Fornce send a message - may be start of something!
+	PC.msg('Out',1);
+
+
+	// Check that AC has 0x1230 in it
+	Do1Tick();
+return;
+	clearOtherLine(); 	
+
+	// Check that PC has 0x0002 in it
+	PropagateSignals();
+	clearOtherLine(); 	
+
+	// Check that we are at the `Halt` instruction in Microcode_PC
+	PropagateSignals();
+	clearOtherLine(); 	
+
+
+
+
+	// ----------------------------------------------------------------------------
+	// So... all done - did we get any errors?
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
+}
+
+
+function Do1Tick() {
+	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
+	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+	RunConnections ();
+	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+	MICROCODE_PC.rise();
+}
+
+function clearTheWorld2() {
+	theWorld2 = {};			// Values
+	theWorld2WhoSet = [];	// Who set like PC
+	theWorld2DepOn = [];	// Functions depending on inputs.
+}
+
+function xxx() {
+	MICROCODE_PC.msg('Out',1);
+}
 
 
 
@@ -3296,10 +3397,28 @@ function test3001() {
 // xyzzy - Test hand_out - decode logic and process
 // ----------------------------------------------------------------------------------------------------------------------------------------
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function testAll() {
 	var mNErr = 0;
-	var tt = [  test2000,   test1000,   test1001,   test1102,   test1101,   test1003,   test1104,   test1105,   test1002,   test1005,   test3000,   test3001  ];
-	var ss = [ "test2000", "test1000", "test1001", "test1102", "test1101", "test1003", "test1104", "test1105", "test1002", "test1005", "test3000", "test3001" ];
+	var tt = [  test2000,   test1000,   test1001,   test1102,   test1101,   test1003,   test1104,   test1105,   test1002,   test1005,   test3000,   test3001,   test3800
+	];
+	var ss = [ "test2000", "test1000", "test1001", "test1102", "test1101", "test1003", "test1104", "test1105", "test1002", "test1005", "test3000", "test3001", "test3800"
+	];
 	for ( var ii = 0, mx = tt.length; ii < mx; ii++ ) {
 		nErr = 0;
 		var t = tt[ii];
