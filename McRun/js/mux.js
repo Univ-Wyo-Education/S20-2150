@@ -8,18 +8,6 @@ var MUX = {
 	}
 	, "x": {
 		  "Name": "MUX"
-		, "Group": "Logic"
-		, "Interface": {
-			  "bus" : { "width": 16, "mode": "io" }
-			, "vcc" : { "width": 1, "mode": "i" }
-			, "gnd" : { "width": 1, "mode": "i" }
-			, "00" : { "width": 8, "mode": "i" }
-			, "01" : { "width": 8, "mode": "i" }
-			, "10" : { "width": 8, "mode": "i" }
-			, "11" : { "width": 8, "mode": "i" }
-			, "Out" : { "width": 8, "mode": "o" }
-			, "Ctl" : { "width": 2, "mode": "i" }
-		}
 		, "_Ctl_0_": null
 		, "_Ctl_1_": null
 		, "_Ctl_": null
@@ -28,6 +16,7 @@ var MUX = {
 		, "_10_": null
 		, "_11_": null
 		, "_Out_": null
+		, "_Error_": []
 	}
 	, msg: function ( wire, val ) {
 		switch ( wire ) {
@@ -35,7 +24,7 @@ var MUX = {
 			val = val & 3;
 			MUX.x["_Ctl_"] = val;
 			MUX.x["_Ctl_0_"] = val & 1;
-			MUX.x["_Ctl_1_"] = val & 2;
+			MUX.x["_Ctl_1_"] = ( val & 2 ) >> 1;
 		break;
 		case "Ctl_0":
 			MUX.x["_Ctl_0_"] = val & 1;
@@ -130,16 +119,18 @@ var MUX = {
 		MUX.func();
 		var x = MUX.x["_Ctl_"];
 		MUX.Display( x );
+		AddMsg ( MUX.x.Name, "Microcode_Ld", "Out", MUX.x._Out_ );
 	}
-	, tick: function ( ) {
-		MUX.func();
-		var x = MUX.x["_Ctl_"];
-		MUX.Display( x );
 
-		var out = MUX.x["_Out_"];
-		MICROCODE_PC.x["_InputBuffer_"] = out;
-		// MICROCODE_PC.msg("Ld",1);
-	}
+//	, tick: function ( ) {
+//		MUX.func();
+//		var x = MUX.x["_Ctl_"];
+//		MUX.Display( x );
+//
+//		var out = MUX.x["_Out_"];
+//		MICROCODE_PC.x["_InputBuffer_"] = out;
+//		// MICROCODE_PC.msg("Ld",1);
+//	}
 
 	, func: function() {
 		switch ( MUX.x["_Ctl_"] & 0x3 ) {
@@ -163,9 +154,13 @@ var MUX = {
 
 	// After Tick Cleanup 
 	, rise: function ( ) {
+		// xyzzy - stuff
+		MUX.x["_Ctl_0_"] = null;
+		MUX.x["_Ctl_1_"] = null;
+		MUX.x["_Ctl_"] = null;
 	}
 	, err: function () {
-		return Error();
+		return MUX.Error();
 	}
 
 	// Turn on display of a wire with this ID
@@ -181,7 +176,10 @@ var MUX = {
 
 	// Return any errors generated in this "chip"
 	, Error: function  ( errorMsg, wire, val ) {
-		return ( [] );
+		if ( errorMsg ) {
+			MICROCODE.x._Error_.push ( errorMsg + " wire:"+wire + " val:" + toHex(val,4) );
+		}
+		return ( MICROCODE.x._Error );
 	}
 
 };

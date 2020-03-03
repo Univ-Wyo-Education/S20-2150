@@ -3029,7 +3029,7 @@ function test1002() {
 
 
 // ----------------------------------------------------------------------------------------------------------------------------------------
-// 1005. MAR -> Memory Read -> AC						Probably Trivial
+// 1005. MAR -> Memory Read -> AC						Probably Trivial (it was trivial)
 // ----------------------------------------------------------------------------------------------------------------------------------------
 function test1005() {
 
@@ -3107,6 +3107,182 @@ function test1005() {
 
 
 
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// 2000.  Test Load, Halt
+// ----------------------------------------------------------------------------------------------------------------------------------------
+function test2000() {
+
+	// ----------------------------------------------------------------------------
+	// Data Setup
+	// ----------------------------------------------------------------------------
+	MEMORY.x._data_[0x0000] = 0x1002;			// Program 	Load X
+	MEMORY.x._data_[0x0001] = 0x7000;			//			Halt
+	MEMORY.x._data_[0x0002] = 0x1230;			// X,       HEX   1230 	
+	mm_max = 1024*16;
+	PC.x._data_ = 0x0000;		
+	MICROCODE_PC.x._data_ = 0x0000;				// Start Microcode Off
+
+
+
+
+	// Check that AC has 0x1230 in it
+	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
+	clearOtherLine(); 	
+
+	// Check that PC has 0x0002 in it
+	PropagateSignals();
+	clearOtherLine(); 	
+
+	// Check that we are at the `Halt` instruction in Microcode_PC
+	PropagateSignals();
+	clearOtherLine(); 	
+
+
+
+
+	// ----------------------------------------------------------------------------
+	// So... all done - did we get any errors?
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
+}
+
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// Test MUX
+// ----------------------------------------------------------------------------------------------------------------------------------------
+function test3000() {
+
+	// ----------------------------------------------------------------------------
+	// Data Setup
+	// ----------------------------------------------------------------------------
+	MUX.x._Ctl_1_ = 1;
+	MUX.x._Ctl_0_ = 1;
+
+	MUX.x._00_0_ = 0;	// 0x00
+	MUX.x._00_1_ = 0;
+	MUX.x._00_2_ = 0;
+	MUX.x._00_3_ = 0;
+	MUX.x._00_4_ = 0;
+	MUX.x._00_5_ = 0;
+	MUX.x._00_6_ = 0;
+	MUX.x._00_7_ = 0;
+
+	MUX.x._01_0_ = 1;	// 0xff
+	MUX.x._01_1_ = 1;
+	MUX.x._01_2_ = 1;
+	MUX.x._01_3_ = 1;
+	MUX.x._01_4_ = 1;
+	MUX.x._01_5_ = 1;
+	MUX.x._01_6_ = 1;
+	MUX.x._01_7_ = 1;
+
+	MUX.x._10_0_ = 1;	// 0x69
+	MUX.x._10_1_ = 0;
+	MUX.x._10_2_ = 0;
+	MUX.x._10_3_ = 1;
+	MUX.x._10_4_ = 0;
+	MUX.x._10_5_ = 1;
+	MUX.x._10_6_ = 1;
+	MUX.x._10_7_ = 0;
+
+	MUX.x._11_0_ = 0;	// 0x9e
+	MUX.x._11_1_ = 1;
+	MUX.x._11_2_ = 1;
+	MUX.x._11_3_ = 1;
+	MUX.x._11_4_ = 1;
+	MUX.x._11_5_ = 0;
+	MUX.x._11_6_ = 0;
+	MUX.x._11_7_ = 1;
+
+	MUX.msg("mux-logic",1);
+
+	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
+	clearOtherLine(); 	
+
+	//		MUX.x["_Out_"] = MUX.x["_00_"] = 
+	//			( MUX.x["_00_0_"] & 0x1 ) 		|
+	//			( MUX.x["_00_1_"] & 0x1 ) << 1 	|
+	//			( MUX.x["_00_2_"] & 0x1 ) << 2 	|
+	//			( MUX.x["_00_3_"] & 0x1 ) << 3 	|
+	//			( MUX.x["_00_4_"] & 0x1 ) << 4 	|
+	//			( MUX.x["_00_5_"] & 0x1 ) << 5 	|
+	//			( MUX.x["_00_6_"] & 0x1 ) << 6 	|
+	//			( MUX.x["_00_7_"] & 0x1 ) << 7 	;
+
+	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+
+	if ( theWorld2["Microcode_Ld"] !== 0x9e ) {
+		console.error ( "Error test3000: 'Microcode_Ld' should be 0x9e, got: " +theWorld2["Microcode_Ld"]+" instead." );
+		nErr++;
+	}
+
+
+
+	// ----------------------------------------------------------------------------
+	// So... all done - did we get any errors?
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
+}
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// Test ALU
+// ----------------------------------------------------------------------------------------------------------------------------------------
+function test3001() {
+
+	// ----------------------------------------------------------------------------
+	// Data Setup
+	// ----------------------------------------------------------------------------
+	// |  0 | 1  |  0 |  0 |    *   |	Add: result = ac + bus (mdr usually)                 |
+	ALU.x._Ctl_0_ = 0;	// Setup to do an ADD
+	ALU.x._Ctl_1_ = 0;
+	ALU.x._Ctl_2_ = 1;
+	ALU.x._Ctl_3_ = 0;
+
+	theWorld2["Bus"] = 7;			// _B_ 
+	AC.x["_data_"] = 5;				// _A_
+	theWorld2["ac_Out_to_ALU"] = 5;	// _A_
+
+	ALU.msg("alu-logic",1);
+
+	PropagateSignals(); 			
+	clearOtherLine(); 	
+
+	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+
+	if ( theWorld2["ALU_Out"] !== 12 ) {
+		console.error ( "Error test3001: 'ALU_Out' should be 0x0d/12, got: " +theWorld2["ALU_Out"]+" instead." );
+		nErr++;
+	}
+
+
+
+	// ----------------------------------------------------------------------------
+	// So... all done - did we get any errors?
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
+}
 
 
 
@@ -3116,19 +3292,14 @@ function test1005() {
 
 
 
-
-
-
-
-
-
-
-
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// xyzzy - Test hand_out - decode logic and process
+// ----------------------------------------------------------------------------------------------------------------------------------------
 
 function testAll() {
 	var mNErr = 0;
-	var tt = [  test2000,   test1000,   test1001,   test1102,   test1101,   test1003,   test1104,   test1105,   test1002,   test1005  ];
-	var ss = [ "test2000", "test1000", "test1001", "test1102", "test1101", "test1003", "test1104", "test1105", "test1002", "test1005" ];
+	var tt = [  test2000,   test1000,   test1001,   test1102,   test1101,   test1003,   test1104,   test1105,   test1002,   test1005,   test3000,   test3001  ];
+	var ss = [ "test2000", "test1000", "test1001", "test1102", "test1101", "test1003", "test1104", "test1105", "test1002", "test1005", "test3000", "test3001" ];
 	for ( var ii = 0, mx = tt.length; ii < mx; ii++ ) {
 		nErr = 0;
 		var t = tt[ii];

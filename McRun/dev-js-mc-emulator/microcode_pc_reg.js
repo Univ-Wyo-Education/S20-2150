@@ -80,7 +80,7 @@ var MICROCODE_PC = {
 
 	, PullBus: function () {
 console.log ( "MICROCODE_PC:PullBus New / Add Closure" );
-		AddDep ( MICROCODE_PC.x.Name, [ "Bus" ], "In", function () {
+		AddDep ( MICROCODE_PC.x.Name, [ "Microcode_Ld" ], "In", function () {
 console.log ( "MICROCODE_PC:PullBus Closure Run" );
 			 	MICROCODE_PC.x["_InputBuffer_"] = theWorld2.Bus;
 				MICROCODE_PC.x["_data_"] = MICROCODE_PC.x["_InputBuffer_"];
@@ -92,7 +92,7 @@ console.log ( "MICROCODE_PC:PullBus Closure Run" );
 
 	, PushBus: function () {
 console.log ( "MICROCODE_PC:PushBus New/Out:", MICROCODE_PC.x._OutputBuffer_ );		
-		AddMsg ( MICROCODE_PC.x.Name, "Bus", "Out", MICROCODE_PC.x._OutputBuffer_ );
+		AddMsg ( MICROCODE_PC.x.Name, "Microcode_PC_Addr", "Out", MICROCODE_PC.x._OutputBuffer_ );
 	}
 
 	// Turn on display of a wire with this ID

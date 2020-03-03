@@ -3,19 +3,8 @@
 // ========
 
 var ALU = {
-	setupSelf: function ( ) {
-		console.log ( "Setup Self/ALU" );
-	}
-	, "x": {
+	  "x": {
 		  "Name": "ALU"
-		, "Group": "Logic"
-		, "Interface": {
-			  "vcc" : { "width": 1, "mode": "i" }
-			, "gnd" : { "width": 1, "mode": "i" }
-			, "Out" : { "width": 16, "mode": "o" }
-			, "A"   : { "width": 16, "mode": "i" }
-			, "B"   : { "width": 16, "mode": "i" }
-		}
 		, "_Ctl_0_": null
 		, "_Ctl_1_": null
 		, "_Ctl_2_": null
@@ -25,41 +14,40 @@ var ALU = {
 		, "_B_": null
 		, "_Out_": null
 		, "_func_txt_": ""
-		, "__debug__": false
+		, "__debug__": true
 	}
 	, msg: function ( wire, val ) {
-		// xyzzy - pull CTL from Inputs (Microcode?)
-		var a = ( ALU.x["_Ctl_3_"] > 0 ) ? 1 : 0;
-		var b = ( ALU.x["_Ctl_2_"] > 0 ) ? 1 : 0;
-		var c = ( ALU.x["_Ctl_1_"] > 0 ) ? 1 : 0;
-		var d = ( ALU.x["_Ctl_0_"] > 0 ) ? 1 : 0;
-		ALU.x["_Ctl_"] = a << 3 | b << 2 | c << 1 | d;
-		//if ( ALU.x["_Ctl_"] == null ) {
-		//	ALU.x["_Ctl_"] = 0;
-		//}
-		ALU.func();
-		var x = ALU.x["_Ctl_"];
-		var y = ALU.x["_func_txt_"];
-		if ( ALU.x.__debug__ ) { console.log ( "x=", x, "y=", y ); }
-		ALU.Display( x, y );
+		switch ( wire ) {
+		case "Ctl":
+			val = val & 0xf;
+			MUX.x["_Ctl_"] = val;
+			MUX.x["_Ctl_0_"] = val & 1;
+			MUX.x["_Ctl_1_"] = ( val & 2 ) >> 1;
+			MUX.x["_Ctl_2_"] = ( val & 4 ) >> 2;
+			MUX.x["_Ctl_3_"] = ( val & 8 ) >> 3;
+		break;
+		case "Ctl_0":
+			MUX.x["_Ctl_0_"] = val & 1;
+			MUX.x["_Ctl_"] = ( MUX.x["_Ctl_"] & 1 )  |  MUX.x["_Ctl_0_"] ;
+		break;
+		case "Ctl_1":
+			MUX.x["_Ctl_1_"] = val & 1;
+			MUX.x["_Ctl_"] = ( MUX.x["_Ctl_"] & 2 )  |  ( MUX.x["_Ctl_1_"] << 1 );
+		break;
+		case "Ctl_2":
+			MUX.x["_Ctl_2_"] = val & 1;
+			MUX.x["_Ctl_"] = ( MUX.x["_Ctl_"] & 4 )  |  ( MUX.x["_Ctl_2_"] << 2 );
+		break;
+		case "Ctl_3":
+			MUX.x["_Ctl_3_"] = val & 1;
+			MUX.x["_Ctl_"] = ( MUX.x["_Ctl_"] & 8 )  |  ( MUX.x["_Ctl_3_"] << 3 );
+		break;
+		default:
+			ALU.PullBus();
+		break;
+		}
 	}
-	, tick: function ( ) {
-		// xyzzy - pull CTL from Inputs (Microcode?)
-		var a = ( ALU.x["_Ctl_3_"] > 0 ) ? 1 : 0;
-		var b = ( ALU.x["_Ctl_2_"] > 0 ) ? 1 : 0;
-		var c = ( ALU.x["_Ctl_1_"] > 0 ) ? 1 : 0;
-		var d = ( ALU.x["_Ctl_0_"] > 0 ) ? 1 : 0;
-		ALU.x["_Ctl_"] = a << 3 | b << 2 | c << 1 | d;
-		//if ( ALU.x["_Ctl_"] == null ) {
-		//	ALU.x["_Ctl_"] = 0;
-		//}
-		ALU.func();
-		ALU.func();
-		var x = ALU.x["_Ctl_"];
-		var y = ALU.x["_func_txt_"];
-		if ( ALU.x.__debug__ ) { console.log ( "x=", x, "y=", y ); }
-		ALU.Display( x, y );
-	}
+
 	// After Tick Cleanup 
 	, rise: function ( ) {
 		ALU.x["_Ctl_0_"] = null;
@@ -95,7 +83,6 @@ var ALU = {
 		|  1 | 1  |  1 |  1 |        |  A << B - logical - 0 fill   - Shift Left             |
 	*/
 	, func: function ( ) {
-		ALU.PullBus();
 		var o;
 		switch ( ALU.x["_Ctl_"] ) {
 		case 0: // 0x0
@@ -167,20 +154,32 @@ var ALU = {
 		break;
 		}
 		ALU.x["_Out_"] = o;
+		AddMsg ( ALU.x.Name, "ALU_Out", "Out", ALU.x._Out_ );
 	}
 	, err: function () {
-		return Error();
-	}
-	, test_peek: function() {
-		return ( ALU.x["_data_"] );
+		return ALU.Error();
 	}
 
 	, PullBus: function () {
-		if(theWorld.Bus && typeof theWorld.Bus.State === "function") {
-			 ALU.x["_B_"] = theWorld.Bus.State();
+		AddDep ( ALU.x.Name, [ "Bus", "ac_Out_to_ALU" ], "Out", function () { 				// xyzzy - should add in Ctl_3...Ctl_0 ???
 console.log ( "ALU:PullBus", ALU.x["_B_"] );
-		}
-		ALU.x["_A_"] = ( AC.x["_Out_to_ALU_"] === 1 ) ? AC.x["_data_"] : 0;
+			ALU.x["_A_"] = AC.x["_data_"];
+			ALU.x["_B_"] = theWorld2["Bus"];
+			
+			var a = ( ALU.x["_Ctl_3_"] > 0 ) ? 1 : 0;
+			var b = ( ALU.x["_Ctl_2_"] > 0 ) ? 1 : 0;
+			var c = ( ALU.x["_Ctl_1_"] > 0 ) ? 1 : 0;
+			var d = ( ALU.x["_Ctl_0_"] > 0 ) ? 1 : 0;
+			ALU.x["_Ctl_"] = a << 3 | b << 2 | c << 1 | d;
+
+console.log ( "ALU.x._Ctl_ =", ALU.x["_Ctl_"] );
+			ALU.func();
+
+			var x = ALU.x["_Ctl_"];
+			var y = ALU.x["_func_txt_"];
+			if ( ALU.x.__debug__ ) { console.log ( "x=", x, "y=", y ); }
+			ALU.Display( x, y );
+		} );
 	}
 
 
@@ -197,7 +196,10 @@ console.log ( "ALU:PullBus", ALU.x["_B_"] );
 
 	// Return any errors generated in this "chip"
 	, Error: function  ( errorMsg, wire, val ) {
-		return ( [] );
+		if ( errorMsg ) {
+			MICROCODE.x._Error_.push ( errorMsg + " wire:"+wire + " val:" + toHex(val,4) );
+		}
+		return ( MICROCODE.x._Error );
 	}
 
 };

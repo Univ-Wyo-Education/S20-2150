@@ -54,6 +54,7 @@ var AC = {
 				AC.x["_ALUOutputBuffer_"] = AC.x["_data_"];
 				AC.PushBus();
 			  	AC.TurnOn( "ac_Out_to_ALU" );
+				AddMsg ( AC.x.Name, "ac_Out_to_ALU", "Out", AC.x._OutputBuffer_ );
 			}
 			AC.Display( AC.x["_data_"]);
 			break;
@@ -102,6 +103,7 @@ console.log ( "AC:PullBus Closure Run" );
 	, PushBus: function () {
 console.log ( "AC:PushBus New/Out:", AC.x._OutputBuffer_ );		
 		AddMsg ( AC.x.Name, "Bus", "Out", AC.x._OutputBuffer_ );
+		AddMsg ( AC.x.Name, "ac_Out_to_ALU", "Out", AC.x._OutputBuffer_ );
 	}
 
 	// Turn on display of a wire with this ID
