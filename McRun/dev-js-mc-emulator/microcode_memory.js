@@ -33,6 +33,7 @@ var MICROCODE = {
 			var obj = MICROCODE.x["_Output_Lines_"];
 			var def = MICROCODE.x["_Output_Lines_"][key];
 			var mcWord = MICROCODE.x[def.DataArray][addr];
+console.log ( "MICROCODE: Raw On:", "->"+key+"<-", val, 'def.NthBit=', def.NthBit, "mcWord =", Number(mcWord).toString(16), def.DataArray, 'addr=', addr);
 			var v2 = MICROCODE.x["_data1_"][addr];
 			var v1 = MICROCODE.x["_data2_"][addr];
 			if ( v1 === 0 && v2 === 0 ) {

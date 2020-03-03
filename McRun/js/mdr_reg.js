@@ -48,25 +48,28 @@ var MDR = {
 			}
 			MDR.Display( MDR.x["_data_"]);
 		break;
-		// , "id_memory_Write": [ { Name:"MEMORY",				Op: ["Write"]      	}, { Name:"MDR", Op:["Out_To_Memory"]  } ]
-		case "Out_To_Memory":		// Write to Memory
+		// , "id_memory_Write": [ { Name:"MEMORY",				Op: ["Write"]      	}, { Name:"MDR", Op:["From_MDR_to_Memory"]  } ]
+		case "From_MDR_to_Memory":		// Write to Memory
 			if ( val === 1 ) {
-console.log ( "Out_To_Memory", MAR.x._data_ );
+console.log ( "From_MDR_to_Memory", MAR.x._data_ );
 				MDR.x["_Out_To_Memory_"] = 1;
 				MDR.x["_OutputBuffer_"] = MDR.x["_data_"];
 				// xyzzy - Push Message
 				// MDR.PushBus();
-				AddMsg ( MDR.x.Name, "Out_To_Memory", "Out", MDR.x._OutputBuffer_ );
-				AddMsg ( MDR.x.Name, "Memory_to_MDR", "Out", MDR.x._OutputBuffer_ );
+				AddMsg ( MDR.x.Name, "MDR_to_Memory", "Out", MDR.x._OutputBuffer_ );
+				MDR.TurnOn( "From_MDR_to_Memory" );
+				// AddMsg ( MDR.x.Name, "Memory_to_MDR", "Out", MDR.x._OutputBuffer_ );
 			}
 			MDR.Display( MDR.x["_data_"]); 						
 		break;
-		// , "id_memory_Read": [ { Name:"MEMORY",				Op: ["Read"]      	}, { Name:"MDR", Op:["Ld_From_Memory"] } ]
-		case "Ld_From_Memory": 	// Reaa From Memory
+		// , "id_memory_Read": [ { Name:"MEMORY",				Op: ["Read"]      	}, { Name:"MDR", Op:["From_Memory_to_MDR"] } ]
+		case "From_Memory_to_MDR": 	// Reaa From Memory
+		case "Memory_to_MDR": 	// Reaa From Memory
 			if ( val === 1 ) {
-console.log ( "Ld_From_Memory", MAR.x._data_ );
+console.log ( "From_Memory_to_MDR", MAR.x._data_ );
 				MDR.x["_Ld_From_Memory_"] = 1;
 				MDR.PullMemory();
+				MDR.TurnOn( "From_Memory_to_MDR" );
 			}
 			MDR.Display( MDR.x["_data_"]);
 		break;
@@ -124,7 +127,7 @@ console.log ( "MDR:PullBus Closure Run" );
 console.log ( "MDR:PullMemory New / Add Closure" );
 		AddDep ( MDR.x.Name, [ "Bus" ], "Out", function () {
 console.log ( "MDR:PullMemory Closure Run" );
-			 	MDR.x["_InputBuffer_"] = theWorld2.Ld_From_Memory;
+			 	MDR.x["_InputBuffer_"] = theWorld2.Memory_to_MDR;
 				MDR.x["_data_"] = MDR.x["_InputBuffer_"];
 				MDR.Display( MDR.x["_data_"]);
 				// MDR.TurnOn( "input_Ld"  );

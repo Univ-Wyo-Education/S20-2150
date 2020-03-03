@@ -1394,8 +1394,19 @@ function showLine(id) {
 	var i = 0;
 	for ( var j = 0, mx = arguments.length; j < mx && i < 16; i++, j++ ) {
 		id = arguments[j];
-		$(id).show();
-		lineOn.push(id);
+		if ( $(id) ) {				// Check that the ID exists in the HTML code.
+			$(id).show();
+			var fnd = false;		// Only add unique IDs to lineOn
+			for ( var k = 0; k < lineOn.length; k++ ) {
+				if ( lineOn[k] === id ) {
+					fnd = true;
+					break;
+				}
+			}
+			if ( !fnd ) {			// Not fnd, so unique -push to lineOn
+				lineOn.push(id);
+			}
+		}
 	}
 }
 
@@ -2051,8 +2062,19 @@ var Connections = {
 	, "id_mar_Out": [ { Name:"MAR",						Op: ["Out"]      	} ]
 	, "id_mdr_Ld": [ { Name:"MDR",						Op: ["Ld"]      	} ]
 	, "id_mdr_Out": [ { Name:"MDR",						Op: ["Out"]      	} ]
-	, "id_memory_Read": [ { Name:"MEMORY",				Op: ["Read"]      	}, { Name:"MDR", Op:["Ld_From_Memory"] } ]
-	, "id_memory_Write": [ { Name:"MEMORY",				Op: ["Write"]      	}, { Name:"MDR", Op:["Out_To_Memory"]  } ]
+	, "id_memory_Read": [ { Name:"MEMORY",				Op: ["Read"]      	}
+		, { Name:"MAR", Op:["Out_to_Memory"] }
+		, { Name:"MDR", Op:["From_Memory_to_MDR"] }		
+	]
+	, "Memory_to_MDR": [
+		  { Name:"MAR", Op:["Out_to_Memory"] }
+		, { Name:"MEMORY", Op:["Read"] }
+		, { Name:"MDR", Op:["From_Memory_to_MDR"] }		
+	]
+	, "id_memory_Write": [ { Name:"MEMORY",				Op: ["Write"]      	}
+		, { Name:"MAR", Op:["Out_to_Memory"] }
+		, { Name:"MDR", Op:["From_MDR_to_Memory"] }										// xyzzy - rename From_MDR_to_Memory
+	]
 	, "id_output_Ld": [ { Name:"OUTPUT",				Op: ["Ld"]      	} ]
 	, "id_output_Out": [ { Name:"OUTPUT",				Op: ["Out"]      	} ]
 	, "id_result_Ld": [ { Name:"RESULT",				Op: ["Ld"]      	} ]
@@ -2095,11 +2117,18 @@ console.log ( "cur=", cur );
 				var name = wireTo[ww].Name;
 				var op = wireTo[ww].Op;
 				for ( var kk = 0, mx = op.length; kk < mx; kk++ ) {
-					if ( window[name] && window[name].msg ) {
-						window[name].msg ( op[kk], 1 );						// connection from "wire" to chip.
+					var toCall = name+".msg('"+op[kk]+"',1);";
+					if ( ! thisTick[toCall] ) { // thisTick ??
+console.log ( ">>>Connections CALLING<<<: "+name+".msg('"+op[kk]+"',1);" ); 
+						if ( window[name] && window[name].msg ) {
+							window[name].msg ( op[kk], 1 );						// connection from "wire" to chip.
+						} else {
+							console.error ( "RunConnections: failed for: ", name+".msg('"+op[kk]+"',1);" ); 
+						}
 					} else {
-						console.error ( "RunConnections: failed for: ", name+".msg('"+op[kk]+"',1);" ); 
+console.log ( ">>>Skipped", toCall);
 					}
+					thisTick[toCall] = 1;
 				}
 			}
 		}
@@ -2221,6 +2250,7 @@ function displayMainBus(s) {
 var theWorld2 = {};			// Values
 var theWorld2WhoSet = [];	// Who set like PC
 var theWorld2DepOn = [];	// Functions depending on inputs.
+var thisTick = {};			// List of calls run during this tick
 
 
 // AddMsg ( PC.x.Name, "Bus", "Out", PC.x._OutputBuffer );		// Resovles Bus							
@@ -2963,12 +2993,14 @@ function test1002() {
 	// ----------------------------------------------------------------------------
 	// PC -> MAR - to setup of read of memory.
 	// ----------------------------------------------------------------------------
+	thisTick = {}; // (same as "Pending" - or Propogation makes it different - ??)
 	PC.msg("Out",1);
 	MAR.msg("Ld",1);
 
 	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
 
 	PropagateSignals();
+	RunConnections ();
 	clearOtherLine(); 	
 
 	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
@@ -2984,16 +3016,19 @@ function test1002() {
 
 
 
+
 	// ----------------------------------------------------------------------------
 	// Read of Memory using MAR -> Memory -> MDR
 	// ----------------------------------------------------------------------------
+	thisTick = {}; // (same as "Pending" - or Propogation makes it different - ??)
 	MEMORY.msg("Read",1);			// Setup MAR to do a load.
-	MAR.msg("Out",1);
-	MDR.msg("Ld_From_Memory",1);
+	MAR.msg("Out_to_Memory",1);
+	MDR.msg("From_Memory_to_MDR",1);
 
 	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
 
 	PropagateSignals();
+	RunConnections ();
 	clearOtherLine(); 	
 
 	if ( theWorld2["Memory_to_MDR"] !== 0xFace ) {
@@ -3058,6 +3093,7 @@ function test1002() {
 
 // ----------------------------------------------------------------------------------------------------------------------------------------
 // 1005. MAR -> Memory Read -> AC						Probably Trivial (it was trivial)
+//														** but later this test saved me lots of pain **
 // ----------------------------------------------------------------------------------------------------------------------------------------
 function test1005() {
 
@@ -3075,7 +3111,7 @@ function test1005() {
 	// ----------------------------------------------------------------------------
 	MEMORY.msg("Read",1);			// Setup MAR to do a load.
 	MAR.msg("Out",1);
-	MDR.msg("Ld_From_Memory",1);
+	MDR.msg("From_Memory_to_MDR",1);
 
 	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
 
@@ -3083,7 +3119,7 @@ function test1005() {
 	clearOtherLine(); 	
 
 	if ( theWorld2["Memory_to_MDR"] !== 0xBeef ) {
-		console.error ( "Error test1005: 'Memory_to_MDR' should be 0xBeef, got: " +theWorld2["Memory_to_MDR"]+" instead." );
+		console.error ( "Error test1005: 'From_Memory_to_MDR' should be 0xBeef, got: " +theWorld2["From_Memory_to_MDR"]+" instead." );
 		nErr++;
 	}
 	if ( MAR.x._data_ !== 0x1005 ) {
@@ -3374,20 +3410,133 @@ function Do1Tick() {
 	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
 	RunConnections ();
 	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
-	MICROCODE_PC.rise();
+	MICROCODE_PC.rise();			// RiseAll()??
+	thisTick = {};					// List of Connections called based on completion - only 1 call per tick.
 }
 
-function clearTheWorld2() {
+function TickFinalCleanup() {
 	theWorld2 = {};			// Values
 	theWorld2WhoSet = [];	// Who set like PC
 	theWorld2DepOn = [];	// Functions depending on inputs.
+	thisTick = {};			// List of Connections called based on completion - only 1 call per tick.
 }
 
-function xxx() {
+function TickStart() {
+	// Setup ThisTick - if already run then can not run it again.
+	thisTick = {}; // (same as "Pending" - or Propogation makes it different - ??)
 	MICROCODE_PC.msg('Out',1);
 }
 
 
+
+var tickDb = 0;
+var prev_pc = 0;
+var prev_m_pc = 0;
+
+function Run1TickInit( db ) {
+	if ( ! db ) {
+		db = 100;
+	}
+	tickDb = db;
+
+	// -----------------------------------------------------
+	// 0. Set prev_pc, prev_mpc - to values.
+	// -----------------------------------------------------
+	if ( ! PC.x._data_ ) {
+		PC.x._data_ = 0;
+	}
+	if ( ! MICROCODE_PC.x._data_ ) {
+		MICROCODE_PC.x._data_ = 0;
+	}
+
+	prev_pc = PC.x._data_;
+	prev_m_pc = MICROCODE_PC.x._data_;
+	// xyzzy - prev_is_fetch - false to true - inidicates start of fetch cycle?
+
+	TickFinalCleanup();
+
+}
+
+function Run1TickStep() {
+
+	// -----------------------------------------------------
+	// 1. Send "Out" message to MICROCODE_PC						
+	// -----------------------------------------------------
+	clearOtherLine(); 	
+	TickFinalCleanup();
+	TickStart();
+
+console.log ( "lineOn", lineOn );
+console.log ( "lineOn", lineOn );
+console.log ( "After Step 1: AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+
+	console.log ( "After Step 1: AT:"+ln(), JSON.stringify(theWorld2));
+	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
+	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+	RunConnections ();
+	console.log ( "After Step 1: AT:"+ln(), JSON.stringify(theWorld2));
+	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
+	RunConnections ();
+	console.log ( "After Step 1: AT:"+ln(), JSON.stringify(theWorld2));
+	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
+	RunConnections ();
+	console.log ( "After Step 1: AT:"+ln(), JSON.stringify(theWorld2));
+
+console.log ( "lineOn", lineOn );
+	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+	MICROCODE_PC.rise();			// RiseAll()??
+	PC.rise();						// RiseAll()??
+
+console.log ( "lineOn", lineOn );
+	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn, thisTick );
+	thisTick = {};			// List of Connections called based on completion - only 1 call per tick.
+
+console.log ( "lineOn", lineOn );
+	if ( MICROCODE_PC.x._data_ != 1+prev_m_pc ) {
+		console.error ( "Asert: 'MICROCODE_PC' should be 1, got: " +MICROCODE_PC.x._data_+" instead." );
+		nErr++;
+	}
+
+
+console.log ( "lineOn", lineOn );
+
+
+
+	prev_m_pc = MICROCODE_PC.x._data_;
+
+	// ----------------------------------------------------------------------------
+	// So... all done - did we get any errors?
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
+}
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// Steps:
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// 0. Set prev_pc, prev_mpc - to values.
+// 1. Send "Out" message to MICROCODE_PC						TickStart()
+// 2. Check that we get the next step via propogation
+// 3. DO the rest of it RunConnections()
+// 4. Test Propogation Again
+// 5. Check that this drives Microcode
+// 6. Check that MICROCODE.msg('Addr',1) got called
+// 7. Verify that outputs happen
+// 8. Check that MICROCONDE_PC.msg('Inc',1) happens
+// 9. Check that MPC is +1 (Incremented) on 'rise' of clock.
+// 10. Cleanup at the end of tick, 								TickFinalCleanup()
+// 11. MICROCODE_PC must be 1 at this point, Loop to (1) above.
+// 		- Confinue until prev_pc increment and CLAR on MPC is completed. (New Instruciton??)
+// ----------------------------------------------------------------------------------------------------------------------------------------
+    // id_Microcode_PC_Clr 	// Inidicates last 'Tick' in an instruction - will go to 0 after this.
+// ----------------------------------------------------------------------------------------------------------------------------------------
 
 
 

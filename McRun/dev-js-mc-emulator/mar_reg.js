@@ -48,6 +48,15 @@ var MAR = {
 			}
 			MAR.Display( MAR.x["_data_"]);
 		break;
+		case "Out_to_Memory":		
+			if ( val === 1 ) {
+				MAR.x["_Out_"] = 1;
+				MAR.x["_OutputBuffer_"] = MAR.x["_data_"];
+				AddMsg ( MAR.x.Name, "Memory_Addr", "Out", MAR.x._OutputBuffer_ );		
+				MAR.TurnOn( "mar_Out_to_Memory" );
+			}
+			MAR.Display( MAR.x["_data_"]);
+		break;
 		case 'rise':			// Act-CLeanup
 			MAR.rise();
 		break;
@@ -90,7 +99,7 @@ console.log ( "MAR:PullBus Closure Run" );
 	}
 
 	, PushBus: function () {
-console.log ( "MAR:PushBus New/Out:", MAR.x._OutputBuffer_ );		
+console.log ( "!!! MAR:PushBus New/Out:", MAR.x._OutputBuffer_ );		
 		AddMsg ( MAR.x.Name, "Bus", "Out", MAR.x._OutputBuffer_ );		
 		AddMsg ( MAR.x.Name, "Memory_Addr", "Out", MAR.x._OutputBuffer_ );		
 	}
