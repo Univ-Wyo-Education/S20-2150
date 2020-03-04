@@ -99,15 +99,25 @@ var ALU = {
 		break;
 		case 1: // 0x1
 			// ??? xyzzy ??? NOP?
+			o = 0;
 			ALU.x["_func_txt_"] = "NOP";
+			$("#h_alu_A_txt").hide();
+			$("#h_alu_B_txt").hide();
+			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 2: // 0x2
 			o = ALU.x["_A_"] + 1;
 			ALU.x["_func_txt_"] = "Inc";
+			$("#h_alu_A_txt").html(ALU.x._A_).show();
+			$("#h_alu_B_txt").hide();
+			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 3: // 0x3
 			o = ALU.x["_A_"] - 1;
 			ALU.x["_func_txt_"] = "Dec";
+			$("#h_alu_A_txt").html(ALU.x._A_).show();
+			$("#h_alu_B_txt").hide();
+			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 4: // 0x4
 			o = ALU.x["_A_"] + ALU.x["_B_"];
@@ -119,49 +129,85 @@ var ALU = {
 		case 5: // 0x5
 			o = ALU.x["_A_"] - ALU.x["_B_"];
 			ALU.x["_func_txt_"] = "(A-B)";
+			$("#h_alu_A_txt").html(ALU.x._A_).show();
+			$("#h_alu_B_txt").html(ALU.x._B_).show();
+			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 6: // 0x6
 			o = ALU.x["_A_"] >> ALU.x["_B_"];
 			ALU.x["_func_txt_"] = "(A>>B)";
+			$("#h_alu_A_txt").html(ALU.x._A_).show();
+			$("#h_alu_B_txt").html(ALU.x._B_).show();
+			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 7: // 0x7
 			o = ( ALU.x["_A_"] == ALU.x["_B_"] ) ? 1 : 0;
 			ALU.x["_func_txt_"] = "(A==B)";
+			$("#h_alu_A_txt").html(ALU.x._A_).show();
+			$("#h_alu_B_txt").html(ALU.x._B_).show();
+			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 8: // 0x8
 			o = ~ ALU.x["_A_"];
 			ALU.x["_func_txt_"] = "~A";
+			$("#h_alu_A_txt").html(ALU.x._A_).show();
+			$("#h_alu_B_txt").html(ALU.x._B_).show();
+			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 9: // 0x9
 			o = ( ALU.x["_A_"] < 0 ) ? 1 : 0;
 			ALU.x["_func_txt_"] = "(A<B)=>1";
+			$("#h_alu_A_txt").html(ALU.x._A_).show();
+			$("#h_alu_B_txt").html(ALU.x._B_).show();
+			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 10: // 0xa
 			o = ( ALU.x["_A_"] > 0 ) ? 1 : 0;
 			ALU.x["_func_txt_"] = "(A>B)=>1";
+			$("#h_alu_A_txt").html(ALU.x._A_).show();
+			$("#h_alu_B_txt").html(ALU.x._B_).show();
+			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 11: // 0xb
 			o = ALU.x["_A_"] & ALU.x["_B_"];
 			ALU.x["_func_txt_"] = "(A&B)";
+			$("#h_alu_A_txt").html(ALU.x._A_).show();
+			$("#h_alu_B_txt").html(ALU.x._B_).show();
+			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 12: // 0xc
 			o = ALU.x["_A_"] | ALU.x["_B_"];
 			ALU.x["_func_txt_"] = "(A|B)";
+			$("#h_alu_A_txt").html(ALU.x._A_).show();
+			$("#h_alu_B_txt").html(ALU.x._B_).show();
+			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 13: // 0xd
 			o = ALU.x["_A_"] ^ ALU.x["_B_"];
 			ALU.x["_func_txt_"] = "(A^B)";
+			$("#h_alu_A_txt").html(ALU.x._A_).show();
+			$("#h_alu_B_txt").html(ALU.x._B_).show();
+			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 14: // 0xe
 			o = ALU.x["_A_"] >> ALU.x["_B_"];	// xyzzy - logical
 			ALU.x["_func_txt_"] = "(A>>B)L";
+			$("#h_alu_A_txt").html(ALU.x._A_).show();
+			$("#h_alu_B_txt").html(ALU.x._B_).show();
+			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 15: // 0xf
 			o = ALU.x["_A_"] << ALU.x["_B_"];	// xyzzy - logical
 			ALU.x["_func_txt_"] = "(A<<B)L";
+			$("#h_alu_A_txt").html(ALU.x._A_).show();
+			$("#h_alu_B_txt").html(ALU.x._B_).show();
+			$("#h_alu_Out_txt").html(o).show();
 		break;
 		default:
 			ALU.x["_func_txt_"] = ALU.x._Ctl_;
+			$("#h_alu_A_txt").hide();
+			$("#h_alu_B_txt").hide();
+			$("#h_alu_Out_txt").hide();
 		break;
 		}
 		ALU.x["_Out_"] = o;
