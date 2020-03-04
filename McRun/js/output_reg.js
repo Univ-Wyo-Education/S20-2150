@@ -36,15 +36,16 @@ function zero7seg () {
 
 // Set 7-seg display to show 'v'
 function show7seg ( v ) {
-	var sVar = toHex(v,4);
+	var sVar = toDec(v,5);
 	var a = sVar.substr(0,1);	// MSB
 	var b = sVar.substr(1,1);
 	var c = sVar.substr(2,1);
 	var d = sVar.substr(3,1);	// LSB
-	var x = [ a, b, c, d ];
-console.log ( "x=", x );
+	var e = sVar.substr(4,1);	// LSB
+	var x = [ a, b, c, d, e ];
+// console.log ( "x=", x );
 
-	for ( var ii = 0; ii < 4; ii++ ) {
+	for ( var ii = 0; ii < 5; ii++ ) {
 		for ( jj = 0; jj <= 9; jj++ ) {
 			var id = "#dig"+ii+"_"+jj+"_7seg";
 			$(id).hide();

@@ -21,7 +21,7 @@ var MDR = {
 			if ( val === 1 ) {
 				MDR.x["_Clr_"] = 1;
 				MDR.x["_data_"] = 0;
-				MDR.TurnOn( "input_Clr" );
+				MDR.TurnOn( "mdr_Clr" );
 			}
 			MDR.Display( MDR.x["_data_"]); 						
 		break;
@@ -35,7 +35,7 @@ var MDR = {
 		case "Inc":				// Act
 			if ( val === 1 ) {
 				MDR.x["_Inc_"] = 1;
-				MDR.TurnOn( "input_Inc" );
+				MDR.TurnOn( "mdr_Inc" );
 			}
 			MDR.Display( MDR.x["_data_"]);
 		break;
@@ -44,7 +44,8 @@ var MDR = {
 				MDR.x["_Out_"] = 1;
 				MDR.x["_OutputBuffer_"] = MDR.x["_data_"];
 				MDR.PushBus();
-				MDR.TurnOn( "input_Out" );
+				// MDR.TurnOn( "mdr_Out" );
+				MDR.TurnOn( "mdr_Out" );									// .///////////////////////////////////////// defect "input"
 			}
 			MDR.Display( MDR.x["_data_"]);
 		break;
@@ -118,7 +119,7 @@ console.log ( "MDR:PullBus Closure Run" );
 			 	MDR.x["_InputBuffer_"] = theWorld2.Bus;
 				MDR.x["_data_"] = MDR.x["_InputBuffer_"];
 				MDR.Display( MDR.x["_data_"]);
-				MDR.TurnOn( "input_Ld"  );
+				MDR.TurnOn( "mdr_Ld"  );
 				MDR.x["_Ld_"] = 2;
 		});													
 	}
@@ -130,7 +131,7 @@ console.log ( "MDR:PullMemory Closure Run" );
 			 	MDR.x["_InputBuffer_"] = theWorld2.Memory_to_MDR;
 				MDR.x["_data_"] = MDR.x["_InputBuffer_"];
 				MDR.Display( MDR.x["_data_"]);
-				// MDR.TurnOn( "input_Ld"  );
+				// MDR.TurnOn( "mdr_Ld"  );
 				MDR.x["_Ld_From_Memory_"] = 2;
 		});													
 	}

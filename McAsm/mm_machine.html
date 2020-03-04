@@ -199,6 +199,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<text id="h_ir_txt_0" x="185" y="55" class="small"></text>
 			<text id="h_ir_txt_1" x="185" y="75" class="small"></text>
 
+			<text id="h_ir_val_15_12" x="350"  y="165" class="vsmall">0 0 0 0</text>
+			<text id="h_ir_val_10_09" x="350"  y="195" class="vsmall">1 1 1 1</text>
 
 	<rect id="id_result" x="300" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_result');"/>
 		<text x="300" y="25" class="small" onclick="infoOn('id_result');">Result</text>
@@ -262,6 +264,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<line x1="502" y1="120" x2="507" y2="125" class="arrow-line" />
 
 		<text id="h_alu_txt" x="405" y="85" class="small"></text>
+
+		<text id="h_alu_A_txt" x="505"    y="32" class="vsmall">XXaa</text>
+		<text id="h_alu_B_txt" x="505"   y="137" class="vsmall">xxYY</text>
+		<text id="h_alu_Out_txt" x="367"  y="75" class="vsmall">mmDD</text>
 
 	<rect id="id_ac" x="600" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_ac');"/>
 		<text x="600" y="25" class="small" onclick="infoOn('id_ac');">AC</text>
@@ -419,6 +425,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 		<text id="h_mux_txt" x="1210" y="220" class="small"></text>
 
+		<text id="h_mux_out_to_MPC" x="1280"  y="140" class="vsmall"></text>
+
 	<rect id="id_main_bus" x="25" y="290" width="1380" height="3" fill="#000000" stroke="#000000" stroke-width="1" />
 		<text x="25" y="285" class="small">Bus</text>
 
@@ -518,7 +526,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 		<text id="h_output_txt_0" x="1210" y="350" class="small"></text>
 
-		<g transform="translate(1210 380) scale(1.8)">
+		<g transform="translate(1185 380) scale(1.8)">
 			<g id="dig0_0_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
 			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#ff0000"/>
 			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#ff0000"/>
@@ -620,7 +628,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			</g>
 		</g>
 
-		<g transform="translate(1232 380) scale(1.8)">
+		<g transform="translate(1210 380) scale(1.8)">
 			<g id="dig1_0_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
 			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#ff0000"/>
 			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#ff0000"/>
@@ -722,7 +730,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			</g>
 		</g>
 
-		<g transform="translate(1254 380) scale(1.8)">
+		<g transform="translate(1232 380) scale(1.8)">
 			<g id="dig2_0_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
 			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#ff0000"/>
 			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#ff0000"/>
@@ -824,7 +832,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			</g>
 		</g>
 
-		<g transform="translate(1276 380) scale(1.8)">
+		<g transform="translate(1254 380) scale(1.8)">
 			<g id="dig3_0_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
 			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#ff0000"/>
 			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#ff0000"/>
@@ -916,6 +924,108 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			  <polygon id="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" fill="#ff0000"/>
 			</g>
 			<g id="dig3___7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
+			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#cccccc"/>
+			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#cccccc"/>
+			  <polygon id="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" fill="#cccccc"/>
+			  <polygon id="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" fill="#cccccc"/>
+			  <polygon id="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" fill="#cccccc"/>
+			  <polygon id="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" fill="#cccccc"/>
+			  <polygon id="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" fill="#cccccc"/>
+			</g>
+		</g>
+
+		<g transform="translate(1279 380) scale(1.8)">
+			<g id="dig4_0_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
+			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#ff0000"/>
+			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#ff0000"/>
+			  <polygon id="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" fill="#ff0000"/>
+			  <polygon id="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" fill="#ff0000"/>
+			  <polygon id="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" fill="#ff0000"/>
+			  <polygon id="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" fill="#ff0000"/>
+			  <polygon id="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" fill="#cccccc"/>
+			</g>
+			<g id="dig4_1_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
+			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#cccccc"/>
+			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#ff0000"/>
+			  <polygon id="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" fill="#ff0000"/>
+			  <polygon id="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" fill="#cccccc"/>
+			  <polygon id="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" fill="#cccccc"/>
+			  <polygon id="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" fill="#cccccc"/>
+			  <polygon id="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" fill="#cccccc"/>
+			</g>
+			<g id="dig4_2_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
+			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#ff0000"/>
+			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#ff0000"/>
+			  <polygon id="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" fill="#cccccc"/>
+			  <polygon id="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" fill="#ff0000"/>
+			  <polygon id="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" fill="#ff0000"/>
+			  <polygon id="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" fill="#cccccc"/>
+			  <polygon id="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" fill="#ff0000"/>
+			</g>
+			<g id="dig4_3_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
+			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#ff0000"/>
+			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#ff0000"/>
+			  <polygon id="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" fill="#ff0000"/>
+			  <polygon id="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" fill="#ff0000"/>
+			  <polygon id="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" fill="#cccccc"/>
+			  <polygon id="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" fill="#cccccc"/>
+			  <polygon id="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" fill="#ff0000"/>
+			</g>
+			<g id="dig4_4_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
+			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#cccccc"/>
+			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#ff0000"/>
+			  <polygon id="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" fill="#ff0000"/>
+			  <polygon id="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" fill="#cccccc"/>
+			  <polygon id="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" fill="#cccccc"/>
+			  <polygon id="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" fill="#ff0000"/>
+			  <polygon id="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" fill="#ff0000"/>
+			</g>
+			<g id="dig4_5_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
+			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#ff0000"/>
+			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#cccccc"/>
+			  <polygon id="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" fill="#ff0000"/>
+			  <polygon id="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" fill="#ff0000"/>
+			  <polygon id="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" fill="#cccccc"/>
+			  <polygon id="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" fill="#ff0000"/>
+			  <polygon id="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" fill="#ff0000"/>
+			</g>
+			<g id="dig4_6_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
+			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#ff0000"/>
+			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#cccccc"/>
+			  <polygon id="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" fill="#ff0000"/>
+			  <polygon id="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" fill="#ff0000"/>
+			  <polygon id="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" fill="#ff0000"/>
+			  <polygon id="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" fill="#ff0000"/>
+			  <polygon id="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" fill="#ff0000"/>
+			</g>
+			<g id="dig4_7_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
+			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#ff0000"/>
+			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#ff0000"/>
+			  <polygon id="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" fill="#ff0000"/>
+			  <polygon id="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" fill="#cccccc"/>
+			  <polygon id="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" fill="#cccccc"/>
+			  <polygon id="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" fill="#cccccc"/>
+			  <polygon id="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" fill="#cccccc"/>
+			</g>
+			<g id="dig4_8_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
+			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#ff0000"/>
+			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#ff0000"/>
+			  <polygon id="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" fill="#ff0000"/>
+			  <polygon id="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" fill="#ff0000"/>
+			  <polygon id="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" fill="#ff0000"/>
+			  <polygon id="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" fill="#ff0000"/>
+			  <polygon id="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" fill="#ff0000"/>
+			</g>
+			<g id="dig4_9_7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
+			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#ff0000"/>
+			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#ff0000"/>
+			  <polygon id="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" fill="#ff0000"/>
+			  <polygon id="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" fill="#ff0000"/>
+			  <polygon id="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" fill="#cccccc"/>
+			  <polygon id="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" fill="#ff0000"/>
+			  <polygon id="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" fill="#ff0000"/>
+			</g>
+			<g id="dig4___7seg" style="fill-rule:evenodd; stroke:#FFFFFF; stroke-width:0.25; stroke-opacity:1; stroke-linecap:butt; stroke-linejoin:miter;">
 			  <polygon id="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" fill="#cccccc"/>
 			  <polygon id="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" fill="#cccccc"/>
 			  <polygon id="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" fill="#cccccc"/>
@@ -1377,6 +1487,13 @@ var lineOn = [
 	,"#is_error"
 	,"#ir_15_12_to_decoder_mux_11"
 	,"#ir_11_08_to_decoder_mux_10"
+	// Text hidden until ready to use.
+		, "#h_alu_A_txt" 
+		, "#h_alu_B_txt" 
+		, "#h_alu_Out_txt" 
+		, "#h_mux_out_to_MPC" 
+		, "#h_ir_val_15_12" 
+		, "#h_ir_val_10_09" 
 ];	// List of IDs of lines that are turned-on
 
 function clearOtherLine() {
@@ -2116,6 +2233,7 @@ console.log ( "cur=", cur );
 			for ( var ww = 0, my = wireTo.length; ww < my; ww++ ) {
 				var name = wireTo[ww].Name;
 				var op = wireTo[ww].Op;
+console.log ( "lineOn", lineOn );
 				for ( var kk = 0, mx = op.length; kk < mx; kk++ ) {
 					var toCall = name+".msg('"+op[kk]+"',1);";
 					if ( ! thisTick[toCall] ) { // thisTick ??
@@ -2129,6 +2247,7 @@ console.log ( ">>>Connections CALLING<<<: "+name+".msg('"+op[kk]+"',1);" );
 console.log ( ">>>Skipped", toCall);
 					}
 					thisTick[toCall] = 1;
+console.log ( "lineOn", lineOn );
 				}
 			}
 		}
@@ -3187,6 +3306,7 @@ function test3000() {
 	MUX.x._Ctl_0_ = 1;
 	theWorld2["MUX_Ctl_1"] = 1;
 	theWorld2["MUX_Ctl_0"] = 1;
+	clearOtherLine(); 	
 
 	MUX.x._00_0_ = 0;	// 0x00
 	MUX.x._00_1_ = 0;
@@ -3227,7 +3347,6 @@ function test3000() {
 	MUX.msg("mux-logic",1);	// remove xyzzy4004
 
 	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
-	clearOtherLine(); 	
 
 	//		MUX.x["_Out_"] = MUX.x["_00_"] = 
 	//			( MUX.x["_00_0_"] & 0x1 ) 		|
@@ -3470,16 +3589,27 @@ console.log ( "lineOn", lineOn );
 console.log ( "lineOn", lineOn );
 console.log ( "After Step 1: AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
 
+console.log ( "lineOn", lineOn );
 	console.log ( "After Step 1: AT:"+ln(), JSON.stringify(theWorld2));
+console.log ( "lineOn", lineOn );
 	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
+console.log ( "lineOn", lineOn );
 	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+console.log ( "lineOn", lineOn );
 	RunConnections ();
+console.log ( "lineOn", lineOn );
 	console.log ( "After Step 1: AT:"+ln(), JSON.stringify(theWorld2));
+console.log ( "lineOn", lineOn );
 	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
+console.log ( "lineOn", lineOn );
 	RunConnections ();
+console.log ( "lineOn", lineOn );
 	console.log ( "After Step 1: AT:"+ln(), JSON.stringify(theWorld2));
+console.log ( "lineOn", lineOn );
 	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
+console.log ( "lineOn", lineOn );
 	RunConnections ();
+console.log ( "lineOn", lineOn );
 	console.log ( "After Step 1: AT:"+ln(), JSON.stringify(theWorld2));
 
 console.log ( "lineOn", lineOn );
@@ -3585,6 +3715,12 @@ function testAll() {
 }
 
 
+		// <text id="h_alu_A_txt" x="505"    y="32" class="vsmall">XXaa</text>
+		// <text id="h_alu_B_txt" x="505"   y="137" class="vsmall">xxYY</text>
+		// <text id="h_alu_Out_txt" x="357"  y="73" class="vsmall">mmDD</text>
+		// <text id="h_mux_out_to_MPC" x="1280"  y="140" class="vsmall">Uu</text>
+		//		<text id="h_ir_val_15_12" x="350"  y="165" class="vsmall">0 0 0 0</text>
+		//		<text id="h_ir_val_10_09" x="350"  y="195" class="vsmall">1 1 1 1</text>
 
 </script>
 </body>

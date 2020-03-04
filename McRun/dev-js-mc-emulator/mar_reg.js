@@ -13,8 +13,8 @@ var MAR = {
 		, "_Inc_": null
 		, "_Out_": null
 		, "_Error_": []
+		// , debug0: 0
 	}
-	, debug0: 0
 	, msg: function ( wire, val ) {
 		switch ( wire ) {
 		case "Clr":				// Act
