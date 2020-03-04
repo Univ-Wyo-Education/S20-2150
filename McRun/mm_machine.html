@@ -3585,50 +3585,34 @@ function Run1TickStep() {
 	TickFinalCleanup();
 	TickStart();
 
-console.log ( "lineOn", lineOn );
-console.log ( "lineOn", lineOn );
 console.log ( "After Step 1: AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
 
-console.log ( "lineOn", lineOn );
 	console.log ( "After Step 1: AT:"+ln(), JSON.stringify(theWorld2));
-console.log ( "lineOn", lineOn );
 	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
-console.log ( "lineOn", lineOn );
 	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
-console.log ( "lineOn", lineOn );
 	RunConnections ();
-console.log ( "lineOn", lineOn );
 	console.log ( "After Step 1: AT:"+ln(), JSON.stringify(theWorld2));
-console.log ( "lineOn", lineOn );
 	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
-console.log ( "lineOn", lineOn );
 	RunConnections ();
-console.log ( "lineOn", lineOn );
 	console.log ( "After Step 1: AT:"+ln(), JSON.stringify(theWorld2));
-console.log ( "lineOn", lineOn );
 	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
-console.log ( "lineOn", lineOn );
 	RunConnections ();
-console.log ( "lineOn", lineOn );
 	console.log ( "After Step 1: AT:"+ln(), JSON.stringify(theWorld2));
 
-console.log ( "lineOn", lineOn );
 	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
 	MICROCODE_PC.rise();			// RiseAll()??
 	PC.rise();						// RiseAll()??
 
-console.log ( "lineOn", lineOn );
 	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn, thisTick );
 	thisTick = {};			// List of Connections called based on completion - only 1 call per tick.
 
-console.log ( "lineOn", lineOn );
 	if ( MICROCODE_PC.x._data_ != 1+prev_m_pc ) {
 		console.error ( "Asert: 'MICROCODE_PC' should be 1, got: " +MICROCODE_PC.x._data_+" instead." );
 		nErr++;
 	}
 
 
-console.log ( "lineOn", lineOn );
+	// console.log ( "lineOn", lineOn );
 
 
 
@@ -3678,7 +3662,210 @@ console.log ( "lineOn", lineOn );
 
 
 
+function test_p0() {
 
+	// ----------------------------------------------------------------------------
+	// Data Setup: Load / Halt
+	// ----------------------------------------------------------------------------
+	MEMORY.x._data_[0x0000] = 0x1002;			// Program 	Load X
+	MEMORY.x._data_[0x0001] = 0x7000;			//			Halt
+	MEMORY.x._data_[0x0002] = 0x1230;			// X,       HEX   1230 	
+	mm_max = 4;
+	PC.x._data_ = 0x0000;						// So can check increment of PC
+	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
+
+	// Expect 0x1230 in AC
+	// Expect PC = 0x0002 (inc of Halt)
+
+}
+
+function test_p3() {
+
+	// ----------------------------------------------------------------------------
+	// Data Setup: Load / Halt
+	// ----------------------------------------------------------------------------
+	MEMORY.x._data_[0x0000] = 0x1003;			// Program 	Load X
+	MEMORY.x._data_[0x0001] = 0x3004;			//			Add Y
+	MEMORY.x._data_[0x0002] = 0x7000;			//			Halt
+	MEMORY.x._data_[0x0003] = 0x1230;			// X,       HEX   1230 	
+	MEMORY.x._data_[0x0004] = 0x0004;			// Y,       HEX   0004 	
+	mm_max = 5;
+	PC.x._data_ = 0x0000;						// So can check increment of PC
+	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
+
+
+	// Expect 0x1234 in AC
+	// Expect PC = 0x0003 (inc of Halt)
+
+}
+
+function test_p4() {
+
+	// ----------------------------------------------------------------------------
+	// Data Setup: Load / Halt
+	// ----------------------------------------------------------------------------
+	MEMORY.x._data_[0x0000] = 0x1003;			// Program 	Load X
+	MEMORY.x._data_[0x0001] = 0x4004;			//			Subt Y
+	MEMORY.x._data_[0x0002] = 0x7000;			//			Halt
+	MEMORY.x._data_[0x0003] = 0x1230;			// X,       HEX   1230 	
+	MEMORY.x._data_[0x0004] = 0x0004;			// Y,       HEX   0004 	
+	mm_max = 5;
+	PC.x._data_ = 0x0000;						// So can check increment of PC
+	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
+
+
+	// Expect 0x1226 in AC
+	// Expect PC = 0x0003 (inc of Halt)
+
+}
+
+
+/*
+1. Per instruction tests of processing
+	Load a program into memory, then run a test on it.
+	p1: Halt
+	2000: Load / Halt
+	p3: Load / Add / Halt
+	p4: Load / Subt / Halt
+	p5: Clear / Add / Halt
+	p6: Clear / Subt / Halt
+	p8: Clear / Jump / Halt / Halt
+	p9: Load / Store / Halt 
+*/
+
+function test_p5() {
+
+	// ----------------------------------------------------------------------------
+	// Data Setup: Load / Halt
+	// ----------------------------------------------------------------------------
+	MEMORY.x._data_[0x0000] = 0xA003;			// Program 	Clear
+	MEMORY.x._data_[0x0001] = 0x3004;			//			Add Y
+	MEMORY.x._data_[0x0002] = 0x7000;			//			Halt
+	// MEMORY.x._data_[0x0003] = 0x1230;		// X,       HEX   1230 	
+	MEMORY.x._data_[0x0004] = 0x0004;			// Y,       HEX   0004 	
+	mm_max = 5;
+	PC.x._data_ = 0x0000;						// So can check increment of PC
+	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
+
+
+	// Expect 0x0004 in AC
+	// Expect PC = 0x0003 (inc of Halt)
+
+}
+
+function test_p6() {
+
+	// ----------------------------------------------------------------------------
+	// Data Setup: Load / Halt
+	// ----------------------------------------------------------------------------
+	MEMORY.x._data_[0x0000] = 0xA003;			// Program 	Clear
+	MEMORY.x._data_[0x0001] = 0x4004;			//			Add Y
+	MEMORY.x._data_[0x0002] = 0x7000;			//			Halt
+	// MEMORY.x._data_[0x0003] = 0x1230;		// X,       HEX   1230 	
+	MEMORY.x._data_[0x0004] = 0x0004;			// Y,       HEX   0004 	
+	mm_max = 5;
+	PC.x._data_ = 0x0000;						// So can check increment of PC
+	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
+
+
+	// Expect 0xfffb(???) in AC
+	// Expect PC = 0x0003 (inc of Halt)
+
+}
+
+function test_p8() {
+
+	// ----------------------------------------------------------------------------
+	// Data Setup: Load / Halt
+	// ----------------------------------------------------------------------------
+	MEMORY.x._data_[0x0000] = 0xA000;			// Program 	Clear
+	MEMORY.x._data_[0x0001] = 0x9003;			//			JUMP Y
+	MEMORY.x._data_[0x0002] = 0x7000;			//			Halt
+	MEMORY.x._data_[0x0003] = 0x7000;			// Y,		Halt
+	mm_max = 5;
+	PC.x._data_ = 0x0000;						// So can check increment of PC
+	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
+
+
+	// Expect 0x0 in AC
+	// Expect PC = 0x0004 (inc of 2nd Halt)
+
+}
+
+function test_p9() {
+
+	// ----------------------------------------------------------------------------
+	// Data Setup: Load / Halt
+	// ----------------------------------------------------------------------------
+	MEMORY.x._data_[0x0000] = 0xA003;			// Program 	Load X
+	MEMORY.x._data_[0x0001] = 0x2004;			//			Store Y
+	MEMORY.x._data_[0x0002] = 0x7000;			//			Halt
+	MEMORY.x._data_[0x0003] = 0x1230;			// X,       HEX   1230 	
+	MEMORY.x._data_[0x0004] = 0x0004;			// Y,       HEX   0004 	
+	mm_max = 5;
+	PC.x._data_ = 0x0000;						// So can check increment of PC
+	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
+
+
+	// Expect 0x1230 in AC
+	// Expect 0x1230 in mem[0x0003]
+	// Expect 0x1230 in mem[0x0004]
+	// Expect PC = 0x0003 (inc of Halt)
+
+}
+
+function test_pInput() {
+
+	// ----------------------------------------------------------------------------
+	// Data Setup: Load / Halt
+	// ----------------------------------------------------------------------------
+	MEMORY.x._data_[0x0000] = 0x5000;			// Program 	Input
+	MEMORY.x._data_[0x0001] = 0x2004;			//			Store Y
+	MEMORY.x._data_[0x0002] = 0x7000;			//			Halt
+	MEMORY.x._data_[0x0003] = 0x1230;			// X,       HEX   1230 	
+	MEMORY.x._data_[0x0004] = 0x0004;			// Y,       HEX   0004 	
+	mm_max = 5;
+	PC.x._data_ = 0x0000;						// So can check increment of PC
+	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
+
+
+	// Input - 0x4421
+	// Expect 0x4421 in AC
+	// Expect 0x4421` in mem[0x0004]
+	// Expect PC = 0x0003 (inc of Halt)
+
+}
+
+function test_pOutput() {
+
+	// ----------------------------------------------------------------------------
+	// Data Setup: Load / Halt
+	// ----------------------------------------------------------------------------
+	MEMORY.x._data_[0x0000] = 0x1003;			// Program 	Load X
+	MEMORY.x._data_[0x0001] = 0x6004;			//			Output
+	MEMORY.x._data_[0x0002] = 0x7000;			//			Halt
+	MEMORY.x._data_[0x0003] = 0x1230;			// X,       HEX   1230 	
+	MEMORY.x._data_[0x0004] = 0x0004;			// Y,       HEX   0004 	
+	mm_max = 5;
+	PC.x._data_ = 0x0000;						// So can check increment of PC
+	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
+
+
+	// Expect 0x1230 in AC
+	// Expect Output of 0x1230
+	// Expect PC = 0x0003 (inc of Halt)
+
+}
+
+
+
+
+
+// JnS
+// JumpI
+// AddI
+// LoadI
+// StoreI
 
 
 
