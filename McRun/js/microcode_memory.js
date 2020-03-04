@@ -24,6 +24,7 @@ var MICROCODE = {
 	}
 	, impl: function ( ) {
 		var addr = MICROCODE.x["_Addr_"];
+		var addr = MICROCODE_PC.x["_data_"];																				// kludge!
 		MICROCODE.x["_Addr_used_"] = 1;
 		// Walk across all the values in the microcode 
 		//	- for each one - lookup the line that needs to be turned on 
@@ -49,7 +50,7 @@ console.log ( "MICROCODE: Turn On:", "->"+key+"<-", val, 'def.NthBit=', def.NthB
 				MICROCODE.x._OutputBufferList_.push ( key );
 				MICROCODE.PushLine( key );
 			}
-displayMicrocodeData(addr, v1, v2, MICROCODE.x._OutputBufferList_);
+			displayMicrocodeData(addr, v1, v2, MICROCODE.x._OutputBufferList_);
 		}
 		MICROCODE.Display( addr );
 	}
@@ -88,6 +89,7 @@ console.log ( "MICROCODE:PullAddr - setup" );
 		AddDep ( MICROCODE.x.Name, [ "Microcode_PC_Addr" ], "In", function () {
 				// var addr = MICROCODE_PC.x["_OutputBuffer_"];		// Pull in the microcode_pc's output.
 				var addr = theWorld2["Microcode_PC_Addr" ];			// Pull in the microcode_pc's output.
+				var addr = MICROCODE_PC.x["_data_"];																				// kludge!
 				addr = addr & 0xff;
 console.log ( "MICROCODE:PullAddr Closure Run, addr=", addr );
 				MICROCODE.x["_Addr_"] = addr;

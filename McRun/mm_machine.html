@@ -199,6 +199,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<text id="h_ir_txt_0" x="185" y="55" class="small"></text>
 			<text id="h_ir_txt_1" x="185" y="75" class="small"></text>
 
+			<text id="h_ir_val_15_12" x="350"  y="165" class="vsmall">0 0 0 0</text>
+			<text id="h_ir_val_10_09" x="350"  y="195" class="vsmall">1 1 1 1</text>
 
 	<rect id="id_result" x="300" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_result');"/>
 		<text x="300" y="25" class="small" onclick="infoOn('id_result');">Result</text>
@@ -262,6 +264,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<line x1="502" y1="120" x2="507" y2="125" class="arrow-line" />
 
 		<text id="h_alu_txt" x="405" y="85" class="small"></text>
+
+		<text id="h_alu_A_txt" x="505"    y="32" class="vsmall">XXaa</text>
+		<text id="h_alu_B_txt" x="505"   y="137" class="vsmall">xxYY</text>
+		<text id="h_alu_Out_txt" x="367"  y="75" class="vsmall">mmDD</text>
 
 	<rect id="id_ac" x="600" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_ac');"/>
 		<text x="600" y="25" class="small" onclick="infoOn('id_ac');">AC</text>
@@ -418,6 +424,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<text x="1230" y="250" class="vsmall">Ctl</text>
 
 		<text id="h_mux_txt" x="1210" y="220" class="small"></text>
+
+		<text id="h_mux_out_to_MPC" x="1280"  y="140" class="vsmall"></text>
 
 	<rect id="id_main_bus" x="25" y="290" width="1380" height="3" fill="#000000" stroke="#000000" stroke-width="1" />
 		<text x="25" y="285" class="small">Bus</text>
@@ -1377,6 +1385,13 @@ var lineOn = [
 	,"#is_error"
 	,"#ir_15_12_to_decoder_mux_11"
 	,"#ir_11_08_to_decoder_mux_10"
+	// Text hidden until ready to use.
+		, "#h_alu_A_txt" 
+		, "#h_alu_B_txt" 
+		, "#h_alu_Out_txt" 
+		, "#h_mux_out_to_MPC" 
+		, "#h_ir_val_15_12" 
+		, "#h_ir_val_10_09" 
 ];	// List of IDs of lines that are turned-on
 
 function clearOtherLine() {
@@ -3187,6 +3202,7 @@ function test3000() {
 	MUX.x._Ctl_0_ = 1;
 	theWorld2["MUX_Ctl_1"] = 1;
 	theWorld2["MUX_Ctl_0"] = 1;
+	clearOtherLine(); 	
 
 	MUX.x._00_0_ = 0;	// 0x00
 	MUX.x._00_1_ = 0;
@@ -3227,7 +3243,6 @@ function test3000() {
 	MUX.msg("mux-logic",1);	// remove xyzzy4004
 
 	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
-	clearOtherLine(); 	
 
 	//		MUX.x["_Out_"] = MUX.x["_00_"] = 
 	//			( MUX.x["_00_0_"] & 0x1 ) 		|
@@ -3585,6 +3600,12 @@ function testAll() {
 }
 
 
+		// <text id="h_alu_A_txt" x="505"    y="32" class="vsmall">XXaa</text>
+		// <text id="h_alu_B_txt" x="505"   y="137" class="vsmall">xxYY</text>
+		// <text id="h_alu_Out_txt" x="357"  y="73" class="vsmall">mmDD</text>
+		// <text id="h_mux_out_to_MPC" x="1280"  y="140" class="vsmall">Uu</text>
+		//		<text id="h_ir_val_15_12" x="350"  y="165" class="vsmall">0 0 0 0</text>
+		//		<text id="h_ir_val_10_09" x="350"  y="195" class="vsmall">1 1 1 1</text>
 
 </script>
 </body>

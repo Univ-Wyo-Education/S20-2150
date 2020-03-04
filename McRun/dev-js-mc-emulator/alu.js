@@ -82,12 +82,20 @@ var ALU = {
 		|  1 | 1  |  1 |  0 |        |  A >> B - logical - 0 fill   - Shift Right            |
 		|  1 | 1  |  1 |  1 |        |  A << B - logical - 0 fill   - Shift Left             |
 	*/
+	/*
+		, "#h_alu_A_txt" 
+		, "#h_alu_B_txt" 
+		, "#h_alu_Out_txt" 
+	*/
 	, func: function ( ) {
 		var o;
 		switch ( ALU.x["_Ctl_"] ) {
 		case 0: // 0x0
 			o = -ALU.x["_A_"];
 			ALU.x["_func_txt_"] = "Unary -";
+			$("#h_alu_A_txt").html(ALU.x._A_).show();
+			$("#h_alu_B_txt").hide();
+			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 1: // 0x1
 			// ??? xyzzy ??? NOP?
@@ -104,6 +112,9 @@ var ALU = {
 		case 4: // 0x4
 			o = ALU.x["_A_"] + ALU.x["_B_"];
 			ALU.x["_func_txt_"] = "(A+B)";
+			$("#h_alu_A_txt").html(ALU.x._A_).show();
+			$("#h_alu_B_txt").html(ALU.x._B_).show();
+			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 5: // 0x5
 			o = ALU.x["_A_"] - ALU.x["_B_"];

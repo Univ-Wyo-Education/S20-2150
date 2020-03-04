@@ -122,16 +122,6 @@ var MUX = {
 		AddMsg ( MUX.x.Name, "Microcode_Ld", "Out", MUX.x._Out_ );
 	}
 
-//	, tick: function ( ) {
-//		MUX.func();
-//		var x = MUX.x["_Ctl_"];
-//		MUX.Display( x );
-//
-//		var out = MUX.x["_Out_"];
-//		MICROCODE_PC.x["_InputBuffer_"] = out;
-//		// MICROCODE_PC.msg("Ld",1);
-//	}
-
 	, func: function() {
 		switch ( MUX.x["_Ctl_"] & 0x3 ) {
 		case 0:
@@ -142,14 +132,18 @@ var MUX = {
 		break;
 		case 2:
 			MUX.x["_Out_"] = MUX.x["_10_"] & 0xff;
+			showLine("#ir_11_08_to_decoder_mux_10");
 		break;
 		case 3:
 			MUX.x["_Out_"] = MUX.x["_11_"] & 0xff;
+			showLine("#ir_15_12_to_decoder_mux_11");
 		break;
 		}
 		var out = MUX.x["_Out_"];
 		MICROCODE_PC.x["_InputBuffer_"] = out;
 		// MICROCODE_PC.msg("Ld",1);
+		// <text id="h_mux_out_to_MPC" x="1280"  y="140" class="vsmall">Uu</text>
+		$("#h_mux_out_to_MPC").text(toHex(out,2)).show();
 	}
 
 	// After Tick Cleanup 
