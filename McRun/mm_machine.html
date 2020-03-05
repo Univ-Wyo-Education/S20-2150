@@ -3544,7 +3544,6 @@ function test2000() {
 	MICROCODE.msg('Addr',1);					// Fornce send a message - may be start of something!
 	PC.msg('Out',1);
 
-return;
 
 	// Standard run 1 instruction code
 	Run1TickInit();
@@ -3561,8 +3560,13 @@ return;
 		console.error ( "Error test7000: 'ins_end' should be 1, got not set: "+theWorld2.ins_end+" instead." );
 		nErr++;
 	}
-	if ( PC.x._data_ !== 2 ) {
-		console.error ( "Error test7000: 'PC' should be 2, got: " +PC.x._data_+" instead." );
+//	if ( PC.x._data_ !== 2 ) {
+//		console.error ( "Error test7000: 'PC' should be 2, got: " +PC.x._data_+" instead." );
+//		nErr++;
+//	}
+	/* Only ran 1 instruciton */
+	if ( PC.x._data_ !== 1 ) {
+		console.error ( "Error test7000: 'PC' should be 1, got: " +PC.x._data_+" instead." );
 		nErr++;
 	}
 
