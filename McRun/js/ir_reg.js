@@ -13,6 +13,8 @@ var IR_old = {
 		, "_OutputBuffer_": 0
 		, "_Ld_": null
 		, "_Out_": null
+		, "debug01": false
+		, "debug02": true
 	}
 	, msg: function ( wire, val ) {
 		switch ( wire ) {
@@ -64,33 +66,22 @@ var IR_old = {
 	}
 
 	, PullBus: function () {
-		if(theWorld.Bus && typeof theWorld.Bus.State === "function") {
-			 IR.x["_InputBuffer_"] = theWorld.Bus.State();
-		}
+		IR.x._data_ = theWorld2["Bus"];
 	}
 
 	, PushBus: function () {
-		if ( IR.debug01 ) {
+		if ( IR.x.debug01 ) {
 			console.log ( "IR:PushBus [][][][]", IR.x["_OutputBuffer_"] );
 			console.log ( "  IR:PushBus [][][][]", IR.x["_OutputBuffer_"] );
 			console.log ( "    IR:PushBus [][][][]", IR.x["_OutputBuffer_"] );
 			console.log ( "      IR:PushBus [][][][]", IR.x["_OutputBuffer_"] );
-		}
-		if(theWorld.Bus && typeof theWorld.Bus.SetState === "function") {
-			if ( theWorld.hand_out && theWorld.hand_out._data_ === 1 ) {
-console.log ( "IR:PushBus/hand_out [][][][]", IR.x["_OutputBuffer_"] );
-				theWorld.Bus.SetState( ( IR.x["_OutputBuffer_"] & 0x0fff ) );
-			} else {
-console.log ( "IR:PushBus", IR.x["_OutputBuffer_"] );
-				theWorld.Bus.SetState( IR.x["_OutputBuffer_"] );
-			}
 		}
 
 		var ir = IR.x["_data_"];
 		var irA = ( ir & 0xf000 ) >> 12;
 		var irB = ( ir & 0x0f00 ) >> 8;
 
-		if ( IR.debug01 ) {
+		if ( IR.x.debug01 ) {
 			console.log ( "irA", irA.toString(16) );
 			console.log ( "irB", irB.toString(16) );
 			console.log ( "11_6", ( (irA & 0x8) != 0 ) ? 1 : 0 );
@@ -118,6 +109,15 @@ console.log ( "IR:PushBus", IR.x["_OutputBuffer_"] );
 //	, "McJmp_1": { Name: "MUX", 					Op: ["00_1"       ,"10_1","11_1"] }
 //	, "McJmp_0": { Name: "MUX", 					Op: ["00_0","01_0","10_0","11_0"] }
 
+		if ( IR.x.debug02 ) { console.log ( "hand_out processing ", theWorld2["hand_out"], " will drive bus" ); }
+		if ( theWorld2["hand_out"] ) {
+			if ( IR.x.debug02 ) { console.error ( "BUS Pussh with hand_out" ); }
+			theWorld2["Bus"] = IR.x._data_ & 0x0fff;
+			IR.TurnOn ( "hand_out" );
+		} else {
+			theWorld2["Bus"] = IR.x._data_;
+			IR.TurnOn ( "full_hand_out" );
+		}
 	}
 
 	// Turn on display of a wire with this ID
@@ -234,14 +234,22 @@ console.log ( "IR:PullBus Closure Run" );
 	}
 
 	, PushBus: function () {
+		if ( theWorld2["hand_out"] ) {
+			IR.x._OutputBuffer_ = IR.x._OutputBuffer_ & 0x0fff; 
+console.log ( "IR:PushBus New/Out:", IR.x._OutputBuffer_, "hand_out is true, just 0x0fff of IR" );		
+			theWorld2["Bus"] = IR.x._OutputBuffer_ ;
+			IR.TurnOn("hand_out");
+			AddMsg ( IR.x.Name, "Bus", "Out", IR.x._OutputBuffer_ );
+		} else {
 console.log ( "IR:PushBus New/Out:", IR.x._OutputBuffer_ );		
-		AddMsg ( IR.x.Name, "Bus", "Out", IR.x._OutputBuffer_ );
+			AddMsg ( IR.x.Name, "Bus", "Out", IR.x._OutputBuffer_ );
+		}
 
 		var ir = IR.x["_data_"];
 		var irA = ( ir & 0xf000 ) >> 12;
 		var irB = ( ir & 0x0f00 ) >> 8;
 
-		if ( IR.debug01 ) {
+		if ( IR.x.debug01 ) {
 			console.log ( "irA", irA.toString(16) );
 			console.log ( "irB", irB.toString(16) );
 			console.log ( "11_6", ( (irA & 0x8) != 0 ) ? 1 : 0 );

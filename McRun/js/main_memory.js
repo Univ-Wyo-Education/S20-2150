@@ -72,6 +72,8 @@ console.log ( "MEMORY:PullMAR Memory Read addr=",addr.toString(16),"Output=", ME
 				MEMORY.Display( addr );
 				MEMORY.TurnOn( "memory_Read"  );
 				MEMORY.x["_Read_"] = 2;
+MDR.x._data_ = MEMORY.x["_OutputBuffer_"];
+MDR.Display ( MDR.x._data_ );
 				AddMsg ( MEMORY.x.Name, "Memory_to_MDR", "Out", MEMORY.x._OutputBuffer_ );
 				AddMsg ( MEMORY.x.Name, "Ld_From_Memory", "Out", MEMORY.x._OutputBuffer_ );
 				// case "Ld_From_Memory": 	// Reaa From Memory

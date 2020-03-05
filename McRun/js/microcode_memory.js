@@ -7,9 +7,24 @@ var MicrocodeFunctions = {
 	,"is_fetch": showFetch
 	,"set_execute": function() { showFetch(false); }
 	,"is_error": showIsError
+	,"hand_out": showHandOut
 };
 
 // function showIsError ( isError ) {
+
+function showHandOut( up ) {
+	console.log ( "hand_out function called, showHandOut()", up );
+	if ( up ) {
+//		AddDep ( MICROCODE.x.Name, [ "Microcode_PC_Addr" ], "In", function () {
+//			if ( theWorld2["id_ir_Out"] ) {
+//				theWorld2["Bus"] = IR.x._data_;
+//			} else {
+//				theWorld2["Bus"] = IR.x._data_ & 0x0fff;
+//			}
+//		}
+	} else {
+	}
+}
 
 var MICROCODE = {
 	  "x": {
@@ -47,7 +62,16 @@ console.log ( "MICROCODE: Raw On:", "->"+key+"<-", val, 'def.NthBit=', def.NthBi
 console.log ( "MICROCODE: Turn On:", "->"+key+"<-", val, 'def.NthBit=', def.NthBit, "mcWord =", Number(mcWord).toString(16), def.DataArray, "    Do It - Push:", key, def );
 				MICROCODE.TurnOn( key );
 				MICROCODE.x[key] = 1;
-				MICROCODE.x._OutputBufferList_.push ( key );
+				var found = false;
+				for ( var ww = 0, wx = MICROCODE.x._OutputBufferList_.length; ww < wx; ww++ ) {
+					if ( MICROCODE.x._OutputBufferList_[ww] == key ) {
+						found = true;
+						break;
+					}
+				}
+				if ( ! found ) {
+					MICROCODE.x._OutputBufferList_.push ( key );
+				}
 				MICROCODE.PushLine( key );
 			}
 			displayMicrocodeData(addr, v1, v2, MICROCODE.x._OutputBufferList_);
