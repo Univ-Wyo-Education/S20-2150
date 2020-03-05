@@ -5,8 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title> MARIA Microcode Emulator </title>
 <!--
-MARIA Microcode Emulator: Version v1.3.7
+MARIA Microcode Emulator: Version v1.4.2
 Copyright (C) University of Wyoming, 2019-2020.
+Credits:
+	Prof Philip Schlump - Primary Code Developer
+	Alexandra (Sosha) Maria Krosley - Graphic Design
 --> 
 
 <!-- Bootstrap CSS
@@ -123,6 +126,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 <script src="js/popper-1.14.7.js" type="text/javascript"></script>
 </head>
 <body>
+<div id="ins_end"></div>
 <svg width="1640" height="1480" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
  <g class="layer">
 	<rect x="493" y="55" width="97" height="50" rx="20" class="bk-box"/>
@@ -1133,18 +1137,25 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		/>
 	<!-- Hand Output to Microcode ,"#Hand_Out_to_microcode" -->
 	<path id="hand_out" class="blue-line"
-		d="M 225 250   L 700 250  700 280 1020 280 1020 130  "
+		d="M 225 235   L 700 235  700 280 1020 280 1020 130  "
 		/>
+	<!-- 12 bits of IR - 9:0 -->
+	<g id="id_hand_out">
+		<path class="light-green-line"
+			d="M 225 252   L 282 252  282 290"
+			/>
+		<text id="id_hand_out_value" x="245" y="268" class="small"></text>
+	</g>
 
 	<g id="ir_decode_g1">
-	<path id="ir_15_12_to_decoder_11" class="blue-line"
-		d="M 200 170   L  705 170  705 280   1170 280 1170 240  1200 240 "
-		/>
+		<path id="ir_15_12_to_decoder_11" class="blue-line"
+			d="M 200 170   L  705 170  705 280   1170 280 1170 240  1200 240 "
+			/>
 	</g>
 	<g id="ir_decode_g2">
-	<path id="ir_11_8_to_decoder_10" class="blue-line"
-		d="M 200 200   L  705 200  705 280   1170 280 1170 225  1200 225 "
-		/>
+		<path id="ir_11_8_to_decoder_10" class="blue-line"
+			d="M 200 200   L  705 200  705 280   1170 280 1170 225  1200 225 "
+			/>
 	</g>
 
 	<g id="alu_ctl_4_to_microcode">
@@ -1280,6 +1291,32 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			d="M 200 200   L 1135 200  1170 200  1170 228  1170 228  "
 			/>
 	</g>
+
+	<!--	showLine("#id_mar_Out_to_memory"); -->
+	<!-- Connection from mar to Main Memory -->
+	<g id="id_mar_Out_to_memory">
+		<path id="id_mar_Out_to_memory" class="light-green-line"
+			d="M 335 375   L  335 415 "
+			/>
+		<!-- Arrow -->
+	</g>
+
+	<!-- Connection from mdr to Main Memory -->
+	<g id="id_mdr_to_memory">
+		<path class="light-green-line"
+			d="M 570 375   L  570 415 "
+			/>
+		<!-- Arrow -->
+	</g>
+
+	<!--
+	<g id="id_memory_to_mdr">
+		<path class="light-green-line"
+			d="M 570 375   L  570 415 "
+			/>
+	</g>
+	-->
+		<!-- Arrow -->
 
 
 <!-- Buttons -->
@@ -1487,6 +1524,10 @@ var lineOn = [
 	,"#is_error"
 	,"#ir_15_12_to_decoder_mux_11"
 	,"#ir_11_08_to_decoder_mux_10"
+	,"#id_hand_out"
+	,"#id_mar_Out_to_memory" 
+	,"#id_mdr_to_memory" 
+	,"#id_memory_to_mdr" 
 	// Text hidden until ready to use.
 		, "#h_alu_A_txt" 
 		, "#h_alu_B_txt" 
@@ -1608,12 +1649,10 @@ function infoOn1(i,x) {
 	case "clear-line":
 		break;
 	case "help":
-		showTextInOutputBox("MARIA Microcode Emulator: Version v1.3.7"
+		showTextInOutputBox("MARIA Microcode Emulator: Version v1.4.2"
 			,"Load assembled microcode and assembled instructions, then step or run."
 			,""
 			,"https://github.com/Univ-Wyo-Education/S20-2150/McRun/ for more detailed help."
-			,""
-			,"Click on a line to see where the input connects to.  Try Ld near the PC register."
 			,""
 			,"Developed for the Deptatmentment of Computer Science 2150 Machine Architecture class."
 			,"Copyright (C) University of Wyoming, 2019-2020." 
@@ -1638,7 +1677,6 @@ function infoOn1(i,x) {
 			,"  11   Common IR Decode"
 			);
 		break;
-		// <g transform="rotate(90 1000 400) translate(-350 14)" onclick="infoOn('decoder-info');">
 	case "load-memory":
 		displayModalMM() ;
 		break;
@@ -1687,12 +1725,18 @@ function infoOn1(i,x) {
 	case "id_ir_Out":
 		showLine("#ir_Out_to_microcode");
 		break;
-// ,"#Hand_Out_to_microcode"
 	case "hand_out":
 		showTextInOutputBox("Take the least-significant 12 bits of the IR and puts that on the bus - with 0's for the most","significant nibble (4 bits).","","IR_Out must be enabled at the same time.");
 		showLine("#hand_out");
 		break;
 
+// ,"#Hand_Out_to_microcode"
+	case "id_hand_out":
+		showLine("#id_hand_out");
+		// <text id="id_hand_out_value" x="245" y="268" class="small"></text>
+		var sv = toHex( theWorld2["Bus"], 4 );
+		$("#id_hand_out_value").html(sv);
+		break;
 
 	case "id_result":
 		$("#"+x).css("fill","#ff0000");
@@ -1743,6 +1787,9 @@ function infoOn1(i,x) {
 	case "id_mar_Out":
 		showLine("#mar_Out_to_microcode");
 		break;
+	case "id_mar_Out_to_Memory":
+		showLine("#id_mar_Out_to_memory");
+		break;
 
 //	,"#mdr_Ld_to_microcode" 
 //	,"#mdr_Out_to_microcode"
@@ -1755,6 +1802,12 @@ function infoOn1(i,x) {
 		break;
 	case "id_mdr_Out":
 		showLine("#mdr_Out_to_microcode");
+		break;
+/*
+xyzzy
+*/
+	case "id_mdr_xyzzy":
+		showLine("#id_mdr_Out_to_memory");
 		break;
 
 //	,"#input_Ld_to_microcode" 
@@ -2233,7 +2286,6 @@ console.log ( "cur=", cur );
 			for ( var ww = 0, my = wireTo.length; ww < my; ww++ ) {
 				var name = wireTo[ww].Name;
 				var op = wireTo[ww].Op;
-console.log ( "lineOn", lineOn );
 				for ( var kk = 0, mx = op.length; kk < mx; kk++ ) {
 					var toCall = name+".msg('"+op[kk]+"',1);";
 					if ( ! thisTick[toCall] ) { // thisTick ??
@@ -2247,7 +2299,6 @@ console.log ( ">>>Connections CALLING<<<: "+name+".msg('"+op[kk]+"',1);" );
 console.log ( ">>>Skipped", toCall);
 					}
 					thisTick[toCall] = 1;
-console.log ( "lineOn", lineOn );
 				}
 			}
 		}
@@ -2486,7 +2537,7 @@ console.log ( "theWorld2DepOn after:" + JSON.stringify ( theWorld2DepOn ) );
 //console.log ( "ALU=",ALU);
 //console.log ( "MUX=",MUX);
 
-console.log ( "Version v.1.4.0 - Sat Feb 29 05:13:21 MST 2020");
+console.log ( "Version v.1.4.2 - Thu Mar  5 06:54:38 MST 2020");
 console.log ( "Developed for the Deptatmentment of Computer Science 2150 Machine Architecture class.");
 console.log ( "Copyright (C) University of Wyoming, 2019-2020." );
 
@@ -2774,25 +2825,6 @@ var nErr = 0;
 
 
 
-// ---------------------------------------------------------------------------------------------------------------------------------------
-// test a 2 instruction program with 1 word of data.
-// 2000.  Test Load, Halt
-function test2000() {
-	// Plug in 2 instructions into Memory ( Load 5, Halt ), Plug in 23 -> mem[5]
-	// Clear Microcode
-	// Fetch ./data/test000b.mc.txt -> Microcode
-	// Fetch ./data/test000b.mm.txt -> Main Memory (2 words)
-	// Clear Registers
-	// Run it
-	// Verify that 
-	//		1. AC == 5
-	//		2. IR == Halt
-	//		3. PC == 1
-	//		4. M_PC == ?? for halt
-	//		5. Halt Light is on
-
-	return ( nErr );
-}
 
 
 
@@ -3474,6 +3506,24 @@ function test3800() {
 // ----------------------------------------------------------------------------------------------------------------------------------------
 // 2000.  Test Load, Halt
 // ----------------------------------------------------------------------------------------------------------------------------------------
+// test a 2 instruction program with 1 word of data.
+// 2000.  Test Load, Halt
+function test2000_old() {
+	// Plug in 2 instructions into Memory ( Load 5, Halt ), Plug in 23 -> mem[5]
+	// Clear Microcode
+	// Fetch ./data/test000b.mc.txt -> Microcode
+	// Fetch ./data/test000b.mm.txt -> Main Memory (2 words)
+	// Clear Registers
+	// Run it
+	// Verify that 
+	//		1. AC == 5
+	//		2. IR == Halt
+	//		3. PC == 1
+	//		4. M_PC == ?? for halt
+	//		5. Halt Light is on
+
+	return ( nErr );
+}
 //var ConnectionsWiredTogether = {	:1330
 //var Connections = {				:2033
 function test2000() {
@@ -3495,20 +3545,30 @@ function test2000() {
 	PC.msg('Out',1);
 
 
-	// Check that AC has 0x1230 in it
-	Do1Tick();
-return;
-	clearOtherLine(); 	
-
-	// Check that PC has 0x0002 in it
-	PropagateSignals();
-	clearOtherLine(); 	
-
-	// Check that we are at the `Halt` instruction in Microcode_PC
-	PropagateSignals();
-	clearOtherLine(); 	
+	// Standard run 1 instruction code
+	Run1TickInit();
+	for ( var i = 0; i < 1000 && !(theWorld2.ins_end === 1); i++ ) { 		
+		Run1TickStep();
+	}
 
 
+	if ( AC.x._data_ != 0x1230 ) {
+		console.error ( "Error test2000: 'AC' should be 0x1230, got not set: "+AC.x._data_.toString(16)+" instead." );
+		nErr++;
+	}
+	if ( theWorld2.ins_end !== 1 ) {
+		console.error ( "Error test7000: 'ins_end' should be 1, got not set: "+theWorld2.ins_end+" instead." );
+		nErr++;
+	}
+//	if ( PC.x._data_ !== 2 ) {
+//		console.error ( "Error test7000: 'PC' should be 2, got: " +PC.x._data_+" instead." );
+//		nErr++;
+//	}
+	/* Only ran 1 instruciton */
+	if ( PC.x._data_ !== 1 ) {
+		console.error ( "Error test7000: 'PC' should be 1, got: " +PC.x._data_+" instead." );
+		nErr++;
+	}
 
 
 	// ----------------------------------------------------------------------------
@@ -3524,14 +3584,81 @@ return;
 }
 
 
-function Do1Tick() {
-	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
-	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
-	RunConnections ();
-	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
-	MICROCODE_PC.rise();			// RiseAll()??
-	thisTick = {};					// List of Connections called based on completion - only 1 call per tick.
+
+
+
+
+
+
+
+
+function test7000() {
+
+	// ----------------------------------------------------------------------------
+	// Data Setup
+	// ----------------------------------------------------------------------------
+	MEMORY.x._data_[0x0000] = 0x7000;			// Program 	Halt
+	mm_max = 2;
+	PC.x._data_ = 0x0000;						// So can check increment of PC
+	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
+
+	// theWorld2["Microcode_PC_Addr"] = 0;			// Simulate Microcode_PC pusing out an address to Microcode(memroy)
+
+	MICROCODE_PC.msg('Out',1);
+	MICROCODE.msg('Addr',1);					// Fornce send a message - may be start of something!
+	PC.msg('Out',1);
+
+
+	Run1TickInit();
+	for ( var i = 0; i < 100; i++ ) { 		// This is different than others - other tests will check for "ins_end" to mark the end of the instruction.
+		Run1TickStep();
+		if ( theWorld2["is_halted"] ) {
+			break;
+		}
+	}
+
+	if ( theWorld2.is_halted !== 1 ) {
+		console.error ( "Error test7000: 'is_halted' should be 1, got not set: "+theWorld2.is_halted+" instead." );
+		nErr++;
+	}
+	if ( theWorld2.ins_end !== 1 ) {
+		console.error ( "Error test7000: 'ins_end' should be 1, got not set: "+theWorld2.ins_end+" instead." );
+		nErr++;
+	}
+	if ( PC.x._data_ !== 1 ) {
+		console.error ( "Error test7000: 'PC' should be 1, got: " +PC.x._data_+" instead." );
+		nErr++;
+	}
+	if ( MICROCODE_PC.x._data_ !== 0xb8 ) {
+		// MPC = 0xb8
+		console.error ( "Error test7000: 'MICROCODE_PC' should be 0xb82, got: 0x"+PC.x._data_.toString(16)+" instead." );
+		nErr++;
+	}
+
+	// ----------------------------------------------------------------------------
+	// So... all done - did we get any errors?
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function TickFinalCleanup() {
 	theWorld2 = {};			// Values
@@ -3576,6 +3703,8 @@ function Run1TickInit( db ) {
 
 }
 
+// console.log ( "After Step 1: AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+// console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
 function Run1TickStep() {
 
 	// -----------------------------------------------------
@@ -3585,34 +3714,33 @@ function Run1TickStep() {
 	TickFinalCleanup();
 	TickStart();
 
-console.log ( "After Step 1: AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
 
-	console.log ( "After Step 1: AT:"+ln(), JSON.stringify(theWorld2));
-	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
-	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
-	RunConnections ();
-	console.log ( "After Step 1: AT:"+ln(), JSON.stringify(theWorld2));
 	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
 	RunConnections ();
-	console.log ( "After Step 1: AT:"+ln(), JSON.stringify(theWorld2));
-	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
-	RunConnections ();
-	console.log ( "After Step 1: AT:"+ln(), JSON.stringify(theWorld2));
 
-	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
+	RunConnections ();
+
+	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
+	RunConnections ();
+
+
+
+	// console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
 	MICROCODE_PC.rise();			// RiseAll()??
 	PC.rise();						// RiseAll()??
+	MICROCODE.rise();				// RiseAll()??
 
-	console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn, thisTick );
+	// console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn, thisTick );
 	thisTick = {};			// List of Connections called based on completion - only 1 call per tick.
 
-	if ( MICROCODE_PC.x._data_ != 1+prev_m_pc ) {
-		console.error ( "Asert: 'MICROCODE_PC' should be 1, got: " +MICROCODE_PC.x._data_+" instead." );
-		nErr++;
-	}
 
 
-	// console.log ( "lineOn", lineOn );
+
+//	if ( MICROCODE_PC.x._data_ != 1+prev_m_pc ) {
+//		console.error ( "Asert: 'MICROCODE_PC' should be 1, got: " +MICROCODE_PC.x._data_+" instead." );
+//		nErr++;
+//	}
 
 
 
@@ -3622,11 +3750,13 @@ console.log ( "After Step 1: AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2D
 	// So... all done - did we get any errors?
 	// ----------------------------------------------------------------------------
 
+if ( false ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
 		console.log ( "PASS" );
 	}
+}
 	return ( nErr );
 }
 
@@ -3691,6 +3821,10 @@ function test_p0() {
 
 	// Expect 0x1230 in AC
 	// Expect PC = 0x0002 (inc of Halt)
+
+/*
+xyzzy
+*/
 
 }
 
