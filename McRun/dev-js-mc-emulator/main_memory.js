@@ -72,6 +72,7 @@ console.log ( "MEMORY:PullMAR Memory Read addr=",addr.toString(16),"Output=", ME
 				MEMORY.Display( addr );
 				MEMORY.TurnOn( "memory_Read"  );
 				MEMORY.x["_Read_"] = 2;
+/* Kludge xyzzy2000_004 */
 MDR.x._data_ = MEMORY.x["_OutputBuffer_"];
 MDR.Display ( MDR.x._data_ );
 				AddMsg ( MEMORY.x.Name, "Memory_to_MDR", "Out", MEMORY.x._OutputBuffer_ );

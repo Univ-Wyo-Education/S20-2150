@@ -80,12 +80,21 @@ var RESULT = {
 	, PullBus: function () {
 console.log ( "RESULT:PullBus New / Add Closure" );
 		AddDep ( RESULT.x.Name, [ "Bus" ], "In", function () {
-console.log ( "RESULT:PullBus Closure Run" );
-			 	RESULT.x["_InputBuffer_"] = theWorld2.Bus;
-				RESULT.x["_data_"] = RESULT.x["_InputBuffer_"];
-				RESULT.Display( RESULT.x["_data_"]);
-				RESULT.TurnOn( "result_Ld"  );
-				RESULT.x["_Ld_"] = 2;
+				if ( theWorld2["id_ALU_Ctl"] ) {
+console.error ( "RESULT:PullBus Closure Run - pulling from ALU" );
+					RESULT.x["_InputBuffer_"] = ALU.x._OutputBuffer_;
+					RESULT.x["_data_"] = RESULT.x["_InputBuffer_"];
+					RESULT.Display( RESULT.x["_data_"]);
+					RESULT.TurnOn( "result_Ld"  );
+					RESULT.x["_Ld_"] = 3;
+				} else {
+console.error ( "RESULT:PullBus Closure Run - pulling from Bus" );
+					RESULT.x["_InputBuffer_"] = theWorld2.Bus;
+					RESULT.x["_data_"] = RESULT.x["_InputBuffer_"];
+					RESULT.Display( RESULT.x["_data_"]);
+					RESULT.TurnOn( "result_Ld"  );
+					RESULT.x["_Ld_"] = 2;
+				}
 		});													
 	}
 

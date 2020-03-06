@@ -25,22 +25,27 @@ var ALU = {
 			ALU.x["_Ctl_1_"] = ( val & 2 ) >> 1;
 			ALU.x["_Ctl_2_"] = ( val & 4 ) >> 2;
 			ALU.x["_Ctl_3_"] = ( val & 8 ) >> 3;
+			ALU.PullBus();
 		break;
 		case "Ctl_0":
 			ALU.x["_Ctl_0_"] = val & 1;
 			ALU.x["_Ctl_"] = ( ALU.x["_Ctl_"] & 1 )  |  ALU.x["_Ctl_0_"] ;
+			ALU.PullBus();
 		break;
 		case "Ctl_1":
 			ALU.x["_Ctl_1_"] = val & 1;
 			ALU.x["_Ctl_"] = ( ALU.x["_Ctl_"] & 2 )  |  ( ALU.x["_Ctl_1_"] << 1 );
+			ALU.PullBus();
 		break;
 		case "Ctl_2":
 			ALU.x["_Ctl_2_"] = val & 1;
 			ALU.x["_Ctl_"] = ( ALU.x["_Ctl_"] & 4 )  |  ( ALU.x["_Ctl_2_"] << 2 );
+			ALU.PullBus();
 		break;
 		case "Ctl_3":
 			ALU.x["_Ctl_3_"] = val & 1;
 			ALU.x["_Ctl_"] = ( ALU.x["_Ctl_"] & 8 )  |  ( ALU.x["_Ctl_3_"] << 3 );
+			ALU.PullBus();
 		break;
 		default:
 			ALU.PullBus();
@@ -208,10 +213,12 @@ var ALU = {
 			$("#h_alu_A_txt").hide();
 			$("#h_alu_B_txt").hide();
 			$("#h_alu_Out_txt").hide();
+			o = 0;
 		break;
 		}
 		ALU.x["_Out_"] = o;
 		AddMsg ( ALU.x.Name, "ALU_Out", "Out", ALU.x._Out_ );
+		return o;
 	}
 	, err: function () {
 		return ALU.Error();
@@ -219,8 +226,9 @@ var ALU = {
 
 	, PullBus: function () {
 		// xyzzy4001 Proposed: AddDep ( ALU.x.Name, [ "Bus", "ac_Out_to_ALU" , [ [ "ALU_Ctl_0" , "ALU_Ctl_1" , "ALU_Ctl_2" , "ALU_Ctl_3" ], [ "ALU_Ctl" ] ] ], "Out", function () { 		
-		AddDep ( ALU.x.Name, [ "Bus", "ac_Out_to_ALU" , "ALU_Ctl_0" , "ALU_Ctl_1" , "ALU_Ctl_2" , "ALU_Ctl_3" ], "Out", function () { 		
-console.log ( "ALU:PullBus", ALU.x["_B_"] );
+		// AddDep ( ALU.x.Name, [ "Bus", "ac_Out_to_ALU" , "ALU_Ctl_0" , "ALU_Ctl_1" , "ALU_Ctl_2" , "ALU_Ctl_3" ], "Out", function () { 		
+		AddDep ( ALU.x.Name, [ "Bus", "ac_Out_to_ALU", "id_ALU_Ctl" ], "Out", function () { 		
+console.error ( "ALU:PullBus", ALU.x["_B_"] );
 			if ( ALU.x._Ctl_ === null ) {
 				console.log ( "AT:"+ln(), "Not Set _Ctl_" );
 				if ( ALU.x._Ctl_0_ === null ) {
@@ -256,13 +264,17 @@ console.log ( "ALU:PullBus", ALU.x["_B_"] );
 			var d = ( ALU.x["_Ctl_0_"] > 0 ) ? 1 : 0;
 			ALU.x["_Ctl_"] = a << 3 | b << 2 | c << 1 | d;
 
-console.log ( "ALU.x._Ctl_ =", ALU.x["_Ctl_"] );
-			ALU.func();
+			var o = ALU.func();
+console.error ( "ALU.x._Ctl_ =", ALU.x["_Ctl_"], "o=", o );
+			RESULT.x._data_ = o;
+			RESULT.Display( o );
+			ALU.x["_OutputBuffer_"] = o;
 
 			var x = ALU.x["_Ctl_"];
 			var y = ALU.x["_func_txt_"];
 			if ( ALU.x.__debug__ ) { console.log ( "x=", x, "y=", y ); }
 			ALU.Display( x, y );
+			ALU.TurnOn ( "ALU_Ctl" );
 		} );
 	}
 
