@@ -152,6 +152,7 @@ Microcode Emulator:
 	n_ins := 0
 
 	memBuf0 := make([]uint64, 256, 256) // Memory is 256 address, 64 wide
+	memBufs := make([]string, 256, 256) // Memory is 256 address, 64 wide
 
 	mpc := 0
 	for ii, line := range mes_lines {
@@ -225,6 +226,7 @@ Microcode Emulator:
 
 		n_ins++
 		memBuf0[mpc&0xff] = eu
+		memBufs[mpc&0xff] = fmt.Sprintf("LineNo: %d %s", line_no, line)
 		mpc++
 
 	}
@@ -245,7 +247,7 @@ Microcode Emulator:
 		os.Exit(1)
 	}
 	for ii, aaa := range memBuf0 {
-		fmt.Fprintf(outFp, "%016x %03d\n", aaa, ii)
+		fmt.Fprintf(outFp, "%016x %03d/%02x %s\n", aaa, ii, ii, memBufs[ii])
 	}
 	fmt.Fprintf(outFp, "##1\n")
 	DumpSymbolTableForHexFile(outFp)
@@ -427,7 +429,23 @@ func convertAddr(h string, line_no int) int {
 		if err != nil {
 			fmt.Printf("invalid binary number [%s], line no:%d\n", h, line_no)
 		}
-		return int(rv)
+		return int(rv) & 0xff
+	} else if len(h) > 2 && h[0:2] == "0x" {
+		h = h[2:]
+		h = strings.Replace(h, "_", "", -1)
+		rv, err := strconv.ParseInt(h, 16, 64)
+		if err != nil {
+			fmt.Printf("invalid binary number [%s], line no:%d\n", h, line_no)
+		}
+		return int(rv) & 0xff
+	} else if len(h) > 1 && h[0:1] == "0" || len(h) > 2 && h[0:2] == "0o" {
+		h = h[2:]
+		h = strings.Replace(h, "_", "", -1)
+		rv, err := strconv.ParseInt(h, 8, 64)
+		if err != nil {
+			fmt.Printf("invalid binary number [%s], line no:%d\n", h, line_no)
+		}
+		return int(rv) & 0xff
 	} else {
 		fmt.Printf("Invalid - ORG should be followd by a 0x000000000 address, line_no:%d\n", line_no)
 	}

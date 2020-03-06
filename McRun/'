@@ -3888,7 +3888,7 @@ function test5002() {
 
 	// Standard run 1 instruction code
 	Run1TickInit();
-	for ( var j = 0; j < 10; j++ ) {
+//	for ( var j = 0; j < 10; j++ ) {
 		// console.error( "Top of loop:",j );
 		for ( var i = 0; i < 100; i++ ) { 		
 			Run1TickStep();
@@ -3897,16 +3897,16 @@ function test5002() {
 				break;
 			}
 		}
-		if ( !!(theWorld2.is_halted) ) {
-			break;
-		}
-	}
+//		if ( !!(theWorld2.is_halted) ) {
+//			break;
+//		}
+//	}
 
 
-	// Expect 0x122c in AC
+	// Expect 0x1226 in AC
 	// Expect PC = 0x0003 (inc of Halt)
-	if ( AC.x._data_ != 0x122c ) {
-		console.error ( "Error test5002: 'AC' should be 0x122c, got : "+AC.x._data_.toString(16)+" instead." );
+	if ( AC.x._data_ != 0x1226 ) {
+		console.error ( "Error test5002: 'AC' should be 0x1226, got : "+AC.x._data_.toString(16)+" instead." );
 		nErr++;
 	}
 	if ( theWorld2.ins_end !== 1 ) {
