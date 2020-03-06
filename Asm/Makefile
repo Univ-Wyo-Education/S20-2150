@@ -8,6 +8,8 @@ fail_test001:
 	./Asm --in data/test001.mas --out out/test001.hex
 	diff out/test001.hex ref
 
+run2: hw2.hex
+
 hw2.hex: hw2.mas
 	./cmp-mac.sh Asm
 	./Asm --in hw2.mas --out hw2.hex --upload
