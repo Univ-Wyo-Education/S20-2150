@@ -83,7 +83,7 @@ MDR.Display ( MDR.x._data_ );
 
 	, PushMDR: function () {	// Memory Write
 console.log ( "MEMORY:PushMDR (write) New/Out:", MEMORY.x._OutputBuffer_ );		
-		AddDep ( MEMORY.x.Name, [ "MAR", "Memory_to_MDR" ], "Out", function () {
+		AddDep ( MEMORY.x.Name, [ "MDR_to_Memory", "Memory_Addr" ], "Out", function () {
 console.log ( "MEMORY:PushMAR Closure Run" );
 			 	MEMORY.x["_InputBuffer_"] = theWorld2.Memory_to_MDR;
 			 	MEMORY.x["_Addr_"] = theWorld2.Memory_Addr;
@@ -91,8 +91,8 @@ console.log ( "MEMORY:PushMAR Closure Run" );
 				if ( addr < 0 || addr >= mm_max ) { MEMORY.Error ( "Address in Error", "PushMDR", addr ); }
 				addr = ( addr >= 0 && addr < mm_max ) ? addr : 0;
 			 	MEMORY.x["_Addr_"] = addr;
-			 	// MEMORY.x["_OutputBuffer_"] = MEMORY.x["_data_"][addr];
-				MEMORY.x["_data_"][addr] = MEMORY.x["_InputBuffer_"];
+				// MEMORY.x["_data_"][addr] = MEMORY.x["_InputBuffer_"];				// Old Code
+				MEMORY.x["_data_"][addr] = MDR.x._data_;
 				MEMORY.Display( addr );
 				MEMORY.TurnOn( "memory_Write"  );
 				MEMORY.x["_Write_"] = 2;
