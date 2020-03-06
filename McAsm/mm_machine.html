@@ -128,6 +128,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
 <body>
 <div id="ins_end"></div>
 <div id="id_ALU_Ctl"></div>
+<div id="do_input"></div>
+<div id="do_output"></div>
 <svg width="1640" height="1480" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
  <g class="layer">
 	<rect x="493" y="55" width="97" height="50" rx="20" class="bk-box"/>
@@ -4135,7 +4137,7 @@ function test5005() {
 	return ( nErr );
 }
 
-function test_pInput() {
+function test5007() {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: Load / Halt
@@ -4150,14 +4152,67 @@ function test_pInput() {
 	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
 
 
-	// Input - 0x4421
-	// Expect 0x4421 in AC
-	// Expect 0x4421` in mem[0x0004]
-	// Expect PC = 0x0003 (inc of Halt)
 
+
+
+	MICROCODE_PC.msg('Out',1);
+	MICROCODE.msg('Addr',1);					// Fornce send a message - may be start of something!
+	PC.msg('Out',1);
+
+
+
+	// Standard run 1 instruction code
+	Run1TickInit();
+	for ( var j = 0; j < 10; j++ ) {
+		// console.error( "Top of loop:",j );
+		for ( var i = 0; i < 100; i++ ) { 		
+			Run1TickStep();
+			// console.error( "bottom of loop:",j ,i );
+			if ( !!(theWorld2.ins_end === 1) ) {
+				break;
+			}
+		}
+		if ( !!(theWorld2.is_halted) ) {
+			break;
+		}
+	}
+
+
+	// Input - 0x2312
+	// Expect 0x2312 in AC
+	// Expect 0x2312` in mem[0x0004]
+	// Expect PC = 0x0003 (inc of Halt)
+	if ( AC.x._data_ != 0x2312 ) {
+		console.error ( "Error test5005: 'AC' should be 0x2312, got : "+AC.x._data_.toString(16)+" instead." );
+		nErr++;
+	}
+	if ( MEMORY.x._data_[0x0004] != 0x2312 ) {
+		console.error ( "Error test5005: 'memory[4]' should be 0x2312, got : "+MEMORY.x._data_[0x0003].toString(16)+" instead." );
+		nErr++;
+	}
+	if ( theWorld2.ins_end !== 1 ) {
+		console.error ( "Error test5005: 'ins_end' should be 1, got not set: "+theWorld2.ins_end+" instead." );
+		nErr++;
+	}
+	if ( PC.x._data_ !== 3 ) {
+		console.error ( "Error test5005: 'PC' should be 2, got: " +PC.x._data_+" instead." );
+		nErr++;
+	}
+
+
+	// ----------------------------------------------------------------------------
+	// So... all done - did we get any errors?
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
 }
 
-function test_pOutput() {
+function test5006() {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: Load / Halt
@@ -4172,10 +4227,58 @@ function test_pOutput() {
 	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
 
 
+
+
+
+	MICROCODE_PC.msg('Out',1);
+	MICROCODE.msg('Addr',1);					// Fornce send a message - may be start of something!
+	PC.msg('Out',1);
+
+
+
+	// Standard run 1 instruction code
+	Run1TickInit();
+	for ( var j = 0; j < 10; j++ ) {
+		// console.error( "Top of loop:",j );
+		for ( var i = 0; i < 100; i++ ) { 		
+			Run1TickStep();
+			// console.error( "bottom of loop:",j ,i );
+			if ( !!(theWorld2.ins_end === 1) ) {
+				break;
+			}
+		}
+		if ( !!(theWorld2.is_halted) ) {
+			break;
+		}
+	}
+
 	// Expect 0x1230 in AC
 	// Expect Output of 0x1230
 	// Expect PC = 0x0003 (inc of Halt)
+	if ( AC.x._data_ != 0x1230 ) {
+		console.error ( "Error test5005: 'AC' should be 0x1230, got : "+AC.x._data_.toString(16)+" instead." );
+		nErr++;
+	}
+	if ( theWorld2.ins_end !== 1 ) {
+		console.error ( "Error test5005: 'ins_end' should be 1, got not set: "+theWorld2.ins_end+" instead." );
+		nErr++;
+	}
+	if ( PC.x._data_ !== 3 ) {
+		console.error ( "Error test5005: 'PC' should be 2, got: " +PC.x._data_+" instead." );
+		nErr++;
+	}
 
+
+	// ----------------------------------------------------------------------------
+	// So... all done - did we get any errors?
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
 }
 
 

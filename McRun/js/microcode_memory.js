@@ -8,6 +8,8 @@ var MicrocodeFunctions = {
 	,"set_execute": function() { showFetch(false); }
 	,"is_error": showIsError
 	,"hand_out": showHandOut
+	,"do_input": do_input
+	,"do_output": do_output
 };
 
 // function showIsError ( isError ) {
@@ -22,6 +24,26 @@ function showHandOut( up ) {
 //				theWorld2["Bus"] = IR.x._data_ & 0x0fff;
 //			}
 //		}
+	} else {
+	}
+}
+
+function do_input( up ) {
+	console.log ( "called do_input", up );
+	if ( up ) {
+		console.error ( "Input Prompt should have been done" );
+		INPUT.x._data_ = 0x2312;
+		INPUT.Display( INPUT.x._data_ );
+		theWorld2["Input_Data"] = 0x2312;
+	} else {
+	}
+}
+
+function do_output( up ) {
+	console.log ( "called do_output", up );
+	if ( up ) {
+		console.error ( "Output: "+OUTPUT.x._data_.toString(16) );
+		theWorld2["Output_Data"] = OUTPUT.x._data_.toString(16);
 	} else {
 	}
 }
