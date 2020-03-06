@@ -2,6 +2,8 @@
 all:
 	./cmp-mac.sh McAsm
 
+install: all windows linux
+	cp McAsm McAsm.* ../Download/
 
 # GOOS=windows go build -o McAsm.pc.exe . 
 windows:
