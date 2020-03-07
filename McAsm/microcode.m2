@@ -105,17 +105,19 @@
     id_ac_Ld id_mdr_Out 														ins_end id_Microcode_PC_Clr			    // AC <- mdr
 
 // OpStoreI 0xE, => 0xf8 address. Ticks 3+3
-	ORG			0b1_1110_000													// 0xF8
-    id_mar_Ld hand_out id_ir_Out id_memory_Read  id_mdr_Ld id_Microcode_PC_Inc  set_execute id_Microcode_PC_Inc			// mar = int(hand) ; mdr = mem[mar]
-	id_mar_Ld id_mdr_Out  id_Microcode_PC_Inc        							id_Microcode_PC_Inc						// mar = mdr
-	id_memory_Write  id_mdr_Out 												ins_end id_Microcode_PC_Clr    			// mem[mar] = mdr
+	ORG			0b1_1110_000													// 0xF0
+    id_mar_Ld hand_out id_ir_Out 												set_execute id_Microcode_PC_Inc			// mar = int(hand) 
+    id_memory_Read  id_mdr_Ld   							              		id_Microcode_PC_Inc						// mdr = mem[mar]
+	id_mar_Ld id_mdr_Out                                      					id_Microcode_PC_Inc						// mar = mdr
+    id_ac_Out id_mdr_Ld 														id_Microcode_PC_Inc					    // mdr <- AC 
+	id_memory_Write 		                                        			ins_end id_Microcode_PC_Clr				// mem[mar] <- mdr
 
 // OpUnused 0xF, => 0xf8 address. ?forever?
 	ORG			0b1_1111_000													// 0xF8
 	//    McJmp_4 McJmp_5 McJmp_7 										id_Microcode_PC_Ld						// Mux 0b00 ; Output Address To Halt - Loop Forever, decoder address 0
 
 // OpAddI 0xE, => 0xf8 address. Ticks 3+5
-	ORG			0b1_1110_000													// 0xF0
+	ORG			0b1_1111_000													// 0xF0
     id_mar_Ld hand_out id_ir_Out id_memory_Read  id_mdr_Ld                 		set_execute id_Microcode_PC_Inc			// mar = int(hand) ; mdr = mem[mar]
 	id_mar_Ld id_mdr_Out                                      					id_Microcode_PC_Inc						// mar = mdr
 	id_memory_Read                                         						id_Microcode_PC_Inc						// mdr = mem[mar]
