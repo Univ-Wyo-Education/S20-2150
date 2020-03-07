@@ -5300,6 +5300,258 @@ function test5041() {
 
 
 
+// Test JumpI - Indirect GOTO
+function test5042() {
+
+	// ----------------------------------------------------------------------------
+	// Data Setup: 
+	// ----------------------------------------------------------------------------
+	MEMORY.x._data_[0x0000] = 0xc004;			// Program 	LoadI X
+	MEMORY.x._data_[0x0001] = 0x7000;			//			Halt
+
+	MEMORY.x._data_[0x0004] = 0x0005;			//			HEX 5900
+	MEMORY.x._data_[0x0005] = 0x0010;			//			HEX 5900
+	MEMORY.x._data_[0x0010] = 0x7010;			//			Halt Instruciton
+	mm_max = 20;
+	PC.x._data_ = 0x0000;						// So can check increment of PC
+	AC.x._data_ = 0x0000;						// So can check changed AC value
+	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
+
+
+
+
+
+	MICROCODE_PC.msg('Out',1);
+	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
+	PC.msg('Out',1);
+
+
+
+	// Standard run 1 instruction code
+	Run1TickInit();
+	for ( var j = 0; j < 10; j++ ) {
+		// console.error( "Top of loop:",j );
+		for ( var i = 0; i < 100; i++ ) { 		
+			Run1TickStep();
+			// console.error( "bottom of loop:",j ,i );
+			if ( !!(theWorld2.ins_end === 1) ) {
+				break;
+			}
+		}
+		if ( !!(theWorld2.is_halted) ) {
+			break;
+		}
+	}
+	clearOtherLine();
+
+	// Expect PC = 0x0011 (inc of Halt)
+	if ( PC.x._data_ != 0x0011 ) {
+		console.error ( "Error test5010: 'PC' should be 0x0011, got : "+PC.x._data_.toString(16)+" instead." );
+		nErr++;
+	}
+	if ( IR.x._data_ != 0x7010 ) {
+		console.error ( "Error test5010: 'IR' should be 0x7010, got : "+IR.x._data_.toString(16)+" instead." );
+		nErr++;
+	}
+	if ( theWorld2.ins_end !== 1 ) {
+		console.error ( "Error test50010: 'ins_end' should be 1, got not set: "+theWorld2.ins_end+" instead." );
+		nErr++;
+	}
+
+
+	// ----------------------------------------------------------------------------
+	// So... all done - did we get any errors?
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// Test AddI 
+function test5043() {
+
+	// ----------------------------------------------------------------------------
+	// Data Setup: JnS, JumpI
+	// ----------------------------------------------------------------------------
+	MEMORY.x._data_[0x0000] = 0x1004;			// Program 	Load X
+	MEMORY.x._data_[0x0001] = 0xB003;			//			AddI Y
+	MEMORY.x._data_[0x0002] = 0x7003;			//			Halt
+	MEMORY.x._data_[0x0003] = 0x0005;			//	
+	MEMORY.x._data_[0x0004] = 0x1110;			//		
+	MEMORY.x._data_[0x0005] = 0x1112;			//			
+	mm_max = 8;
+	PC.x._data_ = 0x0000;						// So can check increment of PC
+	AC.x._data_ = 0x0000;						// So can check changed AC value
+	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
+
+
+
+
+
+	MICROCODE_PC.msg('Out',1);
+	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
+	PC.msg('Out',1);
+
+	// Went to 40
+	// Went to 20
+
+	// Standard run 1 instruction code
+	Run1TickInit();
+	for ( var j = 0; j < 10; j++ ) {
+		// console.error( "Top of loop:",j );
+		for ( var i = 0; i < 100; i++ ) { 		
+			Run1TickStep();
+			// console.error( "bottom of loop:",j ,i );
+			if ( !!(theWorld2.ins_end === 1) ) {
+				break;
+			}
+		}
+		if ( !!(theWorld2.is_halted) ) {
+			break;
+		}
+	}
+	clearOtherLine();
+
+	// Expect 0x0004 in AC
+	// Expect PC = 0x9900 (inc of Halt)
+	if ( AC.x._data_ != 0x2222 ) {
+		console.error ( "Error test5043: 'AC' should be 0x2222, got : "+AC.x._data_.toString(16)+" instead." );
+		nErr++;
+	}
+	if ( theWorld2.ins_end !== 1 ) {
+		console.error ( "Error test50010: 'ins_end' should be 1, got not set: "+theWorld2.ins_end+" instead." );
+		nErr++;
+	}
+	if ( PC.x._data_ !== 3 ) {
+		console.error ( "Error test5043: 'PC' should be 3, got: " +PC.x._data_+" instead." );
+		nErr++;
+	}
+
+
+	// ----------------------------------------------------------------------------
+	// So... all done - did we get any errors?
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
+
+}
+
+
+
+
+
+
+
+
+
+
+
+// Test JnS
+// Jumps and Store: Stores value of PC at address X then increments PC to X+1
+function test5044() {
+
+	// ----------------------------------------------------------------------------
+	// Data Setup: JnS, JumpI
+	// ----------------------------------------------------------------------------
+	MEMORY.x._data_[0x0000] = 0xA000;			// Program 	Clear
+	MEMORY.x._data_[0x0001] = 0x0008;			//          Jns 008
+	MEMORY.x._data_[0x0002] = 0x7030;			//			Halt
+	MEMORY.x._data_[0x0003] = 0;
+	MEMORY.x._data_[0x0004] = 0x1155;			//			Data to load to AC in subroutine.
+	MEMORY.x._data_[0x0005] = 0x0008; // ?? -------------------------------------------------------------------- Why?
+	MEMORY.x._data_[0x0006] = 0;
+	MEMORY.x._data_[0x0007] = 0;
+	MEMORY.x._data_[0x0008] = 0x4444;			//			Marker to see if writen with 0
+	MEMORY.x._data_[0x0009] = 0x1004;			//			Marker to see if writen with 0
+	MEMORY.x._data_[0x000a] = 0xc005;			//			JumpI 008 (return)	-------------------------------- Why? -changed from 8 to 5, 5 points at 8 (Extra Cycle in JumpI?)
+	MEMORY.x._data_[0x000b] = 0;
+	mm_max = 14;
+	PC.x._data_ = 0x0000;						// So can check increment of PC
+	AC.x._data_ = 0x0000;						// So can check changed AC value
+	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
+
+
+
+
+
+	MICROCODE_PC.msg('Out',1);
+	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
+	PC.msg('Out',1);
+
+
+	// Standard run 1 instruction code
+	Run1TickInit();
+	for ( var j = 0; j < 10; j++ ) {
+		// console.error( "Top of loop:",j );
+		for ( var i = 0; i < 100; i++ ) { 		
+			Run1TickStep();
+			// console.error( "bottom of loop:",j ,i );
+			if ( !!(theWorld2.ins_end === 1) ) {
+				break;
+			}
+		}
+		if ( !!(theWorld2.is_halted) ) {
+			break;
+		}
+	}
+	clearOtherLine();
+
+	// Expect 0x0003 in PC
+	if ( PC.x._data_ != 3 ) {
+		console.error ( "Error test5043: 'PC' should be 3, got : "+PC.x._data_.toString(16)+" instead." );
+		nErr++;
+	}
+	if ( IR.x._data_ != 0x7030 ) {
+		console.error ( "Error test5043: 'IR' should be 0x7030, got : "+IR.x._data_.toString(16)+" instead." );
+		nErr++;
+	}
+	if ( theWorld2.ins_end !== 1 ) {
+		console.error ( "Error test50010: 'ins_end' should be 1, got not set: "+theWorld2.ins_end+" instead." );
+		nErr++;
+	}
+	if ( AC.x._data_ != 0x1155 ) {
+		console.error ( "Error test5043: 'AC' should be 0x1155, got : "+AC.x._data_.toString(16)+" instead." );
+		nErr++;
+	}
+
+
+	// ----------------------------------------------------------------------------
+	// So... all done - did we get any errors?
+	// ----------------------------------------------------------------------------
+
+	if ( nErr > 0 ) {
+		console.error ( "FAIL: # of errors: "+nErr );
+	} else {
+		console.log ( "PASS" );
+	}
+	return ( nErr );
+
+}
+
+
+
+
 
 
 

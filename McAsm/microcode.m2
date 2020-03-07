@@ -34,14 +34,14 @@
 
 // -------------------- Instruction Implementation ---------------------------------------------------------------------------------------------------------------------
 
+// Jumps and Store: Stores value of PC at address X then increments PC to X+1
 // OpJnS, 0x0xxx => 0x80.  3+6 Ticks.
     ORG        0b1_0000_000														// 0x80						
     id_mdr_Ld   id_pc_Out  														set_execute id_Microcode_PC_Inc 	// mdr = int(pc)
-    id_mar_Ld   hand_out   id_ir_Out id_memory_Write   							id_Microcode_PC_Inc 				// mar = int(hand); mem[mar] = mdr
-    id_mdr_Ld   hand_out   id_ir_Out id_ac_Clr   								id_Microcode_PC_Inc 				// mdr = int(hand)
-    id_ac_Inc   																id_Microcode_PC_Inc 				// ac = ac + 1
-    id_ac_Out_to_ALU   id_ALU_Ctl_2 id_result_Ld  								id_Microcode_PC_Inc 				// ac = ac + mdr (id_ALU_Ctl[4] = 0x4)
-    id_ac_Ld   id_result_Out 													ins_end id_Microcode_PC_Clr 		// ?  					// Start of next instruction
+    id_mar_Ld   hand_out   id_ir_Out 											id_Microcode_PC_Inc 				// mar = int(hand)
+	id_memory_Write																id_Microcode_PC_Inc 				// mem[mar] = mdr
+    id_pc_Ld   hand_out   id_ir_Out 			   								id_Microcode_PC_Inc 				// mdr = int(hand)
+    id_pc_Inc   																ins_end id_Microcode_PC_Clr 		// ?  					// Start of next instruction
 
 // OpLoad, 0x1xxx => 0x88. 3+2 Ticks.
     ORG        0b1_0001_000														// 0x88
