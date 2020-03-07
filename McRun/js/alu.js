@@ -2,6 +2,15 @@
 // ALU : Arethmetic Logic Unit
 // ========
 
+function signed(v) {
+    if ( ( v & 0x8000 ) > 0 ) {
+        var w = v | 0xffff0000;
+        return w;
+    } else {
+        return v;
+    }
+}
+
 var ALU = {
 	  "x": {
 		  "Name": "ALU"
@@ -103,43 +112,42 @@ var ALU = {
 			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 1: // 0x1
-			// ??? xyzzy ??? NOP?
-			o = 0;
+			o = ALU.x["_A_"];
 			ALU.x["_func_txt_"] = "NOP";
 			$("#h_alu_A_txt").hide();
 			$("#h_alu_B_txt").hide();
 			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 2: // 0x2
-			o = ALU.x["_A_"] + 1;
+			o = signed(ALU.x["_A_"]) + 1;
 			ALU.x["_func_txt_"] = "Inc";
 			$("#h_alu_A_txt").html(ALU.x._A_).show();
 			$("#h_alu_B_txt").hide();
 			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 3: // 0x3
-			o = ALU.x["_A_"] - 1;
+			o = signed(ALU.x["_A_"]) - 1;
 			ALU.x["_func_txt_"] = "Dec";
 			$("#h_alu_A_txt").html(ALU.x._A_).show();
 			$("#h_alu_B_txt").hide();
 			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 4: // 0x4
-			o = ALU.x["_A_"] + ALU.x["_B_"];
+			o = signed(ALU.x["_A_"]) + signed(ALU.x["_B_"]);
 			ALU.x["_func_txt_"] = "(A+B)";
 			$("#h_alu_A_txt").html(ALU.x._A_).show();
 			$("#h_alu_B_txt").html(ALU.x._B_).show();
 			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 5: // 0x5
-			o = ALU.x["_A_"] - ALU.x["_B_"];
+			o = signed(ALU.x["_A_"]) - signed(ALU.x["_B_"]);
 			ALU.x["_func_txt_"] = "(A-B)";
 			$("#h_alu_A_txt").html(ALU.x._A_).show();
 			$("#h_alu_B_txt").html(ALU.x._B_).show();
 			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 6: // 0x6
-			o = ALU.x["_A_"] >> ALU.x["_B_"];
+			o = signed(ALU.x["_A_"]) >> ALU.x["_B_"];
 			ALU.x["_func_txt_"] = "(A>>B)";
 			$("#h_alu_A_txt").html(ALU.x._A_).show();
 			$("#h_alu_B_txt").html(ALU.x._B_).show();
@@ -160,14 +168,14 @@ var ALU = {
 			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 9: // 0x9
-			o = ( ALU.x["_A_"] < 0 ) ? 1 : 0;
+			o = ( signed(ALU.x["_A_"]) < signed(ALU.x["_B_"]) ) ? 1 : 0;
 			ALU.x["_func_txt_"] = "(A<B)=>1";
 			$("#h_alu_A_txt").html(ALU.x._A_).show();
 			$("#h_alu_B_txt").html(ALU.x._B_).show();
 			$("#h_alu_Out_txt").html(o).show();
 		break;
 		case 10: // 0xa
-			o = ( ALU.x["_A_"] > 0 ) ? 1 : 0;
+			o = ( signed(ALU.x["_A_"]) > signed(ALU.x["_B_"]) ) ? 1 : 0;
 			ALU.x["_func_txt_"] = "(A>B)=>1";
 			$("#h_alu_A_txt").html(ALU.x._A_).show();
 			$("#h_alu_B_txt").html(ALU.x._B_).show();

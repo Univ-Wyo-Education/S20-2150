@@ -1589,8 +1589,11 @@ function showTextInOutputBox(text) {
 	}
 }
 
-function showHalt ( isHalted ) {
-	if ( isHalted ) {
+var isHalted = 0;
+
+function showHalt ( _isHalted ) {
+	if ( _isHalted ) {
+		isHalted = _isHalted;
 		$("#set_run").hide();
 		$("#is_halted").show();
 	} else {
@@ -2709,6 +2712,7 @@ var isInit = 0;
 // ---------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------
 function ResetMachine() {
+	isHalted = 0;
 	isInit = 0;
 	showHalt ( false );
 	showFetch ( false );
@@ -4322,9 +4326,9 @@ function test5010() {
 
 	// Expect 0x0004 in AC
 	// Expect PC = 0x0004 (inc of Halt)
-	// Expect PC = 0x5900 (inc of Halt)
-	if ( AC.x._data_ != 0x5900 ) {
-		console.error ( "Error test5010: 'AC' should be 0x5900, got : "+AC.x._data_.toString(16)+" instead." );
+	// Expect PC = 0x0000 (inc of Halt)
+	if ( AC.x._data_ != 0x0000 ) {
+		console.error ( "Error test5010: 'AC' should be 0x0000, got : "+AC.x._data_.toString(16)+" instead." );
 		nErr++;
 	}
 	if ( theWorld2.ins_end !== 1 ) {
@@ -4376,16 +4380,8 @@ function test5011() {
 	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
 
-return;
-
-// Stuck in MC at c0 -
-//		Show "Is Zero" output when (light-green line) with Value
-//		Show Mux Selected on id_decoder_Ctl_1 => 10 value in MUX
-//		MDR 8000 - Instruciton	SkipLt0
-//		IR 8000 - Instruciton SkipLt0
-
-// Went to 40
-// Went to 20
+	// Went to 40
+	// Went to 22
 
 	// Standard run 1 instruction code
 	Run1TickInit();

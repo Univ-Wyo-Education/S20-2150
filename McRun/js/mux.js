@@ -135,7 +135,7 @@ console.error ( "Mux_CTL_ of 1");
 		case 2:
 			MUX.x["_Out_"] = MUX.x["_10_"] & 0xff;
 			showLine("#ir_11_08_to_decoder_mux_10");
-console.error ( "Mux_CTL_ of 2");
+console.log ( "Mux_CTL_ of 2");
 		//		<text id="h_ir_val_11_08" x="350"  y="195" class="vsmall">1 1 1 1</text>
 			$("#h_ir_val_11_08").html(ctlTo4Dig(IR.x._11_08_)).show();
 			lineOn.push("#h_ir_val_15_12");
@@ -143,7 +143,7 @@ console.error ( "Mux_CTL_ of 2");
 		case 3:
 			MUX.x["_Out_"] = MUX.x["_11_"] & 0xff;
 			showLine("#ir_15_12_to_decoder_mux_11");
-console.error ( "Mux_CTL_ of 3");
+console.log ( "Mux_CTL_ of 3");
 		//		<text id="h_ir_val_15_12" x="350"  y="165" class="vsmall">0 0 0 0</text>
 			$("#h_ir_val_15_12").html(ctlTo4Dig(IR.x._15_12_)).show();
 			lineOn.push("#h_ir_val_15_12");
@@ -162,6 +162,11 @@ console.error ( "Mux_CTL_ of 3");
 		MUX.x["_Ctl_0_"] = null;
 		MUX.x["_Ctl_1_"] = null;
 		MUX.x["_Ctl_"] = null;
+
+		MUX.x["_00_"] = null;
+		MUX.x["_01_"] = null;
+		MUX.x["_10_"] = null;
+		MUX.x["_11_"] = null;
 
 		MUX.x["_00_0_"] = null;
 		MUX.x["_00_1_"] = null;

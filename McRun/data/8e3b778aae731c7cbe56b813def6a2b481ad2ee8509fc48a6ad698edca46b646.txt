@@ -30,9 +30,9 @@
 0000000000000000 029/1d 
 0000000000000000 030/1e 
 0000000000000000 031/1f 
-0000080800000004 032/20 LineNo: 165 	id_pc_Inc 																			ins_end id_Microcode_PC_Clr                           			
+0000080000000004 032/20 LineNo: 165     																					ins_end id_Microcode_PC_Clr                           			
 0000000000000000 033/21 
-0000080000000004 034/22 LineNo: 167     																					ins_end id_Microcode_PC_Clr                           			
+0000080800000004 034/22 LineNo: 167 	id_pc_Inc 																			ins_end id_Microcode_PC_Clr                           			
 0000000000000000 035/23 
 0000000000000000 036/24 
 0000000000000000 037/25 
@@ -304,4 +304,4 @@ is_halted 40
 set_execute 42
 ##2
 // Input File: microcode.m2
-// Assembled At: 2020-03-07T12:14:42-0700
+// Assembled At: 2020-03-07T12:10:55-0700

@@ -94,6 +94,7 @@ console.error ( "RESULT:PullBus Closure Run - pulling from Bus" );
 					RESULT.x["_Ld_"] = 2;
 				}
 				RESULT.x["_IsZero_"] =  ( RESULT.x["_data_"] === 0 ) ? 1 : 0;
+				AddMsg ( RESULT.x.Name, "IsZero", "Out", RESULT.x["_IsZero_"] );
 				MUX.msg("01_1", RESULT.x["_IsZero_"] );
 		});													
 	}

@@ -147,36 +147,26 @@
 																						// Take bits 8, 9, 10, 11 of the hand -> decoder | McJmp_10 and McJmp_9 Jump to Below Ops
 
     ORG        0b01_0000_00																				// 0x40
-    id_ac_Out_to_ALU   id_ALU_Ctl id_ALU_Ctl_3 id_ALU_Ctl_0 id_result_Ld McJmp_5 	id_decoder_Ctl_0	id_Microcode_PC_Ld		// Compare AC lessthan 0 (ALU LT 0)
+    id_ac_Out_to_ALU   id_ALU_Ctl id_ALU_Ctl_3 id_ALU_Ctl_0 id_result_Ld 								id_Microcode_PC_Inc
+	id_result_Out McJmp_5 	id_decoder_Ctl_0															id_Microcode_PC_Ld		// Compare AC lessthan 0 (ALU LT 0)
     
     ORG        0b01_0100_00																				// 0x50
-    id_ac_Out_to_ALU    id_result_Ld McJmp_5  id_decoder_Ctl_0 											id_Microcode_PC_Ld		// Compare AC lessthan 0 -- Alu with 0 control is NOP (decoder_ctl = 0b01) - Compare IsZero
+    id_ac_Out_to_ALU    id_result_Ld McJmp_5  															id_Microcode_PC_Inc
+	id_result_Out McJmp_5 	id_decoder_Ctl_0															id_Microcode_PC_Ld		// Compare AC lessthan 0 -- Alu with 0 control is NOP (decoder_ctl = 0b01) - Compare IsZero
     
     ORG        0b01_1000_00																				// 0x60
-    id_ac_Out_to_ALU   id_ALU_Ctl id_ALU_Ctl_3 id_ALU_Ctl_2 id_result_Ld McJmp_5   id_decoder_Ctl_0   	id_Microcode_PC_Ld		// Compare AC lessthan 0 (ALU GT 0xC)	 ( MC goto 0x10 )
-
-
-
-
-// xyzzy - this is wrong!
-	ORG		   0b0001_0000																// 0x10
-	id_result_Out id_decoder_Ctl_0 McJmp_5 McJmp_4 										id_Microcode_PC_Ld		// Use Zero Compare on MUX
+    id_ac_Out_to_ALU   id_ALU_Ctl id_ALU_Ctl_3 id_ALU_Ctl_2 id_result_Ld 								id_Microcode_PC_Inc	
+	id_result_Out McJmp_5 	id_decoder_Ctl_0															id_Microcode_PC_Ld		
 
 
 
 
 	ORG		   0b0010_0000																// 0x20 (no skip)
-    																					ins_end id_Microcode_PC_Clr                           			
-	ORG		   0b0010_0010																// 0x22 (skip)
 	id_pc_Inc 																			ins_end id_Microcode_PC_Clr                           			
-
-
-
-	//                  v
-	ORG		   0b0001_1000																// 0x18
-	id_pc_Inc 																			ins_end id_Microcode_PC_Clr
-	ORG		   0b0001_1010																// 0x1A
+	ORG		   0b0010_0010																// 0x22 (skip)
     																					ins_end id_Microcode_PC_Clr                           			
+
+
 
 
 
