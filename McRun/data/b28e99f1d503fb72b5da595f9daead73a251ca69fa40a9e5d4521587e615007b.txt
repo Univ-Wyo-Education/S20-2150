@@ -30,9 +30,9 @@
 0000000000000000 029/1d 
 0000000000000000 030/1e 
 0000000000000000 031/1f 
-0000080800000004 032/20 LineNo: 169 	id_pc_Inc 																			ins_end id_Microcode_PC_Clr                           			
+0000080800000004 032/20 LineNo: 165 	id_pc_Inc 																			ins_end id_Microcode_PC_Clr                           			
 0000000000000000 033/21 
-0000080000000004 034/22 LineNo: 171     																					ins_end id_Microcode_PC_Clr                           			
+0000080000000004 034/22 LineNo: 167     																					ins_end id_Microcode_PC_Clr                           			
 0000000000000000 035/23 
 0000000000000000 036/24 
 0000000000000000 037/25 
@@ -78,7 +78,7 @@
 0000000000000000 077/4d 
 0000000000000000 078/4e 
 0000000000000000 079/4f 
-00001040007200a0 080/50 LineNo: 154     id_ac_Out_to_ALU   id_ALU_Ctl id_ALU_Ctl_2 id_ALU_Ctl_1 id_ALU_Ctl_0  id_result_Ld McJmp_5  		id_Microcode_PC_Inc
+00000040000200a0 080/50 LineNo: 154     id_ac_Out_to_ALU    id_result_Ld McJmp_5  															id_Microcode_PC_Inc
 0000008001020008 081/51 LineNo: 155 	id_result_Out McJmp_5 	id_decoder_Ctl_0															id_Microcode_PC_Ld		
 0000000000000000 082/52 
 0000000000000000 083/53 
@@ -304,4 +304,4 @@ is_halted 40
 set_execute 42
 ##2
 // Input File: microcode.m2
-// Assembled At: 2020-03-07T12:56:55-0700
+// Assembled At: 2020-03-07T12:49:47-0700

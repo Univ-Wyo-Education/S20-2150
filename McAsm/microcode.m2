@@ -151,14 +151,18 @@
 	id_result_Out McJmp_5 	id_decoder_Ctl_0															id_Microcode_PC_Ld		// Compare AC lessthan 0 (ALU LT 0)
     
     ORG        0b01_0100_00																				// 0x50
-    id_ac_Out_to_ALU    id_result_Ld McJmp_5  															id_Microcode_PC_Inc
+    id_ac_Out_to_ALU   id_ALU_Ctl id_ALU_Ctl_2 id_ALU_Ctl_1 id_ALU_Ctl_0  id_result_Ld 			  		id_Microcode_PC_Inc
 	id_result_Out McJmp_5 	id_decoder_Ctl_0															id_Microcode_PC_Ld		// Compare AC lessthan 0 -- Alu with 0 control is NOP (decoder_ctl = 0b01) - Compare IsZero
     
     ORG        0b01_1000_00																				// 0x60
-    id_ac_Out_to_ALU   id_ALU_Ctl id_ALU_Ctl_3 id_ALU_Ctl_2 id_result_Ld 								id_Microcode_PC_Inc	
+    id_ac_Out_to_ALU   id_ALU_Ctl id_ALU_Ctl_3 id_ALU_Ctl_1 id_result_Ld 								id_Microcode_PC_Inc	
 	id_result_Out McJmp_5 	id_decoder_Ctl_0															id_Microcode_PC_Ld		
 
 
+// SkipNe0
+//  ORG        0b01_0100_00																				// 0x50
+//  id_ac_Out_to_ALU    id_result_Ld 		  															id_Microcode_PC_Inc
+//	id_result_Out McJmp_5 	id_decoder_Ctl_0															id_Microcode_PC_Ld		// Compare AC lessthan 0 -- Alu with 0 control is NOP (decoder_ctl = 0b01) - Compare IsZero
 
 
 	ORG		   0b0010_0000																// 0x20 (no skip)
