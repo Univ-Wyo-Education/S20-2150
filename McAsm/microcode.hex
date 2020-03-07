@@ -30,9 +30,9 @@
 0000000000000000 029/1d 
 0000000000000000 030/1e 
 0000000000000000 031/1f 
-0000080800000004 032/20 LineNo: 171 	id_pc_Inc 																			ins_end id_Microcode_PC_Clr                           			
+0000080800000004 032/20 LineNo: 175 	id_pc_Inc 																			ins_end id_Microcode_PC_Clr                           			
 0000000000000000 033/21 
-0000080000000004 034/22 LineNo: 173     																					ins_end id_Microcode_PC_Clr                           			
+0000080000000004 034/22 LineNo: 177     																					ins_end id_Microcode_PC_Clr                           			
 0000000000000000 035/23 
 0000000000000000 036/24 
 0000000000000000 037/25 
@@ -62,8 +62,8 @@
 0000000000000000 061/3d 
 0000000000000000 062/3e 
 0000000000000000 063/3f 
-00001040009000a0 064/40 LineNo: 152     id_ac_Out_to_ALU   id_ALU_Ctl id_ALU_Ctl_3 id_ALU_Ctl_0 id_result_Ld 								id_Microcode_PC_Inc
-0000008001020008 065/41 LineNo: 153 	id_result_Out McJmp_5 	id_decoder_Ctl_0															id_Microcode_PC_Ld		
+00001040009000a0 064/40 LineNo: 156     id_ac_Out_to_ALU   id_ALU_Ctl id_ALU_Ctl_3 id_ALU_Ctl_0 id_result_Ld 								id_Microcode_PC_Inc
+0000008001020008 065/41 LineNo: 157 	id_result_Out McJmp_5 	id_decoder_Ctl_0															id_Microcode_PC_Ld		
 0000000000000000 066/42 
 0000000000000000 067/43 
 0000000000000000 068/44 
@@ -78,8 +78,8 @@
 0000000000000000 077/4d 
 0000000000000000 078/4e 
 0000000000000000 079/4f 
-00001040007000a0 080/50 LineNo: 156     id_ac_Out_to_ALU   id_ALU_Ctl id_ALU_Ctl_2 id_ALU_Ctl_1 id_ALU_Ctl_0  id_result_Ld 			  		id_Microcode_PC_Inc
-0000008001020008 081/51 LineNo: 157 	id_result_Out McJmp_5 	id_decoder_Ctl_0															id_Microcode_PC_Ld		
+00001040007000a0 080/50 LineNo: 160     id_ac_Out_to_ALU   id_ALU_Ctl id_ALU_Ctl_2 id_ALU_Ctl_1 id_ALU_Ctl_0  id_result_Ld 			  		id_Microcode_PC_Inc
+0000008001020008 081/51 LineNo: 161 	id_result_Out McJmp_5 	id_decoder_Ctl_0															id_Microcode_PC_Ld		
 0000000000000000 082/52 
 0000000000000000 083/53 
 0000000000000000 084/54 
@@ -94,8 +94,8 @@
 0000000000000000 093/5d 
 0000000000000000 094/5e 
 0000000000000000 095/5f 
-0000104000a000a0 096/60 LineNo: 160     id_ac_Out_to_ALU   id_ALU_Ctl id_ALU_Ctl_3 id_ALU_Ctl_1 id_result_Ld 								id_Microcode_PC_Inc	
-0000008001020008 097/61 LineNo: 161 	id_result_Out McJmp_5 	id_decoder_Ctl_0															id_Microcode_PC_Ld		
+0000104000a000a0 096/60 LineNo: 164     id_ac_Out_to_ALU   id_ALU_Ctl id_ALU_Ctl_3 id_ALU_Ctl_1 id_result_Ld 								id_Microcode_PC_Inc	
+0000008001020008 097/61 LineNo: 165 	id_result_Out McJmp_5 	id_decoder_Ctl_0															id_Microcode_PC_Ld		
 0000000000000000 098/62 
 0000000000000000 099/63 
 0000000000000000 100/64 
@@ -190,7 +190,7 @@
 0000000000000000 189/bd 
 0000000000000000 190/be 
 0000000000000000 191/bf 
-0000000022040008 192/c0 LineNo: 148     McJmp_6 id_ir_Out id_decoder_Ctl_1      											id_Microcode_PC_Ld 		
+0000000022040008 192/c0 LineNo: 152     McJmp_6 id_ir_Out id_decoder_Ctl_1      											id_Microcode_PC_Ld 		
 0000000000000000 193/c1 
 0000000000000000 194/c2 
 0000000000000000 195/c3 
@@ -214,19 +214,19 @@
 0000000000000000 213/d5 
 0000000000000000 214/d6 
 0000000000000000 215/d7 
-0000000000000000 216/d8 
-0000000000000000 217/d9 
-0000000000000000 218/da 
-0000000000000000 219/db 
-0000000000000000 220/dc 
-0000000000000000 221/dd 
+0000040064000020 216/d8 LineNo: 121     id_mar_Ld hand_out id_ir_Out 												set_execute id_Microcode_PC_Inc			
+0000000100000021 217/d9 LineNo: 122     id_memory_Read  id_mdr_Ld   							              		id_Microcode_PC_Inc						
+0000000240000020 218/da LineNo: 123 	id_mar_Ld id_mdr_Out                                      					id_Microcode_PC_Inc						
+0000000100000021 219/db LineNo: 124 	id_memory_Read id_mdr_Ld                                        			id_Microcode_PC_Inc						
+00001042004000a0 220/dc LineNo: 125     id_ac_Out_to_ALU   id_mdr_Out   id_ALU_Ctl id_ALU_Ctl_2  id_result_Ld 		id_Microcode_PC_Inc						
+0000088000000404 221/dd LineNo: 126     id_ac_Ld   id_result_Out   													ins_end id_Microcode_PC_Clr				
 0000000000000000 222/de 
 0000000000000000 223/df 
-0000040164000021 224/e0 LineNo: 130     id_mar_Ld hand_out id_ir_Out id_memory_Read  id_mdr_Ld                		set_execute id_Microcode_PC_Inc			
-0000000240000020 225/e1 LineNo: 131 	id_mar_Ld id_mdr_Out                                      					id_Microcode_PC_Inc						
-0000000100000021 226/e2 LineNo: 132 	id_memory_Read id_mdr_Ld                                  					id_Microcode_PC_Inc						
-0000081200000004 227/e3 LineNo: 133     id_pc_Ld id_mdr_Out 														ins_end id_Microcode_PC_Clr     		
-0000000000000000 228/e4 
+0000040064000020 224/e0 LineNo: 131     id_mar_Ld hand_out id_ir_Out 												set_execute id_Microcode_PC_Inc			
+0000000100000021 225/e1 LineNo: 132     id_memory_Read  id_mdr_Ld   							              		id_Microcode_PC_Inc						
+0000000240000020 226/e2 LineNo: 133 	id_mar_Ld id_mdr_Out                                      					id_Microcode_PC_Inc						
+0000000100000021 227/e3 LineNo: 134 	id_memory_Read id_mdr_Ld                                        			id_Microcode_PC_Inc						
+0000081200000004 228/e4 LineNo: 135     id_pc_Ld id_mdr_Out 														ins_end id_Microcode_PC_Clr			    
 0000000000000000 229/e5 
 0000000000000000 230/e6 
 0000000000000000 231/e7 
@@ -246,11 +246,11 @@
 0000000000000000 245/f5 
 0000000000000000 246/f6 
 0000000000000000 247/f7 
-0000040164000021 248/f8 LineNo: 121     id_mar_Ld hand_out id_ir_Out id_memory_Read  id_mdr_Ld                 		set_execute id_Microcode_PC_Inc			
-0000000240000020 249/f9 LineNo: 122 	id_mar_Ld id_mdr_Out                                      					id_Microcode_PC_Inc						
-0000000000000021 250/fa LineNo: 123 	id_memory_Read                                         						id_Microcode_PC_Inc						
-00001042004000a0 251/fb LineNo: 124     id_ac_Out_to_ALU   id_mdr_Out   id_ALU_Ctl id_ALU_Ctl_2  id_result_Ld         			id_Microcode_PC_Inc						
-0000088000000404 252/fc LineNo: 125     id_ac_Ld   id_result_Out   													ins_end id_Microcode_PC_Clr     		
+0000000000000000 248/f8 
+0000000000000000 249/f9 
+0000000000000000 250/fa 
+0000000000000000 251/fb 
+0000000000000000 252/fc 
 0000000000000000 253/fd 
 0000000000000000 254/fe 
 0000000000000000 255/ff 
@@ -304,4 +304,4 @@ is_halted 40
 set_execute 42
 ##2
 // Input File: microcode.m2
-// Assembled At: 2020-03-07T14:18:42-0700
+// Assembled At: 2020-03-07T14:43:15-0700

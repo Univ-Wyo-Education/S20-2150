@@ -114,23 +114,27 @@
 
 // OpUnused 0xF, => 0xf8 address. ?forever?
 	ORG			0b1_1111_000													// 0xF8
-	//    McJmp_4 McJmp_5 McJmp_7 										id_Microcode_PC_Ld						// Mux 0b00 ; Output Address To Halt - Loop Forever, decoder address 0
+	//    McJmp_4 McJmp_5 McJmp_7 												id_Microcode_PC_Ld						// Mux 0b00 ; Output Address To Halt - Loop Forever, decoder address 0
 
-// OpAddI 0xE, => 0xf8 address. Ticks 3+5
-	ORG			0b1_1111_000													// 0xF0
-    id_mar_Ld hand_out id_ir_Out id_memory_Read  id_mdr_Ld                 		set_execute id_Microcode_PC_Inc			// mar = int(hand) ; mdr = mem[mar]
+// OpAddI 0xB, => 0xf8 address. Ticks 3+5
+	ORG			0b1_1011_000													// 0xd8
+    id_mar_Ld hand_out id_ir_Out 												set_execute id_Microcode_PC_Inc			// mar = int(hand) 
+    id_memory_Read  id_mdr_Ld   							              		id_Microcode_PC_Inc						// mdr = mem[mar]
 	id_mar_Ld id_mdr_Out                                      					id_Microcode_PC_Inc						// mar = mdr
-	id_memory_Read                                         						id_Microcode_PC_Inc						// mdr = mem[mar]
-    id_ac_Out_to_ALU   id_mdr_Out   id_ALU_Ctl id_ALU_Ctl_2  id_result_Ld         			id_Microcode_PC_Inc						// AC output to ALU
-    id_ac_Ld   id_result_Out   													ins_end id_Microcode_PC_Clr     		// Move Result to AC; ac = Result; // Start of next instruction 
+	id_memory_Read id_mdr_Ld                                        			id_Microcode_PC_Inc						// mdr = mem[mar]
+    id_ac_Out_to_ALU   id_mdr_Out   id_ALU_Ctl id_ALU_Ctl_2  id_result_Ld 		id_Microcode_PC_Inc						// AC output to ALU (id_Alu_Ctl[4]=0x4)
+    id_ac_Ld   id_result_Out   													ins_end id_Microcode_PC_Clr				// Move Result to AC; // Start of next instruction
 
 
 // OpJumpI 0xCxxx, => 0xE0
 	ORG			0b1_1100_000													// 0xE0
-    id_mar_Ld hand_out id_ir_Out id_memory_Read  id_mdr_Ld                		set_execute id_Microcode_PC_Inc			// mar = int(hand) ; mdr = mem[mar]
+    id_mar_Ld hand_out id_ir_Out 												set_execute id_Microcode_PC_Inc			// mar = int(hand) 
+    id_memory_Read  id_mdr_Ld   							              		id_Microcode_PC_Inc						// mdr = mem[mar]
 	id_mar_Ld id_mdr_Out                                      					id_Microcode_PC_Inc						// mar = mdr
-	id_memory_Read id_mdr_Ld                                  					id_Microcode_PC_Inc						// mdr = mem[mar]
-    id_pc_Ld id_mdr_Out 														ins_end id_Microcode_PC_Clr     		// PC <- mdr
+	id_memory_Read id_mdr_Ld                                        			id_Microcode_PC_Inc						// mdr = mem[mar]
+    id_pc_Ld id_mdr_Out 														ins_end id_Microcode_PC_Clr			    // PC <- mdr
+
+
 
 
 
