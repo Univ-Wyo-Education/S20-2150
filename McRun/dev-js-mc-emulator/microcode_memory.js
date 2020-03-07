@@ -10,6 +10,7 @@ var MicrocodeFunctions = {
 	,"hand_out": showHandOut
 	,"do_input": do_input
 	,"do_output": do_output
+	,"McJmp_6": McJmp_6
 };
 
 // function showIsError ( isError ) {
@@ -24,6 +25,14 @@ function showHandOut( up ) {
 //				theWorld2["Bus"] = IR.x._data_ & 0x0fff;
 //			}
 //		}
+	} else {
+	}
+}
+
+function McJmp_6( up ) {
+	console.log ( "called McJmp_6", up );
+	if ( up ) {
+		MUX.x._10_6_ = 1;
 	} else {
 	}
 }

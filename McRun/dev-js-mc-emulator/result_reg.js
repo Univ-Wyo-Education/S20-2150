@@ -10,9 +10,9 @@ var RESULT = {
 		, "_OutputBuffer_": 0
 		, "_Clr_": null
 		, "_Ld_": null
-//		, "_Inc_": null
 		, "_Out_": null
 		, "_Error_": []
+		, "_IsZero_": null
 	}
 	, debug0: 0
 	, msg: function ( wire, val ) {
@@ -22,6 +22,9 @@ var RESULT = {
 				RESULT.x["_Clr_"] = 1;
 				RESULT.x["_data_"] = 0;
 				RESULT.TurnOn( "result_Clr" );
+				RESULT.x["_IsZero_"] = 1;
+				AddMsg ( RESULT.x.Name, "IsZero", "Out", RESULT.x["_IsZero_"] );
+				MUX.msg("01_1", RESULT.x["_IsZero_"] );
 			}
 			RESULT.Display( RESULT.x["_data_"]); 						
 		break;
@@ -29,22 +32,21 @@ var RESULT = {
 			if ( val === 1 ) {
 				RESULT.x["_Ld_"] = 1;
 				RESULT.PullBus();
+				RESULT.x["_IsZero_"] =  ( RESULT.x["_data_"] === 0 ) ? 1 : 0;
+				AddMsg ( RESULT.x.Name, "IsZero", "Out", RESULT.x["_IsZero_"] );
+				MUX.msg("01_1", RESULT.x["_IsZero_"] );
 			}
 			RESULT.Display( RESULT.x["_data_"]);
 		break;
-//		case "Inc":				// Act
-//			if ( val === 1 ) {
-//				RESULT.x["_Inc_"] = 1;
-//				RESULT.TurnOn( "result_Inc" );
-//			}
-//			RESULT.Display( RESULT.x["_data_"]);
-//		break;
 		case "Out":				// Resolves Bus
 			if ( val === 1 ) {
 				RESULT.x["_Out_"] = 1;
 				RESULT.x["_OutputBuffer_"] = RESULT.x["_data_"];
 				RESULT.PushBus();
 				RESULT.TurnOn( "result_Out" );
+				RESULT.x["_IsZero_"] =  ( RESULT.x["_data_"] === 0 ) ? 1 : 0;
+				AddMsg ( RESULT.x.Name, "IsZero", "Out", RESULT.x["_IsZero_"] );
+				MUX.msg("01_1", RESULT.x["_IsZero_"] );
 			}
 			RESULT.Display( RESULT.x["_data_"]);
 		break;
@@ -63,18 +65,14 @@ var RESULT = {
 			RESULT.x["_data_"] = 0;
 			RESULT.Display( RESULT.x["_data_"] );
 		}
-//		if ( RESULT.x["_Inc_"] === 1 ) {
-//			RESULT.x["_data_"] = RESULT.x["_data_"] + 1;
-//			RESULT.Display( RESULT.x["_data_"] );
-//		}
 		if ( RESULT.x["_Ld_"] === 1 ) {
 			RESULT.Error ( "Failed To Resolve", "Ld", 1 );
 		}
 		RESULT.x["_InputBuffer_"] = null;
 		RESULT.x["_Clr_"] = null;
 		RESULT.x["_Ld_"] = null;
-//		RESULT.x["_Inc_"] = null;
 		RESULT.x["_Out_"] = null;
+		RESULT.x["_IsZero_"] = null;
 	}
 
 	, PullBus: function () {
@@ -95,12 +93,16 @@ console.error ( "RESULT:PullBus Closure Run - pulling from Bus" );
 					RESULT.TurnOn( "result_Ld"  );
 					RESULT.x["_Ld_"] = 2;
 				}
+				RESULT.x["_IsZero_"] =  ( RESULT.x["_data_"] === 0 ) ? 1 : 0;
+				MUX.msg("01_1", RESULT.x["_IsZero_"] );
 		});													
 	}
 
 	, PushBus: function () {
 console.log ( "RESULT:PushBus New/Out:", RESULT.x._OutputBuffer_ );		
 		AddMsg ( RESULT.x.Name, "Bus", "Out", RESULT.x._OutputBuffer_ );
+		RESULT.x["_IsZero_"] =  ( RESULT.x["_data_"] === 0 ) ? 1 : 0;
+		AddMsg ( RESULT.x.Name, "IsZero", "Out", RESULT.x["_IsZero_"] );
 
 		// IsZero Implementation - push data to the MUX/Decoder
 		var dd = RESULT.x["_data_"];		// Should be _OutputBuffer_ ?
