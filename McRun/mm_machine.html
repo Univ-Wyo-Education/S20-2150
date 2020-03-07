@@ -35,6 +35,7 @@ Credits:
 	.out-box         { fill:#ffffff; stroke:#000000; stroke-width:1; }
 	.blue-line       { fill:#000000; stroke:#4040ff; stroke-width:3; fill:none }
 	.light-green-line       { fill:#000000; stroke:#20f020; stroke-width:3; fill:none }
+	.light-red-line       { fill:#000000; stroke:#ff0000; stroke-width:3; fill:none }
 	.blue-line-1     { fill:#000000; stroke:#4040ff; stroke-width:2; fill:none }
 	.button-box      { fill:#b4c5fb; stroke:#000000; stroke-width:2; opacity:0.75 }
 	.arrow-line      { stroke:#000000; stroke-width:2; stroke-linecap: round; }
@@ -1156,7 +1157,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			/>
 	</g>
 	<g id="ir_decode_g2">
-		<path id="ir_11_8_to_decoder_10" class="blue-line"
+		<path id="ir_11_8_to_decoder_10" class="light-red-line"
 			d="M 200 200   L  705 200  705 280   1170 280 1170 225  1200 225 "
 			/>
 	</g>
@@ -1681,9 +1682,10 @@ function infoOn1(i,x) {
 	case "step":	// Step Tick
 		Step1Tick();
 		break;
+	case "step-ins":	// Step 1 Instruction
+		Step1Ins();
+		break;
 
-
-	// step-ins
 
 	// logic-probe
 
@@ -2686,10 +2688,12 @@ function OnStartupReloadMainMemory() {
 OnStartupReloadMainMemory();
 
 
+var isInit = 0;
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------
 function ResetMachine() {
+	isInit = 0;
 	showHalt ( false );
 	showFetch ( false );
 	showIsError ( false );
@@ -2729,66 +2733,28 @@ function ResetMachine() {
 var StopMcTick = 0;
 var StopTick = 0;
 
-// Formerly: ClockRunner() {
 function Step1Tick() {
-	clearOtherLine();
-
-	var old_mc_pc = MICROCODE_PC.x._data_;
-	var old_pc = PC.x._data_;
-
-console.log("");
-console.log(" Start -------------------------------------------------------------------------------------- ");
-console.log("");
-	// Start Process.
-	MICROCODE_PC.msg("Out", 1);		
-	MICROCODE.msg("Addr", 1);	
-	ALU.msg();
-
-console.log("");
-console.log(" Tick... ");
-console.log("");
-	for ( var qq = 0; qq < 1; qq++ ) {
-console.log("    qq =", qq);
-		MICROCODE_PC.tick();
-		MICROCODE.tick();
-		// INPUT.tick();
-		PC.tick();
-		MAR.tick();
-		MEMORY.tick();
-		MDR.tick();
-		IR.tick();
-		// AC.tick();
-		// ALU.tick();
-		// RESULT.tick();
-// console.log ( "MUX" );
-		MUX.tick();
-		// OUTPUT.tick();
+	if ( isInit === 0 ) {
+		MICROCODE_PC.msg('Out',1);
+		MICROCODE.msg('Addr',1);					// send a message - may be start of something!
+		PC.msg('Out',1);
+		Run1TickInit();
+		isInit = 1;
 	}
-
-console.log("");
-console.log(" End... Now Rise... ");
-console.log("");
-
-// End Process.
-console.log ( "A", MICROCODE.x._OutputBufferList_ );
-	MICROCODE.rise();
-console.log ( "B" );
-	MICROCODE_PC.rise();
-console.log ( "C" );
-	PC.rise();
-console.log ( "D" );
-	MAR.rise();
-console.log ( "E" );
-	MDR.rise();
-console.log ( "F" );
-	IR.rise();
-console.log ( "G" );
-	MUX.rise();
-
-
-
-
+	Run1TickStep();
 }
+
+function Step1Ins() {
+	Step1Tick();
+
+	for ( var i = 0; i < 100; i++ ) { 		
+		Run1TickStep();
+		if ( !!(theWorld2.ins_end === 1) ) {
+			break;
+		}
+	}
+}
+
 
 // From StackOverflow: Public Domain
 function ln() {
@@ -3517,7 +3483,7 @@ function test2000() {
 	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
 
 	MICROCODE_PC.msg('Out',1);
-	MICROCODE.msg('Addr',1);					// Fornce send a message - may be start of something!
+	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
 
 return;
@@ -3592,7 +3558,7 @@ function test7000() {
 	// theWorld2["Microcode_PC_Addr"] = 0;			// Simulate Microcode_PC pusing out an address to Microcode(memroy)
 
 	MICROCODE_PC.msg('Out',1);
-	MICROCODE.msg('Addr',1);					// Fornce send a message - may be start of something!
+	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
 
 
@@ -3811,7 +3777,7 @@ function test5001() {
 
 
 	MICROCODE_PC.msg('Out',1);
-	MICROCODE.msg('Addr',1);					// Fornce send a message - may be start of something!
+	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
 
 
@@ -3877,7 +3843,7 @@ function test5002() {
 
 
 	MICROCODE_PC.msg('Out',1);
-	MICROCODE.msg('Addr',1);					// Fornce send a message - may be start of something!
+	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
 
 
@@ -3944,7 +3910,7 @@ function test5003() {
 
 
 	MICROCODE_PC.msg('Out',1);
-	MICROCODE.msg('Addr',1);					// Fornce send a message - may be start of something!
+	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
 
 
@@ -4011,7 +3977,7 @@ function test5004() {
 
 
 	MICROCODE_PC.msg('Out',1);
-	MICROCODE.msg('Addr',1);					// Fornce send a message - may be start of something!
+	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
 
 
@@ -4078,7 +4044,7 @@ function test5005() {
 
 
 	MICROCODE_PC.msg('Out',1);
-	MICROCODE.msg('Addr',1);					// Fornce send a message - may be start of something!
+	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
 
 
@@ -4138,6 +4104,10 @@ function test5005() {
 	return ( nErr );
 }
 
+
+
+// TODO: This needs work.  Input instruction needs to prompt user for the input! "do_input" line is set - what to do?
+// OpInput, then Store
 function test5007() {
 
 	// ----------------------------------------------------------------------------
@@ -4157,7 +4127,7 @@ function test5007() {
 
 
 	MICROCODE_PC.msg('Out',1);
-	MICROCODE.msg('Addr',1);					// Fornce send a message - may be start of something!
+	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
 
 
@@ -4213,6 +4183,7 @@ function test5007() {
 	return ( nErr );
 }
 
+// OpOutput - List output values when "do_output" is signaled in a "Output Q"?
 function test5006() {
 
 	// ----------------------------------------------------------------------------
@@ -4232,7 +4203,7 @@ function test5006() {
 
 
 	MICROCODE_PC.msg('Out',1);
-	MICROCODE.msg('Addr',1);					// Fornce send a message - may be start of something!
+	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
 
 
@@ -4268,6 +4239,10 @@ function test5006() {
 		console.error ( "Error test5005: 'PC' should be 2, got: " +PC.x._data_+" instead." );
 		nErr++;
 	}
+	if ( OUTPUT.x._data_ != 0x1230 ) {
+		console.error ( "Error test5005: 'OUTPUT' should be 0x1230, got : "+OUTPUT.x._data_.toString(16)+" instead." );
+		nErr++;
+	}
 
 
 	// ----------------------------------------------------------------------------
@@ -4284,7 +4259,7 @@ function test5006() {
 
 
 
-
+// Test SkipLt0 - Skipcond 000
 function test5010() {
 
 	// ----------------------------------------------------------------------------
@@ -4305,8 +4280,16 @@ function test5010() {
 
 
 	MICROCODE_PC.msg('Out',1);
-	MICROCODE.msg('Addr',1);					// Fornce send a message - may be start of something!
+	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
+
+return;
+
+// Stuck in MC at c0 -
+//		Show "Is Zero" output when (light-green line) with Value
+//		Show Mux Selected on id_decoder_Ctl_1 => 10 value in MUX
+//		MDR 8000 - Instruciton	SkipLt0
+//		IR 8000 - Instruciton SkipLt0
 
 	// Standard run 1 instruction code
 	Run1TickInit();
@@ -4354,6 +4337,30 @@ function test5010() {
 	return ( nErr );
 
 }
+
+
+
+
+
+
+
+
+
+
+
+// TODO: 4 Indirect Ops AddI, StoreI, LoadI and JumpI
+// TODO: Test all of the Skip* Instructions
+
+// -=-------------------------------------------------------------------------------------------------------------------------------
+// -=-
+// -=- TODO - Tests Below
+// -=-
+// -=-------------------------------------------------------------------------------------------------------------------------------
+
+// Test SkipEq0 - Skipcond 400
+
+// Test SkipGt0 - Skipcond 800
+
 
 function test_pJnS() {
 
@@ -4451,7 +4458,6 @@ function test_pStoreI() {
 
 
 
-// Skip*
 
 
 
