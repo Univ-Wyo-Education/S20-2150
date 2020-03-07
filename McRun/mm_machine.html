@@ -173,6 +173,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		<rect id="id_ir_sw" x="175" y="230" width="50" height="45" class="gray-box" />
 			<text x="230" y="233" class="vsmall" onclick="infoOn('hand_out');">Hand Out</text>
 			<text x="230" y="245" class="vsmall" onclick="infoOn('hand_out');">Hand[12]</text>
+			<!-- Line from gray box left and down to buss - hand_out data line -->
 			<rect id="id_hand_out_a" x="225" y="250" width="60" height="1" class="input-line" />
 			<rect id="id_hand_out_b" x="285" y="250" width="1" height="40" class="input-line" />
 
@@ -209,7 +210,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<text id="h_ir_txt_1" x="185" y="75" class="small"></text>
 
 			<text id="h_ir_val_15_12" x="350"  y="165" class="vsmall">0 0 0 0</text>
-			<text id="h_ir_val_10_09" x="350"  y="195" class="vsmall">1 1 1 1</text>
+			<text id="h_ir_val_11_08" x="350"  y="195" class="vsmall">1 1 1 1</text>
 
 	<rect id="id_result" x="300" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_result');"/>
 		<text x="300" y="25" class="small" onclick="infoOn('id_result');">Result</text>
@@ -1087,6 +1088,9 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 
 
+	<path id="id_ir_to_bus_full_hand_out" class="blue-line"
+		d="M 200 130      L 200 285 "
+		/>
 
 <!-- MM to Dec input - mixed with other inputs. -->
 	<!--
@@ -1525,13 +1529,14 @@ var lineOn = [
 	,"#id_mar_Out_to_memory" 
 	,"#id_mdr_to_memory" 
 	,"#id_memory_to_mdr" 
+	,"#id_ir_to_bus_full_hand_out"
 	// Text hidden until ready to use.
 		, "#h_alu_A_txt" 
 		, "#h_alu_B_txt" 
 		, "#h_alu_Out_txt" 
 		, "#h_mux_out_to_MPC" 
 		, "#h_ir_val_15_12" 
-		, "#h_ir_val_10_09" 
+		, "#h_ir_val_11_08" 
 ];	// List of IDs of lines that are turned-on
 
 function clearOtherLine() {
@@ -1726,6 +1731,12 @@ function infoOn1(i,x) {
 	case "hand_out":
 		showTextInOutputBox("Take the least-significant 12 bits of the IR and puts that on the bus - with 0's for the most","significant nibble (4 bits).","","IR_Out must be enabled at the same time.");
 		showLine("#hand_out");
+		break;
+	case "id_full_hand_out":
+	case "full_hand_out":
+		// xyzzy IR.TurnOn ( "full_hand_out" );
+		// xyzzy_5010_003: turn on line under gray hand_out box and arrow
+		showLine("#id_ir_to_bus_full_hand_out");
 		break;
 
 // ,"#Hand_Out_to_microcode"
@@ -3684,6 +3695,7 @@ function Run1TickStep() {
 	MICROCODE_PC.rise();			// RiseAll()??
 	PC.rise();						// RiseAll()??
 	MICROCODE.rise();				// RiseAll()??
+	MUX.rise();	
 
 	// console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn, thisTick );
 	thisTick = {};			// List of Connections called based on completion - only 1 call per tick.
@@ -4292,6 +4304,9 @@ return;
 //		MDR 8000 - Instruciton	SkipLt0
 //		IR 8000 - Instruciton SkipLt0
 
+// Went to 40
+// Went to 20
+
 	// Standard run 1 instruction code
 	Run1TickInit();
 	for ( var j = 0; j < 10; j++ ) {
@@ -4502,7 +4517,7 @@ function testAll() {
 		// <text id="h_alu_Out_txt" x="357"  y="73" class="vsmall">mmDD</text>
 		// <text id="h_mux_out_to_MPC" x="1280"  y="140" class="vsmall">Uu</text>
 		//		<text id="h_ir_val_15_12" x="350"  y="165" class="vsmall">0 0 0 0</text>
-		//		<text id="h_ir_val_10_09" x="350"  y="195" class="vsmall">1 1 1 1</text>
+		//		<text id="h_ir_val_11_08" x="350"  y="195" class="vsmall">1 1 1 1</text>
 
 </script>
 </body>

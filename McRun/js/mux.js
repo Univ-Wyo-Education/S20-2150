@@ -126,17 +126,27 @@ var MUX = {
 		switch ( MUX.x["_Ctl_"] & 0x3 ) {
 		case 0:
 			MUX.x["_Out_"] = MUX.x["_00_"] & 0xff;
+console.error ( "Mux_CTL_ of 0");
 		break;
 		case 1:
 			MUX.x["_Out_"] = MUX.x["_01_"] & 0xff;
+console.error ( "Mux_CTL_ of 1");
 		break;
 		case 2:
 			MUX.x["_Out_"] = MUX.x["_10_"] & 0xff;
 			showLine("#ir_11_08_to_decoder_mux_10");
+console.error ( "Mux_CTL_ of 2");
+		//		<text id="h_ir_val_11_08" x="350"  y="195" class="vsmall">1 1 1 1</text>
+			$("#h_ir_val_11_08").html(ctlTo4Dig(IR.x._11_08_)).show();
+			lineOn.push("#h_ir_val_15_12");
 		break;
 		case 3:
 			MUX.x["_Out_"] = MUX.x["_11_"] & 0xff;
 			showLine("#ir_15_12_to_decoder_mux_11");
+console.error ( "Mux_CTL_ of 3");
+		//		<text id="h_ir_val_15_12" x="350"  y="165" class="vsmall">0 0 0 0</text>
+			$("#h_ir_val_15_12").html(ctlTo4Dig(IR.x._15_12_)).show();
+			lineOn.push("#h_ir_val_15_12");
 		break;
 		}
 		var out = MUX.x["_Out_"];
@@ -152,6 +162,42 @@ var MUX = {
 		MUX.x["_Ctl_0_"] = null;
 		MUX.x["_Ctl_1_"] = null;
 		MUX.x["_Ctl_"] = null;
+
+		MUX.x["_00_0_"] = null;
+		MUX.x["_00_1_"] = null;
+		MUX.x["_00_2_"] = null;
+		MUX.x["_00_3_"] = null;
+		MUX.x["_00_4_"] = null;
+		MUX.x["_00_5_"] = null;
+		MUX.x["_00_6_"] = null;
+		MUX.x["_00_7_"] = null;
+
+		MUX.x["_01_0_"] = null;
+		MUX.x["_01_1_"] = null;
+		MUX.x["_01_2_"] = null;
+		MUX.x["_01_3_"] = null;
+		MUX.x["_01_4_"] = null;
+		MUX.x["_01_5_"] = null;
+		MUX.x["_01_6_"] = null;
+		MUX.x["_01_7_"] = null;
+
+		MUX.x["_10_0_"] = null;
+		MUX.x["_10_1_"] = null;
+		MUX.x["_10_2_"] = null;
+		MUX.x["_10_3_"] = null;
+		MUX.x["_10_4_"] = null;
+		MUX.x["_10_5_"] = null;
+		MUX.x["_10_6_"] = null;
+		MUX.x["_10_7_"] = null;
+
+		MUX.x["_11_0_"] = null;
+		MUX.x["_11_1_"] = null;
+		MUX.x["_11_2_"] = null;
+		MUX.x["_11_3_"] = null;
+		MUX.x["_11_4_"] = null;
+		MUX.x["_11_5_"] = null;
+		MUX.x["_11_6_"] = null;
+		MUX.x["_11_7_"] = null;
 	}
 	, err: function () {
 		return MUX.Error();
@@ -178,3 +224,13 @@ var MUX = {
 	}
 
 };
+			
+
+function ctlTo4Dig(x) {
+	var xx = x & 0xf;
+	var s = xx.toString(2);
+	var t = s.split("");
+	s = t.join(" ");
+	return s;
+}
+

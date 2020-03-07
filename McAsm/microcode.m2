@@ -145,15 +145,16 @@
 //x    McJmp_6 id_result_Out id_decoder_Ctl_1    id_ir_Out ir_decode_g2  					set_execute id_Microcode_PC_Ld 		// Jumpt to bank 0 of microcode based on input fields. decoder_ctl = 0b10
     McJmp_6 id_ir_Out id_decoder_Ctl_1      									id_Microcode_PC_Ld 		// Jumpt to bank 0 of microcode based on input fields. decoder_ctl = 0b10
 																						// Take bits 8, 9, 10, 11 of the hand -> decoder | McJmp_10 and McJmp_9 Jump to Below Ops
-    ORG        0b01_0000_00
+    ORG        0b01_0000_00														// 0x40
     id_ac_Out_to_ALU   id_ALU_Ctl id_ALU_Ctl_3 id_ALU_Ctl_0 id_result_Ld McJmp_5 		id_Microcode_PC_Ld		// Compare AC lessthan 0 (ALU LT 0)
     
-    ORG        0b01_0100_00
+    ORG        0b01_0100_00														// 0x50
     id_ac_Out_to_ALU    id_result_Ld McJmp_5             								id_Microcode_PC_Ld		// Compare AC lessthan 0 -- Alu with 0 control is NOP
     
-    ORG        0b01_1000_00
+    ORG        0b01_1000_00														// 0x
     id_ac_Out_to_ALU   id_ALU_Ctl id_ALU_Ctl_3 id_ALU_Ctl_2 id_result_Ld McJmp_5      	id_Microcode_PC_Ld		// Compare AC lessthan 0 (ALU GT 0xC)	 ( MC goto 0x10 )
 
+// xyzzy - this is wrong!
 	ORG		   0b0001_0000																// 0x10
 	id_result_Out id_decoder_Ctl_0 McJmp_5 McJmp_4 										id_Microcode_PC_Ld		// Use Zero Compare on MUX
 
