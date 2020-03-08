@@ -42,8 +42,6 @@ xyzzy - cleanup output / debug stuff
 1. xyzzy7000_006: Start process of "debug" flags - that can be set in Config
 1. xyzzy7000_007: Add a "run-test" button that connects to all the tests - and allows re-run from UI.
 
-
-1. xyzzy2000_001: really should fix this to be a .turn-off-at-startup class that is across all of `var lineOn = [` at init.
 1. xyzzy2000_002: whenver memory_Read - should take the action of MAR -> Memory on, Memory to MDR on - and show lines.
 1. xyzzy2000_003: Display of "Main Memory" could use PC.x._data_ for it's address for instruction dis-assembley.
 1. /* Kludge xyzzy2000_004 */
@@ -69,3 +67,5 @@ xyzzy8000 -- next test Load / Add / Halt
 
 
 
+-- fixed --
+	1. xyzzy2000_001: really should fix this to be a .turn-off-at-startup class that is across all of `var lineOn = [` at init.
