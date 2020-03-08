@@ -129,8 +129,8 @@
 // OpJumpI 0xCxxx, => 0xE0
 	ORG			0b1_1100_000													// 0xE0
     id_mar_Ld hand_out id_ir_Out 												set_execute id_Microcode_PC_Inc			// mar = int(hand) 
-    id_memory_Read  id_mdr_Ld   							              		id_Microcode_PC_Inc						// mdr = mem[mar]
-	id_mar_Ld id_mdr_Out                                      					id_Microcode_PC_Inc						// mar = mdr
+//  id_memory_Read  id_mdr_Ld   							              		id_Microcode_PC_Inc						// mdr = mem[mar]
+//	id_mar_Ld id_mdr_Out                                      					id_Microcode_PC_Inc						// mar = mdr
 	id_memory_Read id_mdr_Ld                                        			id_Microcode_PC_Inc						// mdr = mem[mar]
     id_pc_Ld id_mdr_Out 														ins_end id_Microcode_PC_Clr			    // PC <- mdr
 

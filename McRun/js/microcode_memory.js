@@ -80,7 +80,7 @@ var MICROCODE = {
 			var obj = MICROCODE.x["_Output_Lines_"];
 			var def = MICROCODE.x["_Output_Lines_"][key];
 			var mcWord = MICROCODE.x[def.DataArray][addr];
-console.log ( "MICROCODE: Raw On:", "->"+key+"<-", val, 'def.NthBit=', def.NthBit, "mcWord =", Number(mcWord).toString(16), def.DataArray, 'addr=', addr);
+// console.log ( "MICROCODE: Raw On:", "->"+key+"<-", val, 'def.NthBit=', def.NthBit, "mcWord =", Number(mcWord).toString(16), def.DataArray, 'addr=', addr);
 			var v2 = MICROCODE.x["_data1_"][addr];
 			var v1 = MICROCODE.x["_data2_"][addr];
 			if ( v1 === 0 && v2 === 0 ) {
@@ -90,7 +90,7 @@ console.log ( "MICROCODE: Raw On:", "->"+key+"<-", val, 'def.NthBit=', def.NthBi
 			if ( isNaN(def.NthBit) ) {
 				console.log ( "MICROCODE: Turn On: isNaN => True" );
 			} else if ( val == 1 && "-"+key+"-" != "--" && ! isNaN(def.NthBit) ) {
-console.log ( "MICROCODE: Turn On:", "->"+key+"<-", val, 'def.NthBit=', def.NthBit, "mcWord =", Number(mcWord).toString(16), def.DataArray, "    Do It - Push:", key, def );
+// console.log ( "MICROCODE: Turn On:", "->"+key+"<-", val, 'def.NthBit=', def.NthBit, "mcWord =", Number(mcWord).toString(16), def.DataArray, "    Do It - Push:", key, def );
 				MICROCODE.TurnOn( key );
 				MICROCODE.x[key] = 1;
 				var found = false;

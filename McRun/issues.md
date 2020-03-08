@@ -25,11 +25,15 @@
     5042: *OpJumpI      = OpCodeType(0xc000)
     5044: JnS (worked) -- calls into question JumpI(return)
 
-data/1703934c54c37530a7f334c2ade9beba2f67caa625619699c023275777660a98.txt  Microcode.
+data/ec25fd81d2c8ef25b6e3335e06311723cf202c34db454ffc3c9f593e268b3586.txt
 data/6323cdc278b6a2c967716d173d1c278538f378496f5e3b745da1a08bfafd55af.txt  CPU Code (hw2.hex)
+
+
+
 
 Issues:
 
+xyzzy - cleanup output / debug stuff
 
 1. xyzzy7000_001: IN test 7000 - at end the display of values from the IR (15..12) is not shown above the green line.
 1. xyzzy7000_002: An output line inthe "output" box - should show how MUX combined the results also.
@@ -60,10 +64,6 @@ xyzzy8000 -- next test Load / Add / Halt
 1. xyzzy5041_001: - at one point we have both "read" and "write" lines on to memory at once - single step it an late in the StoreI process --- OOPS!
 
 1. xyzzy5044_001: - Seems like JumpI is wrong.
-
-
-
-
 
 
 

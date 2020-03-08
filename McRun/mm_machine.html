@@ -6,7 +6,7 @@
 <title> MARIA Microcode Emulator </title>
 <!--
 MARIA Microcode Emulator: Version v1.4.2
-Sat Mar  7 06:34:54 MST 2020
+Sat Mar  7 16:19:10 MST 2020
 Copyright (C) University of Wyoming, 2019-2020.
 Credits:
 	Prof Philip Schlump - Primary Code Developer
@@ -2553,7 +2553,7 @@ console.log ( "theWorld2DepOn after:" + JSON.stringify ( theWorld2DepOn ) );
 //console.log ( "ALU=",ALU);
 //console.log ( "MUX=",MUX);
 
-console.log ( "Version v.1.4.2 - Sat Mar  7 06:34:54 MST 2020 - version that works for most instructions.");
+console.log ( "Version v.1.4.2 - Sat Mar  7 16:19:24 MST 2020 -- tested with all instructions tested.");
 console.log ( "Developed for the Deptatmentment of Computer Science 2150 Machine Architecture class.");
 console.log ( "Copyright (C) University of Wyoming, 2019-2020." );
 
@@ -5306,11 +5306,11 @@ function test5042() {
 	// ----------------------------------------------------------------------------
 	// Data Setup: 
 	// ----------------------------------------------------------------------------
-	MEMORY.x._data_[0x0000] = 0xc004;			// Program 	LoadI X
+	MEMORY.x._data_[0x0000] = 0xc004;			// Program 	JumpI X
 	MEMORY.x._data_[0x0001] = 0x7000;			//			Halt
 
-	MEMORY.x._data_[0x0004] = 0x0005;			//			HEX 5900
-	MEMORY.x._data_[0x0005] = 0x0010;			//			HEX 5900
+	MEMORY.x._data_[0x0004] = 0x0010;			//			HEX 0005
+
 	MEMORY.x._data_[0x0010] = 0x7010;			//			Halt Instruciton
 	mm_max = 20;
 	PC.x._data_ = 0x0000;						// So can check increment of PC
@@ -5479,12 +5479,13 @@ function test5044() {
 	MEMORY.x._data_[0x0002] = 0x7030;			//			Halt
 	MEMORY.x._data_[0x0003] = 0;
 	MEMORY.x._data_[0x0004] = 0x1155;			//			Data to load to AC in subroutine.
-	MEMORY.x._data_[0x0005] = 0x0008; // ?? -------------------------------------------------------------------- Why?
+//	MEMORY.x._data_[0x0005] = 0x0008; // ?? -------------------------------------------------------------------- Why?
 	MEMORY.x._data_[0x0006] = 0;
 	MEMORY.x._data_[0x0007] = 0;
 	MEMORY.x._data_[0x0008] = 0x4444;			//			Marker to see if writen with 0
 	MEMORY.x._data_[0x0009] = 0x1004;			//			Marker to see if writen with 0
-	MEMORY.x._data_[0x000a] = 0xc005;			//			JumpI 008 (return)	-------------------------------- Why? -changed from 8 to 5, 5 points at 8 (Extra Cycle in JumpI?)
+//	MEMORY.x._data_[0x000a] = 0xc005;			//			JumpI 008 (return)	-------------------------------- Why? -changed from 8 to 5, 5 points at 8 (Extra Cycle in JumpI?)
+	MEMORY.x._data_[0x000a] = 0xc008;			//			JumpI 008 (return)	-------------------------------- Why? -changed from 8 to 5, 5 points at 8 (Extra Cycle in JumpI?)
 	MEMORY.x._data_[0x000b] = 0;
 	mm_max = 14;
 	PC.x._data_ = 0x0000;						// So can check increment of PC
@@ -5499,6 +5500,7 @@ function test5044() {
 	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
 
+// return;
 
 	// Standard run 1 instruction code
 	Run1TickInit();
