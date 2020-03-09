@@ -1,5 +1,13 @@
 # Lecture 17 - An example Fetch Execute Machine
 
+2 billion PCs with GUI interfaces.
+
+3.5 billion smart phones (requiring embedded programming)
+
+31 billion IoT devices.  82% run Linux (Linux or RTOS Linux).  73% have a command line.
+
+"Pull back the curtain, and let the world see..."
+
 This is an interpreter that we are all going to use some in the class.  This is the real beginning
 of us looking at "system" software.  
 
@@ -140,8 +148,8 @@ $ ls
 output:
 
 ```
-xyzzy 
-Lect-17.html   Lect-17.md   Makefile   abc.txt   xyz.txt
+Lect-17.html Lect-17.html.pdf Lect-17.md Makefile Wizard-Oz1.jpg
+abc.txt      xyz.txt
 ```
 
 `ls` lists the files in a directory.    We can list in other directories also.  For example the `/bin` directory 
@@ -204,5 +212,66 @@ One of the builtin commands to the shell is the `cd` command.   The shell has th
 concept of a current working directory.  This is what PWD prints out.
 You can change the directory with the `cd` command.
 
+```
+$ pwd
+```
+
+In my case will be:
+
+```
+/Users/pschlump/go/src/github.com/Univ-Wyo-Education/S20-2150/Lectures/Lect-17
+```
+
+We can go up 1 directory with:
+
+```
+cd ..
+```
+
+Now `pwd` will output
+
+
+```
+/Users/pschlump/go/src/github.com/Univ-Wyo-Education/S20-2150/Lectures
+```
+
+and `ls` is:
+
+```
+Lect-01 Lect-02   Lect-03 Lect-04 Lect-05 Lect-06 Lect-07 Lect-08
+Lect-09 Lect-10   Lect-11 Lect-12 Lect-13 Lect-14 Lect-15 Lect-16
+Lect-17 py-cli.py todo.1
+```
+
+We can go back down the tree with
+
+```
+$ cd Lect-17
+```
+
+So when you double click on a program what is really happening is that it is running it
+as the "shell" and starts it with some sort of a command line.  In the workd of "mac"
+it is the "open" command.
+
+For example I can "open" a .jpg file
+
+```
+$ open Wizard-Oz1.jpg
+```
+
+
+We can also see where the "open" command is.
+
+```
+$ which open
+```
+
+What will "open" do?
+
+
+
+# Copyright
+
+Copyright (C) University of Wyoming, 2020.
 
 
