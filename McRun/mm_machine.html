@@ -6,7 +6,7 @@
 <title> MARIA Microcode Emulator </title>
 <!--
 MARIA Microcode Emulator: Version v1.4.3
-Sun Mar  8 06:04:20 MDT 2020
+Sun Mar	8 06:04:20 MDT 2020
 Copyright (C) University of Wyoming, 2019-2020.
 Credits:
 	Prof Philip Schlump - Primary Code Developer
@@ -21,26 +21,27 @@ Credits:
 
 <head>
 <style>
-	.small           { font: italic 15px sans-serif; }
-	.medium0         { font: 20px sans-serif; fill:#0603cf; }
-	.medium1         { font: italic 17px sans-serif; fill:#0603cf; }
-	.vsmall          { font: italic 12px sans-serif; }
-	.vsmall-red      { font: italic 12px sans-serif; fill:#ff0000; }
-	.teal-box        { fill:#00ffff; stroke:#000000; stroke-width:3; }
-	.yellow-box      { fill:#ffff00; stroke:#000000; stroke-width:3; }
-	.white-box       { fill:#ffffff; stroke:#000000; stroke-width:3; }
-	.gray-box        { fill:#d0d0d0; stroke:#000000; stroke-width:3; }
-	.white-box       { fill:#e0e0e0; stroke:#000000; stroke-width:3; }
-	.input-line      { fill:#000000; stroke:#000000; stroke-width:1; }
-	.red-line        { fill:#f00000; stroke:#000000; stroke-width:1; }
-	.out-box         { fill:#ffffff; stroke:#000000; stroke-width:1; }
-	.blue-line       { fill:#000000; stroke:#4040ff; stroke-width:3; fill:none }
-	.light-green-line       { fill:#000000; stroke:#20f020; stroke-width:3; fill:none }
-	.light-red-line       { fill:#000000; stroke:#ff0000; stroke-width:3; fill:none }
-	.blue-line-1     { fill:#000000; stroke:#4040ff; stroke-width:2; fill:none }
-	.button-box      { fill:#b4c5fb; stroke:#000000; stroke-width:2; opacity:0.75 }
-	.arrow-line      { stroke:#000000; stroke-width:2; stroke-linecap: round; }
-	.arrow-line-red  { stroke:#ff0000; stroke-width:2; stroke-linecap: round; }
+	.small					 { font: italic 15px sans-serif; }
+	.medium0				 { font: 20px sans-serif; fill:#0603cf; }
+	.medium1				 { font: italic 17px sans-serif; fill:#0603cf; }
+	.vsmall					{ font: italic 12px sans-serif; }
+	.vsmall-red			{ font: italic 12px sans-serif; fill:#ff0000; }
+	.teal-box				{ fill:#00ffff; stroke:#000000; stroke-width:3; }
+	.yellow-box			{ fill:#ffff00; stroke:#000000; stroke-width:3; }
+	.white-box			 { fill:#ffffff; stroke:#000000; stroke-width:3; }
+	.gray-box				{ fill:#d0d0d0; stroke:#000000; stroke-width:3; }
+	.white-box			 { fill:#e0e0e0; stroke:#000000; stroke-width:3; }
+	.input-line			{ fill:#000000; stroke:#000000; stroke-width:1; }
+	.red-line				{ fill:#f00000; stroke:#000000; stroke-width:1; }
+	.out-box				 { fill:#ffffff; stroke:#000000; stroke-width:1; }
+	.blue-line			 { fill:#000000; stroke:#4040ff; stroke-width:3; fill:none }
+	.light-green-line			 { fill:#000000; stroke:#20f020; stroke-width:3; fill:none }
+	.light-cyan-line			 { fill:#000000; stroke:#40ffff; stroke-width:3; fill:none }
+	.light-red-line			 { fill:#000000; stroke:#ff0000; stroke-width:3; fill:none }
+	.blue-line-1		 { fill:#000000; stroke:#4040ff; stroke-width:2; fill:none }
+	.button-box			{ fill:#b4c5fb; stroke:#000000; stroke-width:2; opacity:0.75 }
+	.arrow-line			{ stroke:#000000; stroke-width:2; stroke-linecap: round; }
+	.arrow-line-red	{ stroke:#ff0000; stroke-width:2; stroke-linecap: round; }
 	.arrow-line-green { stroke:#00ff00; stroke-width:2; stroke-linecap: round; }
 	.bk-box 		 { fill:#d7d7d7; stroke-width:0; }
 	.hash-input 	 {
@@ -56,72 +57,72 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 /* The Modal (background) */
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
 /* Modal Content */
 .modal-content {
-  position: relative;
-  background-color: #fefefe;
-  margin: auto;
-  padding: 0;
-  border: 1px solid #888;
-  width: 80%;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-  -webkit-animation-name: animatetop;
-  -webkit-animation-duration: 0.4s;
-  animation-name: animatetop;
-  animation-duration: 0.4s
+	position: relative;
+	background-color: #fefefe;
+	margin: auto;
+	padding: 0;
+	border: 1px solid #888;
+	width: 80%;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+	-webkit-animation-name: animatetop;
+	-webkit-animation-duration: 0.4s;
+	animation-name: animatetop;
+	animation-duration: 0.4s
 }
 
 /* Add Animation */
 @-webkit-keyframes animatetop {
-  from {top:-300px; opacity:0} 
-  to {top:0; opacity:1}
+	from {top:-300px; opacity:0} 
+	to {top:0; opacity:1}
 }
 
 @keyframes animatetop {
-  from {top:-300px; opacity:0}
-  to {top:0; opacity:1}
+	from {top:-300px; opacity:0}
+	to {top:0; opacity:1}
 }
 
 /* The Close Button */
 .close {
-  color: white;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+	color: white;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
 }
 
 .modal-header {
-  padding: 2px 16px;
-  background-color: #5cb85c;
-  color: white;
+	padding: 2px 16px;
+	background-color: #5cb85c;
+	color: white;
 }
 
 .modal-body {padding: 2px 16px;}
 
 .modal-footer {
-  padding: 2px 16px;
-  background-color: #5cb85c;
-  color: white;
+	padding: 2px 16px;
+	background-color: #5cb85c;
+	color: white;
 }
 </style>
 <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
@@ -1318,14 +1319,29 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		<!-- Arrow -->
 	</g>
 
-	<!--
 	<g id="id_memory_to_mdr" class="off-at-start">
 		<path class="light-green-line"
 			d="M 570 375   L  570 415 "
 			/>
 	</g>
-	-->
 		<!-- Arrow -->
+
+	<!--
+		<rect id="id_result_zero_out" x="350" y="120" width="47" height="1" class="input-line" />
+			<text x="355" y="115" class="vsmall" onclick="infoOn('id_result_zero_out');">Is Zero</text>
+	-->
+	<g id="id_is_zero_to_mux" class="off-at-start">
+		<path class="light-cyan-line"
+			d="M 1135 130   L 1135 155  1170 155  1170 208  1200 208  "
+			/>
+		<path class="light-cyan-line"
+			d="M 350 120   L  397 120  397 208   1200 208 "
+			/>
+			<text id="h_is_zero_output" x="450"  y="200" class="vsmall off-at-start"></text>
+	</g>
+
+
+
 
 
 <!-- Buttons -->
@@ -1917,9 +1933,11 @@ xyzzy
 		break;
 	case "id_memory_Read":
 		showLine("#Main_Memory_Read");
+		showLine("#id_memory_to_mdr");
 		break;
 	case "id_memory_Write":
 		showLine("#Main_Memory_Write");
+		showLine("#id_memory_to_mdr");
 		break;
 
 

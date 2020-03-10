@@ -47,56 +47,55 @@ data/6323cdc278b6a2c967716d173d1c278538f378496f5e3b745da1a08bfafd55af.txt CPU Co
 
 Issues:
 
+1. xyzzy5005_001: both read/write lines to memory are turned on during a store.
+	- xyzzy5041_001: - at one point we have both "read" and "write" lines on to memory at once - single step it an late in the StoreI process --- OOPS!
+1. xyzzy2000_002: whenver memory_Read - should take the action of MAR -> Memory on, Memory to MDR on - and show lines.
 
 1. do the rest of the buttons.
+	Run - 
+		- The "run" loop - with background runner and delay ( 100ms for each tick? )  Settable in Config.
+
 	Input - put in a list of values - that gets used each time an "Input" instruction happens.
 	Setup - form
+		- xyzzy7000_007: + Add a "run-test" (under setup) button that connects to all the tests - and allows re-run from UI.
+		- Setup screen
+			- Take the tests and put a check-mark and a button for each one. (Check mark turns on single step)
+			- Delay for "run" in run loop.
 	+++ Show Memory - Set MAR - and call display of memory at that location. (show range of memory? - show ptr at location(pc))  See: LoadMA()
-	Run - 
+
 	Logic Probe ??
 
-1. xyzzy - cleanup output / debug stuff
-
-1. test3000 - test of ALU - is failing when run at the end of testAll and succeding if run on its own.
-
-1. xyzzy5001_000: Line from Main Memory to MDR is not highlighted when Read/Write happen.
-
-1. xyzzy7000_003: Need a way to "peek" into microcode and see all lines on at address.
-1. xyzzy7000_004: +++ Cleanup of "output" so add new lines - no clear - a "screen scrole" behavior (with a button to see last 300 lines as a modal?)
-1. xyzzy7000_006: + Start process of "debug" flags - that can be set in Config
-1. xyzzy7000_007: + Add a "run-test" button that connects to all the tests - and allows re-run from UI.
-
-1. xyzzy2000_002: whenver memory_Read - should take the action of MAR -> Memory on, Memory to MDR on - and show lines.
-1. xyzzy2000_003: Display of "Main Memory" could use PC.x._data_ for it's address for instruction dis-assembley.
-1. /* Kludge xyzzy2000_004 */
-
-1. xyzzy5005_001: both read/write lines to memory are turned on during a store.
-1. xyzzy5005_002: green line is left turned on.
-
-xyzzy8000 -- next test Load / Add / Halt
-
-8 Down and 7 to go.  Load, Add, Subt, Halt, SkipLt0, Input, Output, Jump, Clear
-	ToDo	: AddI, SubtI, LoadI, StoreI, JnS, (SkipGt0, SkipEq0)
+1. test3000 - test of ALU - is failing when run at the end of testAll and succeeding if run on its own.
 
 
-1. xyzzy5010_001: - On "memory_Read" - falied to light (and add arrow to) the line form Memory to MDR. End of Fetch Cycle Read.
-1. xyzzy5010_004: - Line from RESULT "Is Zero" to MUX is not created/turned on when ALU operation indicates compare.
 
 
-1. xyzzy5041_001: - at one point we have both "read" and "write" lines on to memory at once - single step it an late in the StoreI process --- OOPS!
 
-1. xyzzy5044_001: - Seems like JumpI is wrong.
 
-1. The "run" loop - with background runner and delay ( 100ms for each tick? )  Settable in Config.
+
+
+
 
 1. Comments on all the functions.   Move testing out to ./js/mm_test_code.js
-1. Setup screen
-	- Take the tests and put a check-mark and a button for each one. (Check mark turns on single step)
-	- Delay for "run" in run loop.
+1. /* Kludge xyzzy2000_004 */
+1. xyzzy7000_006: + Start process of "debug" flags - that can be set in Config
+1. xyzzy7000_004: +++ Cleanup of "output" so add new lines - no clear - a "screen scrole" behavior (with a button to see last 300 lines as a modal?)
+1. xyzzy7000_003: Need a way to "peek" into microcode and see all lines on at address.
 
 
+
+-- ignored --
+	1. xyzzy2000_003: Display of "Main Memory" could use PC.x._data_ for it's address for instruction dis-assembley.
 -- fixed --
 	1. xyzzy2000_001: really should fix this to be a .turn-off-at-startup class that is across all of `var lineOn = [` at init.
 	1. xyzzy7000_001: IN test 7000 - at end the display of values from the IR (15..12) is not shown above the green line.
 	1. xyzzy7000_002: An output line in the "output" box - should show how MUX combined the results also.
 	1. xyzzy5032_000: Add in the skip-set to single step mode to all the tests.
+	1. xyzzy4000_001: Line from is-zero is non-existent
+		<g id="id_is_zero_to_mux" class="x-off-at-start">
+	1. xyzzy5001_000: Line from Main Memory to MDR is not highlighted when Read/Write happen.
+	1. xyzzy - cleanup output / debug stuff
+	1. xyzzy5005_002: green line is left turned on.
+	1. xyzzy5010_004: - Line from RESULT "Is Zero" to MUX is not created/turned on when ALU operation indicates compare.
+	1. xyzzy5010_001: - On "memory_Read" - falied to light (and add arrow to) the line form Memory to MDR. End of Fetch Cycle Read.
+	1. xyzzy5044_001: - Seems like JumpI is wrong.

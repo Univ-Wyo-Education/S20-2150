@@ -126,15 +126,14 @@ var MUX = {
 		switch ( MUX.x["_Ctl_"] & 0x3 ) {
 		case 0:
 			MUX.x["_Out_"] = MUX.x["_00_"] & 0xff;
-// console.log ( "Mux_CTL_ of 0");
+// console.error ( "Mux_CTL_ of 0 - jump occuring");
 		break;
 		case 1:
-			// console.log ( "Mux_CTL_ of 1");
 			var v = ( RESULT.x._data_ > 0 ) ? 0 : 1;
-console.error ( "IsZero - picked out", v );
-			// $("#h_ir_val_11_08").html(ctlTo4Dig(IR.x._11_08_)).show();
-			// lineOn.push("#h_ir_val_15_12");
+			// console.error ( "IsZero - picked out", v );
 			MUX.x["_Out_"] = MUX.x["_01_"] & 0xff;
+			$("#h_is_zero_output").html(" "+(v&0x1)).show();
+			showLine("#id_is_zero_to_mux");
 		break;
 		case 2:
 			MUX.x["_Out_"] = MUX.x["_10_"] & 0xff;
@@ -155,8 +154,6 @@ console.error ( "IsZero - picked out", v );
 		}
 		var out = MUX.x["_Out_"];
 		MICROCODE_PC.x["_InputBuffer_"] = out;
-		// MICROCODE_PC.msg("Ld",1);
-		// <text id="h_mux_out_to_MPC" x="1280"  y="140" class="vsmall">Uu</text>
 		$("#h_mux_out_to_MPC").text(toHex(out,2)).show();
 	}
 
