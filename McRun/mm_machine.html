@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title> MARIA Microcode Emulator </title>
 <!--
-MARIA Microcode Emulator: Version v1.4.2
-Sat Mar  7 16:19:10 MST 2020
+MARIA Microcode Emulator: Version v1.4.3
+Sun Mar  8 06:04:20 MDT 2020
 Copyright (C) University of Wyoming, 2019-2020.
 Credits:
 	Prof Philip Schlump - Primary Code Developer
@@ -209,8 +209,6 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<text id="h_ir_txt_0" x="185" y="55" class="small"></text>
 			<text id="h_ir_txt_1" x="185" y="75" class="small"></text>
 
-			<text id="h_ir_val_15_12" x="350"  y="165" class="vsmall off-at-start">0 0 0 0</text>
-			<text id="h_ir_val_11_08" x="350"  y="195" class="vsmall off-at-start">1 1 1 1</text>
 
 	<rect id="id_result" x="300" y="30" width="50" height="100" class="teal-box" onclick="infoOn('id_result');"/>
 		<text x="300" y="25" class="small" onclick="infoOn('id_result');">Result</text>
@@ -1291,6 +1289,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		<path class="light-green-line"
 			d="M 200 170   L 1135 170  1170 170  1170 240  1200 240  "
 			/>
+			<text id="h_ir_val_15_12" x="350"  y="165" class="vsmall off-at-start">0 0 0 0</text>
 	</g>
 	<g id="ir_11_08_to_decoder_mux_10" class="off-at-start">
 		<path class="light-green-line"
@@ -1299,6 +1298,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		<path class="light-green-line"
 			d="M 200 200   L 1135 200  1170 200  1170 228  1170 228  "
 			/>
+			<text id="h_ir_val_11_08" x="350"  y="195" class="vsmall off-at-start">1 1 1 1</text>
 	</g>
 
 	<!--	showLine("#id_mar_Out_to_memory"); -->
@@ -1403,7 +1403,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
  </g>
 </svg>
 
-<!-- The Modal ======================================================== -->
+<!-- The Modal : Microcode Load ======================================================== -->
 <div id="myModal1" class="modal">
 
 	<!-- Modal content -->
@@ -1443,11 +1443,37 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 </div>
 
+<!-- The Modal : Show Memory  ======================================================== -->
+<div id="myModal3" class="modal">
+
+	<!-- Modal content -->
+	<div class="modal-content">
+		<div class="modal-header">
+			<span class="close" onclick="hideModal();">&times;</span>
+			<h4>Address in Main Memory</h4>
+		</div>
+		<div class="modal-body">
+			<p>Enter the address in hex you want to have shown</p>
+			<input id="modal-input-ma" spellcheck="false" name="i_mm_addr" class="mem-input">
+		</div>
+		<div class="modal-footer">
+			<button class="modal-submit" type="button" id="modal-submit3" onclick="LoadMA();">Show Address</button>
+		</div>
+	</div>
+
+</div>
+
 <script>
+
+var debug_PropagateSignals = false ;
+
+
+
 
 // Get the modal
 var modal1 = document.getElementById("myModal1");
 var modal2 = document.getElementById("myModal2");
+var modal3 = document.getElementById("myModal3");
 
 // Get the <span> element that closes the modal
 // var span = document.getElementsByClassName("close")[0];
@@ -1461,12 +1487,17 @@ function displayModalMM () {
 	// modal.style.display = "block";
 	$("#myModal2").css ( { "display":"block" } );
 }
+function displayModalMA () {
+	// modal.style.display = "block";
+	$("#myModal3").css ( { "display":"block" } );
+}
 
 // When the user clicks on <span> (x), close the modal
 function hideModal() {
 	// modal.style.display = "none";
 	$("#myModal1").css ( { "display":"none" } );
 	$("#myModal2").css ( { "display":"none" } );
+	$("#myModal3").css ( { "display":"none" } );
 }
 
 // When the user clicks anywhere outside of the modal, close it
@@ -1652,13 +1683,13 @@ function infoOn1(i,x) {
 
 	yyy.push ( x );
 
-	console.log("infoOn1: svg/id["+i+"]:"+x);
+	// console.log("infoOn1: svg/id["+i+"]:"+x);
 	switch ( x ) {
 
 	case "clear-line":
 		break;
 	case "help":
-		showTextInOutputBox("MARIA Microcode Emulator: Version v1.4.2"
+		showTextInOutputBox("MARIA Microcode Emulator: Version v1.4.3"
 			,"Load assembled microcode and assembled instructions, then step or run."
 			,""
 			,"https://github.com/Univ-Wyo-Education/S20-2150/McRun/ for more detailed help."
@@ -1702,7 +1733,9 @@ function infoOn1(i,x) {
 	case "step-ins":	// Step 1 Instruction
 		Step1Ins();
 		break;
-
+	case "show-memory":
+		displayModalMA();
+		break;
 
 	// logic-probe
 
@@ -2299,24 +2332,24 @@ var Connections = {
 function RunConnections () {
 	for ( var cur in theWorld2 ) {
 		// for ( var key in Connections ) {
-console.log ( "cur=", cur );
+// console.log ( "cur=", cur );
 		if ( typeof Connections[cur] !== "undefined" ) {
 			var wireTo = Connections[cur];
-			console.log ( "For "+cur+" wireTo=", wireTo );
+			// console.log ( "For "+cur+" wireTo=", wireTo );
 			for ( var ww = 0, my = wireTo.length; ww < my; ww++ ) {
 				var name = wireTo[ww].Name;
 				var op = wireTo[ww].Op;
 				for ( var kk = 0, mx = op.length; kk < mx; kk++ ) {
 					var toCall = name+".msg('"+op[kk]+"',1);";
 					if ( ! thisTick[toCall] ) { // thisTick ??
-console.log ( ">>>Connections CALLING<<<: "+name+".msg('"+op[kk]+"',1);" ); 
+// console.log ( ">>>Connections CALLING<<<: "+name+".msg('"+op[kk]+"',1);" ); 
 						if ( window[name] && window[name].msg ) {
 							window[name].msg ( op[kk], 1 );						// connection from "wire" to chip.
 						} else {
 							console.error ( "RunConnections: failed for: ", name+".msg('"+op[kk]+"',1);" ); 
 						}
 					} else {
-console.log ( ">>>Skipped", toCall);
+// console.log ( ">>>Skipped", toCall);
 					}
 					thisTick[toCall] = 1;
 				}
@@ -2505,43 +2538,63 @@ function depdendenciesMet ( tw ) {
 	return true;
 }
 
+
+function KeyOfHash ( x ) {
+	var s = [];
+	for ( var km in x ) {
+		s.push ( km );
+	}
+	return s.join("-");
+}
+
+function KeyOfArr ( x ) {
+	return x.join("-");
+}
+
 function PropagateSignals () {
-console.log ( "theWorld2      before:" + JSON.stringify ( theWorld2), ln() );
-console.log ( "theWorld2DepOn before:" + JSON.stringify ( theWorld2DepOn ) );
+	if ( debug_PropagateSignals ) {
+		console.log ( "theWorld2      before:" + JSON.stringify ( theWorld2), ln() );
+		console.log ( "theWorld2DepOn before:" + JSON.stringify ( theWorld2DepOn ) );
+	}
+	var Pend = {};
 	for ( var nIter = 0; hasPending(); nIter++ ) {
-		if ( nIter > 50 ) {
-			console.error ( "Out of Gas..." );
+		if ( nIter > 10 ) {
+			console.error ( "Out of Gas...", Pend );
 			break;
 		}
 		for ( var kk = 0, mx = theWorld2DepOn.length; kk < mx; kk++ ) {
 			var tw = theWorld2DepOn[kk];
 			if ( tw.State === "Pending" ) {
+				Pend[KeyOfArr(tw.DepOn)] = 1;
 				if ( depdendenciesMet ( tw ) ) {
 					tw.Fx();
 					theWorld2DepOn[kk].State = "Done";
+					delete Pend[KeyOfArr(tw.DepOn)];
 				}
 			}
 		}
 	}
-console.log ( "theWorld2      after:" + JSON.stringify ( theWorld2) );
-console.log ( "theWorld2DepOn after:" + JSON.stringify ( theWorld2DepOn ) );
+	if ( debug_PropagateSignals ) {
+		console.log ( "theWorld2      after:" + JSON.stringify ( theWorld2) );
+		console.log ( "theWorld2DepOn after:" + JSON.stringify ( theWorld2DepOn ) );
+	}
 }
 
 
 </script>
-<script src="js/pc_reg.js?v=0008"></script>
-<script src="js/ir_reg.js?v=0008"></script>
-<script src="js/result_reg.js?v=0008"></script>
-<script src="js/ac_reg.js?v=0008"></script>
-<script src="js/mar_reg.js?v=0008"></script>
-<script src="js/mdr_reg.js?v=0008"></script>
-<script src="js/input_reg.js?v=0008"></script>
-<script src="js/output_reg.js?v=0008"></script>
-<script src="js/microcode_pc_reg.js?v=0008"></script>
-<script src="js/microcode_memory.js?v=0008"></script>
-<script src="js/main_memory.js?v=0008"></script>
-<script src="js/alu.js?v=0008"></script>
-<script src="js/mux.js?v=0008"></script>
+<script src="js/pc_reg.js"></script>
+<script src="js/ir_reg.js"></script>
+<script src="js/result_reg.js"></script>
+<script src="js/ac_reg.js"></script>
+<script src="js/mar_reg.js"></script>
+<script src="js/mdr_reg.js"></script>
+<script src="js/input_reg.js"></script>
+<script src="js/output_reg.js"></script>
+<script src="js/microcode_pc_reg.js"></script>
+<script src="js/microcode_memory.js"></script>
+<script src="js/main_memory.js"></script>
+<script src="js/alu.js"></script>
+<script src="js/mux.js"></script>
 
 
 <script src="js/show-memory.js?v=0008"></script>
@@ -2557,7 +2610,7 @@ console.log ( "theWorld2DepOn after:" + JSON.stringify ( theWorld2DepOn ) );
 //console.log ( "ALU=",ALU);
 //console.log ( "MUX=",MUX);
 
-console.log ( "Version v.1.4.2 - Sat Mar  7 16:19:24 MST 2020 -- tested with all instructions tested.");
+console.log ( "Version v.1.4.3 - Sun Mar  8 06:04:20 MDT 2020" );
 console.log ( "Developed for the Deptatmentment of Computer Science 2150 Machine Architecture class.");
 console.log ( "Copyright (C) University of Wyoming, 2019-2020." );
 
@@ -2711,6 +2764,17 @@ function OnStartupReloadMainMemory() {
 OnStartupReloadMainMemory();
 
 
+
+function LoadMA() {
+	hideModal();
+console.log ( "LoadMA()" );
+	/* <input id="modal-input-ma" spellcheck="false" name="i_mm_addr" class="mem-input"> */
+	var v = $("#modal-input-ma").val();
+	v = parseInt ( v, 16 );
+	showMemoryAtPC ( v );
+}
+
+
 var isInit = 0;
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
@@ -2740,6 +2804,8 @@ function ResetMachine() {
 }
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
+// Registers and Components.
+// ---------------------------------------------------------------------------------------------------------------------------------------
 //		Microcode_PC
 //		Microcode
 //		Input
@@ -2754,9 +2820,13 @@ function ResetMachine() {
 //		Decoder
 //		Output
 // ---------------------------------------------------------------------------------------------------------------------------------------
+
 var StopMcTick = 0;
 var StopTick = 0;
 
+// Step1Tick will step forward 1 microcode step - the user interface gets to refresh after the step-tick.
+// Step1Tick checks to see if the system has been setup - if not it will set it up and mark it as isInit
+// in a glboal.  This can be reset using the ResetMachine() call.
 function Step1Tick() {
 	if ( isInit === 0 ) {
 		MICROCODE_PC.msg('Out',1);
@@ -2768,6 +2838,7 @@ function Step1Tick() {
 	Run1TickStep();
 }
 
+// Step1Ins will step forwared 1 instruction wintout a user-interface refresh.
 function Step1Ins() {
 	Step1Tick();
 
@@ -2780,28 +2851,52 @@ function Step1Ins() {
 }
 
 
-// From StackOverflow: Public Domain
-function ln() {
-  var e = new Error();
-  if (!e.stack) try {
-    // IE requires the Error to actually be throw or else the Error's 'stack'
-    // property is undefined.
-    throw e;
-  } catch (e) {
-    if (!e.stack) {
-      return 0; // IE < 10, likely
-    }
-  }
-  var stack = e.stack.toString().split(/\r\n|\n/);
-  // We want our caller's frame. It's index into |stack| depends on the
-  // browser and browser version, so we need to search for the second frame:
-  var frameRE = /:(\d+):(?:\d+)[^\d]*$/;
-  do {
-    var frame = stack.shift();
-  } while (!frameRE.exec(frame) && stack.length);
-  return frameRE.exec(stack.shift())[1];
+// stackTrace will return the current stack trace for output on the console.
+function stackTrace() {
+	var e = new Error();
+	if (!e.stack) try {
+		throw e;
+	} catch (e) {
+		if (!e.stack) { // Probably the dreaded IE < 10
+			return 0;
+		}
+	}
+	var stack = e.stack.toString().split(/\r\n|\n/);		// deal with Winderz icky newlines.
+	return ( stack );
 }
 
+// ln will return the line number that you are currently at - for debuging.
+function ln() {
+	var stack = stackTrace();
+	var frameRE = /:(\d+):(?:\d+)[^\d]*$/;
+	do {
+		var frame = stack.shift();
+	} while (!frameRE.exec(frame) && stack.length);
+	return frameRE.exec(stack.shift())[1];
+}
+
+// ctlTo4Dig will take the LSB - 4 ditits - of the number and convert it to a binary string with spaces in it.
+// This is for display purposes.
+function ctlTo4Dig(x) {
+	var xx = x & 0xf;
+	xx |= 0x10;
+	var s = xx.toString(2);
+	s = s.substr(1)
+	// console.log ( "->"+s+"<-", stackTrace() );
+	var t = s.split("");
+	s = t.join(" ");
+	return s;
+}
+
+// signed convers a javascript float value that is 16bits to a signed 32 bit value.
+function signed(v) {
+    if ( ( v & 0x8000 ) > 0 ) {
+        var w = v | 0xffff0000;
+        return w;
+    } else {
+        return v;
+    }
+}
 
 var nErr = 0;
 
@@ -3412,6 +3507,8 @@ function test3001() {
 	//ALU.x._Ctl_2_ = 1;
 	//ALU.x._Ctl_3_ = 0;
 
+	ALU.rise();
+
 	theWorld2["Bus"] = 7;			// _B_ 
 	AC.x["_data_"] = 5;				// _A_
 	theWorld2["ac_Out_to_ALU"] = 5;	// _A_
@@ -3494,7 +3591,7 @@ function test3800() {
 // test a 2 instruction program with 1 word of data.
 // 2000.  Test Load, Halt
 //var Connections = {				:2033
-function test2000() {
+function test2000( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup
@@ -3510,15 +3607,17 @@ function test2000() {
 	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
 
-return;
+	if ( single ) {
+		return;
+	}
 
 	// Standard run 1 instruction code
 	Run1TickInit();
 	for ( var j = 0; j < 10; j++ ) {
-console.error( "Top of loop:",j );
+// console.error( "Top of loop:",j );
 		for ( var i = 0; i < 100; i++ ) { 		
 			Run1TickStep();
-console.error( "bottom of loop:",j ,i );
+// console.error( "bottom of loop:",j ,i );
 			if ( !!(theWorld2.ins_end === 1) ) {
 				break;
 			}
@@ -3534,16 +3633,16 @@ console.error( "bottom of loop:",j ,i );
 		nErr++;
 	}
 	if ( theWorld2.ins_end !== 1 ) {
-		console.error ( "Error test7000: 'ins_end' should be 1, got not set: "+theWorld2.ins_end+" instead." );
+		console.error ( "Error test2000: 'ins_end' should be 1, got not set: "+theWorld2.ins_end+" instead." );
 		nErr++;
 	}
 	if ( PC.x._data_ !== 2 ) {
-		console.error ( "Error test7000: 'PC' should be 2, got: " +PC.x._data_+" instead." );
+		console.error ( "Error test2000: 'PC' should be 2, got: " +PC.x._data_+" instead." );
 		nErr++;
 	}
 //	/* Only ran 1 instruciton */
 //	if ( PC.x._data_ !== 1 ) {
-//		console.error ( "Error test7000: 'PC' should be 1, got: " +PC.x._data_+" instead." );
+//		console.error ( "Error test2000: 'PC' should be 1, got: " +PC.x._data_+" instead." );
 //		nErr++;
 //	}
 
@@ -3569,7 +3668,7 @@ console.error( "bottom of loop:",j ,i );
 
 
 
-function test7000() {
+function test7000( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup
@@ -3585,6 +3684,9 @@ function test7000() {
 	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
 
+	if ( single ) {
+		return;
+	}
 
 	Run1TickInit();
 	for ( var i = 0; i < 100; i++ ) { 		// This is different than others - other tests will check for "ins_end" to mark the end of the instruction.
@@ -3786,7 +3888,7 @@ if ( false ) {
 
 
 
-function test5001() {
+function test5001( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: Load / Halt
@@ -3804,6 +3906,10 @@ function test5001() {
 	MICROCODE_PC.msg('Out',1);
 	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
+
+	if ( single ) {
+		return;
+	}
 
 
 	// Standard run 1 instruction code
@@ -3852,7 +3958,7 @@ function test5001() {
 
 }
 
-function test5002() {
+function test5002( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: Load / Subt / Halt
@@ -3870,6 +3976,10 @@ function test5002() {
 	MICROCODE_PC.msg('Out',1);
 	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
+
+	if ( single ) {
+		return;
+	}
 
 
 	// Standard run 1 instruction code
@@ -3919,7 +4029,7 @@ function test5002() {
 }
 
 
-function test5003() {
+function test5003( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: Load / Halt
@@ -3937,6 +4047,10 @@ function test5003() {
 	MICROCODE_PC.msg('Out',1);
 	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
+
+	if ( single ) {
+		return;
+	}
 
 
 	// Standard run 1 instruction code
@@ -3987,7 +4101,7 @@ function test5003() {
 
 }
 
-function test5004() {
+function test5004( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: Load / Halt
@@ -4004,6 +4118,10 @@ function test5004() {
 	MICROCODE_PC.msg('Out',1);
 	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
+
+	if ( single ) {
+		return;
+	}
 
 
 	// Standard run 1 instruction code
@@ -4052,7 +4170,7 @@ function test5004() {
 
 }
 
-function test5005() {
+function test5005( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: Load / Halt
@@ -4071,6 +4189,10 @@ function test5005() {
 	MICROCODE_PC.msg('Out',1);
 	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
+
+	if ( single ) {
+		return;
+	}
 
 
 
@@ -4133,7 +4255,7 @@ function test5005() {
 
 // TODO: This needs work.  Input instruction needs to prompt user for the input! "do_input" line is set - what to do?
 // OpInput, then Store
-function test5007() {
+function test5007( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: Load / Halt
@@ -4154,6 +4276,10 @@ function test5007() {
 	MICROCODE_PC.msg('Out',1);
 	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
+
+	if ( single ) {
+		return;
+	}
 
 
 
@@ -4209,7 +4335,7 @@ function test5007() {
 }
 
 // OpOutput - List output values when "do_output" is signaled in a "Output Q"?
-function test5006() {
+function test5006( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: Load / Halt
@@ -4231,6 +4357,10 @@ function test5006() {
 	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
 
+
+	if ( single ) {
+		return;
+	}
 
 
 	// Standard run 1 instruction code
@@ -4285,7 +4415,7 @@ function test5006() {
 
 
 // Test SkipLt0 - Skipcond 000 - Number Larger than 0, but not negative.
-function test5010() {
+function test5010( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: JnS, JumpI
@@ -4307,6 +4437,10 @@ function test5010() {
 	MICROCODE_PC.msg('Out',1);
 	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
+
+	if ( single ) {
+		return;
+	}
 
 	// Goes to 40
 	// Goes to 20
@@ -4361,7 +4495,7 @@ function test5010() {
 
 
 // Test SkipLt0 - Skipcond 000 - Number less than 0, 2s compliment
-function test5011() {
+function test5011( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: JnS, JumpI
@@ -4386,6 +4520,10 @@ function test5011() {
 
 	// Went to 40
 	// Went to 22
+
+	if ( single ) {
+		return;
+	}
 
 	// Standard run 1 instruction code
 	Run1TickInit();
@@ -4439,7 +4577,7 @@ function test5011() {
 
 
 // Test SkipLt0 - Skipcond 000 - Number equal to 0, but not negative.
-function test5012() {
+function test5012( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: JnS, JumpI
@@ -4465,6 +4603,10 @@ function test5012() {
 
 	// Goes to 40
 	// Goes to 20
+
+	if ( single ) {
+		return;
+	}
 
 	// Standard run 1 instruction code
 	Run1TickInit();
@@ -4540,7 +4682,7 @@ function test5012() {
 
 
 // Test SkipGt0 - Skipcond 000 - Number Larger than 0, but not negative.
-function test5020() {
+function test5020( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: JnS, JumpI
@@ -4565,6 +4707,10 @@ function test5020() {
 
 	// Goes to 40
 	// Goes to 22
+
+	if ( single ) {
+		return;
+	}
 
 	// Standard run 1 instruction code
 	Run1TickInit();
@@ -4616,7 +4762,7 @@ function test5020() {
 
 
 // Test SkipGt0 - Skipcond 000 - Number less than 0, 2s compliment
-function test5021() {
+function test5021( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: JnS, JumpI
@@ -4641,6 +4787,10 @@ function test5021() {
 
 	// Went to 40
 	// Went to 20
+
+	if ( single ) {
+		return;
+	}
 
 	// Standard run 1 instruction code
 	Run1TickInit();
@@ -4694,7 +4844,7 @@ function test5021() {
 
 
 // Test SkipGt0 - Skipcond 000 - Number equal to 0, but not negative.
-function test5022() {
+function test5022( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: JnS, JumpI
@@ -4720,6 +4870,10 @@ function test5022() {
 
 	// Goes to 40
 	// Goes to 20
+
+	if ( single ) {
+		return;
+	}
 
 	// Standard run 1 instruction code
 	Run1TickInit();
@@ -4777,7 +4931,7 @@ function test5022() {
 
 
 // Test SkipEq0 - Skipcond 000 - Number Larger than 0, but not negative.
-function test5030() {
+function test5030( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: JnS, JumpI
@@ -4802,6 +4956,10 @@ function test5030() {
 
 	// Goes to 40
 	// Goes to 22
+
+	if ( single ) {
+		return;
+	}
 
 	// Standard run 1 instruction code
 	Run1TickInit();
@@ -4853,7 +5011,7 @@ function test5030() {
 
 
 // Test SkipEq0 - Skipcond 000 - Number less than 0, 2s compliment
-function test5031() {
+function test5031( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: JnS, JumpI
@@ -4878,6 +5036,10 @@ function test5031() {
 
 	// Went to 40
 	// Went to 20
+
+	if ( single ) {
+		return;
+	}
 
 	// Standard run 1 instruction code
 	Run1TickInit();
@@ -4931,7 +5093,7 @@ function test5031() {
 
 
 // Test SkipEq0 - Skipcond 000 - Number equal to 0, but not negative.
-function test5032() {
+function test5032( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: JnS, JumpI
@@ -4949,11 +5111,13 @@ function test5032() {
 
 
 
-
-
 	MICROCODE_PC.msg('Out',1);
 	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
+
+	if ( single ) {
+		return;
+	}
 
 	// Goes to 40
 	// Goes to 20
@@ -5031,123 +5195,13 @@ function test5032() {
 
 
 
-// TODO: 4 Indirect Ops AddI, StoreI, LoadI and JumpI
-// TODO: Test all of the Skip* Instructions
-
-// -=-------------------------------------------------------------------------------------------------------------------------------
-// -=-
-// -=- TODO - Tests Below
-// -=-
-// -=-------------------------------------------------------------------------------------------------------------------------------
-
-// Test SkipEq0 - Skipcond 400
-
-// Test SkipGt0 - Skipcond 800
-
-
-function test_pJnS() {
-
-	// ----------------------------------------------------------------------------
-	// Data Setup: JnS, JumpI
-	// ----------------------------------------------------------------------------
-	MEMORY.x._data_[0x0000] = 0x0003;			// Program 	JnS X
-	MEMORY.x._data_[0x0001] = 0x6004;			//			Output
-	MEMORY.x._data_[0x0002] = 0x7000;			//			Halt
-	MEMORY.x._data_[0x0003] = 0x0004;			// X,       HEX   Y	// 0x0004		// Check that this works in assembler
-	MEMORY.x._data_[0x0004] = 0x1006;			// Y,       Load  Z
-	MEMORY.x._data_[0x0005] = 0xc003;			//          JunpI X
-	MEMORY.x._data_[0x0006] = 0x7545;			// Z,       HEX   7545
-	mm_max = 8;
-	PC.x._data_ = 0x0000;						// So can check increment of PC
-	AC.x._data_ = 0x0000;						// So can check changed AC value
-	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
-
-
-	// Expect 0x7545 in AC
-	// Expect Output of 0x7545
-	// Expect PC = 0x0003 (inc of Halt)
-
-}
-
-function test_pAddI() {
-
-	// ----------------------------------------------------------------------------
-	// Data Setup: Load / Halt
-	// ----------------------------------------------------------------------------
-	MEMORY.x._data_[0x0000] = 0xA003;			// Program 	Clear
-	MEMORY.x._data_[0x0001] = 0xB004;			//			AddI Z
-	MEMORY.x._data_[0x0002] = 0x7000;			//			Halt
-	MEMORY.x._data_[0x0004] = 0x0004;			// Y,       HEX   0004 	
-	MEMORY.x._data_[0x0004] = 0x0004;			// Z,       HEX   1004 	
-	MEMORY.x._data_[0x1004] = 0x8004;			// Y,       HEX   0004 	
-	mm_max = 0x1005;
-	PC.x._data_ = 0x0000;						// So can check increment of PC
-	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
-
-
-	// Expect 0x8004 in AC
-	// Expect PC = 0x0003 (inc of Halt)
-
-}
-
-//function test_pLoadI() {
-//
-//	// ----------------------------------------------------------------------------
-//	// Data Setup: Load / Halt
-//	// ----------------------------------------------------------------------------
-//	MEMORY.x._data_[0x0000] = 0xA003;			// Program 	Clear
-//	MEMORY.x._data_[0x0001] = 0xd004;			//			LoadI Z
-//	MEMORY.x._data_[0x0002] = 0x7000;			//			Halt
-//												// 			ORG  0x1005
-//	MEMORY.x._data_[0x0005] = 0x1004;			// Z,       HEX   1004 	
-//												//			ORG  0x1004
-//	MEMORY.x._data_[0x1004] = 0x7004;			// W,       HEX   0004 	
-//	mm_max = 0x1005;
-//	PC.x._data_ = 0x0000;						// So can check increment of PC
-//	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
-//
-//
-//	// Expect 0x7004 in AC
-//	// Expect PC = 0x0003 (inc of Halt)
-//
-//}
-
-//function test_pStoreI() {
-//
-//	// ----------------------------------------------------------------------------
-//	// Data Setup: Load / Halt
-//	// ----------------------------------------------------------------------------
-//	MEMORY.x._data_[0x0000] = 0xA003;			// Program 	Clear
-//	MEMORY.x._data_[0x0001] = 0xd004;			//			LoadI Z
-//	MEMORY.x._data_[0x0002] = 0xe004;			//			StoreI M
-//	MEMORY.x._data_[0x0003] = 0x7000;			//			Halt
-//												//			ORG 0x1005
-//	MEMORY.x._data_[0x0005] = 0x1004;			// Z,       HEX   1004 	
-//	MEMORY.x._data_[0x0006] = 0x1003;			// M,       HEX   1003 	
-//												//			ORG 0x1003
-//	MEMORY.x._data_[0x1003] = 0xface;			//          HEX   face 	
-//	MEMORY.x._data_[0x1004] = 0x7004;			//          HEX   7004 	
-//	mm_max = 0x1005;
-//	PC.x._data_ = 0x0000;						// So can check increment of PC
-//	MICROCODE_PC.x._data_ = 0x00;				// Start Microcode Off	-- So can check increment of Microcode_PC later.
-//
-//
-//	// Expect 0x7004 in AC
-//	// Expect 0x7004 in mem[0x1003]
-//	// Expect PC = 0x0003 (inc of Halt)
-//
-//}
-
-
-
-
 
 
 
 
 
 // Test LoadI - Indirect Load
-function test5040() {
+function test5040( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: JnS, JumpI
@@ -5170,6 +5224,9 @@ function test5040() {
 	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
 
+	if ( single ) {
+		return;
+	}
 
 	// Standard run 1 instruction code
 	Run1TickInit();
@@ -5225,7 +5282,7 @@ function test5040() {
 
 
 // Test StoreI - Indirect Load
-function test5041() {
+function test5041( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: JnS, JumpI
@@ -5249,6 +5306,10 @@ function test5041() {
 	MICROCODE_PC.msg('Out',1);
 	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
+
+	if ( single ) {
+		return;
+	}
 
 
 	// Standard run 1 instruction code
@@ -5305,7 +5366,7 @@ function test5041() {
 
 
 // Test JumpI - Indirect GOTO
-function test5042() {
+function test5042( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: 
@@ -5329,6 +5390,10 @@ function test5042() {
 	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
 
+
+	if ( single ) {
+		return;
+	}
 
 
 	// Standard run 1 instruction code
@@ -5388,7 +5453,7 @@ function test5042() {
 
 
 // Test AddI 
-function test5043() {
+function test5043( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: JnS, JumpI
@@ -5414,6 +5479,10 @@ function test5043() {
 
 	// Went to 40
 	// Went to 20
+
+	if ( single ) {
+		return;
+	}
 
 	// Standard run 1 instruction code
 	Run1TickInit();
@@ -5473,7 +5542,7 @@ function test5043() {
 
 // Test JnS
 // Jumps and Store: Stores value of PC at address X then increments PC to X+1
-function test5044() {
+function test5044( single ) {
 
 	// ----------------------------------------------------------------------------
 	// Data Setup: JnS, JumpI
@@ -5504,7 +5573,10 @@ function test5044() {
 	MICROCODE.msg('Addr',1);					// send a message - may be start of something!
 	PC.msg('Out',1);
 
-// return;
+	if ( single ) {
+		return;
+	}
+
 
 	// Standard run 1 instruction code
 	Run1TickInit();
@@ -5600,6 +5672,13 @@ function testAll() {
 		//		<text id="h_ir_val_15_12" x="350"  y="165" class="vsmall">0 0 0 0</text>
 		//		<text id="h_ir_val_11_08" x="350"  y="195" class="vsmall">1 1 1 1</text>
 
+/*
+			showLine("#ir_11_08_to_decoder_mux_10");
+			$("#h_ir_val_11_08").html(ctlTo4Dig(IR.x._11_08_)).show();
+
+			showLine("#ir_15_12_to_decoder_mux_11");
+			lineOn.push("#h_ir_val_15_12");
+*/
 </script>
 </body>
 </html>

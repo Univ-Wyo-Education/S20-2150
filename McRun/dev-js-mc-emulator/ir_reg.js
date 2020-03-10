@@ -104,11 +104,12 @@ var IR_old = {
 		MUX.msg("10_3", ( (irB & 0x2) != 0 ) ? 1 : 0 );
 		MUX.msg("10_2", ( (irB & 0x1) != 0 ) ? 1 : 0 );
 
-		$("#h_ir_val_11_08").html(ctlTo4Dig(IR.x._11_08_)).show();
-		lineOn.push("#h_ir_val_15_12");
+//console.error ( ctlTo4Dig(IR.x._11_08_) );
+//		$("#h_ir_val_11_08").html(ctlTo4Dig(IR.x._11_08_)).show();
+//		lineOn.push("#h_ir_val_15_12");
 
-		$("#h_ir_val_15_12").html(ctlTo4Dig(IR.x._15_12_)).show();
-		lineOn.push("#h_ir_val_15_12");
+//		$("#h_ir_val_15_12").html(ctlTo4Dig(IR.x._15_12_)).show();
+//		lineOn.push("#h_ir_val_15_12");
 
 //	, "McJmp_7": { Name: "MUX", 					Op: ["00_7","01_7","10_7","11_7"] }
 //	, "McJmp_6": { Name: "MUX", 					Op: ["00_6","01_6","10_6"       ] }

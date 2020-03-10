@@ -79,9 +79,9 @@ var MICROCODE_PC = {
 	}
 
 	, PullFromMux: function () {
-console.log ( "MICROCODE_PC:PullFromMux New / Add Closure" );
+// console.log ( "MICROCODE_PC:PullFromMux New / Add Closure" );
 		AddDep ( MICROCODE_PC.x.Name, [ "Microcode_Ld" ], "In", function () {
-console.error ( "MICROCODE_PC:PullFromMux Closure Run", MUX.x._Out_ );
+// console.log ( "MICROCODE_PC:PullFromMux Closure Run", MUX.x._Out_ );
 			 	MICROCODE_PC.x["_InputBuffer_"] = MUX.x._Out_;
 				MICROCODE_PC.x["_data_"] = MICROCODE_PC.x["_InputBuffer_"];
 				MICROCODE_PC.Display( MICROCODE_PC.x["_data_"]);
@@ -91,7 +91,7 @@ console.error ( "MICROCODE_PC:PullFromMux Closure Run", MUX.x._Out_ );
 	}
 
 	, PushBus: function () {
-console.log ( "MICROCODE_PC:PushBus New/Out:", MICROCODE_PC.x._OutputBuffer_ );		
+// console.log ( "MICROCODE_PC:PushBus New/Out:", MICROCODE_PC.x._OutputBuffer_ );		
 		AddMsg ( MICROCODE_PC.x.Name, "Microcode_PC_Addr", "Out", MICROCODE_PC.x._OutputBuffer_ );
 	}
 

@@ -2,14 +2,6 @@
 // ALU : Arethmetic Logic Unit
 // ========
 
-function signed(v) {
-    if ( ( v & 0x8000 ) > 0 ) {
-        var w = v | 0xffff0000;
-        return w;
-    } else {
-        return v;
-    }
-}
 
 var ALU = {
 	  "x": {
@@ -80,7 +72,7 @@ var ALU = {
 		| i3 | i2 | i1 | i0 | Used   | Action Taken                                          |
 		|:--:|:--:|:--:|:--:|:------:|:------------------------------------------------------|
 		|  0 | 0  |  0 |  0 |    *   |  2s Compliment                                        |
-		|  0 | 0  |  0 |  1 |        |                                                       |
+		|  0 | 0  |  0 |  1 |        |  NOP, pass A to output                                |
 		|  0 | 0  |  1 |  0 |    *   |  Increment by 1, ac + 1 -> Result                     |
 		|  0 | 0  |  1 |  1 |        |  Decrement by 1, 2s compliment, result = ac - 1       |
 		|  0 | 1  |  0 |  0 |    *   |	Add: result = ac + bus (mdr usually)                 |
@@ -236,7 +228,7 @@ var ALU = {
 		// xyzzy4001 Proposed: AddDep ( ALU.x.Name, [ "Bus", "ac_Out_to_ALU" , [ [ "ALU_Ctl_0" , "ALU_Ctl_1" , "ALU_Ctl_2" , "ALU_Ctl_3" ], [ "ALU_Ctl" ] ] ], "Out", function () { 		
 		// AddDep ( ALU.x.Name, [ "Bus", "ac_Out_to_ALU" , "ALU_Ctl_0" , "ALU_Ctl_1" , "ALU_Ctl_2" , "ALU_Ctl_3" ], "Out", function () { 		
 		AddDep ( ALU.x.Name, [ "Bus", "ac_Out_to_ALU", "id_ALU_Ctl" ], "Out", function () { 		
-console.error ( "ALU:PullBus", ALU.x["_B_"] );
+// console.error ( "ALU:PullBus", ALU.x["_B_"] );
 			if ( ALU.x._Ctl_ === null ) {
 				console.log ( "AT:"+ln(), "Not Set _Ctl_" );
 				if ( ALU.x._Ctl_0_ === null ) {
@@ -273,7 +265,7 @@ console.error ( "ALU:PullBus", ALU.x["_B_"] );
 			ALU.x["_Ctl_"] = a << 3 | b << 2 | c << 1 | d;
 
 			var o = ALU.func();
-console.error ( "ALU.x._Ctl_ =", ALU.x["_Ctl_"], "o=", o );
+// console.error ( "ALU.x._Ctl_ =", ALU.x["_Ctl_"], "o=", o );
 			RESULT.x._data_ = o;
 			RESULT.Display( o );
 			ALU.x["_OutputBuffer_"] = o;

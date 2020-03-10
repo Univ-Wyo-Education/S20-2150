@@ -126,27 +126,31 @@ var MUX = {
 		switch ( MUX.x["_Ctl_"] & 0x3 ) {
 		case 0:
 			MUX.x["_Out_"] = MUX.x["_00_"] & 0xff;
-console.error ( "Mux_CTL_ of 0");
+// console.log ( "Mux_CTL_ of 0");
 		break;
 		case 1:
+			// console.log ( "Mux_CTL_ of 1");
+			var v = ( RESULT.x._data_ > 0 ) ? 0 : 1;
+console.error ( "IsZero - picked out", v );
+			// $("#h_ir_val_11_08").html(ctlTo4Dig(IR.x._11_08_)).show();
+			// lineOn.push("#h_ir_val_15_12");
 			MUX.x["_Out_"] = MUX.x["_01_"] & 0xff;
-console.error ( "Mux_CTL_ of 1");
 		break;
 		case 2:
 			MUX.x["_Out_"] = MUX.x["_10_"] & 0xff;
-			showLine("#ir_11_08_to_decoder_mux_10");
-console.log ( "Mux_CTL_ of 2");
-		//		<text id="h_ir_val_11_08" x="350"  y="195" class="vsmall">1 1 1 1</text>
+			var v = IR.x._data_;
+			v = v & 0x0f00;
+			v >>= 8;
 			$("#h_ir_val_11_08").html(ctlTo4Dig(IR.x._11_08_)).show();
-			lineOn.push("#h_ir_val_15_12");
+			showLine("#ir_11_08_to_decoder_mux_10");
 		break;
 		case 3:
 			MUX.x["_Out_"] = MUX.x["_11_"] & 0xff;
+			var v = IR.x._data_;
+			v = v & 0xf000;
+			v >>= 12;
+			$("#h_ir_val_15_12").html(ctlTo4Dig(v)).show();
 			showLine("#ir_15_12_to_decoder_mux_11");
-console.log ( "Mux_CTL_ of 3");
-		//		<text id="h_ir_val_15_12" x="350"  y="165" class="vsmall">0 0 0 0</text>
-			$("#h_ir_val_15_12").html(ctlTo4Dig(IR.x._15_12_)).show();
-			lineOn.push("#h_ir_val_15_12");
 		break;
 		}
 		var out = MUX.x["_Out_"];
@@ -230,12 +234,4 @@ console.log ( "Mux_CTL_ of 3");
 
 };
 			
-
-function ctlTo4Dig(x) {
-	var xx = x & 0xf;
-	var s = xx.toString(2);
-	var t = s.split("");
-	s = t.join(" ");
-	return s;
-}
 

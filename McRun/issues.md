@@ -1,46 +1,70 @@
 
 1. Per instruction tests of processing
+	Basic Tests
+	1000. PC
+	1001. PC -> MAR
+	1102. Output -> 7-seg
+	1101. AC -> Output
+	1003. MDR -> Bus -> MAR 
+	1104. Result -> AC
+	1105. Input -> AC
+	1002. PC -> MAR -> Memory Read -> IR
+	3000. Test MUX
+	3001. Test ALU
+	7000. Halt
+	2000. Test Load, Halt
+
 	Load a program into memory, then run a test on it.
-	7000: Halt
-	2000: Load / Halt
-	5001: Load / Add / Halt
-	5002 Load / Subt / Halt
-	5003: Clear / Subt / Halt
-	5004: Clear / Jump / Halt / Halt
-	5005: Load / Store / Halt 
-	5007: Input +
-	5006: Output +
-	5010: *OpSkipLt0    = OpCodeType(0x8000) // 00 -- Number > 0
-	5011: *OpSkipLt0    = OpCodeType(0x8000) // 00 -- Number < 0
-	5012: *OpSkipLt0    = OpCodeType(0x8000) // 00 -- Number == 0 (should behave like 5010)
-	5020: *OpSkipGt0    = OpCodeType(0x8800) // 00 -- Number > 0
-	5021: *OpSkipGt0    = OpCodeType(0x8000) // 00 -- Number < 0
-	5022: *OpSkipGt0    = OpCodeType(0x8000) // 00 -- Number == 0 (should behave like 5020)
-	5030: *OpSkipEq0    = OpCodeType(0x8800) // 00 -- Number > 0
-	5031: *OpSkipEq0    = OpCodeType(0x8000) // 00 -- Number < 0
-	5032: *OpSkipEq0    = OpCodeType(0x8000) // 00 -- Number == 0 
-    5040: *OpLoadI      = OpCodeType(0xd000)
-    5041: *OpStoreI     = OpCodeType(0xe000)
-    5043: *OpAddI       = OpCodeType(0xB000)
-    5042: *OpJumpI      = OpCodeType(0xc000)
-    5044: JnS (worked) -- calls into question JumpI(return)
+	7000. Halt
+	2000. Load / Halt
+	5001. Load / Add / Halt
+	5002. Load / Subt / Halt
+	5003. Clear / Subt / Halt
+	5004. Clear / Jump / Halt / Halt
+	5005. Load / Store / Halt 
+	5007. Input +
+	5006. Output +
+	5010. *OpSkipLt0    = OpCodeType(0x8000) // 00 -- Number > 0
+	5011. *OpSkipLt0    = OpCodeType(0x8000) // 00 -- Number < 0
+	5012. *OpSkipLt0    = OpCodeType(0x8000) // 00 -- Number == 0 (should behave like 5010)
+	5020. *OpSkipGt0    = OpCodeType(0x8800) // 00 -- Number > 0
+	5021. *OpSkipGt0    = OpCodeType(0x8000) // 00 -- Number < 0
+	5022. *OpSkipGt0    = OpCodeType(0x8000) // 00 -- Number == 0 (should behave like 5020)
+	5030. *OpSkipEq0    = OpCodeType(0x8800) // 00 -- Number > 0
+	5031. *OpSkipEq0    = OpCodeType(0x8000) // 00 -- Number < 0
+	5032. *OpSkipEq0    = OpCodeType(0x8000) // 00 -- Number == 0 
+    5040. *OpLoadI      = OpCodeType(0xd000)
+    5041. *OpStoreI     = OpCodeType(0xe000)
+    5043. *OpAddI       = OpCodeType(0xB000)
+    5042. *OpJumpI      = OpCodeType(0xc000)
+    5044. JnS (worked)  = OpCodeType(0x0000)
 
-data/ec25fd81d2c8ef25b6e3335e06311723cf202c34db454ffc3c9f593e268b3586.txt
-data/6323cdc278b6a2c967716d173d1c278538f378496f5e3b745da1a08bfafd55af.txt  CPU Code (hw2.hex)
-
+v1.4.3 Sun Mar  8 06:04:20 MDT 2020
+data/c6dfd64496869541848a710e643a78cc7d821ba464feb0284b3e72d88c916f03.txt Microcode.
+data/6323cdc278b6a2c967716d173d1c278538f378496f5e3b745da1a08bfafd55af.txt CPU Code (hw2.hex)
 
 
 
 Issues:
 
-xyzzy - cleanup output / debug stuff
 
-1. xyzzy7000_001: IN test 7000 - at end the display of values from the IR (15..12) is not shown above the green line.
-1. xyzzy7000_002: An output line inthe "output" box - should show how MUX combined the results also.
+1. do the rest of the buttons.
+	Input - put in a list of values - that gets used each time an "Input" instruction happens.
+	Setup - form
+	+++ Show Memory - Set MAR - and call display of memory at that location. (show range of memory? - show ptr at location(pc))  See: LoadMA()
+	Run - 
+	Logic Probe ??
+
+1. xyzzy - cleanup output / debug stuff
+
+1. test3000 - test of ALU - is failing when run at the end of testAll and succeding if run on its own.
+
+1. xyzzy5001_000: Line from Main Memory to MDR is not highlighted when Read/Write happen.
+
 1. xyzzy7000_003: Need a way to "peek" into microcode and see all lines on at address.
-1. xyzzy7000_004: Cleanup of "output" so add new lines - no clear - a "screen scrole" behavior (with a button to see last 300 lines as a modal?)
-1. xyzzy7000_006: Start process of "debug" flags - that can be set in Config
-1. xyzzy7000_007: Add a "run-test" button that connects to all the tests - and allows re-run from UI.
+1. xyzzy7000_004: +++ Cleanup of "output" so add new lines - no clear - a "screen scrole" behavior (with a button to see last 300 lines as a modal?)
+1. xyzzy7000_006: + Start process of "debug" flags - that can be set in Config
+1. xyzzy7000_007: + Add a "run-test" button that connects to all the tests - and allows re-run from UI.
 
 1. xyzzy2000_002: whenver memory_Read - should take the action of MAR -> Memory on, Memory to MDR on - and show lines.
 1. xyzzy2000_003: Display of "Main Memory" could use PC.x._data_ for it's address for instruction dis-assembley.
@@ -63,9 +87,16 @@ xyzzy8000 -- next test Load / Add / Halt
 
 1. xyzzy5044_001: - Seems like JumpI is wrong.
 
+1. The "run" loop - with background runner and delay ( 100ms for each tick? )  Settable in Config.
 
-
+1. Comments on all the functions.   Move testing out to ./js/mm_test_code.js
+1. Setup screen
+	- Take the tests and put a check-mark and a button for each one. (Check mark turns on single step)
+	- Delay for "run" in run loop.
 
 
 -- fixed --
 	1. xyzzy2000_001: really should fix this to be a .turn-off-at-startup class that is across all of `var lineOn = [` at init.
+	1. xyzzy7000_001: IN test 7000 - at end the display of values from the IR (15..12) is not shown above the green line.
+	1. xyzzy7000_002: An output line in the "output" box - should show how MUX combined the results also.
+	1. xyzzy5032_000: Add in the skip-set to single step mode to all the tests.

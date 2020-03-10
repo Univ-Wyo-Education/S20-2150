@@ -128,7 +128,7 @@ var MICROCODE = {
 		for ( key in MICROCODE.x._OutputBufferList_ ) {
 			if ( MicrocodeFunctions[key] ) {
 				var fx = MicrocodeFunctions[key];
-console.log ( "<><> TurnOff: ", key );
+// console.log ( "<><> TurnOff: ", key );
 				fx(false);
 			}
 			MICROCODE.x[key] = 0;
@@ -140,13 +140,13 @@ console.log ( "<><> TurnOff: ", key );
 	}
 
 	, PullAddr: function () {
-console.log ( "MICROCODE:PullAddr - setup" );
+// console.log ( "MICROCODE:PullAddr - setup" );
 		AddDep ( MICROCODE.x.Name, [ "Microcode_PC_Addr" ], "In", function () {
 				// var addr = MICROCODE_PC.x["_OutputBuffer_"];		// Pull in the microcode_pc's output.
 				var addr = theWorld2["Microcode_PC_Addr" ];			// Pull in the microcode_pc's output.
 				var addr = MICROCODE_PC.x["_data_"];																				// kludge!
 				addr = addr & 0xff;
-console.log ( "MICROCODE:PullAddr Closure Run, addr=", addr );
+// console.log ( "MICROCODE:PullAddr Closure Run, addr=", addr );
 				MICROCODE.x["_Addr_"] = addr;
 				MICROCODE.impl();
 		});													
@@ -158,7 +158,7 @@ console.log ( "MICROCODE:PullAddr Closure Run, addr=", addr );
 
 	// Turn on display of a wire with this ID
 	, TurnOn: function  ( id ) {
-console.log ( "MICROCOE.TurnOn(",id,");");
+// console.log ( "MICROCOE.TurnOn(",id,");");
 		if ( MicrocodeFunctions[key] ) {
 			var fx = MicrocodeFunctions[key];
 			fx(true);
