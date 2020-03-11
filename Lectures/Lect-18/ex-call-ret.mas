@@ -1,0 +1,14 @@
+/ Call subroutine PrintA
+    JnS PrintA
+    Halt
+
+/ The Subroutine
+PrintA, HEX 000 / This address will hold return
+    Load An_A
+    Output
+
+    / Return from Subroutine
+    JumpI PrintA
+
+An_A, DEC 97
+
