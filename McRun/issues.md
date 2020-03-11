@@ -67,7 +67,9 @@ Issues:
 
 1. test3000 - test of ALU - is failing when run at the end of testAll and succeeding if run on its own.
 
-
+1. Setup a "real" server with this on it - 
+	- aws free tear ec2?
+	- $5 a month ?
 
 
 
