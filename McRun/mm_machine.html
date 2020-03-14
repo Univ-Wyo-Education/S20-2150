@@ -117,6 +117,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
 	color: white;
 }
 
+.modal-blue-top {
+	background-color: #1888fc;
+}
+
 .modal-body {padding: 2px 16px;}
 
 .modal-footer {
@@ -124,6 +128,11 @@ body {font-family: Arial, Helvetica, sans-serif;}
 	background-color: #5cb85c;
 	color: white;
 }
+
+.modal-blue-bot {
+	background-color: #1888fc;
+}
+
 </style>
 <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
 <script src="js/popper-1.14.7.js" type="text/javascript"></script>
@@ -1420,7 +1429,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 </svg>
 
 <!-- The Modal : Microcode Load ======================================================== -->
-<div id="myModal1" class="modal">
+<div id="myModal1" class="modal hideMyModal">
 
 	<!-- Modal content -->
 	<div class="modal-content">
@@ -1440,11 +1449,11 @@ body {font-family: Arial, Helvetica, sans-serif;}
 </div>
 
 <!-- The Modal : Code Load ======================================================== -->
-<div id="myModal2" class="modal">
+<div id="myModal2" class="modal hideMyModal">
 
 	<!-- Modal content -->
 	<div class="modal-content">
-		<div class="modal-header">
+		<div class="modal-header modal-blue-top">
 			<span class="close" onclick="hideModal();">&times;</span>
 			<h4>Load Hex Code Into Main Memory</h4>
 		</div>
@@ -1452,7 +1461,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<p>Enter the hash printed out by Asm with the --upload flag.</p>
 			<input id="modal-input-mm-hash" spellcheck="false" name="i_hash" class="hash-input">
 		</div>
-		<div class="modal-footer">
+		<div class="modal-footer modal-blue-bot">
 			<button class="modal-submit" type="button" id="modal-submit2" onclick="LoadMM();">Load Hex File</button>
 		</div>
 	</div>
@@ -1460,7 +1469,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 </div>
 
 <!-- The Modal : Show Memory  ======================================================== -->
-<div id="myModal3" class="modal">
+<div id="myModal3" class="modal hideMyModal">
 
 	<!-- Modal content -->
 	<div class="modal-content">
@@ -1479,9 +1488,72 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 </div>
 
+<!-- The Modal : Setup / Test ======================================================== -->
+<div id="myModal4" class="modal hideMyModal">
+
+	<!-- Modal content -->
+	<div class="modal-content">
+		<div class="modal-header">
+			<span class="close" onclick="hideModal();">&times;</span>
+			<h4>Setup and Test</h4>
+		</div>
+		<div class="modal-body">
+			<h5>Speed for running when "Run" button is pressed.</h5>
+			<input id="modal-input-run-time" spellcheck="false" name="i_st_run_time"><br>
+			<h5> Tests that can be run </h5>
+			<input type="checkbox" checked id="modal-single-step-test">Single Tick Through the Test?<br><br>
+			<select id="modal-select-test">
+				<option value="" selected> -- no test selected -- </option>
+				<option value="test7000">  Halt                                                       </option>
+				<option value="test2000">  Load / Halt                                                </option>
+				<option value="test5001">  Load / Add / Halt                                          </option>
+				<option value="test5002">  Load / Subt / Halt                                         </option>
+				<option value="test5003">  Clear / Subt / Halt                                        </option>
+				<option value="test5004">  Clear / Jump / Halt / Halt                                 </option>
+				<option value="test5005">  Load / Store / Halt                                        </option>
+				<option value="test5007">  Input   - 0x5000                                           </option>
+				<option value="test5006">  Output  - 0x6000                                           </option>
+				<option value="test5010">  SkipLt0 - 0x8000 / ac &gt; 0                               </option>
+				<option value="test5011">  SkipLt0 - 0x8000  / ac &lt; 0                              </option>
+				<option value="test5012">  SkipLt0 - 0x8000  / ac == 0 (should behave like test 5010) </option>
+				<option value="test5020">  SkipGt0 - 0x8800  / ac &gt; 0                              </option>
+				<option value="test5021">  SkipGt0 - 0x8800  / ac &lt; 0                              </option>
+				<option value="test5022">  SkipGt0 - 0x8800  / ac == 0 (should behave like test 5020) </option>
+				<option value="test5030">  SkipEq0 - 0x8400  / ac &gt; 0                              </option>
+				<option value="test5031">  SkipEq0 - 0x8400  / ac &lt; 0                              </option>
+				<option value="test5032">  SkipEq0 - 0x8400  / ac == 0                                </option>
+				<option value="test5040">  LoadI   - 0xd000                                           </option>
+				<option value="test5041">  StoreI  - 0xe000                                           </option>
+				<option value="test5043">  AddI    - 0xB000                                           </option>
+				<option value="test5042">  JumpI   - 0xc000                                           </option>
+				<option value="test5044">  JnS     - 0x0000                                           </option>
+				<option value="test1000">  PC                                                         </option>
+				<option value="test1001">  PC -&gt; MAR                                               </option>
+				<option value="test1102">  Output -&gt; 7-seg                                         </option>
+				<option value="test1101">  AC -&gt; Output                                            </option>
+				<option value="test1003">  MDR -&gt; Bus -&gt; MAR                                    </option>
+				<option value="test1104">  Result -&gt; AC                                            </option>
+				<option value="test1105">  Input -&gt; AC                                             </option>
+				<option value="test1002">  PC -&gt; MAR -&gt; Memory Read -&gt; IR                    </option>
+				<option value="test3000">  Test MUX                                                   </option>
+				<option value="test3001">  Test ALU                                                   </option>
+				<option value="test7000">  Halt                                                       </option>
+				<option value="test2000">  Test Load, Halt                                            </option>
+			</select><br>
+			<p>&nbsp;</p>
+		</div>
+		<div class="modal-footer">
+			<button class="modal-submit" type="button" id="modal-submit4" onclick="DoSetupTest_Config();">Apply</button>
+			<button class="modal-submit" type="button" id="modal-submit4" onclick="DoSetupTest_RunTest();">Run Test</button>
+		</div>
+	</div>
+
+</div>
+
 <script>
 
 var debug_PropagateSignals = false ;
+var run_timing = 500;	// In MS = 1/10th of a second.
 
 
 
@@ -1490,6 +1562,7 @@ var debug_PropagateSignals = false ;
 var modal1 = document.getElementById("myModal1");
 var modal2 = document.getElementById("myModal2");
 var modal3 = document.getElementById("myModal3");
+var modal4 = document.getElementById("myModal4");
 
 // Get the <span> element that closes the modal
 // var span = document.getElementsByClassName("close")[0];
@@ -1507,14 +1580,19 @@ function displayModalMA () {
 	// modal.style.display = "block";
 	$("#myModal3").css ( { "display":"block" } );
 }
+function displayModalSetupTest () {
+	// modal.style.display = "block";
+	// run_timing = ParseInt ( $("#modal-input-run-time" ).val() );
+	$("#modal-input-run-time" ).val(run_timing);
+	$("#myModal4").css ( { "display":"block" } );
+}
 
 // When the user clicks on <span> (x), close the modal
 function hideModal() {
 	// modal.style.display = "none";
-	$("#myModal1").css ( { "display":"none" } );
-	$("#myModal2").css ( { "display":"none" } );
-	$("#myModal3").css ( { "display":"none" } );
+	$(".hideMyModal").css ( { "display":"none" } );
 }
+
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
@@ -1523,6 +1601,14 @@ window.onclick = function(event) {
 		hideModal();
 	}
 	if (event.target == modal2) {
+		//modal.style.display = "none";
+		hideModal();
+	}
+	if (event.target == modal3) {
+		//modal.style.display = "none";
+		hideModal();
+	}
+	if (event.target == modal4) {
 		//modal.style.display = "none";
 		hideModal();
 	}
@@ -1640,7 +1726,13 @@ function showTextInOutputBox(text) {
 	}
 }
 
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// Globals
+// ---------------------------------------------------------------------------------------------------------------------------------------
+var mm_max = 0;
 var isHalted = 0;
+var doRun = false;
+var myVar = setInterval(myTimer, run_timing);
 
 function showHalt ( _isHalted ) {
 	if ( _isHalted ) {
@@ -1675,10 +1767,63 @@ function showIsError ( isError ) {
 }
 
 
-// ---------------------------------------------------------------------------------------------------------------------------------------
-// Globals
-// ---------------------------------------------------------------------------------------------------------------------------------------
-var mm_max = 0;
+function DoSetupTest_Config() {
+	// <input id="modal-input-run-time" spellcheck="false" name="i_st_run_time"><br>
+	run_timing = parseInt ( $("#modal-input-run-time" ).val() );
+	if ( run_timing < 0 ) {
+		console.error ( "Invalid timing value - setting to 500" );
+		run_timing = 500;
+	} else if ( run_timing < 100 ) {
+		run_timing = 100;
+	}
+	hideModal();
+}
+
+function DoSetupTest_RunTest() {
+	// <input type="checkbox" checked id="modal-single-step-test">Single Tick Through the Test?<br>
+	// <select id="modal-select-test">
+	var isChecked = $("#modal-single-step-test").is(":checked");
+	var testToRun = $("#modal-select-test").val();
+	console.error ( "isChecked=", isChecked, " testToRun=", testToRun );
+	if ( ! window[testToRun] ) {
+		console.error ( "Invalid test name", testToRun );
+	} else {
+		var fx = window[testToRun];
+		fx(isChecked);
+	}
+	hideModal();
+}
+
+
+function myTimer() {
+	if ( doRun ) {
+		var d = new Date();
+		var t = d.toLocaleTimeString();
+		console.log ( "Run Enabled", t );
+		// if ( !!(theWorld2.ins_end === 1) ) {
+		// 	doRun = false;
+		// } else if ( !!(theWorld2.is_halted) ) {
+		if ( !!(theWorld2.is_halted) ) {
+			doRun = false;
+		} else {
+			Step1Tick();
+		}
+	}
+}
+
+function StartRun() {
+	// Run1TickInit();
+	doRun = true;
+}
+
+function StopRun() {
+	doRun = false;
+}
+
+function myStopFunction() {
+  clearInterval(myVar);
+}
+
 
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
@@ -1751,6 +1896,12 @@ function infoOn1(i,x) {
 		break;
 	case "show-memory":
 		displayModalMA();
+		break;
+	case "setup-cfg":	// Setup or run of tests.
+		displayModalSetupTest () ;
+		break;
+	case "run":	// 
+		StartRun();
 		break;
 
 	// logic-probe

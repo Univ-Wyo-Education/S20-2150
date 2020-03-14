@@ -49,21 +49,14 @@ Issues:
 
 1. xyzzy5005_001: both read/write lines to memory are turned on during a store.
 	- xyzzy5041_001: - at one point we have both "read" and "write" lines on to memory at once - single step it an late in the StoreI process --- OOPS!
-1. xyzzy2000_002: whenver memory_Read - should take the action of MAR -> Memory on, Memory to MDR on - and show lines.
+1. xyzzy2000_002: whenever memory_Read - should take the action of MAR -> Memory on, Memory to MDR on - and show lines.
 
 1. do the rest of the buttons.
-	Run - 
-		- The "run" loop - with background runner and delay ( 100ms for each tick? )  Settable in Config.
 
-	Input - put in a list of values - that gets used each time an "Input" instruction happens.
-	Setup - form
-		- xyzzy7000_007: + Add a "run-test" (under setup) button that connects to all the tests - and allows re-run from UI.
-		- Setup screen
-			- Take the tests and put a check-mark and a button for each one. (Check mark turns on single step)
-			- Delay for "run" in run loop.
-	+++ Show Memory - Set MAR - and call display of memory at that location. (show range of memory? - show ptr at location(pc))  See: LoadMA()
+	1. Input - put in a list of values - that gets used each time an "Input" instruction happens.
+		+++ Show Memory - Set MAR - and call display of memory at that location. (show range of memory? - show ptr at location(pc))  See: LoadMA()
 
-	Logic Probe ??
+	1. Logic Probe ??
 
 1. test3000 - test of ALU - is failing when run at the end of testAll and succeeding if run on its own.
 
@@ -101,3 +94,10 @@ Issues:
 	1. xyzzy5010_004: - Line from RESULT "Is Zero" to MUX is not created/turned on when ALU operation indicates compare.
 	1. xyzzy5010_001: - On "memory_Read" - falied to light (and add arrow to) the line form Memory to MDR. End of Fetch Cycle Read.
 	1. xyzzy5044_001: - Seems like JumpI is wrong.
+	1. Setup - form
+		- xyzzy7000_007: + Add a "run-test" (under setup) button that connects to all the tests - and allows re-run from UI.
+		- Setup screen
+			- Take the tests and put a check-mark and a button for each one. (Check mark turns on single step)
+			- Delay for "run" in run loop.
+	1. Run - 
+			- The "run" loop - with background runner and delay ( 100ms for each tick? )  Settable in Config.
