@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title> MARIA Microcode Emulator </title>
 <!--
-MARIA Microcode Emulator: Version v1.4.3
-Sun Mar	8 06:04:20 MDT 2020
+MARIA Microcode Emulator: Version v1.4.4
+Sat Mar 14 16:00:54 MDT 2020
 Copyright (C) University of Wyoming, 2019-2020.
 Credits:
 	Prof Philip Schlump - Primary Code Developer
@@ -1382,7 +1382,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		<text id="b-step-ins-txt"    x="45" y="557" class="small" onclick="infoOn('input');">Input</text>
 
 		<rect id="b-setup-cfg"       x="40" y="570" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('setup-cfg');"/>
-		<text id="b-setup-cfg-txt"   x="45" y="587" class="small" onclick="infoOn('setup-cfg');">Setup</text>
+		<text id="b-setup-cfg-txt"   x="45" y="587" class="small" onclick="infoOn('setup-cfg');">Setup / Test</text>
 
 		<rect id="b-logic-probe"     x="40" y="600" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('logic-probe');"/>
 		<text id="b-logic-probe-txt" x="45" y="617" class="small" onclick="infoOn('logic-probe');">Logic Probe</text>
@@ -1504,41 +1504,41 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<input type="checkbox" checked id="modal-single-step-test">Single Tick Through the Test?<br><br>
 			<select id="modal-select-test">
 				<option value="" selected> -- no test selected -- </option>
-				<option value="test7000">  Halt                                                       </option>
-				<option value="test2000">  Load / Halt                                                </option>
-				<option value="test5001">  Load / Add / Halt                                          </option>
-				<option value="test5002">  Load / Subt / Halt                                         </option>
-				<option value="test5003">  Clear / Subt / Halt                                        </option>
-				<option value="test5004">  Clear / Jump / Halt / Halt                                 </option>
-				<option value="test5005">  Load / Store / Halt                                        </option>
-				<option value="test5007">  Input   - 0x5000                                           </option>
-				<option value="test5006">  Output  - 0x6000                                           </option>
-				<option value="test5010">  SkipLt0 - 0x8000 / ac &gt; 0                               </option>
-				<option value="test5011">  SkipLt0 - 0x8000  / ac &lt; 0                              </option>
-				<option value="test5012">  SkipLt0 - 0x8000  / ac == 0 (should behave like test 5010) </option>
-				<option value="test5020">  SkipGt0 - 0x8800  / ac &gt; 0                              </option>
-				<option value="test5021">  SkipGt0 - 0x8800  / ac &lt; 0                              </option>
-				<option value="test5022">  SkipGt0 - 0x8800  / ac == 0 (should behave like test 5020) </option>
-				<option value="test5030">  SkipEq0 - 0x8400  / ac &gt; 0                              </option>
-				<option value="test5031">  SkipEq0 - 0x8400  / ac &lt; 0                              </option>
-				<option value="test5032">  SkipEq0 - 0x8400  / ac == 0                                </option>
-				<option value="test5040">  LoadI   - 0xd000                                           </option>
-				<option value="test5041">  StoreI  - 0xe000                                           </option>
-				<option value="test5043">  AddI    - 0xB000                                           </option>
-				<option value="test5042">  JumpI   - 0xc000                                           </option>
-				<option value="test5044">  JnS     - 0x0000                                           </option>
-				<option value="test1000">  PC                                                         </option>
-				<option value="test1001">  PC -&gt; MAR                                               </option>
-				<option value="test1102">  Output -&gt; 7-seg                                         </option>
-				<option value="test1101">  AC -&gt; Output                                            </option>
-				<option value="test1003">  MDR -&gt; Bus -&gt; MAR                                    </option>
-				<option value="test1104">  Result -&gt; AC                                            </option>
-				<option value="test1105">  Input -&gt; AC                                             </option>
-				<option value="test1002">  PC -&gt; MAR -&gt; Memory Read -&gt; IR                    </option>
-				<option value="test3000">  Test MUX                                                   </option>
-				<option value="test3001">  Test ALU                                                   </option>
-				<option value="test7000">  Halt                                                       </option>
-				<option value="test2000">  Test Load, Halt                                            </option>
+				<option value="test7000">  7000:  Halt                                                       </option>
+				<option value="test2000">  2000:  Load / Halt                                                </option>
+				<option value="test5001">  5001:  Load / Add / Halt                                          </option>
+				<option value="test5002">  5002:  Load / Subt / Halt                                         </option>
+				<option value="test5003">  5003:  Clear / Subt / Halt                                        </option>
+				<option value="test5004">  5004:  Clear / Jump / Halt / Halt                                 </option>
+				<option value="test5005">  5005:  Load / Store / Halt                                        </option>
+				<option value="test5007">  5007:  Input   - 0x5000                                           </option>
+				<option value="test5006">  5006:  Output  - 0x6000                                           </option>
+				<option value="test5010">  5010:  SkipLt0 - 0x8000 / ac &gt; 0                               </option>
+				<option value="test5011">  5011:  SkipLt0 - 0x8000  / ac &lt; 0                              </option>
+				<option value="test5012">  5012:  SkipLt0 - 0x8000  / ac == 0 (should behave like test 5010) </option>
+				<option value="test5020">  5020:  SkipGt0 - 0x8800  / ac &gt; 0                              </option>
+				<option value="test5021">  5021:  SkipGt0 - 0x8800  / ac &lt; 0                              </option>
+				<option value="test5022">  5022:  SkipGt0 - 0x8800  / ac == 0 (should behave like test 5020) </option>
+				<option value="test5030">  5030:  SkipEq0 - 0x8400  / ac &gt; 0                              </option>
+				<option value="test5031">  5031:  SkipEq0 - 0x8400  / ac &lt; 0                              </option>
+				<option value="test5032">  5032:  SkipEq0 - 0x8400  / ac == 0                                </option>
+				<option value="test5040">  5040:  LoadI   - 0xd000                                           </option>
+				<option value="test5041">  5041:  StoreI  - 0xe000                                           </option>
+				<option value="test5043">  5043:  AddI    - 0xB000                                           </option>
+				<option value="test5042">  5042:  JumpI   - 0xc000                                           </option>
+				<option value="test5044">  5044:  JnS     - 0x0000                                           </option>
+				<option value="test1000">  1000:  PC                                                         </option>
+				<option value="test1001">  1001:  PC -&gt; MAR                                               </option>
+				<option value="test1102">  1102:  Output -&gt; 7-seg                                         </option>
+				<option value="test1101">  1101:  AC -&gt; Output                                            </option>
+				<option value="test1003">  1003:  MDR -&gt; Bus -&gt; MAR                                    </option>
+				<option value="test1104">  1104:  Result -&gt; AC                                            </option>
+				<option value="test1105">  1105:  Input -&gt; AC                                             </option>
+				<option value="test1002">  1002:  PC -&gt; MAR -&gt; Memory Read -&gt; IR                    </option>
+				<option value="test3000">  3000:  Test MUX                                                   </option>
+				<option value="test3001">  3001:  Test ALU                                                   </option>
+				<option value="test7000">  7000:  Halt                                                       </option>
+				<option value="test2000">  2000:  Test Load, Halt                                            </option>
 			</select><br>
 			<p>&nbsp;</p>
 		</div>
@@ -1838,11 +1838,11 @@ function infoOn(x) {
 	}
 }
 
-var yyy = [];
-
+// var yyy = []; // var for debug push of messages to infoOn1
+ 
 function infoOn1(i,x) {
 
-	yyy.push ( x );
+	// yyy.push ( x );	// Debug push of message.
 
 	// console.log("infoOn1: svg/id["+i+"]:"+x);
 	switch ( x ) {
@@ -1850,7 +1850,9 @@ function infoOn1(i,x) {
 	case "clear-line":
 		break;
 	case "help":
-		showTextInOutputBox("MARIA Microcode Emulator: Version v1.4.3"
+		showTextInOutputBox("MARIA Microcode Emulator: Version v1.4.4"
+			,"Built on: Sat Mar 14 16:00:54 MDT 2020" 
+			,""
 			,"Load assembled microcode and assembled instructions, then step or run."
 			,""
 			,"https://github.com/Univ-Wyo-Education/S20-2150/McRun/ for more detailed help."
@@ -2083,10 +2085,12 @@ xyzzy
 		$("#"+x).css("fill","#ff0000");
 		break;
 	case "id_memory_Read":
+console.error(stackTrace());
 		showLine("#Main_Memory_Read");
 		showLine("#id_memory_to_mdr");
 		break;
 	case "id_memory_Write":
+console.error(stackTrace());
 		showLine("#Main_Memory_Write");
 		showLine("#id_memory_to_mdr");
 		break;
@@ -2779,7 +2783,7 @@ function PropagateSignals () {
 //console.log ( "ALU=",ALU);
 //console.log ( "MUX=",MUX);
 
-console.log ( "Version v.1.4.3 - Sun Mar  8 06:04:20 MDT 2020" );
+console.log ( "Version v.1.4.4 - Sat Mar 14 16:00:54 MDT 2020" );
 console.log ( "Developed for the Deptatmentment of Computer Science 2150 Machine Architecture class.");
 console.log ( "Copyright (C) University of Wyoming, 2019-2020." );
 

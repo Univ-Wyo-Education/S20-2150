@@ -23,7 +23,10 @@ var MEMORY = {
 			if ( val === 1 ) {
 				MEMORY.x["_Read_"] = 1;
 				MEMORY.PullMAR();			// xyzzy - deps on MAR & MDR
-				MEMORY.TurnOn( "memory_Read" );
+				if ( theWorld2["id_memory_Write"] ) {
+				} else {
+					MEMORY.TurnOn( "memory_Read" );
+				}
 			}
 			MEMORY.Display( addr );
 		break;
