@@ -1,18 +1,25 @@
 
 Issues:
 
-1. do the rest of the buttons.
-	- Input - put in a list of values - that gets used each time an "Input" instruction happens.
-		+++ Show Memory - Set MAR - and call display of memory at that location. (show range of memory? - show ptr at location(pc))  See: LoadMA()
-
-1. do the rest of the buttons.
+1. do the rest of the buttons. (4hrs)
 	- Logic Probe ??
+	- xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	- A modal with all the "lines" that you can put the probe on.
+	- Chebox for liens - allow 10 at a time
+	- Every time the value chagnes at the end of a cycle for a line - put it in the array["line"][DeltaT]
+	- Keep 20 cycles of [DeltaT]
+	- Chop and Rotate
+	- At end of each cycle - if logicProbeOn - then display all the liens in a box at the bottom.
+
+
+
+
 
 
 
 1. test3000 - test of ALU - is failing when run at the end of testAll and succeeding if run on its own.
 
-1. Setup a "real" server with this on it - 
+1. Setup a "real" server with this on it -  (4hrs) (set some domain t5432z.com to point to it?)
 	- aws free tear ec2?
 	- $5 a month ?
 	aws/ec2.micro - ubuntu - 1cp free 750hrs a month.
@@ -24,11 +31,21 @@ Issues:
 
 
 
-1. Comments on all the functions.   Move testing out to ./js/mm_test_code.js
-1. /* Kludge xyzzy2000_004 */
-1. xyzzy7000_006: + Start process of "debug" flags - that can be set in Config
-1. xyzzy7000_004: +++ Cleanup of "output" so add new lines - no clear - a "screen scrole" behavior (with a button to see last 300 lines as a modal?)
-1. xyzzy7000_003: Need a way to "peek" into microcode and see all lines on at address.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -146,6 +163,12 @@ v1.4.4 Sat Mar 14 16:00:54 MDT 2020
 data/c6dfd64496869541848a710e643a78cc7d821ba464feb0284b3e72d88c916f03.txt Microcode.
 data/6323cdc278b6a2c967716d173d1c278538f378496f5e3b745da1a08bfafd55af.txt CPU Code (hw2.hex)
 
+-- low prioroity / later --
+	1. xyzzy7000_006: + Start process of "debug" flags - that can be set in Config
+	1. Comments on all the functions.   Move testing out to ./js/mm_test_code.js
+	1. /* Kludge xyzzy2000_004 */
+	1. xyzzy7000_003: Need a way to "peek" into microcode and see all lines on at address.
+
 -- ignored --
 	1. xyzzy2000_003: Display of "Main Memory" could use PC.x._data_ for it's address for instruction dis-assembley.
 -- fixed --
@@ -173,3 +196,7 @@ data/6323cdc278b6a2c967716d173d1c278538f378496f5e3b745da1a08bfafd55af.txt CPU Co
 	- xyzzy5041_001: - at one point we have both "read" and "write" lines on to memory at once - single step it an late in the StoreI process --- OOPS!
 1. xyzzy2000_002: whenever memory_Read - should take the action of MAR -> Memory on, Memory to MDR on - and show lines.
 1. Clean up the "output" box - so will not duplicate messages to it.
+1. do the rest of the buttons.
+	- Input - put in a list of values - that gets used each time an "Input" instruction happens.
+		+++ Show Memory - Set MAR - and call display of memory at that location. (show range of memory? - show ptr at location(pc))  See: LoadMA()
+1. xyzzy7000_004: +++ Cleanup of "output" so add new lines - no clear - a "screen scrole" behavior (with a button to see last 300 lines as a modal?)
