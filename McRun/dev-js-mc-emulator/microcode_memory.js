@@ -40,10 +40,14 @@ function McJmp_6( up ) {
 function do_input( up ) {
 	console.log ( "called do_input", up );
 	if ( up ) {
-		console.error ( "Input Prompt should have been done" );
-		INPUT.x._data_ = 0x2312;
+		// console.error ( "Input Prompt should have been done" );
+		// INPUT.x._data_ = 0x2312;
+		// INPUT.Display( INPUT.x._data_ );
+		// theWorld2["Input_Data"] = 0x2312;
+		var v = GetInput();
+		INPUT.x._data_ = v;
 		INPUT.Display( INPUT.x._data_ );
-		theWorld2["Input_Data"] = 0x2312;
+		theWorld2["Input_Data"] = v;
 	} else {
 	}
 }

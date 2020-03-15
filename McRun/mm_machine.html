@@ -1550,6 +1550,35 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 </div>
 
+<!-- The Modal : Collect Input  ======================================================== -->
+<div id="myModal5" class="modal hideMyModal">
+
+	<!-- Modal content -->
+	<div class="modal-content">
+		<div class="modal-header">
+			<span class="close" onclick="hideModal();">&times;</span>
+			<h4>Input to be used by <b>Input</b> instructions.</h4>
+		</div>
+		<div class="modal-body">
+			<h5>Input</h5>
+			<input id="modal-input-0" spellcheck="false" name="i_input_0" class="mem-input"><br>
+			<input id="modal-input-1" spellcheck="false" name="i_input_1" class="mem-input"><br>
+			<input id="modal-input-2" spellcheck="false" name="i_input_2" class="mem-input"><br>
+			<input id="modal-input-3" spellcheck="false" name="i_input_3" class="mem-input"><br>
+			<input id="modal-input-4" spellcheck="false" name="i_input_4" class="mem-input"><br>
+			<input id="modal-input-5" spellcheck="false" name="i_input_5" class="mem-input"><br>
+			<input id="modal-input-6" spellcheck="false" name="i_input_6" class="mem-input"><br>
+			<input id="modal-input-7" spellcheck="false" name="i_input_7" class="mem-input"><br>
+			<input id="modal-input-8" spellcheck="false" name="i_input_8" class="mem-input"><br>
+			<input id="modal-input-9" spellcheck="false" name="i_input_9" class="mem-input"><br>
+		</div>
+		<div class="modal-footer">
+			<button class="modal-submit" type="button" id="modal-submit5" onclick="DoInput();">Collect Input</button>
+		</div>
+	</div>
+
+</div>
+
 <script>
 
 var debug_PropagateSignals = false ;
@@ -1558,11 +1587,6 @@ var run_timing = 500;	// In MS = 1/10th of a second.
 
 
 
-// Get the modal
-var modal1 = document.getElementById("myModal1");
-var modal2 = document.getElementById("myModal2");
-var modal3 = document.getElementById("myModal3");
-var modal4 = document.getElementById("myModal4");
 
 // Get the <span> element that closes the modal
 // var span = document.getElementsByClassName("close")[0];
@@ -1573,18 +1597,17 @@ function displayModal () {
 	$("#myModal1").css ( { "display":"block" } );
 }
 function displayModalMM () {
-	// modal.style.display = "block";
 	$("#myModal2").css ( { "display":"block" } );
 }
 function displayModalMA () {
-	// modal.style.display = "block";
 	$("#myModal3").css ( { "display":"block" } );
 }
 function displayModalSetupTest () {
-	// modal.style.display = "block";
-	// run_timing = ParseInt ( $("#modal-input-run-time" ).val() );
 	$("#modal-input-run-time" ).val(run_timing);
 	$("#myModal4").css ( { "display":"block" } );
+}
+function displayModalInput () {
+	$("#myModal5").css ( { "display":"block" } );
 }
 
 // When the user clicks on <span> (x), close the modal
@@ -1594,21 +1617,27 @@ function hideModal() {
 }
 
 
+// Get the modal
+var modal1 = document.getElementById("myModal1");
+var modal2 = document.getElementById("myModal2");
+var modal3 = document.getElementById("myModal3");
+var modal4 = document.getElementById("myModal4");
+var modal5 = document.getElementById("myModal5");
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
 	if (event.target == modal1) {
 		//modal.style.display = "none";
 		hideModal();
-	}
-	if (event.target == modal2) {
+	} else if (event.target == modal2) {
 		//modal.style.display = "none";
 		hideModal();
-	}
-	if (event.target == modal3) {
+	} else if (event.target == modal3) {
 		//modal.style.display = "none";
 		hideModal();
-	}
-	if (event.target == modal4) {
+	} else if (event.target == modal4) {
+		//modal.style.display = "none";
+		hideModal();
+	} else if (event.target == modal5) {
 		//modal.style.display = "none";
 		hideModal();
 	}
@@ -1708,21 +1737,32 @@ function showLine(id) {
 }
 
 var textCur = 0;
+var textBuf = [];
 
 function clearText() {
 	for ( var i = 0; i < 16; i++ ) {
 		$("#line_"+i).html("");
 	}
 	textCur = 0;
+	textBuf = [];
 }
 
 function showTextInOutputBox(text) {
 	var i = textCur;
+	var jj = textCur;
 	for ( var j = 0, mx = arguments.length; j < mx && i < 16; i++, j++ ) {
-		var x = arguments[i];
-		// console.log ( "i=", i, "j=", j, x );
-		$("#line_"+i).html(arguments[j]);
-		textCur++;
+		var sss = arguments[j];
+		// console.error ( sss, textBuf );
+		if ( textCur > 0 && textBuf[textCur-1] == sss ) {
+		} else {
+			// console.error ( "Will be added", sss, textBuf );
+			var x = arguments[i];
+			// console.log ( "i=", i, "j=", j, x, jj );
+			$("#line_"+jj).html(arguments[j]);
+			textBuf.push(sss);
+			textCur++;
+			jj++;
+		}
 	}
 }
 
@@ -1733,6 +1773,12 @@ var mm_max = 0;
 var isHalted = 0;
 var doRun = false;
 var myVar = setInterval(myTimer, run_timing);
+var curPosInput = 0;
+var theInput = [];
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// Functions for turn on/off of 3 leds at top-left of display.
+// ---------------------------------------------------------------------------------------------------------------------------------------
 
 function showHalt ( _isHalted ) {
 	if ( _isHalted ) {
@@ -1766,6 +1812,9 @@ function showIsError ( isError ) {
 	}
 }
 
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// DoSetupTest - implementaiton for the modal setup/test
+// ---------------------------------------------------------------------------------------------------------------------------------------
 
 function DoSetupTest_Config() {
 	// <input id="modal-input-run-time" spellcheck="false" name="i_st_run_time"><br>
@@ -1794,6 +1843,10 @@ function DoSetupTest_RunTest() {
 	hideModal();
 }
 
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// Run Command setup/run
+// ---------------------------------------------------------------------------------------------------------------------------------------
 
 function myTimer() {
 	if ( doRun ) {
@@ -1824,7 +1877,42 @@ function myStopFunction() {
   clearInterval(myVar);
 }
 
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// Put up a form to collect up to 10 inputs that can get pulled.
+// ---------------------------------------------------------------------------------------------------------------------------------------
 
+
+function CollectInput() {
+	curPosInput = 0;
+	for ( var i = 0; i < 10; i++ ) {
+		$("#modal-input-"+i).val(theInput[i]);
+	}
+	displayModalInput();
+}
+
+function DoInput() {
+	curPosInput = 0;
+	//	<input id="modal-input-0" spellcheck="false" name="i_mm_addr" class="mem-input"><br>
+	for ( var i = 0; i < 10; i++ ) {
+		var v = $("#modal-input-"+i).val();
+		if ( v == "" ) {
+			theInput[i] = 0;
+		} else {
+			var w = parseInt(v,16);
+			theInput[i] = w;
+		}
+	}
+	hideModal();
+}
+
+function GetInput() {
+	if ( curPosInput < 10 ) {
+		var v = theInput[curPosInput];
+		curPosInput++;
+		return ( v );
+	}
+	return ( 0 );
+}
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------
@@ -1838,13 +1926,8 @@ function infoOn(x) {
 	}
 }
 
-// var yyy = []; // var for debug push of messages to infoOn1
- 
 function infoOn1(i,x) {
 
-	// yyy.push ( x );	// Debug push of message.
-
-	// console.log("infoOn1: svg/id["+i+"]:"+x);
 	switch ( x ) {
 
 	case "clear-line":
@@ -1904,6 +1987,9 @@ function infoOn1(i,x) {
 		break;
 	case "run":	// 
 		StartRun();
+		break;
+	case "input":	// 
+		CollectInput();
 		break;
 
 	// logic-probe
@@ -2085,12 +2171,12 @@ xyzzy
 		$("#"+x).css("fill","#ff0000");
 		break;
 	case "id_memory_Read":
-console.error(stackTrace());
+		// console.error(stackTrace());
 		showLine("#Main_Memory_Read");
 		showLine("#id_memory_to_mdr");
 		break;
 	case "id_memory_Write":
-console.error(stackTrace());
+		// console.error(stackTrace());
 		showLine("#Main_Memory_Write");
 		showLine("#id_memory_to_mdr");
 		break;
@@ -2953,6 +3039,7 @@ var isInit = 0;
 // ---------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------
 function ResetMachine() {
+	curPosInput = 0;
 	isHalted = 0;
 	isInit = 0;
 	showHalt ( false );
@@ -4454,6 +4541,17 @@ function test5007( single ) {
 		return;
 	}
 
+	curPosInput = 0;
+	theInput[0] = 0x2312;
+	theInput[1] = 0x2312;
+	theInput[2] = 0x2312;
+	theInput[3] = 0x2312;
+	theInput[4] = 0x2312;
+	theInput[5] = 0x2312;
+	theInput[6] = 0x2312;
+	theInput[7] = 0x2312;
+	theInput[8] = 0x2312;
+	theInput[9] = 0x2312;
 
 
 	// Standard run 1 instruction code

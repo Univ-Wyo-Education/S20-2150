@@ -84,7 +84,11 @@ var INPUT = {
 console.log ( "INPUT:PullBus New / Add Closure" );
 		AddDep ( INPUT.x.Name, [ "Bus" ], "In", function () {
 console.log ( "INPUT:PullBus Closure Run" );
-			 	INPUT.x["_InputBuffer_"] = theWorld2.Bus;
+				if ( theWorld2["do_input"] ) {
+					INPUT.x["_InputBuffer_"] = GetInput();
+				} else {
+					INPUT.x["_InputBuffer_"] = theWorld2.Bus;
+				}
 				INPUT.x["_data_"] = INPUT.x["_InputBuffer_"];
 				INPUT.Display( INPUT.x["_data_"]);
 				INPUT.TurnOn( "input_Ld"  );

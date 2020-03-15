@@ -1,8 +1,6 @@
 
 Issues:
 
-1. Clean up the "output" box - so will not duplicate messages to it.
-
 1. do the rest of the buttons.
 	- Input - put in a list of values - that gets used each time an "Input" instruction happens.
 		+++ Show Memory - Set MAR - and call display of memory at that location. (show range of memory? - show ptr at location(pc))  See: LoadMA()
@@ -10,11 +8,14 @@ Issues:
 1. do the rest of the buttons.
 	- Logic Probe ??
 
+
+
 1. test3000 - test of ALU - is failing when run at the end of testAll and succeeding if run on its own.
 
 1. Setup a "real" server with this on it - 
 	- aws free tear ec2?
 	- $5 a month ?
+	aws/ec2.micro - ubuntu - 1cp free 750hrs a month.
 
 
 
@@ -171,3 +172,4 @@ data/6323cdc278b6a2c967716d173d1c278538f378496f5e3b745da1a08bfafd55af.txt CPU Co
 1. xyzzy5005_001: both read/write lines to memory are turned on during a store.
 	- xyzzy5041_001: - at one point we have both "read" and "write" lines on to memory at once - single step it an late in the StoreI process --- OOPS!
 1. xyzzy2000_002: whenever memory_Read - should take the action of MAR -> Memory on, Memory to MDR on - and show lines.
+1. Clean up the "output" box - so will not duplicate messages to it.
