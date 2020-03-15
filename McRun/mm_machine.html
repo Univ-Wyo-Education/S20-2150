@@ -21,9 +21,10 @@ Credits:
 
 <head>
 <style>
-	.small					 { font: italic 15px sans-serif; }
-	.medium0				 { font: 20px sans-serif; fill:#0603cf; }
-	.medium1				 { font: italic 17px sans-serif; fill:#0603cf; }
+	.small					{ font: italic 15px sans-serif; }
+	.medium0				{ font: 20px sans-serif; fill:#0603cf; }
+	.medium1				{ font: italic 17px sans-serif; fill:#0603cf; }
+	.medium-black			{ font: 30px sans-serif; fill:#000000; }
 	.vsmall					{ font: italic 12px sans-serif; }
 	.vsmall-red			{ font: italic 12px sans-serif; fill:#ff0000; }
 	.teal-box				{ fill:#00ffff; stroke:#000000; stroke-width:3; }
@@ -35,6 +36,8 @@ Credits:
 	.red-line				{ fill:#f00000; stroke:#000000; stroke-width:1; }
 	.out-box				 { fill:#ffffff; stroke:#000000; stroke-width:1; }
 	.blue-line			 { fill:#000000; stroke:#4040ff; stroke-width:3; fill:none }
+	.lp-green			 { fill:#f0f000; stroke:#06e035; stroke-width:3; fill:none }
+	.lp-gray			 { fill:#f0f000; stroke:#040404; stroke-width:1; fill:none }
 	.light-green-line			 { fill:#000000; stroke:#20f020; stroke-width:3; fill:none }
 	.light-cyan-line			 { fill:#000000; stroke:#40ffff; stroke-width:3; fill:none }
 	.light-red-line			 { fill:#000000; stroke:#ff0000; stroke-width:3; fill:none }
@@ -1349,6 +1352,62 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<text id="h_is_zero_output" x="450"  y="200" class="vsmall off-at-start"></text>
 	</g>
 
+	<g id="id_lp_data" class="x-off-at-start">
+		<text id="h_lp_data_title" x="40"  y="820" class="medium-black x-off-at-start">Logic Probe</text>
+		<rect id="lp_box" x="40" y="830" width="1411" height="500" class="white-box" onclick="infoOn('lp-info');" />
+		<g id="lp_lines_0">
+			<path id="lp_line_0" class="lp-green"
+				d="M 250 850   L 350 850   350 870   450 870   450 850   550 850 "
+				/>
+			<text id="h_line_0" x="50"  y="860" class="vsmall x-off-at-start">id_memory_Read</text>
+		</g>
+		<g id="lp_lines_1">
+			<path id="lp_line_0" class="lp-green"
+				d="M 250 910   L 350 910   350 890   550 890   550 910   550 910 "
+				/>
+			<text id="h_line_0" x="50"  y="900" class="vsmall x-off-at-start">id_memory_Write</text>
+		</g>
+		<g id="lp_lines_2"></g>
+		<g id="lp_lines_3"></g>
+		<g id="lp_lines_4"></g>
+		<g id="lp_lines_5"></g>
+		<g id="lp_lines_6"></g>
+		<g id="lp_lines_7"></g>
+		<g id="lp_lines_8"></g>
+		<g id="lp_lines_9"></g>
+		<g id="lp_lines_10"></g>
+		<g id="lp_lines_11"></g>
+		<path class="lp-gray" stroke-dasharray="4"  d="M  252 830  L  252 1330" />
+		<path class="lp-gray" stroke-dasharray="4"  d="M  352 830  L  352 1330" />
+		<path class="lp-gray" stroke-dasharray="4"  d="M  452 830  L  452 1330" />
+		<path class="lp-gray" stroke-dasharray="4"  d="M  552 830  L  552 1330" />
+		<path class="lp-gray" stroke-dasharray="4"  d="M  652 830  L  652 1330" />
+		<path class="lp-gray" stroke-dasharray="4"  d="M  752 830  L  752 1330" />
+		<path class="lp-gray" stroke-dasharray="4"  d="M  852 830  L  852 1330" />
+		<path class="lp-gray" stroke-dasharray="4"  d="M  952 830  L  952 1330" />
+		<path class="lp-gray" stroke-dasharray="4"  d="M 1052 830  L 1052 1330" />
+		<path class="lp-gray" stroke-dasharray="4"  d="M 1152 830  L 1152 1330" />
+		<path class="lp-gray" stroke-dasharray="4"  d="M 1252 830  L 1252 1330" />
+		<path class="lp-gray" stroke-dasharray="4"  d="M 1352 830  L 1352 1330" />
+
+		<path class="lp-gray" stroke-dasharray="4"  d="M  50 873  L  1450 873" />
+		<path class="lp-gray" stroke-dasharray="4"  d="M  50 913  L  1450 913" />
+
+		<path class="lp-gray" stroke-dasharray="4"  d="M  50 953  L  1450 953" />
+		<path class="lp-gray" stroke-dasharray="4"  d="M  50 993  L  1450 993" />
+
+		<path class="lp-gray" stroke-dasharray="4"  d="M  50 1033  L  1450 1033" />
+		<path class="lp-gray" stroke-dasharray="4"  d="M  50 1073  L  1450 1073" />
+
+		<path class="lp-gray" stroke-dasharray="4"  d="M  50 1113  L  1450 1113" />
+		<path class="lp-gray" stroke-dasharray="4"  d="M  50 1153  L  1450 1153" />
+
+		<path class="lp-gray" stroke-dasharray="4"  d="M  50 1193  L  1450 1193" />
+		<path class="lp-gray" stroke-dasharray="4"  d="M  50 1233  L  1450 1233" />
+
+		<path class="lp-gray" stroke-dasharray="4"  d="M  50 1273  L  1450 1273" />
+		<path class="lp-gray" stroke-dasharray="4"  d="M  50 1313  L  1450 1313" />
+	</g>
 
 
 
@@ -1579,6 +1638,29 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 </div>
 
+<!-- The Modal : Logic Probe Form  ======================================================== -->
+<div id="myModal6" class="modal hideMyModal">
+
+	<!-- Modal content -->
+	<div class="modal-content">
+		<div class="modal-header">
+			<span class="close" onclick="hideModal();">&times;</span>
+			<h4>Address in Main Memory</h4>
+		</div>
+		<div class="modal-body">
+			<h5>Pick up to 10 lines to attach the logic probe to</h5>
+			<input type="checkbox" id="lp-0"> SomeName0 <br>
+			<input type="checkbox" id="lp-1"> SomeName0 <br>
+			<input type="checkbox" id="lp-2"> SomeName0 <br>
+			<input type="checkbox" id="lp-3"> SomeName0 <br>
+		</div>
+		<div class="modal-footer">
+			<button class="modal-submit" type="button" id="modal-submit6" onclick="DoLogicProbe();">Show Logic Probe</button>
+		</div>
+	</div>
+
+</div>
+
 <script>
 
 var debug_PropagateSignals = false ;
@@ -1610,6 +1692,10 @@ function displayModalInput () {
 	$("#myModal5").css ( { "display":"block" } );
 }
 
+function displayModalLogicProbe() {
+	$("#myModal6").css ( { "display":"block" } );
+}
+
 // When the user clicks on <span> (x), close the modal
 function hideModal() {
 	// modal.style.display = "none";
@@ -1623,6 +1709,7 @@ var modal2 = document.getElementById("myModal2");
 var modal3 = document.getElementById("myModal3");
 var modal4 = document.getElementById("myModal4");
 var modal5 = document.getElementById("myModal5");
+var modal6 = document.getElementById("myModal6");
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
 	if (event.target == modal1) {
@@ -1640,8 +1727,12 @@ window.onclick = function(event) {
 	} else if (event.target == modal5) {
 		//modal.style.display = "none";
 		hideModal();
+	} else if (event.target == modal6) {
+		//modal.style.display = "none";
+		hideModal();
 	}
 }
+		
 
 // Equvelance classes for wires - What is wired to what.
 
@@ -1914,6 +2005,136 @@ function GetInput() {
 	return ( 0 );
 }
 
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// Logic Probe.
+// ---------------------------------------------------------------------------------------------------------------------------------------
+
+var probeUp = false;
+var lpData = {
+	 "lp-0": [ 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0 ]
+	,"lp-1": [ 0, 0 ]
+	,"lp-2": [ 0, 1 ]
+	,"lp-3": [ 1, 0 ]
+	,"lp-4": [ 1, 1 ]
+	,"lp-5": [ 0, 1, 0, 0, 1 ]
+	,"lp-6": [ 0, 1, 0, 0, 1 ]
+	,"lp-7": [ 0, 1, 0, 0, 1 ]
+	,"lp-8": [ 0, 1, 0, 0, 1 ]
+	,"lp-9": [ 0, 1, 0, 0, 1 ]
+	,"lp-10": [ 0, 1, 0, 0, 1 ]
+	,"lp-11": [ 0, 1, 0, 0, 1 ]
+};
+var lpOn = {
+	 "lp-0": false
+	,"lp-1": false
+	,"lp-2": false
+	,"lp-3": false
+	,"lp-4": false
+	,"lp-5": false
+	,"lp-6": false
+	,"lp-7": false
+	,"lp-8": false
+	,"lp-9": false
+	,"lp-10": false
+	,"lp-11": false
+}
+var lpLine = [
+	 "lp-0"
+	,"lp-1"
+	,"lp-2"
+	,"lp-3"
+	,"lp-4"
+	,"lp-5"
+	,"lp-6"
+	,"lp-7"
+	,"lp-8"
+	,"lp-9"
+	,"lp-10"
+	,"lp-11"
+];
+
+function showLogicProbe ( doShow ) {
+	doShow = !! doShow;
+	probeUp = true;
+	if ( probeUp ) {
+		for ( var i = 0; i < 4; i++ ) {
+			var on = lpOn[ lpLine[i] ];
+			$("#lp-"+i).attr("checked",on);
+		}
+		displayModalLogicProbe();
+	}
+}
+
+function DoLogicProbe() {
+	for ( var i = 0; i < 4; i++ ) {
+		var lineProbed = $("#lp-"+i).is(":checked");
+		lpOn[ lpLine[i] ] = lineProbed;
+	}
+	hideModal();
+}
+
+/*
+		<g id="lp_lines_0">
+			<path id="lp_line_0" class="lp-green"
+				d="M 250 850   L 350 850   350 870   450 870   450 850   550 850 "
+				/>
+			<text id="h_line_0" x="50"  y="860" class="vsmall x-off-at-start">id_memory_Read</text>
+		</g>
+		<g id="lp_lines_1">
+			<path id="lp_line_0" class="lp-green"
+				d="M 250 910   L 350 910   350 890   550 890   550 910   550 910 "
+				/>
+			<text id="h_line_0" x="50"  y="900" class="vsmall x-off-at-start">id_memory_Write</text>
+		</g>
+*/
+
+function drawLpLine() {
+	var pos_x = 50;
+	var pos_y = 850;
+	var dx = 100;
+	var dy = 40;
+
+	for ( var ii = 0; ii < 12; ii++ ) {
+		var name = lpLine[ii];
+		var dd = draw1LpLine ( 250, pos_y, dx, 20, lpData[name] );
+		var buf = [
+			 '<path class="lp-green" d="'+dd+'" />'
+			,'<text x="'+pos_x+'"  y="'+(pos_y+10)+'" class="vsmall x-off-at-start">'+name+'</text>'
+		];
+		$("#lp_lines_"+ii).html ( buf.join("\n") );	
+		pos_y += dy;
+	}
+}
+		
+function draw1LpLine ( pos_x, pos_y, dx, dy, lpData ) {
+	// var dd = "M 250 850   L 350 850   350 870   450 870   450 850   550 850 ";
+	var dd = [];
+	var py = 0, px = 0;
+	var ld = ( lpData[0] == 0 ) ? 1 : 0;
+	var x = pos_x;
+	var y = pos_y+(dy*ld);
+	dd.push ( "M " + x + " " + y + " L " );
+	for ( var jj = 0, mx = lpData.length; jj < mx && jj < 12; jj++ ) {
+		x += dx;
+		var ld = ( lpData[jj] == 0 ) ? 1 : 0;
+		y = pos_y + ( dy * ld );
+		if ( jj > 0 && py != y ) {
+		 	dd.push ( px + " " + y );
+		}
+		dd.push ( x + " " + y );
+		px = x;
+		py = y;
+	}
+	var ddd = dd.join(" ");
+	console.error ( "ddd=", ddd );
+	return ddd;
+}
+
+function testDraw1LpLine() {
+	draw1LpLine ( 250, 840, 100, 20, [ 1, 0, 0, 1 ] );
+}
+
 // ---------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1990,6 +2211,9 @@ function infoOn1(i,x) {
 		break;
 	case "input":	// 
 		CollectInput();
+		break;
+	case "logic-probe":	// 
+		showLogicProbe ( true );
 		break;
 
 	// logic-probe
