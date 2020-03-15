@@ -2,21 +2,53 @@
 Issues:
 
 1. do the rest of the buttons. (4hrs)
-	- Logic Probe ??
-	- xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-	- A modal with all the "lines" that you can put the probe on.
-	- Chebox for liens - allow 10 at a time
+	* Logic Probe ??
+	* xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	* A modal with all the "lines" that you can put the probe on.
+	* Chebox for liens - allow 10 at a time
 	- Every time the value chagnes at the end of a cycle for a line - put it in the array["line"][DeltaT]
-	- Keep 20 cycles of [DeltaT]
-	- Chop and Rotate
+		Pull this data from end-of-cycle - theWorld2
+	- Keep 12 cycles of [DeltaT]
+	- Chop and Rotate the data - so data is most recent 12.  Grow to 12, then pick off and rotate.
 	- At end of each cycle - if logicProbeOn - then display all the liens in a box at the bottom.
 
+	fucnction AddConnectionsToListOfWires() {						// Create lis of all wires for display on Logic Probe Modal
+	function showLogicProbe ( doShow ) {							// Display Logic Probe Modal, turn on Logic Probe Panel			2019 def
+		showLogicProbe ( true );									// Display the Modal											2261 call from infoOn1('logic-probe') (button click)
+	function SubmitButton_for_LogicProbeModal() {					// Submit For: Display the Logic Probe Modal
+
+
+	TODO:
+	3. on showLogicProbe() - list connected wires and other info (description) for each wire.
+		function showLogicProbe ( doShow ) {		:2022
+		show postion from microcode if a microcode output.
 
 
 
 
 
 
+
+
+
+
+-- done -- Logic Probe --
+	+++ * Go from McJmp_0 -> McJmp_{bus:size 8}
+	+++1. Show a list of liens from
+			// var ListOfWires = []; as titles (with sizes if a "bus"
+		Checkbox on each one.
+		If checked then add it to the list...
+	+++2. 	If a "bus" then display a number instead of a green-line
+
+	function getWidthOfLine ( name )
+		return 1; // xyzzy-draw
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+TODO Later
+-----------------------------------------------------------------------------------------------------------------------------------------------
 1. test3000 - test of ALU - is failing when run at the end of testAll and succeeding if run on its own.
 
 1. Setup a "real" server with this on it -  (4hrs) (set some domain t5432z.com to point to it?)
@@ -26,23 +58,9 @@ Issues:
 
 
 
+1. Convert existing test cases into { setup | run | verify } and figure out a way to do these with the new User Interface.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+1. One Note...
 
 
 

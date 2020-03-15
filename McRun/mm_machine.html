@@ -1648,14 +1648,16 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<h4>Address in Main Memory</h4>
 		</div>
 		<div class="modal-body">
-			<h5>Pick up to 10 lines to attach the logic probe to</h5>
-			<input type="checkbox" id="lp-0"> SomeName0 <br>
-			<input type="checkbox" id="lp-1"> SomeName0 <br>
-			<input type="checkbox" id="lp-2"> SomeName0 <br>
-			<input type="checkbox" id="lp-3"> SomeName0 <br>
+			<h5>Pick up to 12 wires or busses to attach the logic probe to:</h5>
+			<span id="logic-probe-list">
+				<input type="checkbox" id="lp-0"> SomeName0 <br>
+				<input type="checkbox" id="lp-1"> SomeName0 <br>
+				<input type="checkbox" id="lp-2"> SomeName0 <br>
+				<input type="checkbox" id="lp-3"> SomeName0 <br>
+			</span> &nbsp; <br>
 		</div>
 		<div class="modal-footer">
-			<button class="modal-submit" type="button" id="modal-submit6" onclick="DoLogicProbe();">Show Logic Probe</button>
+			<button class="modal-submit" type="button" id="modal-submit6" onclick="SubmitButton_for_LogicProbeModal();">Show Logic Probe</button>
 		</div>
 	</div>
 
@@ -2011,62 +2013,40 @@ function GetInput() {
 // ---------------------------------------------------------------------------------------------------------------------------------------
 
 var probeUp = false;
-var lpData = {
-	 "lp-0": [ 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0 ]
-	,"lp-1": [ 0, 0 ]
-	,"lp-2": [ 0, 1 ]
-	,"lp-3": [ 1, 0 ]
-	,"lp-4": [ 1, 1 ]
-	,"lp-5": [ 0, 1, 0, 0, 1 ]
-	,"lp-6": [ 0, 1, 0, 0, 1 ]
-	,"lp-7": [ 0, 1, 0, 0, 1 ]
-	,"lp-8": [ 0, 1, 0, 0, 1 ]
-	,"lp-9": [ 0, 1, 0, 0, 1 ]
-	,"lp-10": [ 0, 1, 0, 0, 1 ]
-	,"lp-11": [ 0, 1, 0, 0, 1 ]
-};
-var lpOn = {
-	 "lp-0": false
-	,"lp-1": false
-	,"lp-2": false
-	,"lp-3": false
-	,"lp-4": false
-	,"lp-5": false
-	,"lp-6": false
-	,"lp-7": false
-	,"lp-8": false
-	,"lp-9": false
-	,"lp-10": false
-	,"lp-11": false
-}
-var lpLine = [
-	 "lp-0"
-	,"lp-1"
-	,"lp-2"
-	,"lp-3"
-	,"lp-4"
-	,"lp-5"
-	,"lp-6"
-	,"lp-7"
-	,"lp-8"
-	,"lp-9"
-	,"lp-10"
-	,"lp-11"
-];
+var lpData = {};
+var lpOn = {};
+var lpLine = [];
+var lpIdToName = [];
 
+// Display Logic Probe Modal, turn on Logic Probe Panel
 function showLogicProbe ( doShow ) {
 	doShow = !! doShow;
 	probeUp = true;
 	if ( probeUp ) {
-		for ( var i = 0; i < 4; i++ ) {
+		// xyzzy-Logic-Probe - need to go through list of "wires" and display each one with an ID and map ID to name.
+		// var lpIdToName = [];
+		// <span id="logic-probe-list">
+		// <input type="checkbox" id="lp-0"> SomeName0 <br>
+		var dd = [];
+		for ( var i = 0, mx = ListOfWires.length; i < mx; i++ ) {
 			var on = lpOn[ lpLine[i] ];
-			$("#lp-"+i).attr("checked",on);
+			if ( on ) {
+				dd.push ( '<input type="checkbox" id="lp-'+i+'" checked> '+ListOfWires[i]+' <br>' );
+			} else {
+				dd.push ( '<input type="checkbox" id="lp-'+i+'"> '+ListOfWires[i]+' <br>' );
+			}
 		}
+		$("#logic-probe-list").html( dd.join("\n") );
+		//for ( var i = 0, mx = ListOfWires.length; i < mx; i++ ) {
+		//	var on = lpOn[ lpLine[i] ];
+		//	$("#lp-"+i).attr("checked",on);
+		//}
 		displayModalLogicProbe();
 	}
 }
 
-function DoLogicProbe() {
+// Submit For: Display the Logic Probe Modal
+function SubmitButton_for_LogicProbeModal() {
 	for ( var i = 0; i < 4; i++ ) {
 		var lineProbed = $("#lp-"+i).is(":checked");
 		lpOn[ lpLine[i] ] = lineProbed;
@@ -2097,42 +2077,124 @@ function drawLpLine() {
 
 	for ( var ii = 0; ii < 12; ii++ ) {
 		var name = lpLine[ii];
-		var dd = draw1LpLine ( 250, pos_y, dx, 20, lpData[name] );
-		var buf = [
-			 '<path class="lp-green" d="'+dd+'" />'
-			,'<text x="'+pos_x+'"  y="'+(pos_y+10)+'" class="vsmall x-off-at-start">'+name+'</text>'
-		];
+		var w = getWidthOfLine ( name );
+		var dd = draw1LpLine ( 250, pos_y, dx, 20, lpData[name], name );
+		var buf = [];
+		if ( w === 1 ) {
+			buf = [
+				 '<path class="lp-green" d="'+dd+'" />'
+				,'<text x="'+pos_x+'"  y="'+(pos_y+10)+'" class="vsmall x-off-at-start">'+name+'</text>'
+			];
+		} else {
+			buf = [
+				 dd
+				,'<text x="'+pos_x+'"  y="'+(pos_y+10)+'" class="vsmall x-off-at-start">'+name+'</text>'
+			];
+		}
 		$("#lp_lines_"+ii).html ( buf.join("\n") );	
 		pos_y += dy;
 	}
 }
+
+// Return the width of a wire or bus. 
+function getWidthOfLine ( name ) {
+	// var ListOfBus = {
+	// 	"Bus": 						{ "width": 16									, "tmpl": "Bus_%{n%}" }
+	if ( ListOfBus[name] && ListOfBus[name]["width"] ) {
+		var w = ListOfBus[name].width;
+		return w;
+	} 
+	return 1; 
+}
 		
-function draw1LpLine ( pos_x, pos_y, dx, dy, lpData ) {
-	// var dd = "M 250 850   L 350 850   350 870   450 870   450 850   550 850 ";
+function draw1LpLine ( pos_x, pos_y, dx, dy, lpData, name ) {
+	// Samle: var ddd = "M 250 850   L 350 850   350 870   450 870   450 850   550 850 ";
 	var dd = [];
 	var py = 0, px = 0;
 	var ld = ( lpData[0] == 0 ) ? 1 : 0;
 	var x = pos_x;
 	var y = pos_y+(dy*ld);
+	var w = getWidthOfLine ( name );
 	dd.push ( "M " + x + " " + y + " L " );
 	for ( var jj = 0, mx = lpData.length; jj < mx && jj < 12; jj++ ) {
 		x += dx;
-		var ld = ( lpData[jj] == 0 ) ? 1 : 0;
-		y = pos_y + ( dy * ld );
-		if ( jj > 0 && py != y ) {
-		 	dd.push ( px + " " + y );
+		if ( w > 1 ) {
+			var ld = lpData[jj];
+			var lds = ld;
+			if ( w == 16 ) {
+				lds = toHex(ld,4);
+			} else if ( w == 8 ) {
+				lds = toHex(ld,2);
+			} else if ( w > 1 ) {
+				lds = toHex(ld,1);
+			}
+			y = pos_y + 10;
+			dd.push ( '<text x="'+x+'" y="'+y+'" class="vsmall x-off-at-start">0x'+lds+'</text>' ); // <text id="id_hand_out_value" x="245" y="268" class="small"></text>
+		} else {
+			var ld = ( lpData[jj] == 0 ) ? 1 : 0;
+			y = pos_y + ( dy * ld );
+			if ( jj > 0 && py != y ) {
+				dd.push ( px + " " + y );
+			}
+			dd.push ( x + " " + y );
+			px = x;
+			py = y;
 		}
-		dd.push ( x + " " + y );
-		px = x;
-		py = y;
 	}
 	var ddd = dd.join(" ");
-	console.error ( "ddd=", ddd );
+	// console.error ( "ddd=", ddd );
 	return ddd;
 }
 
+// testDraw1LpLine() will run a test of draw1LpLine();
 function testDraw1LpLine() {
 	draw1LpLine ( 250, 840, 100, 20, [ 1, 0, 0, 1 ] );
+}
+
+function testDrawLpLine() {
+	lpData = {
+		 "lp-0": [ 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0 ]
+		,"lp-1": [ 0, 0 ]
+		,"lp-2": [ 0, 1 ]
+		,"lp-3": [ 1, 0 ]
+		,"lp-4": [ 1, 1 ]
+		,"Bus": [ 122, 0x10, 0, 0xBeef, 1 ]
+		,"lp-6": [ 0, 1, 0, 0, 1 ]
+		,"lp-7": [ 0, 1, 0, 0, 1 ]
+		,"lp-8": [ 0, 1, 0, 0, 1 ]
+		,"lp-9": [ 0, 1, 0, 0, 1 ]
+		,"lp-10": [ 0, 1, 0, 0, 1 ]
+		,"lp-11": [ 0, 1, 0, 0, 1 ]
+	};
+	lpOn = {
+		 "lp-0": false
+		,"lp-1": false
+		,"lp-2": false
+		,"lp-3": false
+		,"lp-4": false
+		,"Bus": false
+		,"lp-6": false
+		,"lp-7": false
+		,"lp-8": false
+		,"lp-9": false
+		,"lp-10": false
+		,"lp-11": false
+	}
+	lpLine = [
+		 "lp-0"
+		,"lp-1"
+		,"lp-2"
+		,"lp-3"
+		,"lp-4"
+		,"Bus"
+		,"lp-6"
+		,"lp-7"
+		,"lp-8"
+		,"lp-9"
+		,"lp-10"
+		,"lp-11"
+	];
+	drawLpLine();
 }
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
@@ -2476,276 +2538,6 @@ function toBin(d, padding) {
     return bin;
 }
 
-var theWorld = {
-	"Bus": {
-		"_data_": 0
-		, "_used_": false
-		, "_error_": []
-		, "State": function () {
-			if ( theWorld.Bus._used_ ) {
-console.log ( "Called Bus.State, returing", theWorld.Bus._data_ );
-				return ( theWorld.Bus._data_ );
-			} else {
-				var ignore = false;
-				if ( arguments.length > 0 ) {
-					ignore = arguments[0];
-				}
-				if ( ! ignore ) {
-					console.log ( "Warning: Pulling 'bus.State' when undefined" );
-					theWorld.Bus._error_.push( "Warning: Pulling 'bus.State' when undefined" );
-				}
-				return ( theWorld.Bus._data_ );
-			}
-		}
-		, "SetState": function ( v ) {		//Xyzzy - add in who is setting!
-console.log ( "****************** SetState:", v );
-			if (typeof(v) === "undefined" ) {
-				return
-			}
-			// if ( theWorld.Bus._used_ ) {
-			// 	theWorld.Bus._error_.push ( "Multiple SetState on the bus!" );
-			// }
-			theWorld.Bus._data_ = v;
-			theWorld.Bus._used_ = true;
-			var sVal = toHex(v,4);
-			displayMainBus(sVal);
-		}
-		, "TickRise": function ( v ) {
-			theWorld.Bus._data_ = undefined;
-			theWorld.Bus._used_ = false;
-			clearMainBus();
-		}
-		, "Error": function ( v ) {
-			return ( theWorld.Bus._error_ );
-		}
-		, "ClearError": function ( v ) {
-			theWorld.Bus._error_ = [];
-		}
-	}
-	,"IsZero": {
-		"_data_": 0
-		, "_used_": false
-		, "_error_": []
-		, "State": function () {
-			if ( theWorld.IsZero._used_ ) {
-				return ( theWorld.IsZero._data_ );
-			} else {
-				var ignore = false;
-				if ( arguments.length > 0 ) {
-					ignore = arguments[0];
-				}
-				if ( ! ignore ) {
-					console.log ( "Warning: Pulling 'IsZero.State' when undefined" );
-					theWorld.IsZero._error_.push( "Warning: Pulling 'IsZero.State' when undefined" );
-				}
-				return ( theWorld.IsZero._data_ );
-			}
-		}
-		, "SetState": function ( v ) {
-			if (typeof(v) === "undefined" ) {
-				return
-			}
-			theWorld.IsZero._data_ = v;
-			theWorld.IsZero._used_ = true;
-		}
-		, "TickRise": function ( v ) {
-			theWorld.IsZero._data_ = undefined;
-			theWorld.IsZero._used_ = false;
-		}
-		, "Error": function ( v ) {
-			return ( theWorld.IsZero._error_ );
-		}
-		, "ClearError": function ( v ) {
-			theWorld.IsZero._error_ = [];
-		}
-	}
-	,"IR_15__12": {
-		"_data_": 0
-		, "_used_": false
-		, "_error_": []
-		, "State": function () {
-			if ( theWorld.IR_15__12._used_ ) {
-				return ( theWorld.IR_15__12._data_ );
-			} else {
-				var ignore = false;
-				if ( arguments.length > 0 ) {
-					ignore = arguments[0];
-				}
-				if ( ! ignore ) {
-					console.log ( "Warning: Pulling 'IR_15__12.State' when undefined" );
-					theWorld.IR_15__12._error_.push( "Warning: Pulling 'IR_15__12.State' when undefined" );
-				}
-				return ( theWorld.IR_15__12._data_ );
-			}
-		}
-		, "SetState": function ( v ) {
-			if (typeof(v) === "undefined" ) {
-				return
-			}
-			theWorld.IR_15__12._data_ = v;
-			theWorld.IR_15__12._used_ = true;
-		}
-		, "TickRise": function ( v ) {
-			theWorld.IR_15__12._data_ = undefined;
-			theWorld.IR_15__12._used_ = false;
-		}
-		, "Error": function ( v ) {
-			return ( theWorld.IR_15__12._error_ );
-		}
-		, "ClearError": function ( v ) {
-			theWorld.IR_15__12._error_ = [];
-		}
-	}
-	,"IR_11__8": {
-		"_data_": 0
-		, "_used_": false
-		, "_error_": []
-		, "State": function () {
-			if ( theWorld.IR_11__8._used_ ) {
-				return ( theWorld.IR_11__8._data_ );
-			} else {
-				var ignore = false;
-				if ( arguments.length > 0 ) {
-					ignore = arguments[0];
-				}
-				if ( ! ignore ) {
-					console.log ( "Warning: Pulling 'IR_11__8.State' when undefined" );
-					theWorld.IR_11__8._error_.push( "Warning: Pulling 'IR_11__8.State' when undefined" );
-				}
-				return ( theWorld.IR_11__8._data_ );
-			}
-		}
-		, "SetState": function ( v ) {
-			if (typeof(v) === "undefined" ) {
-				return
-			}
-			theWorld.IR_11__8._data_ = v;
-			theWorld.IR_11__8._used_ = true;
-		}
-		, "TickRise": function ( v ) {
-			theWorld.IR_11__8._data_ = undefined;
-			theWorld.IR_11__8._used_ = false;
-		}
-		, "Error": function ( v ) {
-			return ( theWorld.IR_11__8._error_ );
-		}
-		, "ClearError": function ( v ) {
-			theWorld.IR_11__8._error_ = [];
-		}
-	}
-	,"hand_out": {
-		"_data_": 0
-		, "_used_": false
-		, "_error_": []
-		, "State": function () {
-			if ( theWorld.hand_out._used_ ) {
-				return ( theWorld.hand_out._data_ );
-			} else {
-				var ignore = false;
-				if ( arguments.length > 0 ) {
-					ignore = arguments[0];
-				}
-				if ( ! ignore ) {
-					console.log ( "Warning: Pulling 'hand.State' when undefined" );
-					theWorld.hand_out._error_.push( "Warning: Pulling 'hand.State' when undefined" );
-				}
-				return ( theWorld.hand._data_ );
-			}
-		}
-		, "SetState": function ( v ) {
-			if (typeof(v) === "undefined" ) {
-				return
-			}
-			theWorld.hand_out._data_ = v;
-			theWorld.hand_out._used_ = true;
-		}
-		, "TickRise": function ( v ) {
-			theWorld.hand_out._data_ = undefined;
-			theWorld.hand_out._used_ = false;
-		}
-		, "Error": function ( v ) {
-			return ( theWorld.hand_out._error_ );
-		}
-		, "ClearError": function ( v ) {
-			theWorld.hand_out._error_ = [];
-		}
-	}
-	,"MAR_to_Memory": {
-		"_data_": 0
-		, "_used_": false
-		, "_error_": []
-		, "State": function () {
-			if ( theWorld.MAR_to_Memory._used_ ) {
-				return ( theWorld.MAR_to_Memory._data_ );
-			} else {
-				var ignore = false;
-				if ( arguments.length > 0 ) {
-					ignore = arguments[0];
-				}
-				if ( ! ignore ) {
-					console.log ( "Warning: Pulling 'bus.State' when undefined" );
-					theWorld.MAR_to_Memory._error_.push( "Warning: Pulling 'bus.State' when undefined" );
-				}
-				return ( theWorld.MAR_to_Memory._data_ );
-			}
-		}
-		, "SetState": function ( v ) {
-			if (typeof(v) === "undefined" ) {
-				return
-			}
-			theWorld.MAR_to_Memory._data_ = v;
-			theWorld.MAR_to_Memory._used_ = true;
-		}
-		, "TickRise": function ( v ) {
-			theWorld.MAR_to_Memory._data_ = undefined;
-			theWorld.MAR_to_Memory._used_ = false;
-		}
-		, "Error": function ( v ) {
-			return ( theWorld.MAR_to_Memory._error_ );
-		}
-		, "ClearError": function ( v ) {
-			theWorld.MAR_to_Memory._error_ = [];
-		}
-	}
-	,"MDR_to_Memory": {
-		"_data_": 0
-		, "_used_": false
-		, "_error_": []
-		, "State": function () {
-			if ( theWorld.MDR_to_Memory._used_ ) {
-				return ( theWorld.MDR_to_Memory._data_ );
-			} else {
-				var ignore = false;
-				if ( arguments.length > 0 ) {
-					ignore = arguments[0];
-				}
-				if ( ! ignore ) {
-					console.log ( "Warning: Pulling 'bus.State' when undefined" );
-					theWorld.MDR_to_Memory._error_.push( "Warning: Pulling 'bus.State' when undefined" );
-				}
-				return ( theWorld.MDR_to_Memory._data_ );
-			}
-		}
-		, "SetState": function ( v ) {
-			if (typeof(v) === "undefined" ) {
-				return
-			}
-			theWorld.MDR_to_Memory._data_ = v;
-			theWorld.MDR_to_Memory._used_ = true;
-		}
-		, "TickRise": function ( v ) {
-			theWorld.MDR_to_Memory._data_ = underfined;
-			theWorld.MDR_to_Memory._used_ = false;
-		}
-		, "Error": function ( v ) {
-			return ( theWorld.MDR_to_Memory._error_ );
-		}
-		, "ClearError": function ( v ) {
-			theWorld.MDR_to_Memory._error_ = [];
-		}
-	}
-
-};
 
 var Connections = {
 	  "Microcode_PC_Addr": [ { Name:"MICROCODE",		Op: ["Addr"]      	} ]		// Kick start the process.
@@ -2811,11 +2603,42 @@ var Connections = {
 
 };
 
+var ListOfBus = {
+	"Bus": 						{ "width": 16									, "tmpl": "Bus_%{n%}" }
+	,"Microcode_PC_Addr": 		{ "width": 8									, "tmpl": "Microcode_PC_Addr_%{n%}" }
+	,"Memor_to_MDR": 			{ "width": 16, "eqiv": [ "Ld_from_Memory" ]		, "tmpl": "Memory_to_MDR_%{n%}" }
+	,"Ld_from_Memory": 			{ "width": 16, "eqiv": [ "Memory_to_MDR" ]		, "tmpl": "Memory_to_MDR_%{n%}" }
+	,"Memory_Addr": 			{ "width": 16									, "tmpl": "Memory_Addr_%{n%}" }
+	,"id_Input_Inc": 			{ "width": 1 }
+	// MUX
+	,"mux_00_0":				{ "width": 1, "equiv": [ "McJmp_0" ] }		// xyzzy - more 
+	// ALU
+	,"alu_Ctl_0":				{ "width": 1, "equiv": [ "id_decoder_Ctl_0" ] }
+	,"alu_Ctl_1":				{ "width": 1, "equiv": [ "id_decoder_Ctl_1" ] }
+
+	// McJmp_X / McJmp Bus
+	,"McJmp":					{ "width": 8, "members": [ "McJmp_0" ,"McJmp_1" ,"McJmp_2" ,"McJmp_3" ,"McJmp_4" ,"McJmp_5" ,"McJmp_6" ,"McJmp_7" ] }
+	,"McJmp_0":					{ "width": 1, "bus": { "name": "McJmp", "width":8, "pos": 0 } }
+	,"McJmp_1":					{ "width": 1, "bus": { "name": "McJmp", "width":8, "pos": 1 } }
+	,"McJmp_2":					{ "width": 1, "bus": { "name": "McJmp", "width":8, "pos": 2 } }
+	,"McJmp_3":					{ "width": 1, "bus": { "name": "McJmp", "width":8, "pos": 3 } }
+	,"McJmp_4":					{ "width": 1, "bus": { "name": "McJmp", "width":8, "pos": 4 } }
+	,"McJmp_5":					{ "width": 1, "bus": { "name": "McJmp", "width":8, "pos": 5 } }
+	,"McJmp_6":					{ "width": 1, "bus": { "name": "McJmp", "width":8, "pos": 6 } }
+	,"McJmp_7":					{ "width": 1, "bus": { "name": "McJmp", "width":8, "pos": 7 } }
+};
+
+function AddConnectionsToListOfWires() {
+	// var ListOfWires = [];
+	for ( key in ListOfBus ) {
+		ListOfWires.push ( key );
+	}
+}
+
 // ----------------------------------------------------------------------------------------------------------------------------------------
 function RunConnections () {
 	for ( var cur in theWorld2 ) {
-		// for ( var key in Connections ) {
-// console.log ( "cur=", cur );
+		// console.log ( "cur=", cur );
 		if ( typeof Connections[cur] !== "undefined" ) {
 			var wireTo = Connections[cur];
 			// console.log ( "For "+cur+" wireTo=", wireTo );
@@ -2825,14 +2648,14 @@ function RunConnections () {
 				for ( var kk = 0, mx = op.length; kk < mx; kk++ ) {
 					var toCall = name+".msg('"+op[kk]+"',1);";
 					if ( ! thisTick[toCall] ) { // thisTick ??
-// console.log ( ">>>Connections CALLING<<<: "+name+".msg('"+op[kk]+"',1);" ); 
+						// console.log ( ">>>Connections CALLING<<<: "+name+".msg('"+op[kk]+"',1);" ); 
 						if ( window[name] && window[name].msg ) {
 							window[name].msg ( op[kk], 1 );						// connection from "wire" to chip.
 						} else {
 							console.error ( "RunConnections: failed for: ", name+".msg('"+op[kk]+"',1);" ); 
 						}
 					} else {
-// console.log ( ">>>Skipped", toCall);
+						// console.log ( ">>>Skipped", toCall);
 					}
 					thisTick[toCall] = 1;
 				}
@@ -2841,10 +2664,28 @@ function RunConnections () {
 	}
 }
 
+// ----------------------------------------------------------------------------------------------------------------------------------------
+function CollectLogicProbeData() {
+	console.warn ( "**** function CollectLogicProbeData() { **** not implemented yet", JSON.stringify(theWorld2,null,2) );
+}
+
+
+
+
+
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+// Display/Output Functions
+// ----------------------------------------------------------------------------------------------------------------------------------------
 
 function clearMicrocodeText() {
 	$("#microcode_txt_0").text("");
 	$("#microcode_txt_1").text("");
+	$("#microcode_txt_2").text("");
+	$("#microcode_txt_3").text("");
+	$("#microcode_txt_4").text("");
 }
 
 function displayMicrocodeText(t1,t2,t3,t4,t5) {
@@ -3064,6 +2905,23 @@ function PropagateSignals () {
 }
 
 
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// Registers and Components.
+// ---------------------------------------------------------------------------------------------------------------------------------------
+//		Microcode_PC
+//		Microcode
+//		Input
+//		PC
+//		MAR
+//		Memory
+//		MDR
+//		IR
+//		AC
+//		ALU
+//		Result
+//		Decoder
+//		Output
+// ---------------------------------------------------------------------------------------------------------------------------------------
 </script>
 <script src="js/pc_reg.js"></script>
 <script src="js/ir_reg.js"></script>
@@ -3083,6 +2941,9 @@ function PropagateSignals () {
 <script src="js/show-memory.js?v=0008"></script>
 <script>
 
+var ListOfWires = [];	// All of the wires in the system
+var mc_hash = "";		// Current hash from the microcode. - used for user display.
+
 //console.log ( "PC=",PC, "RESULT=", RESULT);
 //console.log ( "IR=",IR, "AC=", AC);
 //console.log ( "MAR=",MAR, "MDR=", MDR);
@@ -3098,14 +2959,9 @@ console.log ( "Developed for the Deptatmentment of Computer Science 2150 Machine
 console.log ( "Copyright (C) University of Wyoming, 2019-2020." );
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
+// Parse input from loading microcode file.
 // ---------------------------------------------------------------------------------------------------------------------------------------
 
-/*
-0000000430000001 000
-0000000144000000 001
-0000000008c00008 002
-436f646520427920 003
-*/
 var ParseInput = function (data) {
 	var array = data.toString().split("\n");
 	var pc = 0;
@@ -3142,8 +2998,8 @@ var ParseInput = function (data) {
 				da = "_data2_";
 				nb = pos - 32;
 			}
-			if ( ! MICROCODE.x_Output_Lines_ ) {
-				MICROCODE.x_Output_Lines_ = {};
+			if ( ! MICROCODE.x._Output_Lines_ ) {
+				MICROCODE.x._Output_Lines_ = {};
 			}
 			MICROCODE.x["_Output_Lines_"][id] = {
 				Loc: pos,
@@ -3151,6 +3007,7 @@ var ParseInput = function (data) {
 				Name: id,
 				DataArray: da
 			};
+			ListOfWires.push ( id );
 		}
     }
 	displayMicrocodeText(
@@ -3160,11 +3017,15 @@ var ParseInput = function (data) {
 		"",
 		"");
 	// console.log ( JSON.stringify ( MICROCODE ) );
+	// var Connections = {
+	AddConnectionsToListOfWires();
 };
 
 
-var mc_hash = "";
 
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// Load the Microcode
+// ---------------------------------------------------------------------------------------------------------------------------------------
 // <button class="modal-submit" type="button" id="modal-submit" onclick="LoadMC();">Load Code</button>
 // <input id="modal-input-code-hash" spellcheck="false" name="i_hash" class="hash-input">
 function LoadMC() {		// LoadMicrocode
@@ -3195,8 +3056,8 @@ OnStartupReloadMicrocode();
 
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
+// Parse input from loading main memory.
 // ---------------------------------------------------------------------------------------------------------------------------------------
-
 var ParseInputHexMM = function (data) {
 	var array = data.toString().split("\n");
 	var pc = 0;
@@ -3205,6 +3066,8 @@ var ParseInputHexMM = function (data) {
 		const str = array[i];
 		if ( str.length === 0 ) {
 			// console.log ( "Skipping 0 length line" )
+		} else if ( str.substr(0,1) === "#" ) {
+			console.log ( "Skipping comment in .hex file", str );
 		} else {
 			const p1x = parseInt(str,16);
 			MEMORY.x["_data_"][pc] = p1x;
@@ -3217,7 +3080,7 @@ var ParseInputHexMM = function (data) {
 		"Data 16 bits wide",
 		"Hex Code Loaded... "+mm_hash.substr(0,10)+"..."
 	);
-//	console.log ( JSON.stringify ( MEMORY ) );
+	//	console.log ( JSON.stringify ( MEMORY ) );
 };
 
 
@@ -3248,9 +3111,12 @@ OnStartupReloadMainMemory();
 
 
 
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// Display modal for memory address (MA) - then show the memory at current PC.
+// ---------------------------------------------------------------------------------------------------------------------------------------
 function LoadMA() {
 	hideModal();
-console.log ( "LoadMA()" );
+	// console.log ( "LoadMA()" );
 	/* <input id="modal-input-ma" spellcheck="false" name="i_mm_addr" class="mem-input"> */
 	var v = $("#modal-input-ma").val();
 	v = parseInt ( v, 16 );
@@ -3261,6 +3127,7 @@ console.log ( "LoadMA()" );
 var isInit = 0;
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
+// Reset the entire machine to original "state"
 // ---------------------------------------------------------------------------------------------------------------------------------------
 function ResetMachine() {
 	curPosInput = 0;
@@ -3287,24 +3154,12 @@ function ResetMachine() {
 	}
 }
 
-// ---------------------------------------------------------------------------------------------------------------------------------------
-// Registers and Components.
-// ---------------------------------------------------------------------------------------------------------------------------------------
-//		Microcode_PC
-//		Microcode
-//		Input
-//		PC
-//		MAR
-//		Memory
-//		MDR
-//		IR
-//		AC
-//		ALU
-//		Result
-//		Decoder
-//		Output
-// ---------------------------------------------------------------------------------------------------------------------------------------
 
+
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// Functions related to moving forward 1 "tick" or 1 instruction in the machine.
+// ---------------------------------------------------------------------------------------------------------------------------------------
 var StopMcTick = 0;
 var StopTick = 0;
 
@@ -3335,6 +3190,93 @@ function Step1Ins() {
 }
 
 
+
+
+
+
+function TickFinalCleanup() {
+	theWorld2 = {};			// Values
+	theWorld2WhoSet = [];	// Who set like PC
+	theWorld2DepOn = [];	// Functions depending on inputs.
+	thisTick = {};			// List of Connections called based on completion - only 1 call per tick.
+}
+
+function TickStart() {
+	// Setup ThisTick - if already run then can not run it again.
+	thisTick = {}; // (same as "Pending" - or Propogation makes it different - ??)
+	MICROCODE_PC.msg('Out',1);
+}
+
+
+
+var prev_pc = 0;
+var prev_m_pc = 0;
+
+function Run1TickInit( ) {
+
+	// -----------------------------------------------------
+	// 0. Set prev_pc, prev_mpc - to values.
+	// -----------------------------------------------------
+	if ( ! PC.x._data_ ) {
+		PC.x._data_ = 0;
+	}
+	if ( ! MICROCODE_PC.x._data_ ) {
+		MICROCODE_PC.x._data_ = 0;
+	}
+
+	prev_pc = PC.x._data_;
+	prev_m_pc = MICROCODE_PC.x._data_;
+
+	TickFinalCleanup();
+
+}
+
+// console.log ( "After Step 1: AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+// console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+function Run1TickStep() {
+
+	// -----------------------------------------------------
+	// 1. Send "Out" message to MICROCODE_PC						
+	// -----------------------------------------------------
+	clearOtherLine(); 	
+	TickFinalCleanup();
+	TickStart();
+
+
+	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
+	RunConnections ();
+
+	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
+	RunConnections ();
+
+	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
+	RunConnections ();
+
+
+
+	// console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
+	MICROCODE_PC.rise();			// RiseAll()??
+	PC.rise();						// RiseAll()??
+	MICROCODE.rise();				// RiseAll()??
+	MUX.rise();	
+
+	// console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn, thisTick );
+	thisTick = {};			// List of Connections called based on completion - only 1 call per tick.
+
+	prev_m_pc = MICROCODE_PC.x._data_;
+
+	CollectLogicProbeData();
+
+	return ( nErr );
+}
+
+
+
+
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// Debugging related functions.
+// ---------------------------------------------------------------------------------------------------------------------------------------
 // stackTrace will return the current stack trace for output on the console.
 function stackTrace() {
 	var e = new Error();
@@ -3392,6 +3334,9 @@ var nErr = 0;
 
 
 
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// Testing Code.
+// ---------------------------------------------------------------------------------------------------------------------------------------
 
 
 // 1000. PC
@@ -4214,145 +4159,6 @@ function test7000( single ) {
 
 
 
-
-
-
-
-
-
-
-
-
-function TickFinalCleanup() {
-	theWorld2 = {};			// Values
-	theWorld2WhoSet = [];	// Who set like PC
-	theWorld2DepOn = [];	// Functions depending on inputs.
-	thisTick = {};			// List of Connections called based on completion - only 1 call per tick.
-}
-
-function TickStart() {
-	// Setup ThisTick - if already run then can not run it again.
-	thisTick = {}; // (same as "Pending" - or Propogation makes it different - ??)
-	MICROCODE_PC.msg('Out',1);
-}
-
-
-
-var tickDb = 0;
-var prev_pc = 0;
-var prev_m_pc = 0;
-
-function Run1TickInit( db ) {
-	if ( ! db ) {
-		db = 100;
-	}
-	tickDb = db;
-
-	// -----------------------------------------------------
-	// 0. Set prev_pc, prev_mpc - to values.
-	// -----------------------------------------------------
-	if ( ! PC.x._data_ ) {
-		PC.x._data_ = 0;
-	}
-	if ( ! MICROCODE_PC.x._data_ ) {
-		MICROCODE_PC.x._data_ = 0;
-	}
-
-	prev_pc = PC.x._data_;
-	prev_m_pc = MICROCODE_PC.x._data_;
-	// xyzzy - prev_is_fetch - false to true - inidicates start of fetch cycle?
-
-	TickFinalCleanup();
-
-}
-
-// console.log ( "After Step 1: AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
-// console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
-function Run1TickStep() {
-
-	// -----------------------------------------------------
-	// 1. Send "Out" message to MICROCODE_PC						
-	// -----------------------------------------------------
-	clearOtherLine(); 	
-	TickFinalCleanup();
-	TickStart();
-
-
-	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
-	RunConnections ();
-
-	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
-	RunConnections ();
-
-	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
-	RunConnections ();
-
-
-
-	// console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
-	MICROCODE_PC.rise();			// RiseAll()??
-	PC.rise();						// RiseAll()??
-	MICROCODE.rise();				// RiseAll()??
-	MUX.rise();	
-
-	// console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn, thisTick );
-	thisTick = {};			// List of Connections called based on completion - only 1 call per tick.
-
-
-
-
-//	if ( MICROCODE_PC.x._data_ != 1+prev_m_pc ) {
-//		console.error ( "Asert: 'MICROCODE_PC' should be 1, got: " +MICROCODE_PC.x._data_+" instead." );
-//		nErr++;
-//	}
-
-
-
-	prev_m_pc = MICROCODE_PC.x._data_;
-
-	// ----------------------------------------------------------------------------
-	// So... all done - did we get any errors?
-	// ----------------------------------------------------------------------------
-
-if ( false ) {
-	if ( nErr > 0 ) {
-		console.error ( "FAIL: # of errors: "+nErr );
-	} else {
-		console.log ( "PASS" );
-	}
-}
-	return ( nErr );
-}
-
-
-
-// ----------------------------------------------------------------------------------------------------------------------------------------
-// Steps:
-// ----------------------------------------------------------------------------------------------------------------------------------------
-// 0. Set prev_pc, prev_mpc - to values.
-// 1. Send "Out" message to MICROCODE_PC						TickStart()
-// 2. Check that we get the next step via propogation
-// 3. DO the rest of it RunConnections()
-// 4. Test Propagation Again
-// 5. Check that this drives Microcode
-// 6. Check that MICROCODE.msg('Addr',1) got called
-// 7. Verify that outputs happen
-// 8. Check that MICROCONDE_PC.msg('Inc',1) happens
-// 9. Check that MPC is +1 (Incremented) on 'rise' of clock.
-// 10. Cleanup at the end of tick, 								TickFinalCleanup()
-// 11. MICROCODE_PC must be 1 at this point, Loop to (1) above.
-// 		- Confinue until prev_pc increment and CLAR on MPC is completed. (New Instruciton??)
-// ----------------------------------------------------------------------------------------------------------------------------------------
-    // id_Microcode_PC_Clr 	// Inidicates last 'Tick' in an instruction - will go to 0 after this.
-// ----------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-// ----------------------------------------------------------------------------------------------------------------------------------------
-// xyzzy - Test hand_out - decode logic and process
-// ----------------------------------------------------------------------------------------------------------------------------------------
 
 
 
