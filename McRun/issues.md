@@ -1,27 +1,23 @@
 
 Issues:
 
-1. do the rest of the buttons. (4hrs)
-	* Logic Probe ??
-	* xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-	* A modal with all the "lines" that you can put the probe on.
-	* Chebox for liens - allow 10 at a time
-	- Every time the value chagnes at the end of a cycle for a line - put it in the array["line"][DeltaT]
-		Pull this data from end-of-cycle - theWorld2
-	- Keep 12 cycles of [DeltaT]
-	- Chop and Rotate the data - so data is most recent 12.  Grow to 12, then pick off and rotate.
+1.  Logic Probe ??
 	- At end of each cycle - if logicProbeOn - then display all the liens in a box at the bottom.
 
-	fucnction AddConnectionsToListOfWires() {						// Create lis of all wires for display on Logic Probe Modal
+	function AddConnectionsToListOfWires() {						// Create lis of all wires for display on Logic Probe Modal
 	function showLogicProbe ( doShow ) {							// Display Logic Probe Modal, turn on Logic Probe Panel			2019 def
 		showLogicProbe ( true );									// Display the Modal											2261 call from infoOn1('logic-probe') (button click)
 	function SubmitButton_for_LogicProbeModal() {					// Submit For: Display the Logic Probe Modal
 
+	function drawLpLine() {											// Display lines/values from lpData
 
 	TODO:
 	3. on showLogicProbe() - list connected wires and other info (description) for each wire.
 		function showLogicProbe ( doShow ) {		:2022
 		show postion from microcode if a microcode output.
+
+
+	// should reverse order of display in array before drawing lines if left is cuurrent time.
 
 
 
@@ -42,6 +38,14 @@ Issues:
 
 	function getWidthOfLine ( name )
 		return 1; // xyzzy-draw
+	// Data collection seems to work
+		// var lpData = {}; // xyzzyLP - Collect data for Logic Probe
+	* A modal with all the "lines" that you can put the probe on.
+	* Chebox for liens - allow 10 at a time
+	* Every time the value chagnes at the end of a cycle for a line - put it in the array["line"][DeltaT]
+		Pull this data from end-of-cycle - theWorld2
+	* Keep 12 cycles of [DeltaT]
+	* Chop and Rotate the data - so data is most recent 12.  Grow to 12, then pick off and rotate.
 
 
 
@@ -177,7 +181,7 @@ TODO Later
     5042. *OpJumpI      = OpCodeType(0xc000)
     5044. JnS (worked)  = OpCodeType(0x0000)
 
-v1.4.4 Sat Mar 14 16:00:54 MDT 2020
+v1.4.5 Sat Mar 14 16:00:54 MDT 2020
 data/c6dfd64496869541848a710e643a78cc7d821ba464feb0284b3e72d88c916f03.txt Microcode.
 data/6323cdc278b6a2c967716d173d1c278538f378496f5e3b745da1a08bfafd55af.txt CPU Code (hw2.hex)
 
