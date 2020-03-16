@@ -1356,16 +1356,20 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		<text id="h_lp_data_title" x="40"  y="820" class="medium-black x-off-at-start">Logic Probe</text>
 		<rect id="lp_box" x="40" y="830" width="1411" height="500" class="white-box" onclick="infoOn('lp-info');" />
 		<g id="lp_lines_0">
+			<!--
 			<path id="lp_line_0" class="lp-green"
 				d="M 250 850   L 350 850   350 870   450 870   450 850   550 850 "
 				/>
 			<text id="h_line_0" x="50"  y="860" class="vsmall x-off-at-start">id_memory_Read</text>
+			-->
 		</g>
 		<g id="lp_lines_1">
+			<!--
 			<path id="lp_line_0" class="lp-green"
 				d="M 250 910   L 350 910   350 890   550 890   550 910   550 910 "
 				/>
 			<text id="h_line_0" x="50"  y="900" class="vsmall x-off-at-start">id_memory_Write</text>
+			-->
 		</g>
 		<g id="lp_lines_2"></g>
 		<g id="lp_lines_3"></g>
@@ -2070,31 +2074,28 @@ console.warn ( " lpLine is =", lpLine );
 */
 
 function drawLpLine() {
-console.log ( "x" );
 	var pos_x = 50;
 	var pos_y = 850;
 	var dx = 100;
 	var dy = 40;
 
-console.log ( "lpLine=", lpLine, "lpData=", lpData );
+	// console.log ( "lpLine=", lpLine, "lpData=", lpData );
 	for ( var ii = 0, mz = lpLine.length; ii < 12 && ii < mz; ii++ ) {
 	var name = lpLine[ii];
-console.warn ( "name=", name, "Iterating over, ii=", ii );
+		// console.warn ( "name=", name, "Iterating over, ii=", ii );
 		var w = getWidthOfLine ( name );
-console.log ( "Just before call to draw1LpLine()", "name=", name, "lpData[name]=", lpData[name], "w(width)=", w );
+		// console.log ( "Just before call to draw1LpLine()", "name=", name, "lpData[name]=", lpData[name], "w(width)=", w );
 		var dd = draw1LpLine ( 250, pos_y, dx, 20, lpData[name], name );
 		if ( !dd ) {
 			continue;
 		}
 		var buf = [];
 		if ( w === 1 ) {
-console.log ( "x" );
 			buf = [
 				 '<path class="lp-green" d="'+dd+'" />'
 				,'<text x="'+pos_x+'"  y="'+(pos_y+10)+'" class="vsmall x-off-at-start">'+name+'</text>'
 			];
 		} else {
-console.log ( "x" );
 			buf = [
 				 dd
 				,'<text x="'+pos_x+'"  y="'+(pos_y+10)+'" class="vsmall x-off-at-start">'+name+'</text>'
@@ -2119,27 +2120,19 @@ function getWidthOfLine ( name ) {
 // Samle: var ddd = "M 250 850   L 350 850   350 870   450 870   450 850   550 850 ";
 function draw1LpLine ( pos_x, pos_y, dx, dy, lpData, name ) {
 	console.log ( "lpData['"+name+"']=", lpData );
-	//	if ( ! ( lpData && lpData[name] ) ) {
-	//		return undefined;
-	//	}
-	// console.log ( "x" );
-
 	var dd = [];
 	var py = 0, px = 0;
-console.log ( "in draw1LpLine: lpData["+name+"]=", lpData );			// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xyzzyError - error line
-	// var ld = ( lpData[0] == 0 ) ? 1 : 0;
+	// console.log ( "in draw1LpLine: lpData["+name+"]=", lpData );			
+	var ld = ( lpData[0] == 0 ) ? 1 : 0;
 	// var ld = 0;
-	var ld = 0;
 	var x = pos_x;
 	var y = pos_y+(dy*ld);
-	// console.log ( "x" );
 	var w = getWidthOfLine ( name );
 	// console.log ( "w=", w );
 	if ( w == 1 ) {
 		dd.push ( "M " + x + " " + y + " L " );
 	}
-	for ( var jj = 0, mx = lpData.length; jj < mx && jj < 12; jj++ ) {		// yyyyyyyyyyyyyyyyyyyyyy
-		// console.log ( "x" );
+	for ( var jj = 0, mx = lpData.length; jj < mx && jj < 12; jj++ ) {		
 		x += dx;
 		if ( w > 1 ) {
 			//	console.warn ( "Length > 1, generate text, w=", w );
@@ -2155,7 +2148,6 @@ console.log ( "in draw1LpLine: lpData["+name+"]=", lpData );			// xxxxxxxxxxxxxx
 			y = pos_y + 10;
 			dd.push ( '<text x="'+x+'" y="'+y+'" class="vsmall x-off-at-start">0x'+lds+'</text>' ); // <text id="id_hand_out_value" x="245" y="268" class="small"></text>
 		} else {
-			// console.log ( "x" );
 			var ld = ( lpData[jj] == 0 ) ? 1 : 0;
 			y = pos_y + ( dy * ld );
 			if ( jj > 0 && py != y ) {
@@ -2190,51 +2182,6 @@ function testDraw1LpLine() {
 
 }
 
-function testDrawLpLine() {
-	lpData = {
-		 "do_input": [ 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0 ]
-		,"hand_out": [ 0, 0, 1, 1, 1, 0, 0, 0, 1 ]
-		,"is_fetch": [ 0, 1 ]
-		,"is_halted": [ 1, 0 ]
-		,"set_execute": [ 1, 1 ]
-		,"Bus": [ 122, 0x10, 0, 0xBeef, 1 ]
-		,"lp-6": [ 0, 1, 0, 0, 1 ]
-		,"lp-7": [ 0, 1, 0, 0, 1 ]
-		,"lp-8": [ 0, 1, 0, 0, 1 ]
-		,"lp-9": [ 0, 1, 0, 0, 1 ]
-		,"lp-10": [ 0, 1, 0, 0, 1 ]
-		,"lp-11": [ 0, 1, 0, 0, 1 ]
-	};
-	lpOn = {
-		 "do_output": true
-		,"hand_out": true
-		,"is_fetch": true
-		,"is_halted": true
-		,"set_execute": true
-		,"Bus": true
-		,"lp-6": true
-		,"lp-7": true
-		,"lp-8": true
-		,"lp-9": false
-		,"lp-10": false
-		,"lp-11": false
-	}
-	ListOfWires = [
-		 "do_input"
-		,"hand_out"
-		,"is_fetch"
-		,"is_halted"
-		,"set_execute"
-		,"Bus"
-		,"lp-6"
-		,"lp-7"
-		,"lp-8"
-		,"lp-9"
-		,"lp-10"
-		,"lp-11"
-	];
-	drawLpLine();
-}
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------
@@ -3339,8 +3286,11 @@ function Run1TickStep() {
 	PropagateSignals(); 			// How to do enough to step an entire Microcode Tick
 	RunConnections ();
 
-	CollectLogicProbeData();
 
+	CollectLogicProbeData();
+	if ( probeUp ) {
+		drawLpLine();
+	}
 
 
 	// console.log ( "AT:"+ln(), theWorld2 , theWorld2WhoSet , theWorld2DepOn );
