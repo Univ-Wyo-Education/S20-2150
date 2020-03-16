@@ -2076,17 +2076,16 @@ console.log ( "x" );
 	var dx = 100;
 	var dy = 40;
 
-console.log ( "x" );
-	for ( var ii = 0; ii < 12; ii++ ) {
-		var name = lpLine[ii];
+console.log ( "lpLine=", lpLine, "lpData=", lpData );
+	for ( var ii = 0, mz = lpLine.length; ii < 12 && ii < mz; ii++ ) {
+	var name = lpLine[ii];
+console.warn ( "name=", name, "Iterating over, ii=", ii );
 		var w = getWidthOfLine ( name );
-console.log ( "Just before call to draw1LpLine()", "name=", name, "lpData[name]=", lpData[name] );
+console.log ( "Just before call to draw1LpLine()", "name=", name, "lpData[name]=", lpData[name], "w(width)=", w );
 		var dd = draw1LpLine ( 250, pos_y, dx, 20, lpData[name], name );
-console.log ( "x" );
 		if ( !dd ) {
 			continue;
 		}
-console.log ( "x" );
 		var buf = [];
 		if ( w === 1 ) {
 console.log ( "x" );
@@ -2139,7 +2138,7 @@ console.log ( "in draw1LpLine: lpData["+name+"]=", lpData );			// xxxxxxxxxxxxxx
 	if ( w == 1 ) {
 		dd.push ( "M " + x + " " + y + " L " );
 	}
-	for ( var jj = 0, mx = lpData.length; jj < mx && jj < 12; jj++ ) {
+	for ( var jj = 0, mx = lpData.length; jj < mx && jj < 12; jj++ ) {		// yyyyyyyyyyyyyyyyyyyyyy
 		// console.log ( "x" );
 		x += dx;
 		if ( w > 1 ) {
@@ -2193,11 +2192,11 @@ function testDraw1LpLine() {
 
 function testDrawLpLine() {
 	lpData = {
-		 "lp-0": [ 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0 ]
-		,"lp-1": [ 0, 0 ]
-		,"lp-2": [ 0, 1 ]
-		,"lp-3": [ 1, 0 ]
-		,"lp-4": [ 1, 1 ]
+		 "do_input": [ 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0 ]
+		,"hand_out": [ 0, 0, 1, 1, 1, 0, 0, 0, 1 ]
+		,"is_fetch": [ 0, 1 ]
+		,"is_halted": [ 1, 0 ]
+		,"set_execute": [ 1, 1 ]
 		,"Bus": [ 122, 0x10, 0, 0xBeef, 1 ]
 		,"lp-6": [ 0, 1, 0, 0, 1 ]
 		,"lp-7": [ 0, 1, 0, 0, 1 ]
@@ -2207,25 +2206,25 @@ function testDrawLpLine() {
 		,"lp-11": [ 0, 1, 0, 0, 1 ]
 	};
 	lpOn = {
-		 "lp-0": true
-		,"lp-1": true
-		,"lp-2": true
-		,"lp-3": true
-		,"lp-4": true
+		 "do_output": true
+		,"hand_out": true
+		,"is_fetch": true
+		,"is_halted": true
+		,"set_execute": true
 		,"Bus": true
 		,"lp-6": true
 		,"lp-7": true
 		,"lp-8": true
-		,"lp-9": true
-		,"lp-10": true
-		,"lp-11": true
+		,"lp-9": false
+		,"lp-10": false
+		,"lp-11": false
 	}
 	ListOfWires = [
-		 "lp-0"
-		,"lp-1"
-		,"lp-2"
-		,"lp-3"
-		,"lp-4"
+		 "do_input"
+		,"hand_out"
+		,"is_fetch"
+		,"is_halted"
+		,"set_execute"
 		,"Bus"
 		,"lp-6"
 		,"lp-7"
