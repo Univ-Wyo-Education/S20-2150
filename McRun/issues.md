@@ -1,51 +1,33 @@
 
 Issues:
 
-1.  Logic Probe ??
-	- At end of each cycle - if logicProbeOn - then display all the liens in a box at the bottom.
+1.  Logic Probe 
+	Notes:
+		function AddConnectionsToListOfWires() {						// Create lis of all wires for display on Logic Probe Modal
+		function showLogicProbe ( doShow ) {							// Display Logic Probe Modal, turn on Logic Probe Panel			2019 def
+			showLogicProbe ( true );									// Display the Modal											2261 call from infoOn1('logic-probe') (button click)
+		function SubmitButton_for_LogicProbeModal() {					// Submit For: Display the Logic Probe Modal
+		function drawLpLine() {											// Display lines/values from lpData
+	1. When pick a line, display a count at the bottom of # picked, # left, catch each "pick"
+	2. Connected wires - and list them - verify this.
 
-	function AddConnectionsToListOfWires() {						// Create lis of all wires for display on Logic Probe Modal
-	function showLogicProbe ( doShow ) {							// Display Logic Probe Modal, turn on Logic Probe Panel			2019 def
-		showLogicProbe ( true );									// Display the Modal											2261 call from infoOn1('logic-probe') (button click)
-	function SubmitButton_for_LogicProbeModal() {					// Submit For: Display the Logic Probe Modal
+2. Split McRun/mm_*.html test code into setup/run/check 
 
-	function drawLpLine() {											// Display lines/values from lpData
-
-	TODO:
-	3. on showLogicProbe() - list connected wires and other info (description) for each wire.
-		function showLogicProbe ( doShow ) {		:2022
-		show postion from microcode if a microcode output.
-
-
-	// should reverse order of display in array before drawing lines if left is cuurrent time.
-
-
+3. Reveiw mm* for what to do next
+4. Convert existing test cases into { setup | run | verify } and figure out a way to do these with the new User Interface.
+	- on "Halt" run the validation of the test - if test is turned on
+5. Save the selected logic-probe lines in local storage - reload on restart.
+6. Video of running a test - 1st video of using MC machine
+7. Video of Microcode - and how it works
+8. Add "help" to tests - paint into text area the "code" that is to be run - and what to click next [ tick ] if checked.
+9. Setup a "real" server with this on it -  (4hrs) (set some domain t5432z.com to point to it?)
+	- aws free tear ec2?
+	- $5 a month ?
+	aws/ec2.micro - ubuntu - 1cp free 750hrs a month.
+10. One Note...
 
 
 
-
-
-
-
-
--- done -- Logic Probe --
-	+++ * Go from McJmp_0 -> McJmp_{bus:size 8}
-	+++1. Show a list of liens from
-			// var ListOfWires = []; as titles (with sizes if a "bus"
-		Checkbox on each one.
-		If checked then add it to the list...
-	+++2. 	If a "bus" then display a number instead of a green-line
-
-	function getWidthOfLine ( name )
-		return 1; // xyzzy-draw
-	// Data collection seems to work
-		// var lpData = {}; // xyzzyLP - Collect data for Logic Probe
-	* A modal with all the "lines" that you can put the probe on.
-	* Chebox for liens - allow 10 at a time
-	* Every time the value chagnes at the end of a cycle for a line - put it in the array["line"][DeltaT]
-		Pull this data from end-of-cycle - theWorld2
-	* Keep 12 cycles of [DeltaT]
-	* Chop and Rotate the data - so data is most recent 12.  Grow to 12, then pick off and rotate.
 
 
 
@@ -55,16 +37,9 @@ TODO Later
 -----------------------------------------------------------------------------------------------------------------------------------------------
 1. test3000 - test of ALU - is failing when run at the end of testAll and succeeding if run on its own.
 
-1. Setup a "real" server with this on it -  (4hrs) (set some domain t5432z.com to point to it?)
-	- aws free tear ec2?
-	- $5 a month ?
-	aws/ec2.micro - ubuntu - 1cp free 750hrs a month.
 
 
 
-1. Convert existing test cases into { setup | run | verify } and figure out a way to do these with the new User Interface.
-
-1. One Note...
 
 
 
@@ -222,3 +197,27 @@ data/6323cdc278b6a2c967716d173d1c278538f378496f5e3b745da1a08bfafd55af.txt CPU Co
 	- Input - put in a list of values - that gets used each time an "Input" instruction happens.
 		+++ Show Memory - Set MAR - and call display of memory at that location. (show range of memory? - show ptr at location(pc))  See: LoadMA()
 1. xyzzy7000_004: +++ Cleanup of "output" so add new lines - no clear - a "screen scrole" behavior (with a button to see last 300 lines as a modal?)
+-- done -- Logic Probe --
+	+++ * Go from McJmp_0 -> McJmp_{bus:size 8}
+	+++1. Show a list of liens from
+			// var ListOfWires = []; as titles (with sizes if a "bus"
+		Checkbox on each one.
+		If checked then add it to the list...
+	+++2. 	If a "bus" then display a number instead of a green-line
+
+	function getWidthOfLine ( name )
+		return 1; // xyzzy-draw
+	// Data collection seems to work
+		// var lpData = {}; // xyzzyLP - Collect data for Logic Probe
+	* A modal with all the "lines" that you can put the probe on.
+	* Chebox for liens - allow 10 at a time
+	* Every time the value chagnes at the end of a cycle for a line - put it in the array["line"][DeltaT]
+		Pull this data from end-of-cycle - theWorld2
+	* Keep 12 cycles of [DeltaT]
+	* Chop and Rotate the data - so data is most recent 12.  Grow to 12, then pick off and rotate.
+	3. on showLogicProbe() - list connected wires and other info (description) for each wire.
+		function showLogicProbe ( doShow ) {		:2022
+		show postion from microcode if a microcode output.
+	// should reverse order of display in array before drawing lines if left is cuurrent time.
+	* At end of each cycle - if logicProbeOn - then display all the liens in a box at the bottom.
+	1. Re-org into a table the list of wires - smaller footprint on checkboxes

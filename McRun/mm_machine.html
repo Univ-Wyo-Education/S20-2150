@@ -21,32 +21,33 @@ Credits:
 
 <head>
 <style>
-	.small					{ font: italic 15px sans-serif; }
-	.medium0				{ font: 20px sans-serif; fill:#0603cf; }
-	.medium1				{ font: italic 17px sans-serif; fill:#0603cf; }
-	.medium-black			{ font: 30px sans-serif; fill:#000000; }
-	.vsmall					{ font: italic 12px sans-serif; }
+	.small				{ font: italic 15px sans-serif; }
+	.medium0			{ font: 20px sans-serif; fill:#0603cf; }
+	.medium1			{ font: italic 17px sans-serif; fill:#0603cf; }
+	.medium-black		{ font: 30px sans-serif; fill:#000000; }
+	.vsmall				{ font: italic 12px sans-serif; }
 	.vsmall-red			{ font: italic 12px sans-serif; fill:#ff0000; }
-	.teal-box				{ fill:#00ffff; stroke:#000000; stroke-width:3; }
+	.teal-box			{ fill:#00ffff; stroke:#000000; stroke-width:3; }
 	.yellow-box			{ fill:#ffff00; stroke:#000000; stroke-width:3; }
-	.white-box			 { fill:#ffffff; stroke:#000000; stroke-width:3; }
-	.gray-box				{ fill:#d0d0d0; stroke:#000000; stroke-width:3; }
-	.white-box			 { fill:#e0e0e0; stroke:#000000; stroke-width:3; }
+	.white-box			{ fill:#ffffff; stroke:#000000; stroke-width:3; }
+	.gray-box			{ fill:#d0d0d0; stroke:#000000; stroke-width:3; }
+	.white-box			{ fill:#e0e0e0; stroke:#000000; stroke-width:3; }
 	.input-line			{ fill:#000000; stroke:#000000; stroke-width:1; }
-	.red-line				{ fill:#f00000; stroke:#000000; stroke-width:1; }
-	.out-box				 { fill:#ffffff; stroke:#000000; stroke-width:1; }
-	.blue-line			 { fill:#000000; stroke:#4040ff; stroke-width:3; fill:none }
-	.lp-green			 { fill:#f0f000; stroke:#06e035; stroke-width:3; fill:none }
-	.lp-gray			 { fill:#f0f000; stroke:#040404; stroke-width:1; fill:none }
-	.light-green-line			 { fill:#000000; stroke:#20f020; stroke-width:3; fill:none }
-	.light-cyan-line			 { fill:#000000; stroke:#40ffff; stroke-width:3; fill:none }
-	.light-red-line			 { fill:#000000; stroke:#ff0000; stroke-width:3; fill:none }
-	.blue-line-1		 { fill:#000000; stroke:#4040ff; stroke-width:2; fill:none }
+	.red-line			{ fill:#f00000; stroke:#000000; stroke-width:1; }
+	.out-box			{ fill:#ffffff; stroke:#000000; stroke-width:1; }
+	.blue-line			{ fill:#000000; stroke:#4040ff; stroke-width:3; fill:none }
+	.lp-green			{ fill:#f0f000; stroke:#06e035; stroke-width:3; fill:none }
+	.lp-gray			{ fill:#f0f000; stroke:#040404; stroke-width:1; fill:none }
+	.light-green-line	{ fill:#000000; stroke:#20f020; stroke-width:3; fill:none }
+	.light-cyan-line	{ fill:#000000; stroke:#40ffff; stroke-width:3; fill:none }
+	.light-red-line		{ fill:#000000; stroke:#ff0000; stroke-width:3; fill:none }
+	.blue-line-1		{ fill:#000000; stroke:#4040ff; stroke-width:2; fill:none }
 	.button-box			{ fill:#b4c5fb; stroke:#000000; stroke-width:2; opacity:0.75 }
 	.arrow-line			{ stroke:#000000; stroke-width:2; stroke-linecap: round; }
-	.arrow-line-red	{ stroke:#ff0000; stroke-width:2; stroke-linecap: round; }
-	.arrow-line-green { stroke:#00ff00; stroke-width:2; stroke-linecap: round; }
-	.bk-box 		 { fill:#d7d7d7; stroke-width:0; }
+	.arrow-line-red	    { stroke:#ff0000; stroke-width:2; stroke-linecap: round; }
+	.arrow-line-green   { stroke:#00ff00; stroke-width:2; stroke-linecap: round; }
+	.bk-box 		    { fill:#d7d7d7; stroke-width:0; }
+	.show-red           { color:red }
 	.hash-input 	 {
 		width: 450px;
 		margin-bottom: 20px;
@@ -1652,12 +1653,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<h4>Address in Main Memory</h4>
 		</div>
 		<div class="modal-body">
-			<h5>Pick up to 12 wires or busses to attach the logic probe to:</h5>
+			<h5>Pick up to 12 wires or busses to attach the logic probe to:
+			<center><span id="logic-prove-nPicked" class="center-me">Number Picked: 0 &nbsp;&nbsp; Availabe 12</span></center>
+			</h5>
 			<span id="logic-probe-list">
-				<input type="checkbox" id="lp-0"> SomeName0 <br>
-				<input type="checkbox" id="lp-1"> SomeName0 <br>
-				<input type="checkbox" id="lp-2"> SomeName0 <br>
-				<input type="checkbox" id="lp-3"> SomeName0 <br>
 			</span> &nbsp; <br>
 		</div>
 		<div class="modal-footer">
@@ -2020,6 +2019,24 @@ var probeUp = false;
 var lpData = {};
 var lpOn = {};
 var lpLine = [];			// Names of the 12 or fewer true lines that are piced to display.
+var nProbed = 0;
+
+function ticked ( i ) {
+	var lineProbed = $("#lp-"+i).is(":checked");
+	if ( lineProbed ) {
+		nProbed++;
+	} else {
+		nProbed--;
+	}
+	// <center><span id="logic-prove-nPicked" class="center-me">Number Picked: 0 &nbsp;&nbsp; Availabe 12</span></center>
+	var used = nProbed;
+	var avail = 12 - nProbed;
+	if ( avail < 0 ) {
+		$("#logic-prove-nPicked").html ( '<span class="show-red">Number Picked: '+used+' &nbsp;&nbsp; Availabe '+avail+'</span>' );
+	} else {
+		$("#logic-prove-nPicked").html ( "Number Picked: "+used+" &nbsp;&nbsp; Availabe "+avail );
+	}
+}
 
 // Display Logic Probe Modal, turn on Logic Probe Panel
 function showLogicProbe ( doShow ) {
@@ -2030,14 +2047,28 @@ function showLogicProbe ( doShow ) {
 		// <span id="logic-probe-list">
 		// <input type="checkbox" id="lp-0"> SomeName0 <br>
 		var dd = [];
+		var max_nw = 6;
+		var cp = 0;
+		dd.push ( '<table><tbody>' );
 		for ( var i = 0, mx = ListOfWires.length; i < mx; i++ ) {
+			if ( cp === 0 ) {
+				dd.push ( '<tr><td>' );
+			}
 			var on = lpOn[ ListOfWires[i] ];
 			if ( on ) {
-				dd.push ( '<input type="checkbox" id="lp-'+i+'" checked> '+ListOfWires[i]+' <br>' );
+				dd.push ( '<input type="checkbox" id="lp-'+i+'" checked onclick="ticked('+i+');"><lable for="lp-'+i+'"> '+ListOfWires[i]+' </lable>' );
 			} else {
-				dd.push ( '<input type="checkbox" id="lp-'+i+'"> '+ListOfWires[i]+' <br>' );
+				dd.push ( '<input type="checkbox" id="lp-'+i+'" onclick="ticked('+i+');"><label for="lp-'+i+'"> '+ListOfWires[i]+' </lable>' );
+			}
+			if ( cp >= max_nw ) {
+				dd.push ( '</td></tr>' );
+				cp = 0;
+			} else {
+				dd.push ( '</td><td>' );
+				cp++;
 			}
 		}
+		dd.push ( '</tbody></table>' );
 		$("#logic-probe-list").html( dd.join("\n") );
 		displayModalLogicProbe();
 	}
