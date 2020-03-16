@@ -2043,13 +2043,14 @@ function showLogicProbe ( doShow ) {
 function SubmitButton_for_LogicProbeModal() {
 console.warn ( "function SubmitButton_for_LogicProbeModal() { // called" );
 	lpLine = [];
-	for ( var i = 0; i < 4; i++ ) {
+	for ( var i = 0, mx = ListOfWires.length; i < mx; i++ ) {												
 		var lineProbed = $("#lp-"+i).is(":checked");
 		lpOn[ ListOfWires[i] ] = lineProbed;
 		if ( lineProbed && lpLine.length < 12 ) {
 			lpLine.push ( ListOfWires[i] );
 		}
 	}
+console.warn ( " lpLine is =", lpLine );
 	hideModal();
 }
 
@@ -2069,25 +2070,32 @@ console.warn ( "function SubmitButton_for_LogicProbeModal() { // called" );
 */
 
 function drawLpLine() {
+console.log ( "x" );
 	var pos_x = 50;
 	var pos_y = 850;
 	var dx = 100;
 	var dy = 40;
 
+console.log ( "x" );
 	for ( var ii = 0; ii < 12; ii++ ) {
 		var name = lpLine[ii];
 		var w = getWidthOfLine ( name );
+console.log ( "Just before call to draw1LpLine()", "name=", name, "lpData[name]=", lpData[name] );
 		var dd = draw1LpLine ( 250, pos_y, dx, 20, lpData[name], name );
+console.log ( "x" );
 		if ( !dd ) {
 			continue;
 		}
+console.log ( "x" );
 		var buf = [];
 		if ( w === 1 ) {
+console.log ( "x" );
 			buf = [
 				 '<path class="lp-green" d="'+dd+'" />'
 				,'<text x="'+pos_x+'"  y="'+(pos_y+10)+'" class="vsmall x-off-at-start">'+name+'</text>'
 			];
 		} else {
+console.log ( "x" );
 			buf = [
 				 dd
 				,'<text x="'+pos_x+'"  y="'+(pos_y+10)+'" class="vsmall x-off-at-start">'+name+'</text>'
@@ -2109,21 +2117,33 @@ function getWidthOfLine ( name ) {
 	return 1; 
 }
 		
+// Samle: var ddd = "M 250 850   L 350 850   350 870   450 870   450 850   550 850 ";
 function draw1LpLine ( pos_x, pos_y, dx, dy, lpData, name ) {
-	// Samle: var ddd = "M 250 850   L 350 850   350 870   450 870   450 850   550 850 ";
-	if ( ! ( lpData && lpData.length ) ) {
-		return undefined;
-	}
+	console.log ( "lpData['"+name+"']=", lpData );
+	//	if ( ! ( lpData && lpData[name] ) ) {
+	//		return undefined;
+	//	}
+	// console.log ( "x" );
+
 	var dd = [];
 	var py = 0, px = 0;
-	var ld = ( lpData[0] == 0 ) ? 1 : 0;
+console.log ( "in draw1LpLine: lpData["+name+"]=", lpData );			// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xyzzyError - error line
+	// var ld = ( lpData[0] == 0 ) ? 1 : 0;
+	// var ld = 0;
+	var ld = 0;
 	var x = pos_x;
 	var y = pos_y+(dy*ld);
+	// console.log ( "x" );
 	var w = getWidthOfLine ( name );
-	dd.push ( "M " + x + " " + y + " L " );
+	// console.log ( "w=", w );
+	if ( w == 1 ) {
+		dd.push ( "M " + x + " " + y + " L " );
+	}
 	for ( var jj = 0, mx = lpData.length; jj < mx && jj < 12; jj++ ) {
+		// console.log ( "x" );
 		x += dx;
 		if ( w > 1 ) {
+			//	console.warn ( "Length > 1, generate text, w=", w );
 			var ld = lpData[jj];
 			var lds = ld;
 			if ( w == 16 ) {
@@ -2136,6 +2156,7 @@ function draw1LpLine ( pos_x, pos_y, dx, dy, lpData, name ) {
 			y = pos_y + 10;
 			dd.push ( '<text x="'+x+'" y="'+y+'" class="vsmall x-off-at-start">0x'+lds+'</text>' ); // <text id="id_hand_out_value" x="245" y="268" class="small"></text>
 		} else {
+			// console.log ( "x" );
 			var ld = ( lpData[jj] == 0 ) ? 1 : 0;
 			y = pos_y + ( dy * ld );
 			if ( jj > 0 && py != y ) {
@@ -2153,7 +2174,21 @@ function draw1LpLine ( pos_x, pos_y, dx, dy, lpData, name ) {
 
 // testDraw1LpLine() will run a test of draw1LpLine();
 function testDraw1LpLine() {
-	draw1LpLine ( 250, 840, 100, 20, [ 1, 0, 0, 1 ] );
+
+	var rv = draw1LpLine ( 250, 840, 100, 20, [ 1, 1, 1, 0, 0, 0, 1, 1, 1 ], "lp-0" );
+	if ( rv == "M 250 840 L  350 840 450 840 550 840 550 860 650 860 750 860 850 860 850 840 950 840 1050 840 1150 840" ) {
+		console.log ( "PASS" );
+	} else {
+		console.error ( "FAIL" );
+	}
+
+	var rv = draw1LpLine ( 250, 840, 100, 20, [ 1, 42, 0xBeef, 0, 0, 0, 1, 1, 1 ], "Bus" );
+	if ( rv == '<text x="350" y="850" class="vsmall x-off-at-start">0x0001</text> <text x="450" y="850" class="vsmall x-off-at-start">0x002a</text> <text x="550" y="850" class="vsmall x-off-at-start">0xbeef</text> <text x="650" y="850" class="vsmall x-off-at-start">0x0000</text> <text x="750" y="850" class="vsmall x-off-at-start">0x0000</text> <text x="850" y="850" class="vsmall x-off-at-start">0x0000</text> <text x="950" y="850" class="vsmall x-off-at-start">0x0001</text> <text x="1050" y="850" class="vsmall x-off-at-start">0x0001</text> <text x="1150" y="850" class="vsmall x-off-at-start">0x0001</text>' ) {
+		console.log ( "PASS" );
+	} else {
+		console.error ( "FAIL" );
+	}
+
 }
 
 function testDrawLpLine() {
@@ -2172,18 +2207,18 @@ function testDrawLpLine() {
 		,"lp-11": [ 0, 1, 0, 0, 1 ]
 	};
 	lpOn = {
-		 "lp-0": false
-		,"lp-1": false
-		,"lp-2": false
-		,"lp-3": false
-		,"lp-4": false
-		,"Bus": false
-		,"lp-6": false
-		,"lp-7": false
-		,"lp-8": false
-		,"lp-9": false
-		,"lp-10": false
-		,"lp-11": false
+		 "lp-0": true
+		,"lp-1": true
+		,"lp-2": true
+		,"lp-3": true
+		,"lp-4": true
+		,"Bus": true
+		,"lp-6": true
+		,"lp-7": true
+		,"lp-8": true
+		,"lp-9": true
+		,"lp-10": true
+		,"lp-11": true
 	}
 	ListOfWires = [
 		 "lp-0"
