@@ -8,23 +8,42 @@ Issues:
 			showLogicProbe ( true );									// Display the Modal											2261 call from infoOn1('logic-probe') (button click)
 		function SubmitButton_for_LogicProbeModal() {					// Submit For: Display the Logic Probe Modal
 		function drawLpLine() {											// Display lines/values from lpData
-	1. When pick a line, display a count at the bottom of # picked, # left, catch each "pick"
-	2. Connected wires - and list them - verify this.
+	++1. When pick a line, display a count at the bottom of # picked, # left, catch each "pick"
+	++2. Connected wires - and list them - verify this.
 
-2. Split McRun/mm_*.html test code into setup/run/check 
+	1. Check that display of "Bus" displays a 0x4000
 
-3. Reveiw mm* for what to do next
-4. Convert existing test cases into { setup | run | verify } and figure out a way to do these with the new User Interface.
-	- on "Halt" run the validation of the test - if test is turned on
+
+
+2. Split McRun/mm....html test code into setup/run/check 
+	4. Convert existing test cases into { setup | run | verify } and figure out a way to do these with the new User Interface.
+		- on "Halt" run the validation of the test - if test is turned on
+
 5. Save the selected logic-probe lines in local storage - reload on restart.
-6. Video of running a test - 1st video of using MC machine
-7. Video of Microcode - and how it works
+
 8. Add "help" to tests - paint into text area the "code" that is to be run - and what to click next [ tick ] if checked.
+
 9. Setup a "real" server with this on it -  (4hrs) (set some domain t5432z.com to point to it?)
 	- aws free tear ec2?
 	- $5 a month ?
 	aws/ec2.micro - ubuntu - 1cp free 750hrs a month.
+	1. A "push" to server.
+
+
+
+3. Reveiw mm... for what to do next
+
 10. One Note...
+
+
+
+
+
+
+VIDEO:
+6. Video of running a test - 1st video of using MC machine
+7. Video of Microcode - and how it works
+
 
 
 
@@ -35,7 +54,6 @@ Issues:
 -----------------------------------------------------------------------------------------------------------------------------------------------
 TODO Later
 -----------------------------------------------------------------------------------------------------------------------------------------------
-1. test3000 - test of ALU - is failing when run at the end of testAll and succeeding if run on its own.
 
 
 
@@ -221,3 +239,5 @@ data/6323cdc278b6a2c967716d173d1c278538f378496f5e3b745da1a08bfafd55af.txt CPU Co
 	// should reverse order of display in array before drawing lines if left is cuurrent time.
 	* At end of each cycle - if logicProbeOn - then display all the liens in a box at the bottom.
 	1. Re-org into a table the list of wires - smaller footprint on checkboxes
+0. test3001 - test of ALU - is failing when run at the end of testAll and succeeding if run on its own.
+	test 11 - only failing test.

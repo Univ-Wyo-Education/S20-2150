@@ -48,14 +48,9 @@ Credits:
 	.arrow-line-green   { stroke:#00ff00; stroke-width:2; stroke-linecap: round; }
 	.bk-box 		    { fill:#d7d7d7; stroke-width:0; }
 	.show-red           { color:red }
-	.hash-input 	 {
-		width: 450px;
-		margin-bottom: 20px;
-	}
-	.modal-submit 	 {
-		margin-top: 20px;
-		margin-bottom: 20px;
-	}
+	.hash-input 	 	{ width: 450px; margin-bottom: 20px; }
+	.modal-submit 	    { margin-top: 20px; margin-bottom: 20px; }
+
 /* Modal ---------------------------------------------------------------------------------- */
 body {font-family: Arial, Helvetica, sans-serif;}
 
@@ -2199,14 +2194,14 @@ function testDraw1LpLine() {
 
 	var rv = draw1LpLine ( 250, 840, 100, 20, [ 1, 1, 1, 0, 0, 0, 1, 1, 1 ], "lp-0" );
 	if ( rv == "M 250 840 L  350 840 450 840 550 840 550 860 650 860 750 860 850 860 850 840 950 840 1050 840 1150 840" ) {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	} else {
 		console.error ( "FAIL" );
 	}
 
 	var rv = draw1LpLine ( 250, 840, 100, 20, [ 1, 42, 0xBeef, 0, 0, 0, 1, 1, 1 ], "Bus" );
 	if ( rv == '<text x="350" y="850" class="vsmall x-off-at-start">0x0001</text> <text x="450" y="850" class="vsmall x-off-at-start">0x002a</text> <text x="550" y="850" class="vsmall x-off-at-start">0xbeef</text> <text x="650" y="850" class="vsmall x-off-at-start">0x0000</text> <text x="750" y="850" class="vsmall x-off-at-start">0x0000</text> <text x="850" y="850" class="vsmall x-off-at-start">0x0000</text> <text x="950" y="850" class="vsmall x-off-at-start">0x0001</text> <text x="1050" y="850" class="vsmall x-off-at-start">0x0001</text> <text x="1150" y="850" class="vsmall x-off-at-start">0x0001</text>' ) {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	} else {
 		console.error ( "FAIL" );
 	}
@@ -3514,7 +3509,7 @@ function test1000() {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 }
@@ -3545,7 +3540,7 @@ function test1001() {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 }
@@ -3589,7 +3584,7 @@ function test1101() {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 }
@@ -3624,7 +3619,7 @@ function test1003() {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 }
@@ -3659,7 +3654,7 @@ function test1104() {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 }
@@ -3692,7 +3687,7 @@ function test1105() {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 }
@@ -3805,7 +3800,7 @@ function test1002() {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 }
@@ -3892,7 +3887,7 @@ function test1005() {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 }
@@ -3984,7 +3979,7 @@ function test3000() {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 }
@@ -4014,7 +4009,9 @@ function test3001() {
 	theWorld2["ALU_Ctl_1"] = 0;	
 	theWorld2["ALU_Ctl_2"] = 1;	
 	theWorld2["ALU_Ctl_3"] = 0;	
+	theWorld2["id_ALU_Ctl"] = 0;	
 
+	// ALU.msg("Ctl",1);
 	ALU.msg("alu-logic",1);
 
 	PropagateSignals(); 			
@@ -4036,7 +4033,7 @@ function test3001() {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 }
@@ -4068,7 +4065,7 @@ function test3800() {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 }
@@ -4152,7 +4149,7 @@ function test2000( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 }
@@ -4219,7 +4216,7 @@ function test7000( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 }
@@ -4311,7 +4308,7 @@ function test5001( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 
@@ -4381,7 +4378,7 @@ function test5002( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 
@@ -4454,7 +4451,7 @@ function test5003( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 
@@ -4523,7 +4520,7 @@ function test5004( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 
@@ -4605,7 +4602,7 @@ function test5005( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 }
@@ -4699,7 +4696,7 @@ function test5007( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 }
@@ -4777,7 +4774,7 @@ function test5006( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 }
@@ -4856,7 +4853,7 @@ function test5010( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 
@@ -4936,7 +4933,7 @@ function test5011( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 
@@ -5019,7 +5016,7 @@ function test5012( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 
@@ -5123,7 +5120,7 @@ function test5020( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 
@@ -5203,7 +5200,7 @@ function test5021( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 
@@ -5286,7 +5283,7 @@ function test5022( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 
@@ -5372,7 +5369,7 @@ function test5030( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 
@@ -5452,7 +5449,7 @@ function test5031( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 
@@ -5533,7 +5530,7 @@ function test5032( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 
@@ -5638,7 +5635,7 @@ function test5040( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 
@@ -5726,7 +5723,7 @@ function test5041( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 
@@ -5805,7 +5802,7 @@ function test5042( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 
@@ -5894,7 +5891,7 @@ function test5043( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 
@@ -5991,7 +5988,7 @@ function test5044( single ) {
 	if ( nErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+nErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 	return ( nErr );
 
@@ -6030,7 +6027,7 @@ function testAll() {
 	if ( mNErr > 0 ) {
 		console.error ( "FAIL: # of errors: "+mNErr );
 	} else {
-		console.log ( "PASS" );
+		console.log ( '%c PASS! ', 'background: #222; color: #bada55');
 	}
 }
 

@@ -3,9 +3,33 @@
 		1. Primary Source youtube.com - links will be provided
 		2. Backup Source - aws/s3 - download .mp4's
 		3. Assume that internet will be overloaded and intermittent
-	1. MARIA Microcode - Overview
-	2. MARIA Run a Test - jjjjjjjj
-	3. 
+
+	1. MARIA Microcode - Overview					10 min
+	2. MARIA Run a Test - 							10 min
+	3. MARIA Run a Test (2) - 						10 min
+
+	3. MARIA Test List of Tests						10 min
+	4. MARIA - what is behind an instruction		xx min
+	5. MARIA - Microcode Assembler					10 min
+
+	6. Microcode Architecture						2x 10min
+	7. What is missing from our machine MARIA		10min
+			machine & real hardware
+		- Interupts
+		- IO Switches
+		- Memory (64k)										
+
+	8. The MARIA microcode emulator  (handout with URLs)
+		The Microcode Assembler - download.
+
+	9. Dedicated controllers that use a "microcode" machine
+	10. 
+
+
+
+20 hrs of lecture
+
+	
 
 
 
