@@ -22,6 +22,8 @@ Issues:
 5. Save the selected logic-probe lines in local storage - reload on restart.
 
 8. Add "help" to tests - paint into text area the "code" that is to be run - and what to click next [ tick ] if checked.
+	see test3001 - near top.
+		showTextInOutputBox("test3001 - test of ALU");
 
 9. Setup a "real" server with this on it -  (4hrs) (set some domain t5432z.com to point to it?)
 	- aws free tear ec2?
