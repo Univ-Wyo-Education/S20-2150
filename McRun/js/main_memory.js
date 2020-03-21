@@ -71,6 +71,10 @@ console.log ( "MEMORY:PullMAR Memory Read addr=",addr.toString(16));
 				addr = ( addr >= 0 && addr < mm_max ) ? addr : 0;
 			 	MEMORY.x["_Addr_"] = addr;
 			 	MEMORY.x["_OutputBuffer_"] = MEMORY.x["_data_"][addr];
+				if ( typeof MEMORY.x["_OutputBuffer_"] === "undefined" ) {
+console.error ( "Error - _OutputBuffer_ undefined!!!" );
+					MEMORY.x["_OutputBuffer_"] = 0;
+				}
 console.log ( "MEMORY:PullMAR Memory Read addr=",addr.toString(16),"Output=", MEMORY.x._OutputBuffer_.toString(16) );
 				MEMORY.Display( addr );
 				MEMORY.TurnOn( "memory_Read"  );

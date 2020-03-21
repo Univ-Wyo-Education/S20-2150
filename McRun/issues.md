@@ -1,29 +1,52 @@
 
 Issues:
 
-1.  Logic Probe 
-	Notes:
-		function AddConnectionsToListOfWires() {						// Create lis of all wires for display on Logic Probe Modal
-		function showLogicProbe ( doShow ) {							// Display Logic Probe Modal, turn on Logic Probe Panel			2019 def
-			showLogicProbe ( true );									// Display the Modal											2261 call from infoOn1('logic-probe') (button click)
-		function SubmitButton_for_LogicProbeModal() {					// Submit For: Display the Logic Probe Modal
-		function drawLpLine() {											// Display lines/values from lpData
-	++1. When pick a line, display a count at the bottom of # picked, # left, catch each "pick"
-	++2. Connected wires - and list them - verify this.
-
-	1. Check that display of "Bus" displays a 0x4000
-
-
-
 2. Split McRun/mm....html test code into setup/run/check 
 	4. Convert existing test cases into { setup | run | verify } and figure out a way to do these with the new User Interface.
 		- on "Halt" run the validation of the test - if test is turned on
+		-- ToDo --
+				<option value="test2000">  2000:  Load / Halt                                                </option>
+				<option value="test5001">  5001:  Load / Add / Halt                                          </option>
 
-5. Save the selected logic-probe lines in local storage - reload on restart.
+				<option value="test5002">  5002:  Load / Subt / Halt                                         </option>
+				<option value="test5003">  5003:  Clear / Subt / Halt                                        </option>
+				<option value="test5004">  5004:  Clear / Jump / Halt / Halt                                 </option>
+				<option value="test5005">  5005:  Load / Store / Halt                                        </option>
+				<option value="test5007">  5007:  Input   - 0x5000                                           </option>
+				<option value="test5006">  5006:  Output  - 0x6000                                           </option>
+				<option value="test5010">  5010:  SkipLt0 - 0x8000 / ac &gt; 0                               </option>
+				<option value="test5011">  5011:  SkipLt0 - 0x8000  / ac &lt; 0                              </option>
+				<option value="test5012">  5012:  SkipLt0 - 0x8000  / ac == 0 (should behave like test 5010) </option>
+				<option value="test5020">  5020:  SkipGt0 - 0x8800  / ac &gt; 0                              </option>
+				<option value="test5021">  5021:  SkipGt0 - 0x8800  / ac &lt; 0                              </option>
+				<option value="test5022">  5022:  SkipGt0 - 0x8800  / ac == 0 (should behave like test 5020) </option>
+				<option value="test5030">  5030:  SkipEq0 - 0x8400  / ac &gt; 0                              </option>
+				<option value="test5031">  5031:  SkipEq0 - 0x8400  / ac &lt; 0                              </option>
+				<option value="test5032">  5032:  SkipEq0 - 0x8400  / ac == 0                                </option>
+				<option value="test5040">  5040:  LoadI   - 0xd000                                           </option>
+				<option value="test5041">  5041:  StoreI  - 0xe000                                           </option>
+				<option value="test5043">  5043:  AddI    - 0xB000                                           </option>
+				<option value="test5042">  5042:  JumpI   - 0xc000                                           </option>
+				<option value="test5044">  5044:  JnS     - 0x0000                                           </option>
+				<option value="test1000">  1000:  PC                                                         </option>
+				<option value="test1001">  1001:  PC -&gt; MAR                                               </option>
+				<option value="test1102">  1102:  Output -&gt; 7-seg                                         </option>
+				<option value="test1101">  1101:  AC -&gt; Output                                            </option>
+				<option value="test1003">  1003:  MDR -&gt; Bus -&gt; MAR                                    </option>
+				<option value="test1104">  1104:  Result -&gt; AC                                            </option>
+				<option value="test1105">  1105:  Input -&gt; AC                                             </option>
+				<option value="test1002">  1002:  PC -&gt; MAR -&gt; Memory Read -&gt; IR                    </option>
+				<option value="test3000">  3000:  Test MUX                                                   </option>
+		x. Add "help" to tests - paint into text area the "code" that is to be run - and what to click next [ tick ] if checked.
+			see test3001 - near top.
+				showTextInOutputBox("test3001 - test of ALU");
 
-8. Add "help" to tests - paint into text area the "code" that is to be run - and what to click next [ tick ] if checked.
-	see test3001 - near top.
-		showTextInOutputBox("test3001 - test of ALU");
+
+0. Defect: Run test 7000 twice / should be able to do a "reset" in between - but instead it fails on 2nd run.
+	Fresh page reload will allow it to run.  Reset not fully -resetting- the system.
+	// How ?? Why xyzzy0xb8
+	look in js/test_7000.js
+
 
 9. Setup a "real" server with this on it -  (4hrs) (set some domain t5432z.com to point to it?)
 	- aws free tear ec2?
@@ -33,30 +56,38 @@ Issues:
 
 
 
-3. Reveiw mm... for what to do next
-
-10. One Note...
 
 
 
+-----------------------------------------------------------------------------------------------------------------------------------------------
+Test Plan
+-----------------------------------------------------------------------------------------------------------------------------------------------
+1. Click on each of the buttons and verify functionality.
+2. Run a program or 2 
 
 
 
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
 VIDEO:
+-----------------------------------------------------------------------------------------------------------------------------------------------
 6. Video of running a test - 1st video of using MC machine
 7. Video of Microcode - and how it works
-
-
-
-
-
-
 
 
 -----------------------------------------------------------------------------------------------------------------------------------------------
 TODO Later
 -----------------------------------------------------------------------------------------------------------------------------------------------
 
+5. Save the selected logic-probe lines in local storage - reload on restart.
+1. Implement scroll on output panel - test3001 multiple times.
+3. Reveiw mm... for what to do next
+10. One Note...
 
 
 
@@ -243,3 +274,15 @@ data/6323cdc278b6a2c967716d173d1c278538f378496f5e3b745da1a08bfafd55af.txt CPU Co
 	1. Re-org into a table the list of wires - smaller footprint on checkboxes
 0. test3001 - test of ALU - is failing when run at the end of testAll and succeeding if run on its own.
 	test 11 - only failing test.
+	1. Check that display of "Bus" displays a 0x4000
+
+1.  Logic Probe 
+	Notes:
+		function AddConnectionsToListOfWires() {						// Create lis of all wires for display on Logic Probe Modal
+		function showLogicProbe ( doShow ) {							// Display Logic Probe Modal, turn on Logic Probe Panel			2019 def
+			showLogicProbe ( true );									// Display the Modal											2261 call from infoOn1('logic-probe') (button click)
+		function SubmitButton_for_LogicProbeModal() {					// Submit For: Display the Logic Probe Modal
+		function drawLpLine() {											// Display lines/values from lpData
+	++1. When pick a line, display a count at the bottom of # picked, # left, catch each "pick"
+	++2. Connected wires - and list them - verify this.
+
