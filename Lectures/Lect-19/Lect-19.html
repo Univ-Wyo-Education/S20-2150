@@ -710,12 +710,9 @@ ol {
 
 <h1>Lecture 19</h1>
 
-<p>My best guess is that this may be our last in-person lecture for a long time.
-1. Spring break is extended till the 29th (an extra week).   This means that you
-have till the 30th of the month for Homework-4 (due today) to be only 1 day late.
-2. The teaching staff (that means me) is to take the extra week to setup for
-remote instruction for all classes.
-3. Most important - take good care of yourself!</p>
+<p>Most important - take good care of yourself!  Remember to get outside and go for a walk!</p>
+
+<p>Our first &ldquo;zoom&rdquo; based office hours worked!  It worked really well!</p>
 
 <h2>RAID - Redundant Array Inexpensive Disks</h2>
 
@@ -729,18 +726,90 @@ way to make your data safe - and the spend on it.</p>
 
 <p>First - what is the history of RAID.
 RAID started out on disks that were 1MB to 5MB - and they were much cheaper than corresponding high reliability 25 or 50MB disks.
-A 5MB scsi interface disk would cost $1750 - and you could build a RAID array with 10 of them.   A 35MB disk from IBM or DED would
+A 5MB SCSI interface disk would cost $1750 - and you could build a RAID array with 10 of them.   A 35MB disk from IBM or DED would
 cost $250,000.00 and give you the same reliability - but with much lower performance.</p>
 
-<p>What makes it work.
-Raid5 uses checksums and error correction.  So when you read it checks to see if an error happened.   If an error then it rebuilds
-the block using the error correction and starts a re-build of the disk onto a &ldquo;hot spear&rdquo; or a &ldquo;cold spear&rdquo;.   This means that</p>
+<p>What do they look like:</p>
 
-<p>Raid Recovery Times:</p>
+<p><img src="HuaweiRH2288HV2.jpg" width=1024></p>
+
+<h3>What makes it work.</h3>
+
+<p>RAID has a bunch of &ldquo;levels&rdquo; which are different implementations of parity and data recovery or duplication of drives.</p>
+
+<h4>RAID 0</h4>
+
+<p>RAID 0 consists of striping, but no mirroring or parity. Striping means that you have your data across multiple drives
+with a chunk on each drive.   This can boost performance.   Also it means that if any one of the drives fails you loose
+the entire system.</p>
+
+<h4>RAID 1</h4>
+
+<p>RAID 1 consists of data mirroring. No parity or striping is used. Data is written identically to two or more drives, thereby
+producing a &ldquo;mirrored set&rdquo; of drives.   Read requests can be provided by any of the drives that have that data.
+This has a definite performance boost.  Writes are slower because you have to write to multiple drives.</p>
+
+<h4>RAID 2</h4>
+
+<p>RAID 2 consists of bit-level striping with dedicated Hamming-code parity.   I don&rsquo;t think this is used any more.
+It requires drive level speed synchronization.  Most modern hard drives to not have an interface that allows
+this.</p>
+
+<h4>RAID 3</h4>
+
+<p>RAID 3 consists of byte-level striping with dedicated parity.  Like RAID 2 - this is out of use.</p>
+
+<h4>RAID 4</h4>
+
+<p>RAID 4 consists of block-level striping with dedicated parity.   NetApp used to use this but has replaced it with
+its own RAID-DP system that is proprietary with double redundancy blocks on 2 drives.  NetApp&rsquo;s system has better
+small block throughput.</p>
+
+<h4>RAID 5</h4>
+
+<p>RAID 5 is built out of block-level striping with distributed parity. Parity information is distributed among
+the drives in the set.  This means that it can recover from a single drive failure.   You have to have a minimum
+of 3 drives but in practice 5 drives with 1 spear is a common confutation set.  This has been the most common
+RAID configuration.</p>
+
+<p>RAID 5 implementations are susceptible to system failures because of increasing disk size and rebuild times.
+If you have a 2nd drive fail (or you have data rot on a second drive) during a rebuild then you loose the
+entire set.</p>
+
+<h4>RAID 6</h4>
+
+<p>RAID 6 consists of block-level striping with double distributed parity.</p>
+
+<h4>RAID 10</h4>
+
+<p>RAID 10 Uses a disk duplication scheme with some parity checks.  It avoids the problems of 5 and 6 but requires
+more than 2x the number of disks.</p>
+
+<p>See <a href="https://www.lacie.com/manuals/lrm/raid/">https://www.lacie.com/manuals/lrm/raid/</a></p>
+
+<p>Real world usage and failure stats:
+<a href="https://www.backblaze.com/blog/hard-drive-stats-for-2019/">https://www.backblaze.com/blog/hard-drive-stats-for-2019/</a></p>
+
+<p>Disks have gotten bigger and bigger - and people still think that raid worked the way it has always worked.  Also peoples
+exception of acceptable down time has gotten less and less.  They are really put out when a system is offline for 5 minutes,
+let alone days.</p>
+
+<h3>Data rot happens</h3>
+
+<p>Data will degrade over time.</p>
+
+<p>Single point of failure happens.  A single RAID controller with a set of disks - then the controller is the single point of
+failure.</p>
+
+<h3>So how effective is RAID today?</h3>
+
+<p>RAID Recovery Times:</p>
 
 <p>DLO/y = Data Loss Odds per Year</p>
 
 <p><img src="raid-recovery-time.png" alt="raid-recovery-time.png" /></p>
+
+<p>To Address some of this we have RAID6 - this helps but it is definitely not a solution.</p>
 
 <h2>Alternatives to RAID</h2>
 
