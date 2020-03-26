@@ -4,10 +4,13 @@ package main
 // Copyright (C) University of Wyoming, 2019-2020.
 
 import (
+	"bytes"
 	"encoding/hex"
 	"flag"
 	"fmt"
 	"io/ioutil"
+	"net/http"
+	"net/url"
 	"os"
 	"reflect"
 	"regexp"
@@ -28,6 +31,9 @@ import (
 // xyzzy421 - Add in --version
 // xyzzy800 - Sort symbol table output before outputting
 // xyzzy401 - ImplementDebugFlags
+// remote@198.58.107.206
+// http://www.2c-why.com/status
+// http://www.2c-why.com/upload
 
 // ---------------------------------------------------------------------------------
 // asm - MARIA assembler.
@@ -45,6 +51,11 @@ var DbFlag = flag.String("db-flag", "", "debug flags.") // xyzzy401 - TODO
 var Upload = flag.Bool("upload", false, "Upload the code.hex to Amazon S3://")
 var St = flag.String("st", "", "Output symbol table to file")
 var Version = flag.Bool("version", false, "Print out version of build and exit.")
+
+var Server = flag.String("server", "http://www.2c-why.com/", "Destination server to send upload to")
+
+// var Server = flag.String("server", "http://localhost:10000/", "Destination server to send upload to")
+var AuthKey = flag.String("auth_key", "V7luOm6qurGREm1Ts2W2epA0KrM=", "Authorization Key")
 
 var GitCommit string
 
@@ -584,20 +595,41 @@ func main() {
 			fmt.Printf("Error: (Unable to Upload to S3) failed to write temporary data: %s error:%s\n", fn, err)
 			os.Exit(1)
 		}
-		s := SetupS3()
-		err = AddFileToS3(s, fn, toFile)
-		if err != nil {
-			fmt.Printf("Error: (Unable to Upload to S3) failed to upload to S3 error:%s\n", err)
-			os.Exit(1)
+
+		defer func() {
+			err = os.RemoveAll("./tmp")
+			if err != nil {
+				fmt.Printf("Error: %s\nManually remove ./tmp directory.", err)
+			}
+		}()
+
+		// -------------------------------------------------------------------------------------
+		// To S3 or Server
+		// -------------------------------------------------------------------------------------
+		if *Server == "" {
+		} else if *Server == "S3" {
+			s := SetupS3()
+			err = AddFileToS3(s, fn, toFile)
+			if err != nil {
+				fmt.Printf("Error: (Unable to Upload to S3) failed to upload to S3 error:%s\n", err)
+				os.Exit(1)
+			}
+		} else {
+			// toUrl := fmt.Sprintf("%supload?key=%s&hash=%s&data=%s", *Server, *AuthKey, toFile, data), fn, toFile)
+			toUrl := fmt.Sprintf("%supload-data", *Server)
+			status, rv := DoGet(toUrl, "key", *AuthKey, "hash", toFile, "data", string(data))
+			// fn==./tmp/[hash].txt, toFile==hashHex, Server == http://.../
+			if status != 200 {
+				fmt.Fprintf(os.Stderr, "Error: status=%d msg=%s\n", status, rv)
+				return
+			}
 		}
 
 		fmt.Printf("Hash To Enter to Load the hex file into the Emulator:\n\t%s\n\n", hashHex)
 
-		err = os.RemoveAll("./tmp")
-		if err != nil {
-			fmt.Printf("Error: %s\nManually remove ./tmp directory.", err)
-		}
-
+		// -------------------------------------------------------------------------------------
+		// Local Copy
+		// -------------------------------------------------------------------------------------
 		if filelib.Exists("../McRun/data") {
 			fn := fmt.Sprintf("../McRun/data/%s.txt", hashHex)
 			err = ioutil.WriteFile(fn, data, 0644)
@@ -605,6 +637,45 @@ func main() {
 				fmt.Printf("Error: (Unable to save locally to ../McRun/data) failed create file error:%s\n", err)
 			}
 		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// POST to server.
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+func DoGet(uri string, args ...string) (status int, rv string) {
+
+	sep := "?"
+	var qq bytes.Buffer
+	qq.WriteString(uri)
+	for ii := 0; ii < len(args); ii += 2 {
+		// q = q + sep + name + "=" + value;
+		qq.WriteString(sep)
+		qq.WriteString(url.QueryEscape(args[ii]))
+		qq.WriteString("=")
+		if ii < len(args) {
+			qq.WriteString(url.QueryEscape(args[ii+1]))
+		}
+		sep = "&"
+	}
+	url_q := qq.String()
+
+	fmt.Printf("-->>%s<<--\n", url_q)
+
+	res, err := http.Get(url_q)
+	if err != nil {
+		return 500, ""
+	} else {
+		defer res.Body.Close()
+		body, err := ioutil.ReadAll(res.Body)
+		if err != nil {
+			return 500, ""
+		}
+		status = res.StatusCode
+		if status == 200 {
+			rv = string(body)
+		}
+		return
 	}
 }
 

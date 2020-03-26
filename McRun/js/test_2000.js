@@ -25,8 +25,8 @@ function test2000_setup(single) {
 
 }
 
+// Standard run 1 instruction code
 function test2000_run(single) {
-	// Standard run 1 instruction code
 	Run1TickInit();
 	for ( var j = 0; j < 10; j++ ) {
 		for ( var i = 0; i < 100; i++ ) { 		
@@ -55,12 +55,6 @@ function test2000_validate(single) {
 		console.error ( "Error test2000: 'PC' should be 2, got: " +PC.x._data_+" instead." );
 		nErr++;
 	}
-//	/* Only ran 1 instruciton */
-//	if ( PC.x._data_ !== 1 ) {
-//		console.error ( "Error test2000: 'PC' should be 1, got: " +PC.x._data_+" instead." );
-//		nErr++;
-//	}
-
 
 	// ----------------------------------------------------------------------------
 	// So... all done - did we get any errors?
