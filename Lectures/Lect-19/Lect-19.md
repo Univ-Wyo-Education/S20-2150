@@ -1,5 +1,14 @@
 # Lecture 19
 
+## Videos
+
+[https://youtu.be/pXd2AiqpsPg](Lecture 19 - quick zoom overview) <br>
+[https://youtu.be/pXd2AiqpsPg](Lecture 19 - RAID storage part 1) <br>
+[https://youtu.be/Yp-K4WqZ9LM](Lecture 19 - RAID storage part 2 - disk reliability) <br>
+[](Lecture 19 - RAID storage part 3 - data rot) <br>
+[](Lecture 19 - RAID storage part 4 - better systems than RAID) <br>
+
+
 Most important - take good care of yourself!  Remember to get outside and go for a walk!
 
 Our first "zoom" based office hours worked!  It worked really well!
@@ -97,6 +106,23 @@ Disks have gotten bigger and bigger - and people still think that raid worked th
 exception of acceptable down time has gotten less and less.  They are really put out when a system is offline for 5 minutes,
 let alone days.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Data rot happens
 
 Data will degrade over time.
@@ -118,8 +144,34 @@ To Address some of this we have RAID6 - this helps but it is definitely not a so
 
 BTRFS: a better file system.
 
-Fully Distributed data.  Google's F1 database.
+Take a few minutes to read [https://en.wikipedia.org/wiki/Btrfs](https://en.wikipedia.org/wiki/Btrfs)
 
+### Snapshots
+
+Take a quick "copy" of an entire file system.
+
+### Checksums
+
+Deal with data rot by having checksums of all files and periodic re-read of data to validate.
+
+### Pooling
+
+Use disks in a pool with duplicated data written to multiple disks.
+
+### Scaling
+
+16 Exabyte file system size.	 This is `16 * 2 ** 60` - that is a bunch.
+
+
+
+### Googles F1 database - a world scale database.
+
+F1 is a port of the MySQL database to run on a distributed block share called BigTable.
+
+Most likely you are using this already.  Gmail, google docs and lots of other products
+outside of google use this.
+
+[https://storage.googleapis.com/pub-tools-public-publication-data/pdf/41344.pdf](https://storage.googleapis.com/pub-tools-public-publication-data/pdf/41344.pdf)
 
 
 

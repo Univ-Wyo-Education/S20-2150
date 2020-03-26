@@ -30,6 +30,9 @@ import (
 
 // xyzzy421 - Add in --version
 // xyzzy401 - ImplementDebugFlags
+// xyzzy442 - var DbFlag = flag.String("db-flag", "", "debug flags.") // xyzzy401 - TODO
+
+// /version API end point
 
 var cfgAwsUsed = false
 
@@ -44,7 +47,6 @@ var cfgAwsUsed = false
 var In = flag.String("in", "", "Input File - microcode assembly code. (microcode.mm)")
 var Out = flag.String("out", "", "Output in hex. Loadable Microcode .hex file")
 var IdList = flag.String("id-list", "id-list.txt", "List of Valid IDs in hardware")
-var DbFlag = flag.String("db-flag", "", "debug flags.") // xyzzy401 - TODO
 var St = flag.String("st", "", "Output symbol table to file")
 var Upload = flag.Bool("upload", false, "Upload the microcode.hex to Amazon S3://")
 var Help = flag.Bool("help", false, "Help Printout")
@@ -143,6 +145,10 @@ Microcode Emulator:
 			os.Exit(1)
 		}
 	}
+
+	// -----------------------------------------------------------------------------------------------------------------------------------------------------------
+	// start
+	// -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	// idList := ReadIdList(*IdList)
 	idList := GetIDsFromSVG("./mm_machine.html")
@@ -339,45 +345,6 @@ Microcode Emulator:
 		}
 	}
 
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// POST to server.
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-func DoGet(uri string, args ...string) (status int, rv string) {
-
-	sep := "?"
-	var qq bytes.Buffer
-	qq.WriteString(uri)
-	for ii := 0; ii < len(args); ii += 2 {
-		// q = q + sep + name + "=" + value;
-		qq.WriteString(sep)
-		qq.WriteString(url.QueryEscape(args[ii]))
-		qq.WriteString("=")
-		if ii < len(args) {
-			qq.WriteString(url.QueryEscape(args[ii+1]))
-		}
-		sep = "&"
-	}
-	url_q := qq.String()
-
-	fmt.Printf("-->>%s<<--\n", url_q)
-
-	res, err := http.Get(url_q)
-	if err != nil {
-		return 500, ""
-	} else {
-		defer res.Body.Close()
-		body, err := ioutil.ReadAll(res.Body)
-		if err != nil {
-			return 500, ""
-		}
-		status = res.StatusCode
-		if status == 200 {
-			rv = string(body)
-		}
-		return
-	}
 }
 
 // 1. Find every line with id="..."
@@ -682,6 +649,45 @@ func HashByesReturnHex(data []byte) (s string) {
 	h := HashStrings.HashByte(data)
 	s = hex.EncodeToString(h)
 	return
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// POST to server.
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+func DoGet(uri string, args ...string) (status int, rv string) {
+
+	sep := "?"
+	var qq bytes.Buffer
+	qq.WriteString(uri)
+	for ii := 0; ii < len(args); ii += 2 {
+		// q = q + sep + name + "=" + value;
+		qq.WriteString(sep)
+		qq.WriteString(url.QueryEscape(args[ii]))
+		qq.WriteString("=")
+		if ii < len(args) {
+			qq.WriteString(url.QueryEscape(args[ii+1]))
+		}
+		sep = "&"
+	}
+	url_q := qq.String()
+
+	fmt.Printf("-->>%s<<--\n", url_q)
+
+	res, err := http.Get(url_q)
+	if err != nil {
+		return 500, ""
+	} else {
+		defer res.Body.Close()
+		body, err := ioutil.ReadAll(res.Body)
+		if err != nil {
+			return 500, ""
+		}
+		status = res.StatusCode
+		if status == 200 {
+			rv = string(body)
+		}
+		return
+	}
 }
 
 var db1 = true  // Leave True

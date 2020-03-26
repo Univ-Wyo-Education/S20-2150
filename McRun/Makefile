@@ -6,5 +6,7 @@ run2:
 	~/bin/go-server -p :9000 -d . -k abc &
 
 deploy:
-	echo Not Implemented Yet
+	scp mm_machine.html pschlump@198.58.107.206:/home/pschlump/uw2150/static
+	ssh pschlump@198.58.107.206 "mkdir -p ./uw2150/static/js"
+	rsync -r -a -v -e "ssh -l pschlump"    ./js            			pschlump@198.58.107.206:/home/pschlump/uw2150/static
 

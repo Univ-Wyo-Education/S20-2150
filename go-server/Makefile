@@ -31,5 +31,7 @@ deploy: build_linux
 	ssh pschlump@198.58.107.206 "mkdir -p ./uw2150/www/static"
 	scp *.linux pschlump@198.58.107.206:/home/pschlump/uw2150
 	scp run-prod.sh pschlump@198.58.107.206:/home/pschlump/uw2150
+
+x:
 	rsync -r -a -v -e "ssh -l pschlump"    ./static            			pschlump@198.58.107.206:/home/pschlump/uw2150/www
 	

@@ -19,7 +19,7 @@ while true ; do
 		. ./set-env.sh
 	fi
 	# ./go-server.linux -cfg ./prod-cfg.json -hostport 192.154.97.75:9022 2>&1  >/tmp/go-server.out 
-	./go-server -p ":80" -d ./static 2>&1  >/tmp/go-server.out 
+	./go-server -p ":80" -d ./static/ 2>&1  >/tmp/go-server.out 
 	sleep 1 
 done
 ) 2>&1 > /tmp/go-server.2.out &

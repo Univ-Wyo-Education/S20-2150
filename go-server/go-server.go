@@ -26,6 +26,12 @@ var opts struct {
 	Key     string `short:"k" long:"key" description:"AuthKey" default:"V7luOm6qurGREm1Ts2W2epA0KrM="`
 }
 
+/*
+	port := flag.String("p", "3000", "port to serve on")
+	directory := flag.String("d", ".", "the directory of static file to host")
+	flag.Parse()
+*/
+
 func ParseCmdLineArgs() {
 
 	// args, err := flags.ParseArgs(&opts, os.Args)
@@ -112,8 +118,15 @@ func main() {
 	fs := http.FileServer(http.Dir(Dir))
 	http.HandleFunc("/status", respHandlerStatus)
 	http.HandleFunc("/upload-data", respHandlerUploadData)
+
+	// Original
 	// fs := http.FileServer(http.Dir(Dir))
 	// http.Handle("/", http.StripPrefix("/", fs))
+
+	// Modified to pick out ./js
+	// directory := "./static"
+	// http.Handle("/js/", http.StripPrefix(strings.TrimRight("/js/", "/"), http.FileServer(http.Dir(directory))))
+
 	http.HandleFunc("/", func(www http.ResponseWriter, req *http.Request) {
 		www.Header().Set("Cache-Control", "public, max-age=1")
 		fs.ServeHTTP(www, req)
