@@ -2,7 +2,7 @@
 
 ## Survey on languages that you know
 
-For homework that is not in MARIA - our emulated machine you
+For homework that is not in MARIE - our emulated machine you
 have your choice of { C, C++, Python, Go, Haskell, F#, Swift, Kotlin } as your
 language of implementation.  If you do other than C/C++/Python/Go then 
 I will be grading your homework instead of the graduate assistant - so
@@ -10,7 +10,7 @@ it may take longer to get graded.  If you pick other than C, C++, Python
 or Go you are responsible for knowing the language (Go is taught in 4010/5010
 special topics - blockchain.  You should have had C++.  I don't care for
 Java or JavaScript(node.js) so don't do your homework in those languages).
-Some of the class will be in MARIA an assembly language.  We will be learning
+Some of the class will be in MARIE an assembly language.  We will be learning
 that in this class.
 
 

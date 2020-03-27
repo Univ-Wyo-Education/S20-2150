@@ -4,7 +4,7 @@ We have been hitting on this for some time.  Let's get serious about some gates
 and logic.
 
 Last time we talked about a one-hot encoding.  We will be using (later in the year)
-a one-hot encoding in the MARIA instruction set.
+a one-hot encoding in the MARIE instruction set.
 
 Instruction 0x8000 is the Jump-Compare and Misc instruction.  The 2 bits after the 8
 determine how the compare is done.

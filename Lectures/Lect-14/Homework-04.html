@@ -708,7 +708,7 @@ ol {
 
 <div class="markdown-body">
 
-<h1>Build a MARIA emulator</h1>
+<h1>Build a MARIE emulator</h1>
 
 <p>Due: Mar 13. Friday before spring break.  Spring break 14th to 22nd
 will count as a single day for any late homework.  I will be available for
@@ -716,7 +716,7 @@ appointments over spring break - but I am working some days.</p>
 
 <p>Pts: 400</p>
 
-<p>Use the fetch-execute cycle and build an emulator for the MARIA language.  Pick a language to
+<p>Use the fetch-execute cycle and build an emulator for the MARIE language.  Pick a language to
 implement this in.  C, C++, F#, Kotlin, Go, Python, Haskell.  (No Java, JavaScrip(node.js), Ruby).</p>
 
 <p>Command Line:  Process the command line for <code>--in &lt;fn&gt;</code> and <code>--out &lt;fn&gt;</code> and get the file names.
@@ -739,7 +739,7 @@ int main ( int argc, char *argv[] ) {
     for ( i = 1; i &lt; argc; i++ ) {
         if ( strcmp ( argv[i], &quot;--in&quot; ) == 0 ) {
             if ( (i+1) &lt; argc ) {
-                in = argv[i];
+                in = argv[i+1];
                 i++;
             } else {
                 fprintf ( stderr, &quot;Error: --in missing file name\n&quot; );
@@ -747,7 +747,7 @@ int main ( int argc, char *argv[] ) {
             }
         } else if ( strcmp ( argv[i], &quot;--out&quot; ) == 0 ) {
             if ( (i+1) &lt; argc ) {
-                out = argv[i];
+                out = argv[i+1];
                 i++;
             } else {
                 fprintf ( stderr, &quot;Error: --out missing file name\n&quot; );
@@ -804,7 +804,7 @@ original paper <code>ir</code> is current instruction register (CIR).</p>
 <h2>Testing</h2>
 
 <p>Write (at least 5) programs of your choice that demonstrate that all of the instructions in the
-MARIA instruction set work.  Run the multiply example from the midterm and verify that it works.</p>
+MARIE instruction set work.  Run the multiply example from the midterm and verify that it works.</p>
 
 <h2>Turn in (via upload)</h2>
 

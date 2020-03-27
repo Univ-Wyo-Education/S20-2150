@@ -12,7 +12,7 @@
 
 1. Homework 2 is nearly done getting graded  - and will soon be return.
 2. Homework 3 .  Hm.. 
-3. Homework 4 - Build a MARIA emulator. 
+3. Homework 4 - Build a MARIE emulator. 
 
 ## In the News
 

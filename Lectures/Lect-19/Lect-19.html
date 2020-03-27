@@ -710,6 +710,26 @@ ol {
 
 <h1>Lecture 19</h1>
 
+<h2>Videos</h2>
+
+<p>Youtube Preferred:</p>
+
+<p><a href="https://youtu.be/pXd2AiqpsPg">Lecture 19 - quick zoom overview</a> <br>
+<a href="https://youtu.be/pXd2AiqpsPg">Lecture 19 - RAID storage part 1</a> <br>
+<a href="https://youtu.be/Yp-K4WqZ9LM">Lecture 19 - RAID storage part 2 - disk reliability</a> <br>
+<a href="https://youtu.be/yLzlkHsfYn4">Lecture 19 - RAID storage part 3 - data rot</a> <br>
+<a href="https://youtu.be/P2deSrKDyE4">Lecture 19 - RAID storage part 4 - better systems than RAID</a> <br>
+<a href="https://youtu.be/EC0WUbHnyKg">Lecture 19 - Part 5 - Why do processors pre-fetch instructions</a> <br></p>
+
+<h3>For download - use the following URL to download:</h3>
+
+<p><a href="[http://uw-s20-2015.s3.amazonaws.com/zoom01.mp4">Lecture 19 - quick zoom overview</a> <br>
+<a href="http://uw-s20-2015.s3.amazonaws.com/Lect-19-pt-01.mp4">Lecture 19 - part 1</a> <br>
+<a href="http://uw-s20-2015.s3.amazonaws.com/Lect-19-pt-02.mp4">Lecture 19 - part 2</a> <br>
+<a href="http://uw-s20-2015.s3.amazonaws.com/Lect-19-pt-03-data-rot.mp4">Lecture 19 - part 3</a> <br>
+<a href="http://uw-s20-2015.s3.amazonaws.com/Lect-19-pt-04-raid-alternatives.mp4">Lecture 19 - part 4</a> <br>
+<a href="http://uw-s20-2015.s3.amazonaws.com/Lect-19-why-instruction-prefect.mp4">Lecture 19 - part 5</a> <br></p>
+
 <p>Most important - take good care of yourself!  Remember to get outside and go for a walk!</p>
 
 <p>Our first &ldquo;zoom&rdquo; based office hours worked!  It worked really well!</p>
@@ -790,9 +810,25 @@ more than 2x the number of disks.</p>
 <p>Real world usage and failure stats:
 <a href="https://www.backblaze.com/blog/hard-drive-stats-for-2019/">https://www.backblaze.com/blog/hard-drive-stats-for-2019/</a></p>
 
+<h2>Biger disks and system failures</h2>
+
 <p>Disks have gotten bigger and bigger - and people still think that raid worked the way it has always worked.  Also peoples
 exception of acceptable down time has gotten less and less.  They are really put out when a system is offline for 5 minutes,
 let alone days.</p>
+
+<p><img src="raid_system.png" height="400"></p>
+
+<p>Let&rsquo;s look at what is wrong with this kind of a system.  What happens if the controller fails.  This is a single point of
+failure.  What happens if 1 of the 6 disks fails and you have to use the spare to do a recovery.  The longer it takes to
+write a disk the longer the recovery takes.</p>
+
+<p>Let&rsquo;s talk about twin engine air plainest v.s. single engine airplanes.  Most people look at a twin and say that there
+are 2 engines so if 1 fails then you still have one left.   Reality works more like this.  You have twice as many
+engines to fail so you have doubled your likelihood of an engine failure.  Twins are actually more dangerous than
+single engine airplanes.</p>
+
+<p>In a raid system with 5 in use and 1 spare you have 6 times as many chances of failure!  Also you have a much more
+complicated disk controller - one that can also fail.</p>
 
 <h3>Data rot happens</h3>
 
@@ -815,7 +851,32 @@ failure.</p>
 
 <p>BTRFS: a better file system.</p>
 
-<p>Fully Distributed data.  Google&rsquo;s F1 database.</p>
+<p>Take a few minutes to read <a href="https://en.wikipedia.org/wiki/Btrfs">https://en.wikipedia.org/wiki/Btrfs</a></p>
+
+<h3>Snapshots</h3>
+
+<p>Take a quick &ldquo;copy&rdquo; of an entire file system.</p>
+
+<h3>Checksums</h3>
+
+<p>Deal with data rot by having checksums of all files and periodic re-read of data to validate.</p>
+
+<h3>Pooling</h3>
+
+<p>Use disks in a pool with duplicated data written to multiple disks.</p>
+
+<h3>Scaling</h3>
+
+<p>16 Exabyte file system size.     This is <code>16 * 2 ** 60</code> - that is a bunch.</p>
+
+<h3>Googles F1 database - a world scale database.</h3>
+
+<p>F1 is a port of the MySQL database to run on a distributed block share called BigTable.</p>
+
+<p>Most likely you are using this already.  Gmail, google docs and lots of other products
+outside of google use this.</p>
+
+<p><a href="https://storage.googleapis.com/pub-tools-public-publication-data/pdf/41344.pdf">https://storage.googleapis.com/pub-tools-public-publication-data/pdf/41344.pdf</a></p>
 
 </div>
 

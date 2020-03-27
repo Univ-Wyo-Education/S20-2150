@@ -1,8 +1,8 @@
-# MARIA Microcode Emulator
+# MARIE Microcode Emulator
 
-Version 1.3.7
+Version 1.4.7
 
-Mon Mar  2 11:23:08 MST 2020
+Fri Mar 27 10:37:31 MDT 2020
 
 
 

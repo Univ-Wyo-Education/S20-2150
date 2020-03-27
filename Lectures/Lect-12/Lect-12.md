@@ -1,4 +1,4 @@
-# Lecture 12 - Trace of A Maria Program or Two
+# Lecture 12 - Trace of A MARIE Program or Two
 
 ## C Code and Operators (This also applies to C++)
 

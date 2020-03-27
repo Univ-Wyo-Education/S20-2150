@@ -2,11 +2,25 @@
 
 ## Videos
 
-[https://youtu.be/pXd2AiqpsPg](Lecture 19 - quick zoom overview) <br>
-[https://youtu.be/pXd2AiqpsPg](Lecture 19 - RAID storage part 1) <br>
-[https://youtu.be/Yp-K4WqZ9LM](Lecture 19 - RAID storage part 2 - disk reliability) <br>
-[](Lecture 19 - RAID storage part 3 - data rot) <br>
-[](Lecture 19 - RAID storage part 4 - better systems than RAID) <br>
+Youtube Preferred:
+
+[Lecture 19 - quick zoom overview](https://youtu.be/pXd2AiqpsPg) <br>
+[Lecture 19 - RAID storage part 1](https://youtu.be/pXd2AiqpsPg) <br>
+[Lecture 19 - RAID storage part 2 - disk reliability](https://youtu.be/Yp-K4WqZ9LM) <br>
+[Lecture 19 - RAID storage part 3 - data rot](https://youtu.be/yLzlkHsfYn4) <br>
+[Lecture 19 - RAID storage part 4 - better systems than RAID](https://youtu.be/P2deSrKDyE4) <br>
+[Lecture 19 - Part 5 - Why do processors pre-fetch instructions](https://youtu.be/EC0WUbHnyKg) <br>
+
+### For download - use the following URL to download:
+
+[Lecture 19 - quick zoom overview]([http://uw-s20-2015.s3.amazonaws.com/zoom01.mp4) <br>
+[Lecture 19 - part 1](http://uw-s20-2015.s3.amazonaws.com/Lect-19-pt-01.mp4) <br>
+[Lecture 19 - part 2](http://uw-s20-2015.s3.amazonaws.com/Lect-19-pt-02.mp4) <br>
+[Lecture 19 - part 3](http://uw-s20-2015.s3.amazonaws.com/Lect-19-pt-03-data-rot.mp4) <br>
+[Lecture 19 - part 4](http://uw-s20-2015.s3.amazonaws.com/Lect-19-pt-04-raid-alternatives.mp4) <br>
+[Lecture 19 - part 5](http://uw-s20-2015.s3.amazonaws.com/Lect-19-why-instruction-prefect.mp4) <br>
+
+
 
 
 Most important - take good care of yourself!  Remember to get outside and go for a walk!
@@ -102,10 +116,39 @@ Real world usage and failure stats:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Biger disks and system failures
+
 Disks have gotten bigger and bigger - and people still think that raid worked the way it has always worked.  Also peoples
 exception of acceptable down time has gotten less and less.  They are really put out when a system is offline for 5 minutes,
 let alone days.
 
+<img src="raid_system.png" height="400">
+
+Let's look at what is wrong with this kind of a system.  What happens if the controller fails.  This is a single point of
+failure.  What happens if 1 of the 6 disks fails and you have to use the spare to do a recovery.  The longer it takes to
+write a disk the longer the recovery takes.  
+
+Let's talk about twin engine air plainest v.s. single engine airplanes.  Most people look at a twin and say that there
+are 2 engines so if 1 fails then you still have one left.   Reality works more like this.  You have twice as many
+engines to fail so you have doubled your likelihood of an engine failure.  Twins are actually more dangerous than
+single engine airplanes.
+
+In a raid system with 5 in use and 1 spare you have 6 times as many chances of failure!  Also you have a much more
+complicated disk controller - one that can also fail.
 
 
 
@@ -139,6 +182,22 @@ DLO/y = Data Loss Odds per Year
 ![raid-recovery-time.png](raid-recovery-time.png)
 
 To Address some of this we have RAID6 - this helps but it is definitely not a solution.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Alternatives to RAID
 

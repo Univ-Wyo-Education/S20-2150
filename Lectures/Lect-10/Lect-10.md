@@ -11,7 +11,7 @@ fucntion strprint ( char *s ) {
 }
 ```
 
-In MARIA:
+In MARIE:
 (From the homework 2)
 
 ```

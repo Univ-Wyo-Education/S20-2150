@@ -1,5 +1,5 @@
 
-# Lecture 8 - MARIA instructions
+# Lecture 8 - MARIE instructions
 
 ## First - One Hot Example
 
@@ -22,7 +22,7 @@ function PrintString () {
 }
 ```
 
-### MARIA Code
+### MARIE Code
 
 ```
 L1,     LoadI    X

@@ -10,13 +10,17 @@ build_linux:
 mac: all
 	mv go-server go-server.mac
 
+# Local run of server
+run2: go-server
+	( cd ../McRun ; go-server -p :9000 -d . -key "" )
+
 go-server: go-server.go Makefile cmp-local.sh gen_ran.go lib.go
 	@mkdir -p ./db
 	./cmp-local.sh
 
 
 test1:
-	89-http-server --port 4000 --dir ./static
+	go-server --port 4000 --dir ./static
 
 #deploy_74: build_linux
 #	echo ssh pschlump@192.154.97.74 "mkdir -p ./q8s/www"

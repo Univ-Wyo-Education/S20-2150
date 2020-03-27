@@ -1,4 +1,4 @@
-# Build a MARIA emulator
+# Build a MARIE emulator
 
 Due: Mar 13. Friday before spring break.  Spring break 14th to 22nd 
 will count as a single day for any late homework.  I will be available for
@@ -6,7 +6,7 @@ appointments over spring break - but I am working some days.
 
 Pts: 400
 
-Use the fetch-execute cycle and build an emulator for the MARIA language.  Pick a language to
+Use the fetch-execute cycle and build an emulator for the MARIE language.  Pick a language to
 implement this in.  C, C++, F#, Kotlin, Go, Python, Haskell.  (No Java, JavaScrip(node.js), Ruby).
 
 Command Line:  Process the command line for `--in <fn>` and `--out <fn>` and get the file names.
@@ -30,7 +30,7 @@ int main ( int argc, char *argv[] ) {
     for ( i = 1; i < argc; i++ ) {
         if ( strcmp ( argv[i], "--in" ) == 0 ) {
             if ( (i+1) < argc ) {
-                in = argv[i];
+                in = argv[i+1];
                 i++;
             } else {
                 fprintf ( stderr, "Error: --in missing file name\n" );
@@ -38,7 +38,7 @@ int main ( int argc, char *argv[] ) {
             }
         } else if ( strcmp ( argv[i], "--out" ) == 0 ) {
             if ( (i+1) < argc ) {
-                out = argv[i];
+                out = argv[i+1];
                 i++;
             } else {
                 fprintf ( stderr, "Error: --out missing file name\n" );
@@ -95,7 +95,7 @@ original paper `ir` is current instruction register (CIR).
 ## Testing
 
 Write (at least 5) programs of your choice that demonstrate that all of the instructions in the
-MARIA instruction set work.  Run the multiply example from the midterm and verify that it works.
+MARIE instruction set work.  Run the multiply example from the midterm and verify that it works.
 
 
 ## Turn in (via upload)

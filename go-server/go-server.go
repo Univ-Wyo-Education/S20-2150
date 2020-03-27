@@ -24,6 +24,7 @@ var opts struct {
 	Dir     string `short:"d" long:"dir" description:"A directory to serve - default '.'" default:"."`
 	Version bool   `short:"V" long:"version" description:"Return version info and exit."`
 	Key     string `short:"k" long:"key" description:"AuthKey" default:"V7luOm6qurGREm1Ts2W2epA0KrM="`
+	Local   bool   `short:"L" long:"local" description:"Local Run of server"`
 }
 
 /*
@@ -97,7 +98,7 @@ func respHandlerUploadData(www http.ResponseWriter, req *http.Request) {
 
 	www.Header().Set("Content-Type", "application/json")
 
-	if key == opts.Key {
+	if key == opts.Key || opts.Key == "" {
 		os.Mkdir(fmt.Sprintf("./%s/data", opts.Dir), 0755)
 		fn := fmt.Sprintf("./%s/data/%s.txt", opts.Dir, hash)
 		err := ioutil.WriteFile(fn, []byte(data), 0644)
