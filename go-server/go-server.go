@@ -11,6 +11,8 @@ import (
 	"net/url"
 	"os"
 
+	"github.com/Univ-Wyo-Education/S20-2150/go-server/asm"
+	"github.com/Univ-Wyo-Education/S20-2150/go-server/mcasm"
 	flags "github.com/jessevdk/go-flags"
 	// "./flags" // "www.2c-why.com/go-lib/flags"
 )
@@ -114,11 +116,46 @@ func respHandlerUploadData(www http.ResponseWriter, req *http.Request) {
 }
 
 // -------------------------------------------------------------------------------------------------
+func respHandlerMcAsm(www http.ResponseWriter, req *http.Request) {
+	queryValues := req.URL.Query()
+	mes := queryValues.Get("mes")
+	nEx, _ /*hex*/, hashHex, stDump, err := mcasm.Asssemble(mes)
+	www.Header().Set("Content-Type", "application/json")
+	if err == nil {
+		fmt.Fprintf(www, `{"status":"success","nEx":%d, "hashHex":%q, "stDump":%q}`, nEx, hashHex, stDump)
+	} else {
+		fmt.Fprintf(www, `{"status":"error","err":%q}`, err)
+	}
+}
+
+// -------------------------------------------------------------------------------------------------
+func respHandlerAsm(www http.ResponseWriter, req *http.Request) {
+	queryValues := req.URL.Query()
+	mes := queryValues.Get("mes")
+	nErr, _ /*hex*/, hashHex, stList, err := asm.MARIE_Assm(mes, "tmp-xyzzy") // func Asm(mes, out string) (n_err int, hex, hashHex string, err error) {
+	www.Header().Set("Content-Type", "application/json")
+	if err == nil {
+		fmt.Fprintf(www, `{"status":"success","nErr":%d, "hashHex":%q, "stList":%q}`, nErr, hashHex, stList)
+	} else {
+		fmt.Fprintf(www, `{"status":"error","err":%q}`, err)
+	}
+}
+
+// -------------------------------------------------------------------------------------------------
 func main() {
 	ParseCmdLineArgs()
 	fs := http.FileServer(http.Dir(Dir))
 	http.HandleFunc("/status", respHandlerStatus)
 	http.HandleFunc("/upload-data", respHandlerUploadData)
+
+	http.HandleFunc("/mcAsm", respHandlerMcAsm)
+
+	http.HandleFunc("/asm", respHandlerAsm)
+
+	mcasm.Setup(
+		fmt.Sprintf("%s/mm_machine.html", opts.Dir),
+		fmt.Sprintf("%s/data", opts.Dir),
+	) // In production environment?
 
 	// Original
 	// fs := http.FileServer(http.Dir(Dir))

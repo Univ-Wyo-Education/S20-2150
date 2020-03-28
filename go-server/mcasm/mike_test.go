@@ -90,7 +90,8 @@ func MustDecodeString(s string) []byte {
 
 func TestMike(t *testing.T) {
 
-	Setup("../../McRun/mm_machine.html")
+	Setup("../../McRun/mm_machine.html", "../../McRun/data")
+	// Setup("./static/mm_machine.html", "./static/data")	// In production environment?
 
 	fileData, err := ioutil.ReadFile("../../McAsm/backup-microcode.m2")
 	if err != nil {

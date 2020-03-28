@@ -57,9 +57,11 @@ var AuthKey = flag.String("auth_key", "V7luOm6qurGREm1Ts2W2epA0KrM=", "Authoriza
 var stOut = os.Stdout
 
 var idList map[string]bool
+var pathToData string
 
-func Setup(fn string) {
+func Setup(fn, pd string) {
 	idList = GetIDsFromSVG(fn) // "./www/mm_machine.html")
+	pathToData = pd
 }
 
 // mes - the posted body of the assembley file.
@@ -189,8 +191,7 @@ func Asssemble(mes string) (nEx int, hex, hashHex, stDump string, err error) {
 
 	hashHex = HashByesReturnHex([]byte(hex)) // hash of the file - to write it.
 
-	// err = ioutil.WriteFile(fmt.Sprintf("./www/data/%s.txt", hashHex), []byte(hex), 0644)
-	// _ = err // xyzzy1
+	err = ioutil.WriteFile(fmt.Sprintf("%s/%s.txt", hashHex, pathToData), []byte(hex), 0644)
 
 	if db1001 {
 		fmt.Printf("Hash To Enter to Load the Microcode into the Emulator:\n\t%s\n\n", hashHex)
