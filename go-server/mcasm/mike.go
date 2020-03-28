@@ -1,6 +1,7 @@
 package mcasm
 
 // Microcode Assembler
+// Microcode Assembler
 // Copyright (C) University of Wyoming, 2019-2020.
 
 import (
@@ -12,7 +13,6 @@ import (
 	"os"
 	"reflect"
 	"regexp"
-	"runtime"
 	"sort"
 	"strconv"
 	"strings"
@@ -56,27 +56,14 @@ var AuthKey = flag.String("auth_key", "V7luOm6qurGREm1Ts2W2epA0KrM=", "Authoriza
 
 var stOut = os.Stdout
 
-// GitCommit must be external it is generated at compile time and set by the
-// loader.  This is the version of the program and date/time for the code.
-var GitCommit string
-
-var OnWindows = false
-
 var idList map[string]bool
 
-func init() {
-	if runtime.GOOS == "windows" {
-		OnWindows = true
-	}
-	OnWindows = true
-
-	// idList := ReadIdList(*IdList)
-	idList = GetIDsFromSVG("./www/mm_machine.html")
+func Setup(fn string) {
+	idList = GetIDsFromSVG(fn) // "./www/mm_machine.html")
 }
 
 // mes - the posted body of the assembley file.
-
-func asssemble(mes string) (hex, hashHex string, err error) {
+func Asssemble(mes string) (nEx int, hex, hashHex, stDump string, err error) {
 
 	var buffer bytes.Buffer
 
@@ -165,10 +152,12 @@ func asssemble(mes string) (hex, hashHex string, err error) {
 
 	}
 
-	if db1 {
+	nEx = n_ins
+
+	if db1000 {
 		fmt.Fprintf(stOut, "# Of Instructions: %d\n", n_ins)
-		DumpSymbolTable(stOut)
 	}
+	stDump = DumpSymbolTable(stOut)
 
 	// Output
 	if n_err > 0 {
@@ -200,10 +189,12 @@ func asssemble(mes string) (hex, hashHex string, err error) {
 
 	hashHex = HashByesReturnHex([]byte(hex)) // hash of the file - to write it.
 
-	err = ioutil.WriteFile(fmt.Sprintf("./www/data/%s.txt", hashHex), []byte(hex), 0644)
-	_ = err // xyzzy1
+	// err = ioutil.WriteFile(fmt.Sprintf("./www/data/%s.txt", hashHex), []byte(hex), 0644)
+	// _ = err // xyzzy1
 
-	fmt.Printf("Hash To Enter to Load the Microcode into the Emulator:\n\t%s\n\n", hashHex)
+	if db1001 {
+		fmt.Printf("Hash To Enter to Load the Microcode into the Emulator:\n\t%s\n\n", hashHex)
+	}
 
 	return
 }
@@ -232,22 +223,28 @@ func GetIDsFromSVG(HTMLFile string) (outIdList map[string]bool) {
 			if len(s2) == 0 {
 				fmt.Fprintf(os.Stderr, "Error: Failed to match ->%s<- for ID, LineNo:%d, at:%s\n", Line, LineNo, godebug.LF())
 			}
-			fmt.Printf("SUccess: %s\n", godebug.SVarI(s2[0][0]))
+			if db810 {
+				fmt.Printf("SUccess: %s\n", godebug.SVarI(s2[0][0]))
+			}
 			idS := s2[0][0]
 			idS = idS[4 : len(idS)-1]
-			fmt.Printf("SUccess: ->%s<-\n", idS)
+			if db810 {
+				fmt.Printf("SUCcess: ->%s<-\n", idS)
+			}
 			outIdList[idS] = true
 
 			// check for [n] in ID - if found then replace with 0..n-1
 			if hasRange.MatchString(idS) {
-				fmt.Printf("%sHas a Range in it... ->%s<-%s\n", MiscLib.ColorYellow, idS, MiscLib.ColorReset)
+				if db810 {
+					fmt.Printf("%sHas a Range in it... ->%s<-%s\n", MiscLib.ColorYellow, idS, MiscLib.ColorReset)
+				}
 				if rangeAtEnd.MatchString(idS) {
 					s3 := getNum.FindAllStringSubmatch(idS, -1)
 					s3num := s3[0][0]
 					s3num = s3num[1 : len(s3num)-1]
 					num, err := strconv.ParseInt(s3num, 10, 64)
 					if err != nil {
-						fmt.Printf("Error: Invalid number ->%s<- LineNo: error:%s\n", s3num, LineNo, err)
+						fmt.Printf("Error: Invalid number ->%s<- LineNo: %d error:%s\n", s3num, LineNo, err)
 					} else {
 						begArr := strings.Split(idS, "[")
 						beg := begArr[0]
@@ -261,7 +258,7 @@ func GetIDsFromSVG(HTMLFile string) (outIdList map[string]bool) {
 					s3num = s3num[1 : len(s3num)-1] // get the n
 					num, err := strconv.ParseInt(s3num, 10, 64)
 					if err != nil {
-						fmt.Printf("Error: Invalid number ->%s<- LineNo: error:%s\n", s3num, LineNo, err)
+						fmt.Printf("Error: Invalid number ->%s<- LineNo: %d error:%s\n", s3num, LineNo, err)
 					} else {
 						begArr := strings.Split(idS, "[")
 						beg := begArr[0]
@@ -450,17 +447,19 @@ func KeysFromMap(a interface{}) (keys []string) {
 	return
 }
 
-func DumpSymbolTable(fp *os.File) {
-	fmt.Fprintf(fp, "Symbol Table\n")
-	fmt.Fprintf(fp, "-------------------------------------------------------------\n")
+func DumpSymbolTable(fp *os.File) string {
+	var buffer bytes.Buffer
+	buffer.WriteString(fmt.Sprintf("Symbol Table\n"))
+	buffer.WriteString(fmt.Sprintf("-------------------------------------------------------------\n"))
 	keys := ymux.KeysFromMap(SymbolTable)
 	sort.Strings(keys)
 	// for key, val := range SymbolTable {
 	for _, key := range keys {
 		val := SymbolTable[key]
-		fmt.Fprintf(fp, "%s: %s\n", key, godebug.SVar(val))
+		buffer.WriteString(fmt.Sprintf("%s: %s\n", key, godebug.SVar(val)))
 	}
-	fmt.Fprintf(fp, "-------------------------------------------------------------\n\n")
+	buffer.WriteString(fmt.Sprintf("-------------------------------------------------------------\n\n"))
+	return buffer.String()
 }
 
 func DumpSymbolTableForHexFile(buffer *bytes.Buffer) {
@@ -524,3 +523,6 @@ var db14 = false // DOS
 var db15 = false // DOS
 var db16 = false //
 var db20 = true
+var db810 = false
+var db1000 = false
+var db1001 = false

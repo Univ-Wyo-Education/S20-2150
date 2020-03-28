@@ -38,4 +38,11 @@ deploy: build_linux
 
 x:
 	rsync -r -a -v -e "ssh -l pschlump"    ./static            			pschlump@198.58.107.206:/home/pschlump/uw2150/www
-	
+
+y:	
+	rsync -r -a -v -e "ssh -l pschlump"    ./mcasm            			pschlump@192.168.0.199:/home/pschlump/go/src/github.com/Univ-Wyo-Education/S20-2150/go-server
+
+z:	
+	( cd ~/go ; \
+	rsync -r -a -v -e "ssh -l pschlump"    ./src            			pschlump@192.168.0.199:/home/pschlump/go \
+	)
