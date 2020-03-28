@@ -1449,6 +1449,12 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		<rect id="b-show-memory"     x="40" y="630" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('show-memory');"/>
 		<text id="b-show-memory-txt" x="45" y="647" class="small" onclick="infoOn('show-memory');">Show Memory</text>
 
+		<rect id="b-ass-MARIE"       x="40" y="660" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('ass-MARIE');"/>
+		<text id="b-ass-MARIE-txt"   x="45" y="677" class="small" onclick="infoOn('ass-MARIE');">Assmbl MARIE</text>
+
+		<rect id="b-ass-MC"          x="40" y="690" rx="6" ry="6" width="120" height="25" class="button-box" onclick="infoOn('ass-MC');"/>
+		<text id="b-ass-MC-txt"      x="45" y="707" class="small" onclick="infoOn('ass-MC');">Assmbl M.C.</text>
+
 
 
 	<g id="is_halted" class="off-at-start">
@@ -1519,6 +1525,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		<div class="modal-body">
 			<p>Enter the hash printed out by Asm with the --upload flag.</p>
 			<input id="modal-input-mm-hash" spellcheck="false" name="i_hash" class="hash-input">
+			<br>
 		</div>
 		<div class="modal-footer modal-blue-bot">
 			<button class="modal-submit" type="button" id="modal-submit2" onclick="LoadMM();">Load Hex File</button>
@@ -1539,6 +1546,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		<div class="modal-body">
 			<p>Enter the address in hex you want to have shown</p>
 			<input id="modal-input-ma" spellcheck="false" name="i_mm_addr" class="mem-input">
+			<br>
 		</div>
 		<div class="modal-footer">
 			<button class="modal-submit" type="button" id="modal-submit3" onclick="LoadMA();">Show Address</button>
@@ -1630,6 +1638,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			<input id="modal-input-7" spellcheck="false" name="i_input_7" class="mem-input"><br>
 			<input id="modal-input-8" spellcheck="false" name="i_input_8" class="mem-input"><br>
 			<input id="modal-input-9" spellcheck="false" name="i_input_9" class="mem-input"><br>
+			<br>
 		</div>
 		<div class="modal-footer">
 			<button class="modal-submit" type="button" id="modal-submit5" onclick="DoInput();">Collect Input</button>
@@ -1656,6 +1665,72 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		</div>
 		<div class="modal-footer">
 			<button class="modal-submit" type="button" id="modal-submit6" onclick="SubmitButton_for_LogicProbeModal();">Show Logic Probe</button>
+		</div>
+	</div>
+
+</div>
+
+<!-- The Modal : Assemble MARIE Form  ======================================================== -->
+<div id="myModal7" class="modal hideMyModal">
+
+	<!-- Modal content -->
+	<div class="modal-content">
+		<div class="modal-header">
+			<span class="close" onclick="hideModal();">&times;</span>
+			<h4>Address in Main Memory</h4>
+		</div>
+		<div class="modal-body">
+			<h5>Assemble MARIE assembley code</h5>
+			<form>
+				<div class="form-group">
+					  <div>
+							<!--<label for="asm_code">Assembly Code</label>-->
+							<textarea class="form-control" id="asm_code" rows="40" cols="120"></textarea>
+					  </div>
+				</div>
+			</form>
+			<br>
+			<span id="hash_out"></span>
+			<span id="hex_out"></span>
+			<span id="list_out"></span>
+			<span id="hex"></span>
+		</div>
+		<div class="modal-footer">
+			<button class="modal-submit" type="button" id="modal-submit7" onclick="SubmitButton_for_Assemble('stay-open');">Assemble</button>
+			<button class="modal-submit" type="button" id="modal-submit7b" onclick="SubmitButton_for_Assemble('save');">Save and Close</button>
+		</div>
+	</div>
+
+</div>
+
+<!-- The Modal : Assemble MARIE Form  ======================================================== -->
+<div id="myModal8" class="modal hideMyModal">
+
+	<!-- Modal content -->
+	<div class="modal-content">
+		<div class="modal-header">
+			<span class="close" onclick="hideModal();">&times;</span>
+			<h4>Address in Main Memory</h4>
+		</div>
+		<div class="modal-body">
+			<h5>Assemble MARIE assembley code</h5>
+			<form>
+				<div class="form-group">
+					  <div>
+							<!--<label for="asm_code">Assembly Code</label>-->
+							<textarea class="form-control" id="mcasm_code" rows="40" cols="120"></textarea>
+					  </div>
+				</div>
+			</form>
+			<br>
+			<span id="mc_hash_out"></span>
+			<span id="mc_hex_out"></span>
+			<span id="mc_list_out"></span>
+			<span id="mc_hex"></span>
+		</div>
+		<div class="modal-footer">
+			<button class="modal-submit" type="button" id="modal-submit8" onclick="SubmitButton_for_MCAssemble('stay-open');">Microcode Assemble</button>
+			<button class="modal-submit" type="button" id="modal-submit8b" onclick="SubmitButton_for_MCAssemble('save');">Microcode Save and Close</button>
 		</div>
 	</div>
 
@@ -1696,6 +1771,12 @@ function displayModalInput () {
 function displayModalLogicProbe() {
 	$("#myModal6").css ( { "display":"block" } );
 }
+function displayAssembler() {
+	$("#myModal7").css ( { "display":"block" } );
+}
+function displayMcAssm() {
+	$("#myModal8").css ( { "display":"block" } );
+}
 
 // When the user clicks on <span> (x), close the modal
 function hideModal() {
@@ -1711,6 +1792,8 @@ var modal3 = document.getElementById("myModal3");
 var modal4 = document.getElementById("myModal4");
 var modal5 = document.getElementById("myModal5");
 var modal6 = document.getElementById("myModal6");
+var modal7 = document.getElementById("myModal7");
+var modal8 = document.getElementById("myModal8");
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
 	if (event.target == modal1) {
@@ -1729,6 +1812,12 @@ window.onclick = function(event) {
 		//modal.style.display = "none";
 		hideModal();
 	} else if (event.target == modal6) {
+		//modal.style.display = "none";
+		hideModal();
+	} else if (event.target == modal7) {
+		//modal.style.display = "none";
+		hideModal();
+	} else if (event.target == modal8) {
 		//modal.style.display = "none";
 		hideModal();
 	}
@@ -1844,6 +1933,190 @@ function showIsError ( isError ) {
 		$("#is_error").hide();
 		$("#set_ok").show();
 	}
+}
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// <button class="modal-submit" type="button" id="modal-submit7" onclick="SubmitButton_for_Assemble();">Assemble</button>
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// function LoadMM() { -- see for Microcode.
+
+function SubmitButton_for_Assemble( closeFlag ) {
+	console.log ( "Called Assemble for MARIA", closeFlag );
+
+	//		<textarea class="form-control" id="asm_code" rows="40" cols="120"></textarea>
+	var body = $("#asm_code").val();
+	localStorage.setItem('asm_code',body); // 1. Save as local storage.
+	// 2. Call Assembler -- $.post(...'GET'...) to setver
+	// 3. Load from Server	-- Restulst in JSON back.
+	// 4. Display "hex" results
+	// 5. Display Listing
+
+	var data = {
+	   	  "mes"				: body
+		, "__method__"		: "POST"
+		, "_ran_" 			: ( Math.random() * 10000000 ) % 10000000
+	};
+	submitItData ( event, data, "/asm", function(data){
+		console.log( "data=", data );
+		// fmt.Fprintf(www, `{"status":"success","nErr":%d, "hashHex":%q, "stList":%q}`, nErr, hashHex, stList)
+		// fmt.Fprintf(www, `{"status":"error","err":%q}`, err)
+		var status = data.status; 
+		if ( status === "success" ) {
+			var hashHex = data.hashHex; 
+			var stList = data.stList; 
+			var hex = data.hex; 
+			console.log( "hashHex=", hashHex );
+			// <span id="hash_out"></span>
+			// <span id="hex_out"></span>
+			// <span id="list_out"></span>
+			console.log ( "hashHex=", hashHex, "stList=", stList, "hex", hex );
+			// $("#hash_out").html( "Hash for this assembled code: "+ hashHex + "<br>" );
+			$("#list_out").html( "<pre>\n"+stList+"\n</pre>" );
+			$("#hex_out").html( "<pre>\n"+hex+"\n</pre>" );
+
+			// Load the Code to machine
+			localStorage.setItem('main_memory_data',hashHex);
+			mm_hash = hashHex;
+			ParseInputHexMM(hex);
+			
+			if ( closeFlag === "save" ) {
+				hideModal();
+			}
+
+		} else {
+			var nErr = data.nErr; 
+			$("#list_out").html( "<h2>Errors: "+nErr+"</h2><br><pre>"+stList+"</pre>" );
+		}
+	}, function(data) {
+		console.log( "ERROR: ", data );
+		// renderError( "Failed to Login - Network communication failed.", "Failed to communicate with the server." );
+	});
+}
+
+// Take local storage and load to modal if set.
+function LoadAssembleyFromLocalStorage() {
+	var body = localStorage.getItem('asm_code');
+	if ( body ) {
+		$("#asm_code").val(body);
+	}
+}
+
+LoadAssembleyFromLocalStorage();
+
+
+
+
+
+
+
+
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// <button class="modal-submit" type="button" id="modal-submit7" onclick="SubmitButton_for_Assemble();">Assemble</button>
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// function LoadMC() { -- see for Microcode.
+
+function SubmitButton_for_MCAssemble( closeFlag ) {
+	console.log ( "Called Microcode Assembler", closeFlag );
+
+	//		<textarea class="form-control" id="asm_code" rows="40" cols="120"></textarea>
+	var body = $("#mcasm_code").val();
+	localStorage.setItem('mcasm_code',body); // 1. Save as local storage.
+	// 2. Call Assembler -- $.post(...'GET'...) to setver
+	// 3. Load from Server	-- Restulst in JSON back.
+	// 4. Display "hex" results
+	// 5. Display Listing
+
+	var data = {
+	   	  "mes"				: body
+		, "__method__"		: "POST"
+		, "_ran_" 			: ( Math.random() * 10000000 ) % 10000000
+	};
+	submitItData ( event, data, "/mcAsm", function(data){
+		console.log( "data=", data );
+		// fmt.Fprintf(www, `{"status":"success","nEx":%d, "hashHex":%q, "stDump":%q, "hex":%q}`, nEx, hashHex, stDump, hex)
+		// fmt.Fprintf(www, `{"status":"error","err":%q, "stDump":%q}`, err, stDump)
+		var status = data.status; 
+		if ( status === "success" ) {
+			var hashHex = data.hashHex; 
+			var stDump = data.stDump; 
+			var hex = data.hex; 
+			console.log( "hashHex=", hashHex );
+			// <span id="mc_hash_out"></span>
+			// <span id="mc_hex_out"></span>
+			// <span id="mc_list_out"></span>
+			console.log ( "hashHex=", hashHex, "stDump=", stDump, "hex", hex );
+			// $("#hash_out").html( "Hash for this assembled code: "+ hashHex + "<br>" );
+			$("#mc_list_out").html( "<pre>\n"+stDump+"\n</pre>" );
+			$("#mc_hex_out").html( "<pre>\n"+hex+"\n</pre>" );
+
+			// Load the Code to machine
+			localStorage.setItem('microcode_data',hashHex);
+			mc_hash = hashHex;
+			ParseInput(hex);
+			
+			if ( closeFlag === "save" ) {
+				hideModal();
+			}
+
+		} else {
+			var nErr = data.nErr; 
+			$("#list_out").html( "<h2>Errors: "+nErr+"</h2><br><pre>"+stDump+"</pre>" );
+		}
+	}, function(data) {
+		console.log( "ERROR: ", data );
+		// renderError( "Failed to Login - Network communication failed.", "Failed to communicate with the server." );
+	});
+}
+
+// Take local storage and load to modal if set.
+function LoadMicrocodeFromLocalStorage() {
+	var body = localStorage.getItem('mcasm_code');
+	if ( body ) {
+		$("#mcasm_code").val(body);
+	}
+}
+
+LoadMicrocodeFromLocalStorage();
+
+
+
+
+
+
+
+
+
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// xyzzy - need to ad a title for errors
+// ---------------------------------------------------------------------------------------------------------------------------------------
+function submitItData ( event, data, action, succ, erro ) {
+	if ( event && event.preventDefault && typeof event.preventDefault == "function") { event.preventDefault(); }
+	console.log ( "form data (passed): ", data);
+	$.ajax({
+		type: 'GET',
+		url: action,
+		data: data,
+		success: function (data) {
+			console.log ( "success AJAX", data );
+			$("#output").text( JSON.stringify(data, null, 4) );
+			if ( succ ) {
+				succ(data);
+			}
+		},
+		error: function(resp) {
+			$("#output").text( "Error!"+JSON.stringify(resp) );
+			// alert("got error status="+resp.status+" "+resp.statusText);
+			if ( erro ) {
+				erro(resp);
+			} else {
+				var msg = resp.statusText;
+			//	renderError ( "xyzzy-title:doc-index.js:79", msg );
+			//	render5SecClearMessage ( );
+			}
+		}
+	});
 }
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
@@ -2233,7 +2506,15 @@ function infoOn1(i,x) {
 		showLogicProbe ( true );
 		break;
 
-	// logic-probe
+	// <text id="b-ass-MARIE-txt"   x="45" y="677" class="small" onclick="infoOn('ass-MARIE');">Assmbl MARIE</text>
+	// <text id="b-ass-MC-txt"      x="45" y="707" class="small" onclick="infoOn('ass-MC');">Assmbl M.C.</text>
+	case "ass-MARIE":	 
+		displayAssembler();
+		break;
+
+	case "ass-MC":	
+		displayMcAssm();
+		break;
 
 
 	case "id_pc":
@@ -3019,7 +3300,7 @@ var ParseInput = function (data) {
 	displayMicrocodeText(
 		"Address 256 Words",
 		"Data 64 bits wide",
-		"Microcode Loaded... "+mc_hash.substr(0,10)+"...",
+		"Microcode (hash) Loaded... "+mc_hash.substr(0,10)+"...",
 		"",
 		"");
 	// console.log ( JSON.stringify ( MICROCODE ) );
@@ -3084,7 +3365,7 @@ var ParseInputHexMM = function (data) {
 	displayMemoryText(
 		"Address 8K Words",
 		"Data 16 bits wide",
-		"Hex Code Loaded... "+mm_hash.substr(0,10)+"..."
+		"Hex Code (hash) Loaded... "+mm_hash.substr(0,10)+"..."
 	);
 	//	console.log ( JSON.stringify ( MEMORY ) );
 };

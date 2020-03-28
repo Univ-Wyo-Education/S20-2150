@@ -1,0 +1,18 @@
+Form - with Name and big box for code
+Button to run
+
+Output in small div/box [hash of code]
+Output in div/big box at bottom [ hex code ]
+Output in div/big box for listing
+
+www.2c-why.com/asm.html
+
+3hrs each
+
+1. Modifiy asm to wAsm & put into server.
+	/asm-code?code= &name=
+	/mcasm-code?code= &name=
+Save name local storage and re-fill
+Add name field to mm_*.html
+
+

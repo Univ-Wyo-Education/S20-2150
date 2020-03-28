@@ -148,7 +148,7 @@ func Asssemble(mes string) (nEx int, hex, hashHex, stDump string, err error) {
 	buffer.WriteString("##1\n")
 	mst.DumpSymbolTableForHexFile(&buffer)
 	buffer.WriteString("##2\n")
-	s = fmt.Sprintf("// Input Data: %s\n", mes)
+	s = fmt.Sprintf("// Input Data\n")
 	buffer.WriteString(s)
 	t := time.Now()
 	s = fmt.Sprintf("// Assembled At: %s\n", t.Format("2006-01-02T15:04:05-0700"))
