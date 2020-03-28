@@ -12,9 +12,9 @@ mac: all
 
 # Local run of server
 run2: go-server
-	( cd ../McRun ; go-server -p :9000 -d . -key "" )
+	( cd ../McRun ; ../go-server/go-server -p :9000 -d . -key "" )
 
-go-server: go-server.go Makefile cmp-local.sh gen_ran.go lib.go
+go-server: go-server.go Makefile cmp-local.sh gen_ran.go lib.go asm/asm.go mcasm/mike.go
 	@mkdir -p ./db
 	./cmp-local.sh
 

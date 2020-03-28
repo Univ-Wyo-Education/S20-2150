@@ -18,7 +18,6 @@ import (
 	"github.com/Univ-Wyo-Education/S20-2150/Mac"
 	"github.com/pschlump/HashStrings"
 	"github.com/pschlump/MiscLib"
-	"github.com/pschlump/filelib"
 	"github.com/pschlump/godebug"
 	"gitlab.com/pschlump/PureImaginationServer/ymux"
 )
@@ -38,11 +37,15 @@ func Setup(op string) {
 }
 
 // _ /*hex*/, hashHex, stDump, err := asm.Asssemble(mes)
-func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err error) {
+func MARIE_Assm(mes string) (n_err int, hex, hashHex, stList string, err error) {
+
+	nst := NewST()
 
 	// fpList := (*os.File)(nil)
 	var buffer bytes.Buffer
 	var bufferList bytes.Buffer
+
+	// fmt.Printf("mes ->%s<- at:%s\n", mes, godebug.LF())
 
 	mes_lines := strings.Split(mes, "\n")
 
@@ -66,7 +69,7 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 			continue
 		} else {
 			if label != "" {
-				err = AddSymbol(label, pc, line_no)
+				err = nst.AddSymbol(label, pc, line_no)
 				if err != nil {
 					bufferList.WriteString(fmt.Sprintf("Duplicate Symbol: %s\n", err))
 					n_err++
@@ -116,7 +119,7 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 					n_err++
 					continue
 				}
-				handVal, _ := ConvHand(hand, 0)
+				handVal, _ := ConvHand(&nst, hand, 0)
 				pc = Mac.AddressType(int(handVal))
 			case Mac.DirDEC:
 				pc++
@@ -165,7 +168,7 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 
 			switch op {
 			case Mac.OpAdd:
-				handVal, err := ConvHand(hand, 0)
+				handVal, err := ConvHand(&nst, hand, 0)
 				if err != nil {
 					bufferList.WriteString(fmt.Sprintf("%s\n", err))
 					continue
@@ -179,7 +182,7 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpSubt:
-				handVal, err := ConvHand(hand, 0)
+				handVal, err := ConvHand(&nst, hand, 0)
 				if err != nil {
 					bufferList.WriteString(fmt.Sprintf("%s\n", err))
 					continue
@@ -197,7 +200,7 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpLoad:
-				handVal, err := ConvHand(hand, 0)
+				handVal, err := ConvHand(&nst, hand, 0)
 				if err != nil {
 					bufferList.WriteString(fmt.Sprintf("%s\n", err))
 					continue
@@ -211,7 +214,7 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpStore:
-				handVal, err := ConvHand(hand, 0)
+				handVal, err := ConvHand(&nst, hand, 0)
 				if err != nil {
 					bufferList.WriteString(fmt.Sprintf("%s\n", err))
 					continue
@@ -233,7 +236,7 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpJump:
-				handVal, err := ConvHand(hand, 0)
+				handVal, err := ConvHand(&nst, hand, 0)
 				if err != nil {
 					bufferList.WriteString(fmt.Sprintf("%s\n", err))
 					continue
@@ -242,7 +245,7 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpJnS:
-				handVal, err := ConvHand(hand, 0)
+				handVal, err := ConvHand(&nst, hand, 0)
 				if err != nil {
 					bufferList.WriteString(fmt.Sprintf("%s\n", err))
 					continue
@@ -251,7 +254,7 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpClear:
-				handVal, err := ConvHand(hand, 0)
+				handVal, err := ConvHand(&nst, hand, 0)
 				if err != nil {
 					bufferList.WriteString(fmt.Sprintf("%s\n", err))
 					continue
@@ -269,7 +272,7 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 					memBuf[pc] = op_gen
 					pc++
 				} else {
-					handVal, err := ConvHand(hand, 0)
+					handVal, err := ConvHand(&nst, hand, 0)
 					// fmt.Printf("    handval=%x %d\n", handVal, handVal)
 					if err != nil {
 						bufferList.WriteString(fmt.Sprintf("%s\n", err))
@@ -304,7 +307,7 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 				}
 				pc++
 			case Mac.OpAddI:
-				handVal, err := ConvHand(hand, 0)
+				handVal, err := ConvHand(&nst, hand, 0)
 				if err != nil {
 					bufferList.WriteString(fmt.Sprintf("%s\n", err))
 					continue
@@ -313,7 +316,7 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpJumpI:
-				handVal, err := ConvHand(hand, 0)
+				handVal, err := ConvHand(&nst, hand, 0)
 				if err != nil {
 					bufferList.WriteString(fmt.Sprintf("%s\n", err))
 					continue
@@ -322,7 +325,7 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpLoadI:
-				handVal, err := ConvHand(hand, 0)
+				handVal, err := ConvHand(&nst, hand, 0)
 				if err != nil {
 					bufferList.WriteString(fmt.Sprintf("%s\n", err))
 					continue
@@ -331,7 +334,7 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 				memBuf[pc] = op_gen
 				pc++
 			case Mac.OpStoreI:
-				handVal, err := ConvHand(hand, 0)
+				handVal, err := ConvHand(&nst, hand, 0)
 				if err != nil {
 					bufferList.WriteString(fmt.Sprintf("%s\n", err))
 					continue
@@ -340,7 +343,7 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 				memBuf[pc] = op_gen
 				pc++
 			case Mac.DirORG:
-				handVal, err := ConvHand(hand, 0)
+				handVal, err := ConvHand(&nst, hand, 0)
 				if err != nil {
 					bufferList.WriteString(fmt.Sprintf("%s\n", err))
 					continue
@@ -352,7 +355,7 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 				}
 				pc = Mac.AddressType(int(handVal))
 			case Mac.DirDEC:
-				handVal, err := ConvHand(hand, 10)
+				handVal, err := ConvHand(&nst, hand, 10)
 				if err != nil {
 					bufferList.WriteString(fmt.Sprintf("%s\n", err))
 					continue
@@ -364,7 +367,7 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 				if db5 {
 					fmt.Printf("%sHEX [%s]%s\n", MiscLib.ColorRed, hand, MiscLib.ColorReset)
 				}
-				handVal, err := ConvHand(hand, 16)
+				handVal, err := ConvHand(&nst, hand, 16)
 				if err != nil {
 					bufferList.WriteString(fmt.Sprintf("%s\n", err))
 					continue
@@ -373,7 +376,7 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 				memBuf[pc] = op_gen
 				pc++
 			case Mac.DirOCT:
-				handVal, err := ConvHand(hand, 8)
+				handVal, err := ConvHand(&nst, hand, 8)
 				if err != nil {
 					bufferList.WriteString(fmt.Sprintf("%s\n", err))
 					continue
@@ -382,7 +385,7 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 				memBuf[pc] = op_gen
 				pc++
 			case Mac.DirBIN:
-				handVal, err := ConvHand(hand, 2)
+				handVal, err := ConvHand(&nst, hand, 2)
 				if err != nil {
 					bufferList.WriteString(fmt.Sprintf("%s\n", err))
 					continue
@@ -422,37 +425,35 @@ func MARIE_Assm(mes, out string) (n_err int, hex, hashHex, stList string, err er
 
 	bufferList.WriteString("\n")
 
-	DumpSymbolTable(&bufferList)
+	nst.DumpSymbolTable(&bufferList)
 
 	// Output
 	if n_err > 0 {
 		bufferList.WriteString(fmt.Sprintf("%s# Of Errors: %d%s\n", MiscLib.ColorRed, n_err, MiscLib.ColorReset))
 		bufferList.WriteString(fmt.Sprintf(".hex file may be incorrect\n"))
+		fmt.Fprintf(os.Stderr, "%s# Of Errors: %d%s\n", MiscLib.ColorRed, n_err, MiscLib.ColorReset)
+		fmt.Fprintf(os.Stderr, ".hex file may be incorrect\n")
 	}
-	out = fmt.Sprintf("%s/%s", outPath, out) // put the output in the path.
-	outFp, err := filelib.Fopen(out, "w")
-	if err != nil {
-		bufferList.WriteString(fmt.Sprintf("Unable to open output file : %s error : %s\n", out, err))
-		return
-	}
-	defer outFp.Close()
-	for _, aaa := range memBuf {
-		buffer.WriteString(fmt.Sprintf("%04x\n", uint(aaa)&0xffff))
-	}
-	if n_err > 0 {
-		return
-	}
-
-	data, err := ioutil.ReadFile(out)
-	if err != nil {
-		fmt.Printf("Error: (Unable to Upload to S3) failed to re-read output: file: %s error:%s\n", out, err)
-		os.Exit(1)
-	}
-	hashHex = HashByesReturnHex(data)
-	hex = string(data)
 
 	// var bufferList bytes.Buffer
 	stList = bufferList.String()
+	if n_err > 0 {
+		fmt.Fprintf(os.Stderr, "Listing: %s\n", stList)
+	}
+
+	for _, aaa := range memBuf {
+		buffer.WriteString(fmt.Sprintf("%04x\n", uint(aaa)&0xffff))
+	}
+
+	data := buffer.Bytes()
+	if n_err > 0 {
+		fmt.Fprintf(os.Stderr, "Hex: %s\n", data)
+	}
+
+	hashHex = HashByesReturnHex(data)
+	fn := fmt.Sprintf("%s/%s.txt", outPath, hashHex)
+	err = ioutil.WriteFile(fn, data, 0644)
+	hex = string(data)
 
 	return
 }
@@ -558,15 +559,20 @@ type SymbolTableType struct {
 	Address Mac.AddressType // -1 indicates that this is not an assigned address yet
 }
 
-var SymbolTable map[string]SymbolTableType
-
-func init() {
-	SymbolTable = make(map[string]SymbolTableType)
+// var SymbolTable map[string]SymbolTableType
+type NstType struct {
+	SymbolTable map[string]SymbolTableType
 }
 
-func AddSymbol(Name string, pc Mac.AddressType, line_no int) (err error) {
-	if ss, found := SymbolTable[Name]; !found {
-		SymbolTable[Name] = SymbolTableType{
+func NewST() NstType {
+	return NstType{
+		SymbolTable: make(map[string]SymbolTableType),
+	}
+}
+
+func (nst *NstType) AddSymbol(Name string, pc Mac.AddressType, line_no int) (err error) {
+	if ss, found := nst.SymbolTable[Name]; !found {
+		nst.SymbolTable[Name] = SymbolTableType{
 			Name:    Name,
 			LineNo:  line_no,
 			Address: pc,
@@ -577,9 +583,9 @@ func AddSymbol(Name string, pc Mac.AddressType, line_no int) (err error) {
 	return
 }
 
-func LookupSymbol(Name string) (st SymbolTableType, err error) {
+func (nst *NstType) LookupSymbol(Name string) (st SymbolTableType, err error) {
 	var ok bool
-	st, ok = SymbolTable[Name]
+	st, ok = nst.SymbolTable[Name]
 	if !ok {
 		err = fmt.Errorf("Not Found")
 	}
@@ -606,15 +612,15 @@ func KeysFromMap(a interface{}) (keys []string) {
 	return
 }
 
-func DumpSymbolTable(buffer *bytes.Buffer) {
+func (nst *NstType) DumpSymbolTable(buffer *bytes.Buffer) {
 	// xyzzy800 - Sort symbol table output before outputting
 	buffer.WriteString(fmt.Sprintf("Symbol Table\n"))
 	buffer.WriteString(fmt.Sprintf("-------------------------------------------------------------\n"))
-	keys := ymux.KeysFromMap(SymbolTable)
+	keys := ymux.KeysFromMap(nst.SymbolTable)
 	sort.Strings(keys)
 	// for key, val := range SymbolTable {
 	for _, key := range keys {
-		val := SymbolTable[key]
+		val := nst.SymbolTable[key]
 		buffer.WriteString(fmt.Sprintf("%s: %s\n", key, godebug.SVar(val)))
 	}
 	buffer.WriteString(fmt.Sprintf("-------------------------------------------------------------\n\n"))
@@ -624,11 +630,11 @@ func DumpSymbolTable(buffer *bytes.Buffer) {
 // Utitlieis
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func ConvHand(hand string, base int) (handVal Mac.HandType, err error) {
+func ConvHand(nst *NstType, hand string, base int) (handVal Mac.HandType, err error) {
 	hand = strings.TrimRight(hand, "\r\n \t")
 	handVal = Mac.HandType(0)
 	if hand != "" {
-		st, e1 := LookupSymbol(hand)
+		st, e1 := nst.LookupSymbol(hand)
 		if e1 == nil {
 			handVal = Mac.HandType(int(st.Address))
 			return

@@ -1,0 +1,11 @@
+--2020-03-28 11:15:31--  http://localhost:9000/Xasm?mes=%20%20Load%20X%0A%20Halt%0AX%2C%20DEC%204%0A&__method__=POST&_ran_=1168866.288485273
+Resolving localhost (localhost)... ::1, 127.0.0.1
+Connecting to localhost (localhost)|::1|:9000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 484 [application/json]
+Saving to: ‘vv’
+
+     0K                                                       100%  115M=0s
+
+2020-03-28 11:15:31 (115 MB/s) - ‘vv’ saved [484/484]
+

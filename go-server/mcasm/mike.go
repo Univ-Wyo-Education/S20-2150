@@ -7,7 +7,6 @@ package mcasm
 import (
 	"bytes"
 	"encoding/hex"
-	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -29,33 +28,6 @@ import (
 // xyzzy401 - ImplementDebugFlags
 // xyzzy442 - var DbFlag = flag.String("db-flag", "", "debug flags.") // xyzzy401 - TODO
 
-// /version API end point
-
-var cfgAwsUsed = false
-
-// ---------------------------------------------------------------------------------
-// asm - MARIA assembler.
-// ---------------------------------------------------------------------------------
-// --in  FILE.mas	input .mas file
-// --out FILE.hex	output assembled code
-// --st  file.out   Symbol table output
-// ---------------------------------------------------------------------------------
-
-var In = flag.String("in", "", "Input File - microcode assembly code. (microcode.mm)")
-var Out = flag.String("out", "", "Output in hex. Loadable Microcode .hex file")
-var IdList = flag.String("id-list", "id-list.txt", "List of Valid IDs in hardware")
-var St = flag.String("st", "", "Output symbol table to file")
-var Upload = flag.Bool("upload", false, "Upload the microcode.hex to Amazon S3://")
-var Help = flag.Bool("help", false, "Help Printout")
-var Version = flag.Bool("version", false, "Print out version of build and exit.")
-
-var Server = flag.String("server", "http://www.2c-why.com/", "Destination server to send upload to")
-
-// var Server = flag.String("server", "http://localhost:10000/", "Destination server to send upload to")
-var AuthKey = flag.String("auth_key", "V7luOm6qurGREm1Ts2W2epA0KrM=", "Authorization Key")
-
-var stOut = os.Stdout
-
 var idList map[string]bool
 var pathToData string
 
@@ -66,6 +38,8 @@ func Setup(fn, pd string) {
 
 // mes - the posted body of the assembley file.
 func Asssemble(mes string) (nEx int, hex, hashHex, stDump string, err error) {
+
+	mst := NewST()
 
 	var buffer bytes.Buffer
 
@@ -104,7 +78,7 @@ func Asssemble(mes string) (nEx int, hex, hashHex, stDump string, err error) {
 		}
 		if op_s == "DCL" {
 			for _, ss := range symbols[1:] {
-				AddSymbol(ss, line_no, true)
+				mst.AddSymbol(ss, line_no, true)
 			}
 			continue
 		} else if op_s == "ORG" {
@@ -132,13 +106,13 @@ func Asssemble(mes string) (nEx int, hex, hashHex, stDump string, err error) {
 		}
 
 		for _, ss := range symbols {
-			AddSymbol(ss, line_no, false)
+			mst.AddSymbol(ss, line_no, false)
 		}
 
 		eu := uint64(0)
 
 		for _, ss := range symbols {
-			st, err := LookupSymbol(ss)
+			st, err := mst.LookupSymbol(ss)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "Invalid symbol [%s] was not found, line %d\n", ss, line_no)
 			} else {
@@ -157,9 +131,9 @@ func Asssemble(mes string) (nEx int, hex, hashHex, stDump string, err error) {
 	nEx = n_ins
 
 	if db1000 {
-		fmt.Fprintf(stOut, "# Of Instructions: %d\n", n_ins)
+		fmt.Fprintf(os.Stderr, "# Of Instructions: %d\n", n_ins)
 	}
-	stDump = DumpSymbolTable(stOut)
+	stDump = mst.DumpSymbolTable(os.Stderr)
 
 	// Output
 	if n_err > 0 {
@@ -172,9 +146,9 @@ func Asssemble(mes string) (nEx int, hex, hashHex, stDump string, err error) {
 		buffer.WriteString(s)
 	}
 	buffer.WriteString("##1\n")
-	DumpSymbolTableForHexFile(&buffer)
+	mst.DumpSymbolTableForHexFile(&buffer)
 	buffer.WriteString("##2\n")
-	s = fmt.Sprintf("// Input File: %s\n", *In)
+	s = fmt.Sprintf("// Input Data: %s\n", mes)
 	buffer.WriteString(s)
 	t := time.Now()
 	s = fmt.Sprintf("// Assembled At: %s\n", t.Format("2006-01-02T15:04:05-0700"))
@@ -187,11 +161,11 @@ func Asssemble(mes string) (nEx int, hex, hashHex, stDump string, err error) {
 		return
 	}
 
-	CheckIds(idList)
+	mst.CheckIds(idList)
 
 	hashHex = HashByesReturnHex([]byte(hex)) // hash of the file - to write it.
 
-	err = ioutil.WriteFile(fmt.Sprintf("%s/%s.txt", hashHex, pathToData), []byte(hex), 0644)
+	err = ioutil.WriteFile(fmt.Sprintf("%s/%s.txt", pathToData, hashHex), []byte(hex), 0644)
 
 	if db1001 {
 		fmt.Printf("Hash To Enter to Load the Microcode into the Emulator:\n\t%s\n\n", hashHex)
@@ -276,7 +250,6 @@ func GetIDsFromSVG(HTMLFile string) (outIdList map[string]bool) {
 	return
 }
 
-// idList :=  ReadIdList ( *IdList )
 func ReadIdList(IdListFn string) (rv map[string]bool) {
 	rv = make(map[string]bool)
 	rv["_"] = true
@@ -392,36 +365,40 @@ type SymbolTableType struct {
 	Declared bool
 }
 
-var SymbolTable map[string]SymbolTableType
-var SymbolAddress int
-
-func init() {
-	SymbolTable = make(map[string]SymbolTableType)
-	SymbolAddress = 0
+type MstType struct {
+	SymbolTable   map[string]SymbolTableType
+	SymbolAddress int
 }
 
-func AddSymbol(Name string, line_no int, Dcl bool) (err error) {
-	if ss, found := SymbolTable[Name]; !found {
+func NewST() MstType {
+	return MstType{
+		SymbolTable:   make(map[string]SymbolTableType),
+		SymbolAddress: 0,
+	}
+}
+
+func (mst *MstType) AddSymbol(Name string, line_no int, Dcl bool) (err error) {
+	if ss, found := mst.SymbolTable[Name]; !found {
 		if !Dcl {
 			fmt.Fprintf(os.Stderr, "%sFound non-declared symbol (%s) on line %d%s\n", MiscLib.ColorRed, Name, line_no, MiscLib.ColorReset)
 		}
-		SymbolTable[Name] = SymbolTableType{
+		mst.SymbolTable[Name] = SymbolTableType{
 			Name:     Name,
 			LineNo:   []int{line_no},
-			Address:  SymbolAddress,
+			Address:  mst.SymbolAddress,
 			Declared: Dcl,
 		}
-		SymbolAddress++
+		mst.SymbolAddress++
 	} else {
 		ss.LineNo = append(ss.LineNo, line_no)
-		SymbolTable[Name] = ss
+		mst.SymbolTable[Name] = ss
 	}
 	return
 }
 
-func LookupSymbol(Name string) (st SymbolTableType, err error) {
+func (mst *MstType) LookupSymbol(Name string) (st SymbolTableType, err error) {
 	var ok bool
-	st, ok = SymbolTable[Name]
+	st, ok = mst.SymbolTable[Name]
 	if !ok {
 		err = fmt.Errorf("Not Found")
 	}
@@ -448,38 +425,38 @@ func KeysFromMap(a interface{}) (keys []string) {
 	return
 }
 
-func DumpSymbolTable(fp *os.File) string {
+func (mst *MstType) DumpSymbolTable(fp *os.File) string {
 	var buffer bytes.Buffer
 	buffer.WriteString(fmt.Sprintf("Symbol Table\n"))
 	buffer.WriteString(fmt.Sprintf("-------------------------------------------------------------\n"))
-	keys := ymux.KeysFromMap(SymbolTable)
+	keys := ymux.KeysFromMap(mst.SymbolTable)
 	sort.Strings(keys)
 	// for key, val := range SymbolTable {
 	for _, key := range keys {
-		val := SymbolTable[key]
+		val := mst.SymbolTable[key]
 		buffer.WriteString(fmt.Sprintf("%s: %s\n", key, godebug.SVar(val)))
 	}
 	buffer.WriteString(fmt.Sprintf("-------------------------------------------------------------\n\n"))
 	return buffer.String()
 }
 
-func DumpSymbolTableForHexFile(buffer *bytes.Buffer) {
-	keys := ymux.KeysFromMap(SymbolTable)
+func (mst *MstType) DumpSymbolTableForHexFile(buffer *bytes.Buffer) {
+	keys := ymux.KeysFromMap(mst.SymbolTable)
 	sort.Strings(keys)
 	// for key, val := range SymbolTable {
 	for _, key := range keys {
-		val := SymbolTable[key]
+		val := mst.SymbolTable[key]
 		s := fmt.Sprintf("%s %d\n", key, val.Address)
 		buffer.WriteString(s)
 	}
 }
 
-func CheckIds(idList map[string]bool) {
-	keys := ymux.KeysFromMap(SymbolTable)
+func (mst *MstType) CheckIds(idList map[string]bool) {
+	keys := ymux.KeysFromMap(mst.SymbolTable)
 	sort.Strings(keys)
 	// for key, val := range SymbolTable {
 	for _, key := range keys {
-		val := SymbolTable[key]
+		val := mst.SymbolTable[key]
 		if !idList[key] {
 			fmt.Fprintf(os.Stderr, "%sId %s Used Line %d - Not found in SVG%s\n", MiscLib.ColorRed, key, val.LineNo, MiscLib.ColorReset)
 		}
