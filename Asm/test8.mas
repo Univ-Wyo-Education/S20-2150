@@ -1,0 +1,4 @@
+  input
+  load x
+  halt
+x, dec 0
