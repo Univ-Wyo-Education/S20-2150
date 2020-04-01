@@ -73,3 +73,10 @@ This give us:
 ![p20.03.png](p20.03.png)
 
 
+![p20.04.png](p20.04.png)
+![p20.05.png](p20.05.png)
+![p20.06.png](p20.06.png)
+![p20.07.png](p20.07.png)
+![p20.08.png](p20.08.png)
+![p20.09.png](p20.09.png)
+![p20.10.png](p20.10.png)
