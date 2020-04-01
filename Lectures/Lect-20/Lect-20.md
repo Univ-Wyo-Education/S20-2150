@@ -1,5 +1,9 @@
 # Lecture 20 - Fetch Cycle in Microcode
 
+# Videos
+
+xyzzy
+
 # LZ Compression 
 
 Please read the section in chapter 7 on LZ compression.
@@ -34,6 +38,12 @@ or 0x800.
 Since the dictionary has to be first to decode the document for small documents this will result in a bigger output.
 In documents being sent across the web Google has analyzed that any document less than 1721 bytes is better off
 left un-compressed.
+
+This leaves the question of finding the most frequent text in the book and encoding that with the shortest 
+bit string.  To solve that question let's look at Huffman Encoding.
+
+
+# Huffman Encoding
 
 Let's walk through the example in the book.
 
@@ -72,11 +82,47 @@ This give us:
 
 ![p20.03.png](p20.03.png)
 
+We now have multiple things that are frequency 2.  Combining the first 2 of these into a frequency
+4 node produces:
 
 ![p20.04.png](p20.04.png)
+
+Combining a 2 and a 3 to produce a 5 produces:
+
 ![p20.05.png](p20.05.png)
+
+Combining 3 and 4 to produce a 7 results in:
+
 ![p20.06.png](p20.06.png)
+
+Repeat this process, combining the 5 and other nodes 7 more times:
+
 ![p20.07.png](p20.07.png)
+
+We end up with the tree:
+
 ![p20.08.png](p20.08.png)
+
+Mark each left side of a tree with a 0 and each right side with a 1:
+
 ![p20.09.png](p20.09.png)
+
+From the tree we generate the following encoding table:
+
 ![p20.10.png](p20.10.png)
+
+Now in the document we have an encoding of:
+
+```
+1011
+1001
+1111
+1111
+...
+
+```
+
+Giving us back the HIGG...
+
+
+

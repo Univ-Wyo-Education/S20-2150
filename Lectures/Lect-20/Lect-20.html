@@ -710,6 +710,10 @@ ol {
 
 <h1>Lecture 20 - Fetch Cycle in Microcode</h1>
 
+<h1>Videos</h1>
+
+<p>xyzzy</p>
+
 <h1>LZ Compression</h1>
 
 <p>Please read the section in chapter 7 on LZ compression.</p>
@@ -742,6 +746,11 @@ or 0x800.</p>
 <p>Since the dictionary has to be first to decode the document for small documents this will result in a bigger output.
 In documents being sent across the web Google has analyzed that any document less than 1721 bytes is better off
 left un-compressed.</p>
+
+<p>This leaves the question of finding the most frequent text in the book and encoding that with the shortest
+bit string.  To solve that question let&rsquo;s look at Huffman Encoding.</p>
+
+<h1>Huffman Encoding</h1>
 
 <p>Let&rsquo;s walk through the example in the book.</p>
 
@@ -779,13 +788,46 @@ of C and D.   Repeat for &ldquo;F&rdquo; and &ldquo;M&rdquo;.</p>
 
 <p><img src="p20.03.png" alt="p20.03.png" /></p>
 
-<p><img src="p20.04.png" alt="p20.04.png" />
-<img src="p20.05.png" alt="p20.05.png" />
-<img src="p20.06.png" alt="p20.06.png" />
-<img src="p20.07.png" alt="p20.07.png" />
-<img src="p20.08.png" alt="p20.08.png" />
-<img src="p20.09.png" alt="p20.09.png" />
-<img src="p20.10.png" alt="p20.10.png" /></p>
+<p>We now have multiple things that are frequency 2.  Combining the first 2 of these into a frequency
+4 node produces:</p>
+
+<p><img src="p20.04.png" alt="p20.04.png" /></p>
+
+<p>Combining a 2 and a 3 to produce a 5 produces:</p>
+
+<p><img src="p20.05.png" alt="p20.05.png" /></p>
+
+<p>Combining 3 and 4 to produce a 7 results in:</p>
+
+<p><img src="p20.06.png" alt="p20.06.png" /></p>
+
+<p>Repeat this process, combining the 5 and other nodes 7 more times:</p>
+
+<p><img src="p20.07.png" alt="p20.07.png" /></p>
+
+<p>We end up with the tree:</p>
+
+<p><img src="p20.08.png" alt="p20.08.png" /></p>
+
+<p>Mark each left side of a tree with a 0 and each right side with a 1:</p>
+
+<p><img src="p20.09.png" alt="p20.09.png" /></p>
+
+<p>From the tree we generate the following encoding table:</p>
+
+<p><img src="p20.10.png" alt="p20.10.png" /></p>
+
+<p>Now in the document we have an encoding of:</p>
+
+<pre><code>1011
+1001
+1111
+1111
+...
+
+</code></pre>
+
+<p>Giving us back the HIGG&hellip;</p>
 
 </div>
 
