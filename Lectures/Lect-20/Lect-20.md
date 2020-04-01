@@ -2,7 +2,15 @@
 
 # Videos
 
-xyzzy
+[https://youtu.be/lsbYE4Jdh0Q - Lect-20-2150-Fetch-Cycle.mp4](https://youtu.be/lsbYE4Jdh0Q)<br>
+[https://youtu.be/PGa7yS8DC6s - Lect-20-2150-pt2-compression.mp4](https://youtu.be/PGa7yS8DC6s)<br>
+[https://youtu.be/BhRhpSNwA08 - Lect-20-2150-pt3-huffman.mp4](https://youtu.be/BhRhpSNwA08)<br>
+
+From Amazon S3 - for download (same as youtube videos)
+
+[http://uw-s20-2015.s3.amazonaws.com/Lect-20-2150-Fetch-Cycle.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-20-2150-Fetch-Cycle.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-20-2150-pt2-compression.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-20-2150-pt2-compression.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-20-2150-pt3-huffman.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-20-2150-pt3-huffman.mp4)<br>
 
 # LZ Compression 
 
@@ -125,4 +133,12 @@ Now in the document we have an encoding of:
 Giving us back the HIGG...
 
 
+
+
+# Copyright
+
+Copyright (C) University of Wyoming, 2020.
+
+Images taken from our textbook:
+The Essentials of Computer Organization and Architecture, 3th edition, Linda Null & Julia Lobur.
 
