@@ -64,7 +64,7 @@ URL - what is it:
 ```
 http://www.2c-why.com/index.html
                       ^^^^^^^^^^--- "path" to the resouce (communication endpoing)
-	       ^^^^^^^^^^-------------- domain name
+           ^^^^^^^^^^-------------- domain name
        ^^^------------------------- sub-domain
 ^^^^------------------------------- Protocal (https, http, sftp etc)
 ```
@@ -85,10 +85,10 @@ IP Version 4
 
 | Address        | Description       |
 |:---------------|:------------------|
-| 127.0.0.1      | Local host	     |
-| 192.168.0.xxx  | Class C	         |
-| 172.16.xxx.xxx | Class B	         |
-| 10.xxx.xxx.xxx | Class A	         |
+| 127.0.0.1      | Local host         |
+| 192.168.0.xxx  | Class C             |
+| 172.16.xxx.xxx | Class B             |
+| 10.xxx.xxx.xxx | Class A             |
 
 IP Version 4 ran out of addresses - so now we have IP version 6.
 
@@ -234,7 +234,7 @@ to the server.
 In Go it looks like:
 
 ```
-	http.HandleFunc("/status", respHandlerStatus)
+    http.HandleFunc("/status", respHandlerStatus)
 ```
 
 This is using the standard Go 'http' library - it will see the endpoint of
@@ -323,7 +323,7 @@ In our example the "method" for display of the data is JSON - JavaScript Object 
 the "header" for this is: `application/json`.
 
 ```
-	www.Header().Set("Content-Type", "application/json")
+    www.Header().Set("Content-Type", "application/json")
 ```
 
 
@@ -406,21 +406,21 @@ If we put the same URL into the browser we get a similar result:
 
 ```
 [
-	"0x9d41e5938767466af28865e1c33071f1561d57a8",
-	"0x31568cc92115a2ebe6eb37e9a7c7f6334b988196",
-	"0x3b65b88e4256c8926358551072f17460efe5452b",
-	"0x42f487a6d5c86962310d5ab5afe5cad7bc80805b",
-	"0x5ae7b3cf64adc3d7fef099319a9be4acb8bd73ed",
-	"0x4af64cd87a47aab7cffdbada6bfd6aef47036c03",
-	"0xe7b8a518bf1b5c4f01b2a7ee39a2800a982e06ee",
-	"0x7e3afec048bc7be745d0fa0f5af97d3978c40e9a",
-	"0x885765a2fcfb72e68d82d656c6411b7d27bacdd7",
-	"0xdb180da9a8982c7bb75ca40039f959cb959c62e8",
-	"0x40681739b0ef568acce20f5575ad4cf24223926f",
-	"0x6e06bf940bb57ade69cb03153d1c3842411bd3c1",
-	"0x4e27d9c8ba3a6904f7a7cb31eae5ccce8bf33300",
-	"0x0c34a1a3c5ae302cb41f9cfd999e7950b8ebf40f",
-	"0xb0d533a8064ed180967aa4dafa453deab107961c"
+    "0x9d41e5938767466af28865e1c33071f1561d57a8",
+    "0x31568cc92115a2ebe6eb37e9a7c7f6334b988196",
+    "0x3b65b88e4256c8926358551072f17460efe5452b",
+    "0x42f487a6d5c86962310d5ab5afe5cad7bc80805b",
+    "0x5ae7b3cf64adc3d7fef099319a9be4acb8bd73ed",
+    "0x4af64cd87a47aab7cffdbada6bfd6aef47036c03",
+    "0xe7b8a518bf1b5c4f01b2a7ee39a2800a982e06ee",
+    "0x7e3afec048bc7be745d0fa0f5af97d3978c40e9a",
+    "0x885765a2fcfb72e68d82d656c6411b7d27bacdd7",
+    "0xdb180da9a8982c7bb75ca40039f959cb959c62e8",
+    "0x40681739b0ef568acce20f5575ad4cf24223926f",
+    "0x6e06bf940bb57ade69cb03153d1c3842411bd3c1",
+    "0x4e27d9c8ba3a6904f7a7cb31eae5ccce8bf33300",
+    "0x0c34a1a3c5ae302cb41f9cfd999e7950b8ebf40f",
+    "0xb0d533a8064ed180967aa4dafa453deab107961c"
 ]
 ```
 
@@ -444,37 +444,37 @@ output should look something like:
 ```
 
 lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> mtu 16384
-	options=1203<RXCSUM,TXCSUM,TXSTATUS,SW_TIMESTAMP>
-	inet 127.0.0.1 netmask 0xff000000 
-	inet6 ::1 prefixlen 128 
-	inet6 fe80::1%lo0 prefixlen 64 scopeid 0x1 
-	nd6 options=201<PERFORMNUD,DAD>
+    options=1203<RXCSUM,TXCSUM,TXSTATUS,SW_TIMESTAMP>
+    inet 127.0.0.1 netmask 0xff000000 
+    inet6 ::1 prefixlen 128 
+    inet6 fe80::1%lo0 prefixlen 64 scopeid 0x1 
+    nd6 options=201<PERFORMNUD,DAD>
 en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
-	ether f0:18:98:37:71:1f 
-	inet6 fe80::14c7:3cba:a20c:29e7%en0 prefixlen 64 secured scopeid 0xa 
-	inet 192.168.0.44 netmask 0xffffff00 broadcast 192.168.0.255
-	inet6 fdc9:8c75:ae02::10b8:5dd2:e91:b73f prefixlen 64 autoconf secured 
-	inet6 fdc9:8c75:ae02::8e0 prefixlen 64 dynamic 
-	inet6 fdc9:8c75:ae02::9dd1:d612:d4db:1b6b prefixlen 64 deprecated autoconf temporary 
-	inet6 fdc9:8c75:ae02::f842:b64b:220:48f0 prefixlen 64 deprecated autoconf temporary 
-	inet6 fdc9:8c75:ae02::19c5:e05c:ad62:42d1 prefixlen 64 deprecated autoconf temporary 
-	inet6 fdc9:8c75:ae02::6139:73a6:dcba:6f3c prefixlen 64 deprecated autoconf temporary 
-	inet6 fdc9:8c75:ae02::c117:7f88:6346:eca4 prefixlen 64 deprecated autoconf temporary 
-	inet6 fdc9:8c75:ae02::8d42:3b5e:639:71be prefixlen 64 deprecated autoconf temporary 
-	inet6 fdc9:8c75:ae02::4078:1d3e:c848:7341 prefixlen 64 autoconf temporary 
-	nd6 options=201<PERFORMNUD,DAD>
-	media: autoselect
-	status: active
+    ether f0:18:98:37:71:1f 
+    inet6 fe80::14c7:3cba:a20c:29e7%en0 prefixlen 64 secured scopeid 0xa 
+    inet 192.168.0.44 netmask 0xffffff00 broadcast 192.168.0.255
+    inet6 fdc9:8c75:ae02::10b8:5dd2:e91:b73f prefixlen 64 autoconf secured 
+    inet6 fdc9:8c75:ae02::8e0 prefixlen 64 dynamic 
+    inet6 fdc9:8c75:ae02::9dd1:d612:d4db:1b6b prefixlen 64 deprecated autoconf temporary 
+    inet6 fdc9:8c75:ae02::f842:b64b:220:48f0 prefixlen 64 deprecated autoconf temporary 
+    inet6 fdc9:8c75:ae02::19c5:e05c:ad62:42d1 prefixlen 64 deprecated autoconf temporary 
+    inet6 fdc9:8c75:ae02::6139:73a6:dcba:6f3c prefixlen 64 deprecated autoconf temporary 
+    inet6 fdc9:8c75:ae02::c117:7f88:6346:eca4 prefixlen 64 deprecated autoconf temporary 
+    inet6 fdc9:8c75:ae02::8d42:3b5e:639:71be prefixlen 64 deprecated autoconf temporary 
+    inet6 fdc9:8c75:ae02::4078:1d3e:c848:7341 prefixlen 64 autoconf temporary 
+    nd6 options=201<PERFORMNUD,DAD>
+    media: autoselect
+    status: active
 p2p0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> mtu 2304
-	ether 02:18:98:37:71:1f 
-	media: autoselect
-	status: inactive
+    ether 02:18:98:37:71:1f 
+    media: autoselect
+    status: inactive
 awdl0: flags=8943<UP,BROADCAST,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1484
-	ether 7a:12:fb:34:f1:97 
-	inet6 fe80::7812:fbff:fe34:f197%awdl0 prefixlen 64 scopeid 0xc 
-	nd6 options=201<PERFORMNUD,DAD>
-	media: autoselect
-	status: active
+    ether 7a:12:fb:34:f1:97 
+    inet6 fe80::7812:fbff:fe34:f197%awdl0 prefixlen 64 scopeid 0xc 
+    nd6 options=201<PERFORMNUD,DAD>
+    media: autoselect
+    status: active
 ```
 
 I know for my system that I am looking in the section 'en0' - this will be true for most
