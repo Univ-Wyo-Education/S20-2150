@@ -501,4 +501,35 @@ for examples.
 
 
 
+## Other Protocols
+
+HTTP 1.0 and 1.1 ruled for 20+ years.
+
+Then HTTP 2.0 in the last 5 years has taken over.  It is a purely https/tls based replacement for HTTP that has compressed headers (saving 10% to 25% of traffic)
+and batching of request - effectively doubling the throughput to web pages.
+
+These all run on TCP/IP - a reliable communication layer on top of Unix "sockets".
+
+The latest protocol is QUIC. It skips TCP/IP and runs on UDP - an unreliable lower level communication system.   Currently it is used by about 7% of all web
+traffic.  Using QUIC v.s. HTTP 1.1 improves performance of an average page by a 3x factor.
+
+QUIC will replace all the HTTP traffic in a few years.  It is just a much better way of transferring data.
+
+## Other improvements and changes in the "web".
+
+1. BR based compression reduces the size of images by 20 to 30% while maintaining the presentation quality.
+2. .webm video compression is 30% better than the best .mp4 compression.
+3. "Progressive Web Applications" for mobile and desktop are easier to install and have a higher retention/usage rate.
+4. WebAssembly - finally a compiled executable format for in the brewer operations.  It runs 10x to 50x faster than JavaScript and
+you get to use other languages.
+5. DOH - DNS over HTTP - so that you get security and variation of DNS addresses.
+6. 5G - with all the other improvements bandwidth is not that important to mobile apps.  5G will have the biggest impact in Information of Things (IoT).
+The biggest impediment that Tesla and Goole Waymo have to getting self driving working is lack of data.  Right now less than 1% of the data that the
+cars are collecting can be send back to the cloud.  This is because of 4G congestion.  5G will address this and allow the 30T of data that a Tesla
+car generates a day to all be pushed back to Tesla.
+6. Low Power Processors - the latest ARM processors have 5% more compute power than x86-Intel processors with less than 1/2 the power consumption.
+New dedicated processors for AI and Neural networks are 100's of times faster for this kind of processing.  The combination will drive all sorts of
+new and better applications.
+7. Blockchain's use in providing reliable tracking, transfer of digital resources and distributed data will drive an new class of applications for years to come.
+
 
