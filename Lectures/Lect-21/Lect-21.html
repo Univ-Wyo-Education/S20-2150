@@ -1,0 +1,1234 @@
+<style>
+@font-face {
+	font-family: octicons-link;
+	src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	line-height: 1.5;
+	color: #24292e;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-size: 16px;
+	line-height: 1.5;
+	word-wrap: break-word;
+}
+
+.markdown-body .pl-c {
+	color: #6a737d;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+	color: #005cc5;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+	color: #6f42c1;
+}
+
+.markdown-body .pl-smi,
+.markdown-body .pl-s .pl-s1 {
+	color: #24292e;
+}
+
+.markdown-body .pl-ent {
+	color: #22863a;
+}
+
+.markdown-body .pl-k {
+	color: #d73a49;
+}
+
+.markdown-body .pl-s,
+.markdown-body .pl-pds,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sre,
+.markdown-body .pl-sr .pl-sra {
+	color: #032f62;
+}
+
+.markdown-body .pl-v,
+.markdown-body .pl-smw {
+	color: #e36209;
+}
+
+.markdown-body .pl-bu {
+	color: #b31d28;
+}
+
+.markdown-body .pl-ii {
+	color: #fafbfc;
+	background-color: #b31d28;
+}
+
+.markdown-body .pl-c2 {
+	color: #fafbfc;
+	background-color: #d73a49;
+}
+
+.markdown-body .pl-c2::before {
+	content: "^M";
+}
+
+.markdown-body .pl-sr .pl-cce {
+	font-weight: bold;
+	color: #22863a;
+}
+
+.markdown-body .pl-ml {
+	color: #735c0f;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+	font-weight: bold;
+	color: #005cc5;
+}
+
+.markdown-body .pl-mi {
+	font-style: italic;
+	color: #24292e;
+}
+
+.markdown-body .pl-mb {
+	font-weight: bold;
+	color: #24292e;
+}
+
+.markdown-body .pl-md {
+	color: #b31d28;
+	background-color: #ffeef0;
+}
+
+.markdown-body .pl-mi1 {
+	color: #22863a;
+	background-color: #f0fff4;
+}
+
+.markdown-body .pl-mc {
+	color: #e36209;
+	background-color: #ffebda;
+}
+
+.markdown-body .pl-mi2 {
+	color: #f6f8fa;
+	background-color: #005cc5;
+}
+
+.markdown-body .pl-mdr {
+	font-weight: bold;
+	color: #6f42c1;
+}
+
+.markdown-body .pl-ba {
+	color: #586069;
+}
+
+.markdown-body .pl-sg {
+	color: #959da5;
+}
+
+.markdown-body .pl-corl {
+	text-decoration: underline;
+	color: #032f62;
+}
+
+.markdown-body .octicon {
+	display: inline-block;
+	vertical-align: text-top;
+	fill: currentColor;
+}
+
+.markdown-body a {
+	background-color: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+	outline-width: 0;
+}
+
+.markdown-body strong {
+	font-weight: inherit;
+}
+
+.markdown-body strong {
+	font-weight: bolder;
+}
+
+.markdown-body h1 {
+	font-size: 2em;
+	margin: 0.67em 0;
+}
+
+.markdown-body img {
+	border-style: none;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+	font-family: monospace, monospace;
+	font-size: 1em;
+}
+
+.markdown-body hr {
+	box-sizing: content-box;
+	height: 0;
+	overflow: visible;
+}
+
+.markdown-body input {
+	font: inherit;
+	margin: 0;
+}
+
+.markdown-body input {
+	overflow: visible;
+}
+
+.markdown-body [type="checkbox"] {
+	box-sizing: border-box;
+	padding: 0;
+}
+
+.markdown-body * {
+	box-sizing: border-box;
+}
+
+.markdown-body input {
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+}
+
+.markdown-body a {
+	color: #0366d6;
+	text-decoration: none;
+}
+
+.markdown-body a:hover {
+	text-decoration: underline;
+}
+
+.markdown-body strong {
+	font-weight: 600;
+}
+
+.markdown-body hr {
+	height: 0;
+	margin: 15px 0;
+	overflow: hidden;
+	background: transparent;
+	border: 0;
+	border-bottom: 1px solid #dfe2e5;
+}
+
+.markdown-body hr::before {
+	display: table;
+	content: "";
+}
+
+.markdown-body hr::after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+.markdown-body table {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.markdown-body td,
+.markdown-body th {
+	padding: 0;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body h1 {
+	font-size: 32px;
+	font-weight: 600;
+}
+
+.markdown-body h2 {
+	font-size: 24px;
+	font-weight: 600;
+}
+
+.markdown-body h3 {
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.markdown-body h4 {
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.markdown-body h5 {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.markdown-body h6 {
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.markdown-body p {
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+
+.markdown-body blockquote {
+	margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+	x-list-style-type: lower-roman;
+	  list-style-type: decimal;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+	list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+	margin-left: 0;
+}
+
+.markdown-body code {
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	font-size: 12px;
+}
+
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 0;
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	font-size: 12px;
+}
+
+.markdown-body .octicon {
+	vertical-align: text-bottom;
+}
+
+.markdown-body .pl-0 {
+	padding-left: 0 !important;
+}
+
+.markdown-body .pl-1 {
+	padding-left: 4px !important;
+}
+
+.markdown-body .pl-2 {
+	padding-left: 8px !important;
+}
+
+.markdown-body .pl-3 {
+	padding-left: 16px !important;
+}
+
+.markdown-body .pl-4 {
+	padding-left: 24px !important;
+}
+
+.markdown-body .pl-5 {
+	padding-left: 32px !important;
+}
+
+.markdown-body .pl-6 {
+	padding-left: 40px !important;
+}
+
+.markdown-body::before {
+	display: table;
+	content: "";
+}
+
+.markdown-body::after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+.markdown-body>*:first-child {
+	margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+	margin-bottom: 0 !important;
+}
+
+.markdown-body a:not([href]) {
+	color: inherit;
+	text-decoration: none;
+}
+
+.markdown-body .anchor {
+	float: left;
+	padding-right: 4px;
+	margin-left: -20px;
+	line-height: 1;
+}
+
+.markdown-body .anchor:focus {
+	outline: none;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 16px;
+}
+
+.markdown-body hr {
+	height: 0.25em;
+	padding: 0;
+	margin: 24px 0;
+	background-color: #e1e4e8;
+	border: 0;
+}
+
+.markdown-body blockquote {
+	padding: 0 1em;
+	color: #6a737d;
+	border-left: 0.25em solid #dfe2e5;
+}
+
+.markdown-body blockquote>:first-child {
+	margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+	margin-bottom: 0;
+}
+
+.markdown-body kbd {
+	display: inline-block;
+	padding: 3px 5px;
+	font-size: 11px;
+	line-height: 10px;
+	color: #444d56;
+	vertical-align: middle;
+	background-color: #fafbfc;
+	border: solid 1px #c6cbd1;
+	border-bottom-color: #959da5;
+	border-radius: 3px;
+	box-shadow: inset 0 -1px 0 #959da5;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	margin-top: 24px;
+	margin-bottom: 16px;
+	font-weight: 600;
+	line-height: 1.25;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+	color: #1b1f23;
+	vertical-align: middle;
+	visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+	text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+	visibility: visible;
+}
+
+.markdown-body h1 {
+	padding-bottom: 0.3em;
+	font-size: 2em;
+	border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h2 {
+	padding-bottom: 0.3em;
+	font-size: 1.5em;
+	border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h3 {
+	font-size: 1.25em;
+}
+
+.markdown-body h4 {
+	font-size: 1em;
+}
+
+.markdown-body h5 {
+	font-size: 0.875em;
+}
+
+.markdown-body h6 {
+	font-size: 0.85em;
+	color: #6a737d;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body li {
+	word-wrap: break-all;
+}
+
+.markdown-body li>p {
+	margin-top: 16px;
+}
+
+.markdown-body li+li {
+	margin-top: 0.25em;
+}
+
+.markdown-body dl {
+	padding: 0;
+}
+
+.markdown-body dl dt {
+	padding: 0;
+	margin-top: 16px;
+	font-size: 1em;
+	font-style: italic;
+	font-weight: 600;
+}
+
+.markdown-body dl dd {
+	padding: 0 16px;
+	margin-bottom: 16px;
+}
+
+.markdown-body table {
+	display: block;
+	width: 100%;
+	overflow: auto;
+}
+
+.markdown-body table th {
+	font-weight: 600;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+	padding: 6px 13px;
+	border: 1px solid #dfe2e5;
+}
+
+.markdown-body table tr {
+	background-color: #fff;
+	border-top: 1px solid #c6cbd1;
+}
+
+.markdown-body table tr:nth-child(2n) {
+	background-color: #f6f8fa;
+}
+
+.markdown-body img {
+	max-width: 100%;
+	box-sizing: content-box;
+	background-color: #fff;
+}
+
+.markdown-body img[align=right] {
+	padding-left: 20px;
+}
+
+.markdown-body img[align=left] {
+	padding-right: 20px;
+}
+
+.markdown-body code {
+	padding: 0.2em 0.4em;
+	margin: 0;
+	font-size: 85%;
+	background-color: rgba(27,31,35,0.05);
+	border-radius: 3px;
+}
+
+.markdown-body pre {
+	word-wrap: normal;
+}
+
+.markdown-body pre>code {
+	padding: 0;
+	margin: 0;
+	font-size: 100%;
+	word-break: normal;
+	white-space: pre;
+	background: transparent;
+	border: 0;
+}
+
+.markdown-body .highlight {
+	margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre {
+	margin-bottom: 0;
+	word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+	padding: 16px;
+	overflow: auto;
+	font-size: 85%;
+	line-height: 1.45;
+	background-color: #f6f8fa;
+	border-radius: 3px;
+}
+
+.markdown-body pre code {
+	display: inline;
+	max-width: auto;
+	padding: 0;
+	margin: 0;
+	overflow: visible;
+	line-height: inherit;
+	word-wrap: normal;
+	background-color: transparent;
+	border: 0;
+}
+
+.markdown-body .full-commit .btn-outline:not(:disabled):hover {
+	color: #005cc5;
+	border-color: #005cc5;
+}
+
+.markdown-body kbd {
+	display: inline-block;
+	padding: 3px 5px;
+	font: 11px "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	line-height: 10px;
+	color: #444d56;
+	vertical-align: middle;
+	background-color: #fafbfc;
+	border: solid 1px #d1d5da;
+	border-bottom-color: #c6cbd1;
+	border-radius: 3px;
+	box-shadow: inset 0 -1px 0 #c6cbd1;
+}
+
+.markdown-body :checked+.radio-label {
+	position: relative;
+	z-index: 1;
+	border-color: #0366d6;
+}
+
+.markdown-body .task-list-item {
+	list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+	margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+	margin: 0 0.2em 0.25em -1.6em;
+	vertical-align: middle;
+}
+
+.markdown-body hr {
+	border-bottom-color: #eee;
+}
+
+</style>
+<style>
+ol {
+    display: block;
+    list-style-type: decimal;
+}
+.pagebreak { page-break-before: always; }
+.half { height: 200px; }
+</style>
+
+<div class="markdown-body">
+
+<h1>Lecture 21 - &ldquo;the network is the computer&rdquo;</h1>
+
+<p>This was &ldquo;sun&rdquo; micro systems moniker about 20 years ago.  Today this is increasingly the case.
+Lots of applications and systems exist only in the &ldquo;cloud&rdquo; and are not on a persons computer.
+Lot&rsquo;s of computes lack the capability to even have local programs run on them.  They are
+just a platform for running a &ldquo;client&rdquo; like Google Chrome.
+The 2nd larges use of IO in modern computers is via the &ldquo;net&rdquo;.  The question is how it all works.</p>
+
+<p>Questions:</p>
+
+<p>What is a domain name?</p>
+
+<p>What is a URL?</p>
+
+<p>What are the parts of an URL?</p>
+
+<p>How is DNS resolved?</p>
+
+<p>What is an IP Address?</p>
+
+<p>What is IP v.4 , what is IP v.6?</p>
+
+<p>How will a message from a client make it to a server?</p>
+
+<p>How is can messages be interrupted in the middle?</p>
+
+<p>How do servers work?</p>
+
+<p>What is a proxy?</p>
+
+<p>How do proxies work?</p>
+
+<p>What is a &ldquo;router&rdquo; and how do they work?</p>
+
+<p>This is all about answering questions like this.  At the low level a server sees an incoming message,
+deciphers it, if the message is for that system then it acts on it and sends back a response.</p>
+
+<p>This is how most &ldquo;system&rdquo; software is built today.</p>
+
+<p>Most languages like Java and Python were designed for a model of read in some data on a single processor,
+process it, produce some output.   That is not a really relevant model for today.  First most systems
+have multiple processors ( like 48 * 4 in a single box ) and most software is written to run across
+the web.</p>
+
+<p>Blochain is a good example.  The front end is a web application that formats a message that gets sent
+to the back end - the &ldquo;server&rdquo; or &ldquo;network of nodes&rdquo; to get processed.</p>
+
+<p>Gmail and Google docs are perfect examples too.  A front end has some local data that it is displaying.
+Then messages are sent to the back end to change and update data (you decide to view an email for example).</p>
+
+<p>This is the big picture - of how messages are sent / received / routed / processed and data is returned
+to the client.</p>
+
+<p>All of you have used a web browser - that is one kind of client.  Lots of other clients exist like
+&ldquo;curl&rdquo; and &ldquo;wget&rdquo; it is easy to build custom clients.</p>
+
+<h2>Flow - how it all comes together</h2>
+
+<p>URL - what is it:</p>
+
+<pre><code>http://www.2c-why.com/index.html
+                      ^^^^^^^^^^--- &quot;path&quot; to the resouce (communication endpoing)
+	       ^^^^^^^^^^-------------- domain name
+       ^^^------------------------- sub-domain
+^^^^------------------------------- Protocal (https, http, sftp etc)
+</code></pre>
+
+<p>This is a default port of 80 for &ldquo;http&rdquo; and port 443 for &ldquo;https&rdquo;.  So</p>
+
+<pre><code>https://www.2c-why.com:80/index.html
+</code></pre>
+
+<p>is the same address and port.</p>
+
+<p>Domains get resolved into IP addresses.  (Or you can use the IP address itself)</p>
+
+<p>Special IP addresses</p>
+
+<p>IP Version 4</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Address</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">127.0.0.1</td>
+<td align="left">Local host</td>
+</tr>
+
+<tr>
+<td align="left">192.168.0.xxx</td>
+<td align="left">Class C</td>
+</tr>
+
+<tr>
+<td align="left">172.16.xxx.xxx</td>
+<td align="left">Class B</td>
+</tr>
+
+<tr>
+<td align="left">10.xxx.xxx.xxx</td>
+<td align="left">Class A</td>
+</tr>
+</tbody>
+</table>
+
+<p>IP Version 4 ran out of addresses - so now we have IP version 6.</p>
+
+<p>IP 6 - looks like:  2001:db8:85a3:8d3:1319:8a2e:370:7348</p>
+
+<p><code>Localhost</code> for IP 6 looks like <code>::1</code></p>
+
+<p>So to reference your local system for a server <code>http://[::1]/</code>.</p>
+
+<p>Port numbers are from 1 to 65536 on most systems.</p>
+
+<p>www.2c-why.com and 2c-why.com can have different addresses.</p>
+
+<p>Also you can have</p>
+
+<p>test1.2c-why.com and mike.test1.2c-why.com etc.  Each with it&rsquo;s own address.</p>
+
+<p>An Average page will have 90 or more domain name lookups.  If you can bring you domain lookup local
+then pages will load much faster.</p>
+
+<p>What happens when somebody &ldquo;spoofs&rdquo; a domain lookup - and sends the wrong address to you - then can
+then intercept the traffic that would normally go to that address.</p>
+
+<p>You can do this too.  For example I might want to spoof <code>a.doubclick.com</code> - one of the major add serving
+sites and sent it off to some other address, for example 127.0.0.1 - my local computer.  This is how lots
+of add blocking works.</p>
+
+<p>DNS over HTTPS is designed to prevent this.  Using a domain name server that you trust like 1.1.1.1 or
+1.1.1.2 (Cloudfont&rsquo;s) or 8.8.8.8 or 8.8.4.4 (google&rsquo;s) is also to prevent this kind of spoofing.</p>
+
+<p>Do you have a laptop - you connect to a wireless network and part of that connection is DHCP - this
+allows your computer to receive its connection and IP address from the local server - it also gets
+its DNS setup from that server.  Let&rsquo;s say you are in DIA and you connect to AT&amp;T&rsquo;s WiFi hotspot.
+AT&amp;T can now tell you where to get &lsquo;a.doublclick.com&rsquo; adds from - and instead of sending this to
+doublclick might want to direct it to it&rsquo;s own add server - and get the revenue from the adds
+for itself - instead of letting google get the revenue.  This actually happens.</p>
+
+<p>Or how about spoofing your bank - This is what https:// is all about - preventing this spoofing.
+So - your computer has a &ldquo;signature&rdquo; that it can check through a chain of trust that the destination
+is the correct destination for the request - and that via encryption that no body in the middle
+can look at what was transmitted.  This prevents man in the middle attacks - provided that nobody
+looses the &ldquo;private&rdquo; keys that protect the chain of trust.  For example the government &ldquo;Georga&rdquo;
+requires that you turn over you private keys to the government.  Dell managed to &ldquo;loose&rdquo; a set of
+signing private keys etc.</p>
+
+<p>So DNS turns a &ldquo;name&rdquo; into an address.</p>
+
+<p>Then routing occurs.</p>
+
+<p>But most organizations (including in my home) want to intercept your request before it leaves
+the local site.  Both for DNS and for tracking and security reasons.   This is the first level
+of proxy.   So your request runs through something like &ldquo;squid&rdquo; - and squid can cache pages
+that you visit - and track you.</p>
+
+<p>Finally you enter the routing and frame cloud.  Through some magic with routing tables your
+packed of data gets directed to the correct computer.  Usually on the receiving end it will
+again pass through a proxy like HA-Proxy - a proxy designed to grantee high availability of
+the resources.  Again it may pass through some caching layer like Cloudfront or a proxy like
+squid that will cache requests.</p>
+
+<p>Then it will probably reach a reverse-proxy like NgInx - where it gets directed to a final
+server - some chunk of code that runs on your box or AWS S3 that serves the request.</p>
+
+<h2>What happens at the server</h2>
+
+<p>http started out serving files.  Then the capability for the server to do something
+replaced some of the files.  In our example:</p>
+
+<pre><code>http://www.2c-why.com/index.html
+</code></pre>
+
+<p>The &ldquo;destination&rdquo; or communication end point is &lsquo;index.html&rsquo;.   If you put in:</p>
+
+<pre><code>http://www.2c-why.com/
+</code></pre>
+
+<p>Then the server will usually replace this with <code>http://www.2c-why.com/index.html</code>.
+Some weird servers use something else like <code>default.htm</code> - but this is the exception
+not the rule.</p>
+
+<p>Often &lsquo;index.html&rsquo; is a file in some directory on the server.  This is how
+most single page web applications  work.    So a request for
+<code>http://www.2c-why.com/sample/demo1.txt</code> will probably look in some directory
+for a sub-directory called <code>sample</code> then in that directory for <code>demo1.txt</code>.
+There is no grantee of this behavior - I use  a web server that takes <code>demo.html</code>
+and generates the <code>demo.html</code> dynamically in code and returns it.</p>
+
+<h2>What about &lsquo;https&rsquo;?</h2>
+
+<p>So we could have used <code>https://www.2c-why.com/</code> - with the HTTPS protocol.
+It would default to port 443 - but you can use other ports.  This runs on top of
+a system called &ldquo;transport layer security&rdquo; or TLS.  Currently TLS is at version 1.3
+with 1.0 and 1.1 being deprecated versions that have security flaws that should
+not be used.</p>
+
+<p>TLS uses encryption to send data back and forth.  It also uses a web-of-trust
+to establish that you are talking to your intended destination.   The most common
+encryption used is ECDSA - the same as the encryption and signatures in
+the Ethereum and Bitcoin blockchain.</p>
+
+<p>HTTPS uses a table of known good public keys on your system to validate that
+who you are talking to is the correct destination.  If this set of signatures
+on your system is corrupted - then the validation is useless.  So if you have
+some malicious software gain access to your system and it installs a new
+&ldquo;Root Certificate&rdquo; in your local &ldquo;Certificate Cache&rdquo; -then it can spoof anything
+that is signed by that &ldquo;Root Certificate&rdquo;.    For example as a developer I find
+it really useful to be able to <code>https://localhost:9494/index.html</code> so that
+I can test code with https locally.  This is one of my known test steps before
+deploying code to a server.  Browsers behave differently with &lsquo;https&rsquo; v.s. &lsquo;http&rsquo;.
+For example the use of cookies for authentication is different.   I have to test
+that before code gets sent to production.  To do this I have a way to setup
+a signing authority (Root Certificate) so that I can sign for the domain <code>localhost</code>
+to be <code>127.0.0.1</code> or <code>[::1]</code> - on my system.  This means that with that
+root certificate any server that runs on my computer can now used <code>https</code> and
+spoof things like my bank.</p>
+
+<p>How dangerous is that - now suppose that some malicious software did the same
+thing - fixed a signing authority in the local cache on your system
+so that it can replace some domain name that it wants to watch.  Then it
+steps in the middle as a proxy -but- it now has the ability to take your
+browser encrypted HTTPS messages - decrypt them - save them - then re-encrypt
+the messages and pass them on to the destination.   You see the same
+page that you normally see - but somebody is in the middle catching your
+login and emptying your bank account.</p>
+
+<h2>What about &ldquo;dynamic&rdquo; content.</h2>
+
+<p>Lots of stuff over the web relies on some dynamic content.  When you
+use gmail and delete an email - this is not deleting a file - this is updating
+a database at Google.  So there is some sort of &ldquo;API&rdquo; application programming
+interface that gets called as the communication end point.</p>
+
+<p>Inside the server there will be some method for routing these communication
+end points to some chunk of code.   Basically this is a table that says
+for <code>/api/v1/delete-email</code> - call the function <code>HandleDeleteEmail</code> with
+the request from the client and a way to send back the results / success/fail
+to the server.</p>
+
+<p>In Go it looks like:</p>
+
+<pre><code>	http.HandleFunc(&quot;/status&quot;, respHandlerStatus)
+</code></pre>
+
+<p>This is using the standard Go &lsquo;http&rsquo; library - it will see the endpoint of
+&lsquo;/status&rsquo; and call the function respHandlerStatus for it.</p>
+
+<p>So if you entered <code>http://www.2c-why.com/status</code> you will get back some sort
+of a message that shows the status of the server.</p>
+
+<p>This means that you can use the http/https system to make calls to a server and
+do something.   In the case of Google  and gmail - this &ldquo;do something&rdquo; will be
+to delete the email from that users email.</p>
+
+<p>So when you look at a set of server code and you want to know what messages
+it will respond to - the first thing to look for is this &ldquo;routing in table&rdquo;.
+Some languages like C# (Vs Code / .NET) go to extremes to &ldquo;hide&rdquo; this routing process from
+the developers.   This makes it very difficult to understand where the
+routing takes place and manage the routing process.</p>
+
+<p>Python and it&rsquo;s django project are an example of a language that just shows the
+routing as a table:</p>
+
+<pre><code>from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path('articles/2003/', views.special_case_2003),
+    path('articles/&lt;int:year&gt;/', views.year_archive),
+    path('articles/&lt;int:year&gt;/&lt;int:month&gt;/', views.month_archive),
+    path('articles/&lt;int:year&gt;/&lt;int:month&gt;/&lt;slug:slug&gt;/', views.article_detail),
+]
+</code></pre>
+
+<h2>What is a proxy?</h2>
+
+<p>A proxy is a program that receives HTTP on one end and send a similar or
+modified version of the HTTP on the other end.  Then when it gets a response
+it will send back the response to the person that made the request.  Proxies
+are really useful for lots of stuff.  They can cache responses .  Then can
+enforce security rules - by reeking that a person login to the proxy before
+it will send stuff through.  They can act as a man-in-the-middle for debugging
+code so that you can see what is being sent back and forth.  Then can monitor
+load.</p>
+
+<p>There are 2 flavors - a regular &ldquo;proxy&rdquo; that a business uses to enforce
+security and a &ldquo;reverse proxy&rdquo; that a server uses to route requests from
+a common interface to the correct inside server.  Some reverse proxies
+are designed to do the &ldquo;reverse proxy&rdquo; and allow for fault tolerance.
+&ldquo;HA Proxy&rdquo; - the High Availability Proxy is an example.  Some act as
+a reverse proxy just to do routing.  NgInx is an example of this.</p>
+
+<p>In most web traffic there are multiple proxies the middle.</p>
+
+<h2>REST - Representation State Transfer</h2>
+
+<p>On top of the - make a request - there is a set of request types that are used.
+The most common is <code>GET</code> that says send me back something - usually a file.
+All of the proxies and caches in between expect that <code>GET</code> is idempotent.
+That means that for a specific <code>GET</code> request they can cache the result for
+as long as the cache headers specify - and the next time that they see the
+same request they can just send back the result that they already have.
+If you are making a request to  a chunk of code - and you want that to
+go all the way to the server - then this caching behavior is not what you
+want!  Usually that requires the addition of a &ldquo;cache-busting&rdquo; value to be
+added so that the URL will be unique every time.</p>
+
+<p>The besides &ldquo;GET&rdquo; other commonly used &ldquo;Methods&rdquo; are PUT, POST and DELETE.
+These are usually mapped as follows:</p>
+
+<table>
+<thead>
+<tr>
+<th align="right">Method</th>
+<th>database</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="right">GET</td>
+<td>select</td>
+<td>Retrieve data from the server or database.  Read a file or select from a database.</td>
+</tr>
+
+<tr>
+<td align="right">POST</td>
+<td>insert</td>
+<td>create new data</td>
+</tr>
+
+<tr>
+<td align="right">PUT</td>
+<td>update</td>
+<td>change some existing data.  Often this is an insert/update operation so that if the data is new it will insert.</td>
+</tr>
+
+<tr>
+<td align="right">DELETE</td>
+<td>delete</td>
+<td>Remove existing data</td>
+</tr>
+</tbody>
+</table>
+
+<p>The other modifier on the data is what format it is in.  This is specified using a
+header.  For example it could be text, or HTML, or JSON data that is send back.</p>
+
+<p>The header tells the client how to display the data.  You don&rsquo;t display a GIF image
+in the same way you display a text or html file.</p>
+
+<p>In our example the &ldquo;method&rdquo; for display of the data is JSON - JavaScript Object Notion and
+the &ldquo;header&rdquo; for this is: <code>application/json</code>.</p>
+
+<pre><code>	www.Header().Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+</code></pre>
+
+<h2>Parameters passed to the back end</h2>
+
+<p>There are a number of schemes for passing parameters from the client to the back end.
+Name based parameters are the easiest to understand and manager.</p>
+
+<p>Our URL can have them:</p>
+
+<pre><code>http://www.2c-why.com/asm?code=Load&amp;name=bob
+                                         ^^^------- value
+                                    ^^^^----------- name
+                               ^^^^---------------- value
+                          ^^^^--------------------- name
+</code></pre>
+
+<p>In this example there are 2 names, &ldquo;code&rdquo; and &ldquo;name&rdquo; and each has a value.
+It starts with a &lsquo;?&rsquo; and is separated with &lsquo;&amp;&lsquo;.
+To do this without blanks requires encoding of the parameters - so if you see <code>%20</code> that is a blank.
+There is a standard URL encoding scheme to allow you to encode lots of stuff on the URL.</p>
+
+<p>The second name based scheme is used by POST and DELETE.  This is called <code>x-url-encoded</code> and sends name
+based parameters as a part of the &ldquo;body&rdquo; of the message instead of the URL.</p>
+
+<p>The Body is limited in length so there is a 3rd name based encoding that is used for files.  This 3rd
+method encodes stuff in the same way that email attachments are encoded.</p>
+
+<p>The forth method is to tell the server that the body of the message is JSON - so that we can send more
+complex name/value based data from the client to the server.</p>
+
+<p>Another method is using a positional encoding of data in the URL itself.  In our Python example :</p>
+
+<pre><code>from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path('articles/2003/', views.special_case_2003),
+    path('articles/&lt;int:year&gt;/', views.year_archive),
+    path('articles/&lt;int:year&gt;/&lt;int:month&gt;/', views.month_archive),
+    path('articles/&lt;int:year&gt;/&lt;int:month&gt;/&lt;slug:slug&gt;/', views.article_detail),
+]
+</code></pre>
+
+<p>The <code>&lt;int:year&gt;</code> is telling the pattern matcher that at that location in the URL it needs to match an integer and
+return it as the named parameter &lsquo;year&rsquo;.   This kind of positional encoding is very popular - but it has the disadvantage
+of making it much more difficult to analyze the &ldquo;path&rdquo; for what functions to call - and also it basically requires that
+a user of the URL use documentation to identify the lotions of all the parameters.   Good research in language development
+and design has show that positional parameters only work with a small number of parameters and that above that small
+number it is much better to accept un-ordered name based values.</p>
+
+<h2>Sending data back.</h2>
+
+<p>So the front end client makes a request.   As a developer we have gone and looked in the server or its documentation
+to find where the requests are processed - and what the end-points are for the communication - and we now know how to
+send a request.   Let&rsquo;s try it with a simple server.  We will use a command level client, &lsquo;curl&rsquo; to send the request.
+We could type in the value in the URL box in the browser also - but in this case we will stick to a simple command line
+process.</p>
+
+<pre><code>$ curl 'http://0x7e3aFEc048bC7be745d0fA0F5af97D3978C40E9A:237801@192.168.0.44:9191/api/acct-list'
+</code></pre>
+
+<p>This particular server will send back a list of accounts as JSON data.</p>
+
+<p>If we put the same URL into the browser we get a similar result:</p>
+
+<pre><code>[
+	&quot;0x9d41e5938767466af28865e1c33071f1561d57a8&quot;,
+	&quot;0x31568cc92115a2ebe6eb37e9a7c7f6334b988196&quot;,
+	&quot;0x3b65b88e4256c8926358551072f17460efe5452b&quot;,
+	&quot;0x42f487a6d5c86962310d5ab5afe5cad7bc80805b&quot;,
+	&quot;0x5ae7b3cf64adc3d7fef099319a9be4acb8bd73ed&quot;,
+	&quot;0x4af64cd87a47aab7cffdbada6bfd6aef47036c03&quot;,
+	&quot;0xe7b8a518bf1b5c4f01b2a7ee39a2800a982e06ee&quot;,
+	&quot;0x7e3afec048bc7be745d0fa0f5af97d3978c40e9a&quot;,
+	&quot;0x885765a2fcfb72e68d82d656c6411b7d27bacdd7&quot;,
+	&quot;0xdb180da9a8982c7bb75ca40039f959cb959c62e8&quot;,
+	&quot;0x40681739b0ef568acce20f5575ad4cf24223926f&quot;,
+	&quot;0x6e06bf940bb57ade69cb03153d1c3842411bd3c1&quot;,
+	&quot;0x4e27d9c8ba3a6904f7a7cb31eae5ccce8bf33300&quot;,
+	&quot;0x0c34a1a3c5ae302cb41f9cfd999e7950b8ebf40f&quot;,
+	&quot;0xb0d533a8064ed180967aa4dafa453deab107961c&quot;
+]
+</code></pre>
+
+<p>In a front end application we may want to display this list in a more user-friendly way - like a HTML table - but the
+communication is the same.    Somebody may have clicked a button in the page to say &ldquo;Show All My Accounts&rdquo; - a message
+was sent - then a response with a list is returned - and the front end then processes this result.</p>
+
+<h2>Feeding out the IP address of your computer.</h2>
+
+<p>Often your computer will be setup to use DHCP.  This means that the address is not fixed.  You may be able to use
+the localhost address - that stays the same.  It is 127.0.0.1 - but you may also want to setup your system to use
+the non-local interface.  On Mac and Linux you can use <code>ifconfig</code> to get the address.  At the commandline:</p>
+
+<pre><code>$ ifconfig
+</code></pre>
+
+<p>output should look something like:</p>
+
+<pre><code>
+lo0: flags=8049&lt;UP,LOOPBACK,RUNNING,MULTICAST&gt; mtu 16384
+	options=1203&lt;RXCSUM,TXCSUM,TXSTATUS,SW_TIMESTAMP&gt;
+	inet 127.0.0.1 netmask 0xff000000 
+	inet6 ::1 prefixlen 128 
+	inet6 fe80::1%lo0 prefixlen 64 scopeid 0x1 
+	nd6 options=201&lt;PERFORMNUD,DAD&gt;
+en0: flags=8863&lt;UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST&gt; mtu 1500
+	ether f0:18:98:37:71:1f 
+	inet6 fe80::14c7:3cba:a20c:29e7%en0 prefixlen 64 secured scopeid 0xa 
+	inet 192.168.0.44 netmask 0xffffff00 broadcast 192.168.0.255
+	inet6 fdc9:8c75:ae02::10b8:5dd2:e91:b73f prefixlen 64 autoconf secured 
+	inet6 fdc9:8c75:ae02::8e0 prefixlen 64 dynamic 
+	inet6 fdc9:8c75:ae02::9dd1:d612:d4db:1b6b prefixlen 64 deprecated autoconf temporary 
+	inet6 fdc9:8c75:ae02::f842:b64b:220:48f0 prefixlen 64 deprecated autoconf temporary 
+	inet6 fdc9:8c75:ae02::19c5:e05c:ad62:42d1 prefixlen 64 deprecated autoconf temporary 
+	inet6 fdc9:8c75:ae02::6139:73a6:dcba:6f3c prefixlen 64 deprecated autoconf temporary 
+	inet6 fdc9:8c75:ae02::c117:7f88:6346:eca4 prefixlen 64 deprecated autoconf temporary 
+	inet6 fdc9:8c75:ae02::8d42:3b5e:639:71be prefixlen 64 deprecated autoconf temporary 
+	inet6 fdc9:8c75:ae02::4078:1d3e:c848:7341 prefixlen 64 autoconf temporary 
+	nd6 options=201&lt;PERFORMNUD,DAD&gt;
+	media: autoselect
+	status: active
+p2p0: flags=8843&lt;UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST&gt; mtu 2304
+	ether 02:18:98:37:71:1f 
+	media: autoselect
+	status: inactive
+awdl0: flags=8943&lt;UP,BROADCAST,RUNNING,PROMISC,SIMPLEX,MULTICAST&gt; mtu 1484
+	ether 7a:12:fb:34:f1:97 
+	inet6 fe80::7812:fbff:fe34:f197%awdl0 prefixlen 64 scopeid 0xc 
+	nd6 options=201&lt;PERFORMNUD,DAD&gt;
+	media: autoselect
+	status: active
+</code></pre>
+
+<p>I know for my system that I am looking in the section &lsquo;en0&rsquo; - this will be true for most
+Mac&rsquo;s.   For Linux look for &lsquo;eth0&rsquo; section.  Somewhere in there there is a line
+that starts with &lsquo;inet&rsquo; and after that there is an address.   It may start with
+<code>192.</code>, <code>172.</code> or <code>10.</code> that is the address of your local computer on its network.</p>
+
+<p>If you change networks this address will change.</p>
+
+<p>On Windows you can bring up the PowerShell and run:</p>
+
+<pre><code>C:\&gt; ipconfig
+</code></pre>
+
+<p>Windows uses a much simpler interface system.
+Windows fails to support multiple internet listeners on a single system.</p>
+
+<p>Look at the output for the line that starts with &ldquo;IPv4 Address&rdquo;.  This is the
+address of your system.</p>
+
+<p>See: <a href="https://www.howtogeek.com/168896/10-useful-windows-commands-you-should-know/">https://www.howtogeek.com/168896/10-useful-windows-commands-you-should-know/</a>
+for examples.</p>
+
+</div>
+
