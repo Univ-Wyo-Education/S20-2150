@@ -1,5 +1,27 @@
 # Lecture 21 - "the network is the computer"
 
+# Videos
+
+[https://youtu.be/ekz29DK_ITE - Lect-21-1-of-8.mp4](https://youtu.be/ekz29DK_ITE)<br>
+[https://youtu.be/BOZS22ScVe8 - Lect-21-2-of-8.mp4](https://youtu.be/BOZS22ScVe8)<br>
+[https://youtu.be/sZ4yyVQDh4A - Lect-21-3-of-8.mp4](https://youtu.be/sZ4yyVQDh4A)<br>
+[https://youtu.be/fkDGfPwa9sk - Lect-21-4-of-8.mp4](https://youtu.be/fkDGfPwa9sk)<br>
+[https://youtu.be/yT3A5iYWARg - Lect-21-6-of-8.mp4](https://youtu.be/yT3A5iYWARg)<br>
+[https://youtu.be/79rYhXcaJ58 - Lect-21-7-of-8.mp4](https://youtu.be/79rYhXcaJ58)<br>
+[https://youtu.be/fcD759BsPaE - Lect-21-8-of-8.mp4](https://youtu.be/fcD759BsPaE)<br>
+
+From Amazon S3 - for download (same as youtube videos)
+
+[http://uw-s20-2015.s3.amazonaws.com/Lect-21-1-of-8.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-21-1-of-8.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-21-2-of-8.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-21-2-of-8.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-21-3-of-8.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-21-3-of-8.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-21-4-of-8.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-21-4-of-8.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-21-6-of-8.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-21-6-of-8.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-21-7-of-8.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-21-7-of-8.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-21-8-of-8.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-21-8-of-8.mp4)<br>
+
+# How the net works
+
 This was "sun" micro systems moniker about 20 years ago.  Today this is increasingly the case.
 Lots of applications and systems exist only in the "cloud" and are not on a persons computer.
 Lot's of computes lack the capability to even have local programs run on them.  They are 
