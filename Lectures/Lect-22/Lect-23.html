@@ -1,0 +1,908 @@
+<style>
+@font-face {
+	font-family: octicons-link;
+	src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	line-height: 1.5;
+	color: #24292e;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-size: 16px;
+	line-height: 1.5;
+	word-wrap: break-word;
+}
+
+.markdown-body .pl-c {
+	color: #6a737d;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+	color: #005cc5;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+	color: #6f42c1;
+}
+
+.markdown-body .pl-smi,
+.markdown-body .pl-s .pl-s1 {
+	color: #24292e;
+}
+
+.markdown-body .pl-ent {
+	color: #22863a;
+}
+
+.markdown-body .pl-k {
+	color: #d73a49;
+}
+
+.markdown-body .pl-s,
+.markdown-body .pl-pds,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sre,
+.markdown-body .pl-sr .pl-sra {
+	color: #032f62;
+}
+
+.markdown-body .pl-v,
+.markdown-body .pl-smw {
+	color: #e36209;
+}
+
+.markdown-body .pl-bu {
+	color: #b31d28;
+}
+
+.markdown-body .pl-ii {
+	color: #fafbfc;
+	background-color: #b31d28;
+}
+
+.markdown-body .pl-c2 {
+	color: #fafbfc;
+	background-color: #d73a49;
+}
+
+.markdown-body .pl-c2::before {
+	content: "^M";
+}
+
+.markdown-body .pl-sr .pl-cce {
+	font-weight: bold;
+	color: #22863a;
+}
+
+.markdown-body .pl-ml {
+	color: #735c0f;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+	font-weight: bold;
+	color: #005cc5;
+}
+
+.markdown-body .pl-mi {
+	font-style: italic;
+	color: #24292e;
+}
+
+.markdown-body .pl-mb {
+	font-weight: bold;
+	color: #24292e;
+}
+
+.markdown-body .pl-md {
+	color: #b31d28;
+	background-color: #ffeef0;
+}
+
+.markdown-body .pl-mi1 {
+	color: #22863a;
+	background-color: #f0fff4;
+}
+
+.markdown-body .pl-mc {
+	color: #e36209;
+	background-color: #ffebda;
+}
+
+.markdown-body .pl-mi2 {
+	color: #f6f8fa;
+	background-color: #005cc5;
+}
+
+.markdown-body .pl-mdr {
+	font-weight: bold;
+	color: #6f42c1;
+}
+
+.markdown-body .pl-ba {
+	color: #586069;
+}
+
+.markdown-body .pl-sg {
+	color: #959da5;
+}
+
+.markdown-body .pl-corl {
+	text-decoration: underline;
+	color: #032f62;
+}
+
+.markdown-body .octicon {
+	display: inline-block;
+	vertical-align: text-top;
+	fill: currentColor;
+}
+
+.markdown-body a {
+	background-color: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+	outline-width: 0;
+}
+
+.markdown-body strong {
+	font-weight: inherit;
+}
+
+.markdown-body strong {
+	font-weight: bolder;
+}
+
+.markdown-body h1 {
+	font-size: 2em;
+	margin: 0.67em 0;
+}
+
+.markdown-body img {
+	border-style: none;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+	font-family: monospace, monospace;
+	font-size: 1em;
+}
+
+.markdown-body hr {
+	box-sizing: content-box;
+	height: 0;
+	overflow: visible;
+}
+
+.markdown-body input {
+	font: inherit;
+	margin: 0;
+}
+
+.markdown-body input {
+	overflow: visible;
+}
+
+.markdown-body [type="checkbox"] {
+	box-sizing: border-box;
+	padding: 0;
+}
+
+.markdown-body * {
+	box-sizing: border-box;
+}
+
+.markdown-body input {
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+}
+
+.markdown-body a {
+	color: #0366d6;
+	text-decoration: none;
+}
+
+.markdown-body a:hover {
+	text-decoration: underline;
+}
+
+.markdown-body strong {
+	font-weight: 600;
+}
+
+.markdown-body hr {
+	height: 0;
+	margin: 15px 0;
+	overflow: hidden;
+	background: transparent;
+	border: 0;
+	border-bottom: 1px solid #dfe2e5;
+}
+
+.markdown-body hr::before {
+	display: table;
+	content: "";
+}
+
+.markdown-body hr::after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+.markdown-body table {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.markdown-body td,
+.markdown-body th {
+	padding: 0;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body h1 {
+	font-size: 32px;
+	font-weight: 600;
+}
+
+.markdown-body h2 {
+	font-size: 24px;
+	font-weight: 600;
+}
+
+.markdown-body h3 {
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.markdown-body h4 {
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.markdown-body h5 {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.markdown-body h6 {
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.markdown-body p {
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+
+.markdown-body blockquote {
+	margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+	x-list-style-type: lower-roman;
+	  list-style-type: decimal;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+	list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+	margin-left: 0;
+}
+
+.markdown-body code {
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	font-size: 12px;
+}
+
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 0;
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	font-size: 12px;
+}
+
+.markdown-body .octicon {
+	vertical-align: text-bottom;
+}
+
+.markdown-body .pl-0 {
+	padding-left: 0 !important;
+}
+
+.markdown-body .pl-1 {
+	padding-left: 4px !important;
+}
+
+.markdown-body .pl-2 {
+	padding-left: 8px !important;
+}
+
+.markdown-body .pl-3 {
+	padding-left: 16px !important;
+}
+
+.markdown-body .pl-4 {
+	padding-left: 24px !important;
+}
+
+.markdown-body .pl-5 {
+	padding-left: 32px !important;
+}
+
+.markdown-body .pl-6 {
+	padding-left: 40px !important;
+}
+
+.markdown-body::before {
+	display: table;
+	content: "";
+}
+
+.markdown-body::after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+.markdown-body>*:first-child {
+	margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+	margin-bottom: 0 !important;
+}
+
+.markdown-body a:not([href]) {
+	color: inherit;
+	text-decoration: none;
+}
+
+.markdown-body .anchor {
+	float: left;
+	padding-right: 4px;
+	margin-left: -20px;
+	line-height: 1;
+}
+
+.markdown-body .anchor:focus {
+	outline: none;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 16px;
+}
+
+.markdown-body hr {
+	height: 0.25em;
+	padding: 0;
+	margin: 24px 0;
+	background-color: #e1e4e8;
+	border: 0;
+}
+
+.markdown-body blockquote {
+	padding: 0 1em;
+	color: #6a737d;
+	border-left: 0.25em solid #dfe2e5;
+}
+
+.markdown-body blockquote>:first-child {
+	margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+	margin-bottom: 0;
+}
+
+.markdown-body kbd {
+	display: inline-block;
+	padding: 3px 5px;
+	font-size: 11px;
+	line-height: 10px;
+	color: #444d56;
+	vertical-align: middle;
+	background-color: #fafbfc;
+	border: solid 1px #c6cbd1;
+	border-bottom-color: #959da5;
+	border-radius: 3px;
+	box-shadow: inset 0 -1px 0 #959da5;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	margin-top: 24px;
+	margin-bottom: 16px;
+	font-weight: 600;
+	line-height: 1.25;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+	color: #1b1f23;
+	vertical-align: middle;
+	visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+	text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+	visibility: visible;
+}
+
+.markdown-body h1 {
+	padding-bottom: 0.3em;
+	font-size: 2em;
+	border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h2 {
+	padding-bottom: 0.3em;
+	font-size: 1.5em;
+	border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h3 {
+	font-size: 1.25em;
+}
+
+.markdown-body h4 {
+	font-size: 1em;
+}
+
+.markdown-body h5 {
+	font-size: 0.875em;
+}
+
+.markdown-body h6 {
+	font-size: 0.85em;
+	color: #6a737d;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body li {
+	word-wrap: break-all;
+}
+
+.markdown-body li>p {
+	margin-top: 16px;
+}
+
+.markdown-body li+li {
+	margin-top: 0.25em;
+}
+
+.markdown-body dl {
+	padding: 0;
+}
+
+.markdown-body dl dt {
+	padding: 0;
+	margin-top: 16px;
+	font-size: 1em;
+	font-style: italic;
+	font-weight: 600;
+}
+
+.markdown-body dl dd {
+	padding: 0 16px;
+	margin-bottom: 16px;
+}
+
+.markdown-body table {
+	display: block;
+	width: 100%;
+	overflow: auto;
+}
+
+.markdown-body table th {
+	font-weight: 600;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+	padding: 6px 13px;
+	border: 1px solid #dfe2e5;
+}
+
+.markdown-body table tr {
+	background-color: #fff;
+	border-top: 1px solid #c6cbd1;
+}
+
+.markdown-body table tr:nth-child(2n) {
+	background-color: #f6f8fa;
+}
+
+.markdown-body img {
+	max-width: 100%;
+	box-sizing: content-box;
+	background-color: #fff;
+}
+
+.markdown-body img[align=right] {
+	padding-left: 20px;
+}
+
+.markdown-body img[align=left] {
+	padding-right: 20px;
+}
+
+.markdown-body code {
+	padding: 0.2em 0.4em;
+	margin: 0;
+	font-size: 85%;
+	background-color: rgba(27,31,35,0.05);
+	border-radius: 3px;
+}
+
+.markdown-body pre {
+	word-wrap: normal;
+}
+
+.markdown-body pre>code {
+	padding: 0;
+	margin: 0;
+	font-size: 100%;
+	word-break: normal;
+	white-space: pre;
+	background: transparent;
+	border: 0;
+}
+
+.markdown-body .highlight {
+	margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre {
+	margin-bottom: 0;
+	word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+	padding: 16px;
+	overflow: auto;
+	font-size: 85%;
+	line-height: 1.45;
+	background-color: #f6f8fa;
+	border-radius: 3px;
+}
+
+.markdown-body pre code {
+	display: inline;
+	max-width: auto;
+	padding: 0;
+	margin: 0;
+	overflow: visible;
+	line-height: inherit;
+	word-wrap: normal;
+	background-color: transparent;
+	border: 0;
+}
+
+.markdown-body .full-commit .btn-outline:not(:disabled):hover {
+	color: #005cc5;
+	border-color: #005cc5;
+}
+
+.markdown-body kbd {
+	display: inline-block;
+	padding: 3px 5px;
+	font: 11px "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	line-height: 10px;
+	color: #444d56;
+	vertical-align: middle;
+	background-color: #fafbfc;
+	border: solid 1px #d1d5da;
+	border-bottom-color: #c6cbd1;
+	border-radius: 3px;
+	box-shadow: inset 0 -1px 0 #c6cbd1;
+}
+
+.markdown-body :checked+.radio-label {
+	position: relative;
+	z-index: 1;
+	border-color: #0366d6;
+}
+
+.markdown-body .task-list-item {
+	list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+	margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+	margin: 0 0.2em 0.25em -1.6em;
+	vertical-align: middle;
+}
+
+.markdown-body hr {
+	border-bottom-color: #eee;
+}
+
+</style>
+<style>
+ol {
+    display: block;
+    list-style-type: decimal;
+}
+.pagebreak { page-break-before: always; }
+.half { height: 200px; }
+</style>
+
+<div class="markdown-body">
+
+<h1>System Software - Assemblers / Compilers / Linkers</h1>
+
+<p>One of the big developments in systems software (Chapter 8) was the development of
+high level languages.  Please read Chapter 8 in the book.</p>
+
+<p>The basic idea of system software is to build something that is farther away from
+the machine and easier for humans to understand and use.</p>
+
+<p>Research in this is ongoing with companies like IOHK developing domain specific
+languages for FinTeck (Financial Technology).   If this kind of a thing interests
+somebody -then- it makes a decent masters project to develop a DSL for things like
+the insurance industry.</p>
+
+<h2>How do Assemblers work.</h2>
+
+<p>Most assemblers are 2 pass systems.</p>
+
+<p>Pass 1: Read the source and figure out where all the symbols are located.  In this
+pass you pretend to do the assembly - but all you are looking for is the address of
+all the symbols.</p>
+
+<pre><code>	Load X
+	Store Y
+	Halt
+X,	Dec 10
+Y,	Dec 0
+</code></pre>
+
+<p>Start at pc = 0</p>
+
+<p>So you fake generate a Load instruction, increment pc to 1.</p>
+
+<p>Fake generate Store, increment PC to 2.</p>
+
+<p>Fake Generate Halt, increment PC to 3.</p>
+
+<p>Read Label X - store this as having an address of 3.   Fake Dec 10, increment PC to 3.</p>
+
+<p>Read Label Y - store this as having an address of 4.  Fake Dec 0, increment PC to 4.</p>
+
+<p>Find the end of file - so done with pass 1.</p>
+
+<p>Star at top - keeping the symbol table with X, address 3, Y Address 4.</p>
+
+<p>Generate Load X - with a load instruction of 0x1000 and the address of X - we know that
+now to be 3. So 0x1003.</p>
+
+<p>Generate the Store Y - with a store instruction of 0x2000 and the address of Y - we know
+that now to be 4. So 0x2004.</p>
+
+<p>Generate the Halt, 0x7000.</p>
+
+<p>Generate the Dec 12, 0x000a.</p>
+
+<p>Generate the Dec 0, 0x0000.</p>
+
+<p>Done.</p>
+
+<h2>How do compilers work.</h2>
+
+<p>Compilers took a lot longer to build.  They have lots of fun parts.  The original compiler, Fortran
+was originally build on circuit boards where the boards had to be put directly into the system.
+The 1&rsquo;s and 0&rsquo;s were generated by cutting diodes out of the board.   I bet the developers got
+blisters using wire cutters.</p>
+
+<p>Fortran is still around - and still used - but it has &ldquo;evolved&rdquo; and is a much more useful language.
+I learned Fortran in college - and still occasionally program in it.  Specifically I made fixes
+to some genetic analysis code last week for looking at the evolution/mutation rate in COVID-19.</p>
+
+<p>The big developments in compilers involved parsing of languages into trees and the formal specification
+of languages.  Compilers today are super-reliable.  In 1989 when you had a defect in your code the
+question was always is the compiler failing or is my code failing.  Also compilers tend to produce
+really nice error messages today.   I used a Fortran-66 compiler that if you had a syntax error
+it produced the message &ldquo;syntax error.&rdquo; - but did not even tell you the line number that the error
+was on.</p>
+
+<p>So &hellip;</p>
+
+<p>How do copiers work. &ndash; The 1990&rsquo;s easy view &ndash; Later we will look at how a modern compiler works.</p>
+
+<ol>
+<li>Symbol Table - Symbols are not just address - they have type and size information with them.</li>
+<li>Scanner - This takes the input and coverts it into &ldquo;tokens&rdquo; so an &ldquo;id&rdquo; is a single thing to the next phase.</li>
+<li>Parser - This converts the scanned tokens into a tree representation of the code.  This is often called an Abstract Syntax Tree (AST).</li>
+<li>Code Generator - This takes the AST and generates code for it in assembly Language</li>
+<li>Optimizer - This takes the code and re-writes it to be better code.</li>
+<li>Assemble the output into a binary.</li>
+<li>Link multiple binaries together into a final program.</li>
+</ol>
+
+<h2>Interpreters.</h2>
+
+<p>Interpreted languages like &ldquo;java&rdquo; and &ldquo;python&rdquo; were built to run the AST directly - at least in the original form of the language.
+Later this AST was translated into a P-CODE - an assembly for a virtual machine that did not exist.   This made the execution
+faster.  Then things like optimizes could work on the code.  Also porting to new machines just meant re-writing the emulator.
+Then they started Just-In-Time compiling the code to make them faster.  This meant doing the final step of the compile - to
+translate the P-Code into machine code - as the program ran.   This made them faster.</p>
+
+<p>More modern languages like Go and Rust have avoided this - by doing all the work up front.</p>
+
+<p>The most common data storage and analysis systems are interpreters.  Microsoft Excel for example.</p>
+
+<h1>System Software - Batch Processing Code</h1>
+
+<p>Most software from the 1960s to the 1990s for business ran on a &ldquo;bach&rdquo; processing model.  It worked a lot like
+an assembler - but in this case it worked on financial data.</p>
+
+<p>Banks still use this - the IRS still uses this.  If you get a mortgage - then the bank will use software that works this way.
+Telephone companies and your utility company still work this way.</p>
+
+<p>Often a database persists some of the data - but the basic model is:</p>
+
+<ol>
+<li>Read in a record of data
+
+<ul>
+<li>Validate the record</li>
+<li>Do some processing on the record (save in a database, update  a database)</li>
+<li>Produce some output for this record</li>
+<li>Summarize this data - for final reports</li>
+</ul></li>
+<li>Move to next record (back to (1))</li>
+</ol>
+
+<h1>System Software - with GUI interfaces (Microsoft Excel, Photoshop etc)</h1>
+
+<p>The 1980 to 2000 saw the development of &ldquo;desk top&rdquo; applications like Excel and Photoshop.  The are what-you-see-is-what-you-get
+applications with a GUI interface.   You click and things change.   A large number of compiled languages were built during this time
+to reflect the difficulty in developing these applications.   Often the GUI interface in these is 90% or more of the code in the
+entire application.   Also applications moved from the Mainframe (batch processing) to the Desktop (GUI with a mouse).</p>
+
+<p>Good Side:  GUI is really good for drawing and fast changing of data.  This is fantastic for individual creativity and one-off
+operations.</p>
+
+<p>Bad size: There is no way to re-use or build a higher-level abstraction with a GUI.  If I am processing an image to add a watermark
+with Photoshop.  Then it takes about 21 clicks to open image, open a layer, drag the &ldquo;water mark&rdquo; layer on top of the image, combine
+the lawyers, save the resulting image.  This is all good when you have 1 image to work on.  When you have 100,000 images a week this
+is a huge waste of time.  The same task cam be implemented in shell-script (programming language) in 8 lines of code and do all
+100,000 in the same time as it takes a human to do 4 images.  Also the shell script will get the &ldquo;water mark&rdquo; in the same correct location
+every time, not in a variable location.</p>
+
+<p>Good Side: Very little training is required.</p>
+
+<p>Bad Side: The code is really really hard to test.  This means that there are lots of defects left in it.</p>
+
+<p>Good Side: Well designed applications are a joy to use.</p>
+
+<p>Bad Side: Most GUI applications are very poorly designed.  Figuring out how users actually work is incredibly hard.  Apple develops
+9 different to finish interfaces for every change that they make to a user interface then picks the best one.  That is very
+costly and most business apps don&rsquo;t have that luxury.</p>
+
+<p>Good Side: it is quick to make changes.</p>
+
+<p>Bad Side: The application is &ldquo;real time&rdquo;.  Anything longer that about 10ms in response to a mouse move or click makes the
+interface very hard to use.  Not everything that we want computers to do is can be done in 10ms.  This introduces concurrency
+into the code - and that is very hard to work with.</p>
+
+<pre><code>Start a loop waiting for an event.
+	On Event - Propogate the change to the region of the screen handler for that event
+		Given the context (region) of the vent - then take action to update the &quot;model&quot; of data based on the event
+		Redraw the screen based on the changed data in the model.
+</code></pre>
+
+<p>The real difficulty in this is that every region of the screen can now do changes to the &ldquo;model&rdquo; for every mouse / keyboard
+or other event in any order.  Every chunk of code also has to make the changes in real time.  Also users frequency make
+mistakes and want to un-do the changes that they just made.</p>
+
+<h2>More modern GUI applications</h2>
+
+<p>The web is the replacement for most desktop applications.  This moves the GUI interface to a client and the processing to a
+server.  This has all sorts of advantages - but it also makes the development more distributed.  The biggest advantage is that
+the users will not install any software on a local system to get it to work.  The biggest disadvantage is security.</p>
+
+<p>The last lecture on web-lecture is on how they work.</p>
+
+<h1>System Software - Databases</h1>
+
+<p>The NASA Saturn V project saw the development of a truly new kind of system software.  This was the IBM Information Management System.
+This was the first &ldquo;database&rdquo; system ever developed.   IBM followed this with a number of years of research and finally developed a
+&ldquo;query&rdquo; language that allows for the concise storage and retrieval of data.  This was standardized and is called SQL for Standard Query Language.
+It has it&rsquo;s problems but usually works fairly well.<br />
+One of the people, Larry Ellison, that worked at IBM on this left and purchased a small software company, renamed it Oracle and started producing
+a database based on this.<br />
+The two most important storage systems for data are Microsoft Excel, and the Oracle Database.</p>
+
+<p>First thing is that databases store the data in a common location - and - the software remotely accesses the data.
+This means that the data is not local to the user and the database has to support a client-server architecture.  Most of the web&rsquo;s client
+server system design came from the building of databases.  Being client-server this means that the database has to have
+security that works.  Some systems, Oracle, PostgreSQL have succeeded at this.  Some like Microsoft SQL-Server( T-SQL ) have known
+problems that have persisted in security for years.   Also applications that run on top of these have to be security-aware and
+prevent things like malicious code injection.</p>
+
+<h1>Copyright</h1>
+
+<p>Copyright &copy; University of Wyoming, 2020.</p>
+
+</div>
+
