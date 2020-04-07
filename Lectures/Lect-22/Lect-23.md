@@ -189,6 +189,20 @@ security that works.  Some systems, Oracle, PostgreSQL have succeeded at this.  
 problems that have persisted in security for years.   Also applications that run on top of these have to be security-aware and
 prevent things like malicious code injection.
 
+Database have evolved and de-evolved.  In the 1990s SQL and relational took over from the Network and Graph databases because it could do everything
+that they could do - and do it better and faster.  Now in the 2020s we see a resurface in Network (Neo4j) and Graph databases (Mogo DB).   My testing
+indicates that everything that you can do in Neo4j and MogoDB you can do in PostgreSQL at about 4 to 10 times faster - and - you can also do 
+rational queries and a bunch of other things.   There are some special applications like Time Series databases that work really well.  PostgreSQL
+has a TimeSerise package - that appears to me to have more features and be the best time series database in existence.  There are special
+databases like Google F1 built on top of BigTable.   This is a relational database running on a distributed block share.  It uses atomic
+clocks for synchronization of data.  It is the worlds first "world scale" database.  This has some really fantastic uses like "gmail" and
+google "docs".  There is an open-source version of the same technique called Cockroach DB that is a port of PostgreSQL to use the
+distributed block share and not rely on atomic clocks.   There are special network databases that Facebook uses.  This is called Cassandra.
+At scale it makes sense.  Scale being over 5,000,000 computers running it at the same time.  Most people don't need 5 million computers.
+One of the non-relational databases that I use is called Redis - it is an in-memory database that can easily do 250,000 transactions per
+second on a single box and - it can scale to 3 or 4 million transactions with replication.  This is a fantastic way to build data-queues
+and caching.    I also recognized it's limitations.  I don't try to store user-accounts and accounting records in an in-memory
+system.
 
 
 
