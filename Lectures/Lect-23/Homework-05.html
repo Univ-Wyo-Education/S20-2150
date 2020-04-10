@@ -1,0 +1,1554 @@
+<style>
+@font-face {
+	font-family: octicons-link;
+	src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	line-height: 1.5;
+	color: #24292e;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-size: 16px;
+	line-height: 1.5;
+	word-wrap: break-word;
+}
+
+.markdown-body .pl-c {
+	color: #6a737d;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+	color: #005cc5;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+	color: #6f42c1;
+}
+
+.markdown-body .pl-smi,
+.markdown-body .pl-s .pl-s1 {
+	color: #24292e;
+}
+
+.markdown-body .pl-ent {
+	color: #22863a;
+}
+
+.markdown-body .pl-k {
+	color: #d73a49;
+}
+
+.markdown-body .pl-s,
+.markdown-body .pl-pds,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sre,
+.markdown-body .pl-sr .pl-sra {
+	color: #032f62;
+}
+
+.markdown-body .pl-v,
+.markdown-body .pl-smw {
+	color: #e36209;
+}
+
+.markdown-body .pl-bu {
+	color: #b31d28;
+}
+
+.markdown-body .pl-ii {
+	color: #fafbfc;
+	background-color: #b31d28;
+}
+
+.markdown-body .pl-c2 {
+	color: #fafbfc;
+	background-color: #d73a49;
+}
+
+.markdown-body .pl-c2::before {
+	content: "^M";
+}
+
+.markdown-body .pl-sr .pl-cce {
+	font-weight: bold;
+	color: #22863a;
+}
+
+.markdown-body .pl-ml {
+	color: #735c0f;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+	font-weight: bold;
+	color: #005cc5;
+}
+
+.markdown-body .pl-mi {
+	font-style: italic;
+	color: #24292e;
+}
+
+.markdown-body .pl-mb {
+	font-weight: bold;
+	color: #24292e;
+}
+
+.markdown-body .pl-md {
+	color: #b31d28;
+	background-color: #ffeef0;
+}
+
+.markdown-body .pl-mi1 {
+	color: #22863a;
+	background-color: #f0fff4;
+}
+
+.markdown-body .pl-mc {
+	color: #e36209;
+	background-color: #ffebda;
+}
+
+.markdown-body .pl-mi2 {
+	color: #f6f8fa;
+	background-color: #005cc5;
+}
+
+.markdown-body .pl-mdr {
+	font-weight: bold;
+	color: #6f42c1;
+}
+
+.markdown-body .pl-ba {
+	color: #586069;
+}
+
+.markdown-body .pl-sg {
+	color: #959da5;
+}
+
+.markdown-body .pl-corl {
+	text-decoration: underline;
+	color: #032f62;
+}
+
+.markdown-body .octicon {
+	display: inline-block;
+	vertical-align: text-top;
+	fill: currentColor;
+}
+
+.markdown-body a {
+	background-color: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+	outline-width: 0;
+}
+
+.markdown-body strong {
+	font-weight: inherit;
+}
+
+.markdown-body strong {
+	font-weight: bolder;
+}
+
+.markdown-body h1 {
+	font-size: 2em;
+	margin: 0.67em 0;
+}
+
+.markdown-body img {
+	border-style: none;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+	font-family: monospace, monospace;
+	font-size: 1em;
+}
+
+.markdown-body hr {
+	box-sizing: content-box;
+	height: 0;
+	overflow: visible;
+}
+
+.markdown-body input {
+	font: inherit;
+	margin: 0;
+}
+
+.markdown-body input {
+	overflow: visible;
+}
+
+.markdown-body [type="checkbox"] {
+	box-sizing: border-box;
+	padding: 0;
+}
+
+.markdown-body * {
+	box-sizing: border-box;
+}
+
+.markdown-body input {
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+}
+
+.markdown-body a {
+	color: #0366d6;
+	text-decoration: none;
+}
+
+.markdown-body a:hover {
+	text-decoration: underline;
+}
+
+.markdown-body strong {
+	font-weight: 600;
+}
+
+.markdown-body hr {
+	height: 0;
+	margin: 15px 0;
+	overflow: hidden;
+	background: transparent;
+	border: 0;
+	border-bottom: 1px solid #dfe2e5;
+}
+
+.markdown-body hr::before {
+	display: table;
+	content: "";
+}
+
+.markdown-body hr::after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+.markdown-body table {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.markdown-body td,
+.markdown-body th {
+	padding: 0;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body h1 {
+	font-size: 32px;
+	font-weight: 600;
+}
+
+.markdown-body h2 {
+	font-size: 24px;
+	font-weight: 600;
+}
+
+.markdown-body h3 {
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.markdown-body h4 {
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.markdown-body h5 {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.markdown-body h6 {
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.markdown-body p {
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+
+.markdown-body blockquote {
+	margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+	x-list-style-type: lower-roman;
+	  list-style-type: decimal;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+	list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+	margin-left: 0;
+}
+
+.markdown-body code {
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	font-size: 12px;
+}
+
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 0;
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	font-size: 12px;
+}
+
+.markdown-body .octicon {
+	vertical-align: text-bottom;
+}
+
+.markdown-body .pl-0 {
+	padding-left: 0 !important;
+}
+
+.markdown-body .pl-1 {
+	padding-left: 4px !important;
+}
+
+.markdown-body .pl-2 {
+	padding-left: 8px !important;
+}
+
+.markdown-body .pl-3 {
+	padding-left: 16px !important;
+}
+
+.markdown-body .pl-4 {
+	padding-left: 24px !important;
+}
+
+.markdown-body .pl-5 {
+	padding-left: 32px !important;
+}
+
+.markdown-body .pl-6 {
+	padding-left: 40px !important;
+}
+
+.markdown-body::before {
+	display: table;
+	content: "";
+}
+
+.markdown-body::after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+.markdown-body>*:first-child {
+	margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+	margin-bottom: 0 !important;
+}
+
+.markdown-body a:not([href]) {
+	color: inherit;
+	text-decoration: none;
+}
+
+.markdown-body .anchor {
+	float: left;
+	padding-right: 4px;
+	margin-left: -20px;
+	line-height: 1;
+}
+
+.markdown-body .anchor:focus {
+	outline: none;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 16px;
+}
+
+.markdown-body hr {
+	height: 0.25em;
+	padding: 0;
+	margin: 24px 0;
+	background-color: #e1e4e8;
+	border: 0;
+}
+
+.markdown-body blockquote {
+	padding: 0 1em;
+	color: #6a737d;
+	border-left: 0.25em solid #dfe2e5;
+}
+
+.markdown-body blockquote>:first-child {
+	margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+	margin-bottom: 0;
+}
+
+.markdown-body kbd {
+	display: inline-block;
+	padding: 3px 5px;
+	font-size: 11px;
+	line-height: 10px;
+	color: #444d56;
+	vertical-align: middle;
+	background-color: #fafbfc;
+	border: solid 1px #c6cbd1;
+	border-bottom-color: #959da5;
+	border-radius: 3px;
+	box-shadow: inset 0 -1px 0 #959da5;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	margin-top: 24px;
+	margin-bottom: 16px;
+	font-weight: 600;
+	line-height: 1.25;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+	color: #1b1f23;
+	vertical-align: middle;
+	visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+	text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+	visibility: visible;
+}
+
+.markdown-body h1 {
+	padding-bottom: 0.3em;
+	font-size: 2em;
+	border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h2 {
+	padding-bottom: 0.3em;
+	font-size: 1.5em;
+	border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h3 {
+	font-size: 1.25em;
+}
+
+.markdown-body h4 {
+	font-size: 1em;
+}
+
+.markdown-body h5 {
+	font-size: 0.875em;
+}
+
+.markdown-body h6 {
+	font-size: 0.85em;
+	color: #6a737d;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body li {
+	word-wrap: break-all;
+}
+
+.markdown-body li>p {
+	margin-top: 16px;
+}
+
+.markdown-body li+li {
+	margin-top: 0.25em;
+}
+
+.markdown-body dl {
+	padding: 0;
+}
+
+.markdown-body dl dt {
+	padding: 0;
+	margin-top: 16px;
+	font-size: 1em;
+	font-style: italic;
+	font-weight: 600;
+}
+
+.markdown-body dl dd {
+	padding: 0 16px;
+	margin-bottom: 16px;
+}
+
+.markdown-body table {
+	display: block;
+	width: 100%;
+	overflow: auto;
+}
+
+.markdown-body table th {
+	font-weight: 600;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+	padding: 6px 13px;
+	border: 1px solid #dfe2e5;
+}
+
+.markdown-body table tr {
+	background-color: #fff;
+	border-top: 1px solid #c6cbd1;
+}
+
+.markdown-body table tr:nth-child(2n) {
+	background-color: #f6f8fa;
+}
+
+.markdown-body img {
+	max-width: 100%;
+	box-sizing: content-box;
+	background-color: #fff;
+}
+
+.markdown-body img[align=right] {
+	padding-left: 20px;
+}
+
+.markdown-body img[align=left] {
+	padding-right: 20px;
+}
+
+.markdown-body code {
+	padding: 0.2em 0.4em;
+	margin: 0;
+	font-size: 85%;
+	background-color: rgba(27,31,35,0.05);
+	border-radius: 3px;
+}
+
+.markdown-body pre {
+	word-wrap: normal;
+}
+
+.markdown-body pre>code {
+	padding: 0;
+	margin: 0;
+	font-size: 100%;
+	word-break: normal;
+	white-space: pre;
+	background: transparent;
+	border: 0;
+}
+
+.markdown-body .highlight {
+	margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre {
+	margin-bottom: 0;
+	word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+	padding: 16px;
+	overflow: auto;
+	font-size: 85%;
+	line-height: 1.45;
+	background-color: #f6f8fa;
+	border-radius: 3px;
+}
+
+.markdown-body pre code {
+	display: inline;
+	max-width: auto;
+	padding: 0;
+	margin: 0;
+	overflow: visible;
+	line-height: inherit;
+	word-wrap: normal;
+	background-color: transparent;
+	border: 0;
+}
+
+.markdown-body .full-commit .btn-outline:not(:disabled):hover {
+	color: #005cc5;
+	border-color: #005cc5;
+}
+
+.markdown-body kbd {
+	display: inline-block;
+	padding: 3px 5px;
+	font: 11px "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	line-height: 10px;
+	color: #444d56;
+	vertical-align: middle;
+	background-color: #fafbfc;
+	border: solid 1px #d1d5da;
+	border-bottom-color: #c6cbd1;
+	border-radius: 3px;
+	box-shadow: inset 0 -1px 0 #c6cbd1;
+}
+
+.markdown-body :checked+.radio-label {
+	position: relative;
+	z-index: 1;
+	border-color: #0366d6;
+}
+
+.markdown-body .task-list-item {
+	list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+	margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+	margin: 0 0.2em 0.25em -1.6em;
+	vertical-align: middle;
+}
+
+.markdown-body hr {
+	border-bottom-color: #eee;
+}
+
+</style>
+<style>
+ol {
+    display: block;
+    list-style-type: decimal;
+}
+.pagebreak { page-break-before: always; }
+.half { height: 200px; }
+</style>
+
+<div class="markdown-body">
+
+<h1>Homework 05 - Implement Microcode</h1>
+
+<p>400 pts (part 1)</p>
+
+<p>Due Apr 20</p>
+
+<p>Emulator at: <a href="http://www.2c-why.com/">http://www.2c-why.com/</a></p>
+
+<h2>Example Microcode</h2>
+
+<p>The file is attached to the homework.   Let&rsquo;s walk thorough it.</p>
+
+<pre><code>  1 
+  2   DCL id_memory_Read id_memory_Write
+  3   DCL id_Microcode_PC_Clr id_Microcode_PC_Ld Microcode_PC_Ld2 id_Microcode_PC_Inc
+  4   DCL ir_decode_g1 
+  5   DCL id_ac_Out_to_ALU id_ac_Clr id_ac_Inc id_ac_Ld id_ac_Out
+  6   DCL McJmp_0 McJmp_1 McJmp_2 McJmp_3 McJmp_4 McJmp_5 McJmp_6 McJmp_7 
+  7   DCL id_ALU_Ctl_0 id_ALU_Ctl_1 id_ALU_Ctl_2 id_ALU_Ctl_3
+  8   DCL id_decoder_Ctl_0 id_decoder_Ctl_1
+  9   DCL hand_out                    
+ 10   DCL id_input_Out
+ 11   DCL id_ir_Ld id_ir_Out
+ 12   DCL id_mar_Ld id_mar_Out
+ 13   DCL id_mdr_Ld id_mdr_Out
+ 14   DCL id_output_Ld
+ 15   DCL id_pc_Inc id_pc_Ld id_pc_Out
+ 16   DCL id_result_Ld id_result_Out
+ 17 
+ 18   DCL is_halted is_fetch set_execute ins_end id_ALU_Ctl do_input do_output 
+ 19 
+ 20 // -------------------- Instruction Fetch Cycle ----------------------------
+ 21 
+ 22 // Decode 1st nibble of instruction
+ 23 // Move Instruction from Main Memory to IR
+ 24 // 3 Tick
+ 25     ORG        0b0_0000_000                      // 0x00
+ 26     id_mar_Ld id_pc_Out                          is_fetch id_Microcode_PC_Inc
+ 27     id_mdr_Out id_pc_Inc  id_memory_Read         id_Microcode_PC_Inc
+ 28     id_ir_Ld id_mdr_Out                          id_Microcode_PC_Inc
+ 29     id_decoder_Ctl_1 id_decoder_Ctl_0   McJmp_7  id_ir_Out ir_decode_g1    id_Microcode_PC_Ld     
+ 30 
+ 31 
+ 32   STR By Your Name......................
+ 33 
+ 34 
+ 35 
+ 36 
+ 37 
+ 38 
+ 39 // ------------ Instruction Execute (Implementation) --------------------------
+ 40 
+ 41 
+ 42 // OpLoad, 0x1xxx =&gt; 0x88. 3+2 Ticks.
+ 43     ORG        0b1_0001_000             // 0x88
+ 44     hand_out id_ir_Out   id_mar_Ld      set_execute id_Microcode_PC_Inc  // Move HAND -&gt; MAR
+ 45     id_memory_Read                      id_Microcode_PC_Inc          
+ 46     id_ac_Ld   id_mdr_Out               ins_end id_Microcode_PC_Clr      // Move MDR -&gt; AC - Start of next instruction
+ 47 
+ 48 // OpStore, 0x2xxx =&gt; 0x90. 3+2 Ticks.    
+ 49     ORG        0b1_0010_000             // 0x90
+ 50     hand_out   id_ir_Out id_mar_Ld      set_execute id_Microcode_PC_Inc // Move HAND -&gt; MAR
+ 51     id_mdr_Ld   id_ac_Out               id_Microcode_PC_Inc             // Move AC -&gt; MDR 
+ 52     id_memory_Write                     ins_end id_Microcode_PC_Clr     // Write
+ 53 
+ 54 
+ 55 
+ 56 
+ 57 
+ 58 
+ 59 
+ 60 
+ 61 
+ 62 
+ 63 
+ 64 
+ 65 
+ 66 // Jumps and Store: Stores value of PC at address X then increments PC to X+1
+ 67 // OpJnS, 0x0xxx =&gt; 0x80.  3+6 Ticks.
+ 68     ORG        0b1_0000_000                            // 0x80            
+ 69   // TODO
+ 70 
+ 71 // OpAdd, 0x3xxx =&gt; 0x98. 3+3 Ticks.
+ 72     ORG        0b1_0011_000                            // 0x98
+ 73   // TODO
+ 74 
+ 75 // OpSubt, 0x4xxx =&gt; 0xA0. 3+3 Ticks.
+ 76     ORG        0b1_0100_000                            // 0xA0
+ 77   // TODO
+ 78 
+ 79 // OpInput, 0x5xxx =&gt; 0xA8. 3+1 Ticks.      
+ 80     ORG        0b1_0101_000                            // 0xA8
+ 81   // TODO
+ 82 
+ 83 // OpOutput, 0x6xxx =&gt; 0xA8. 3+1 Ticks.
+ 84     ORG        0b1_0110_000                            // 0xB0
+ 85   // TODO
+ 86 
+ 87 // OpHalt, 0x7xxx =&gt; 0xB0. 3+1 Ticks.
+ 88     ORG        0b1_0111_000                            // 0xB8
+ 89   // TODO
+ 90 
+ 91 // OpJump, 0x9xxx =&gt; 0xE8. 3+1 Ticks.
+ 92     ORG        0b1_1001_000                            // 0xC8
+ 93   // TODO
+ 94                                 
+ 95 // OpClear, 0xAxxx =&gt; 0xD8. 3+1 Ticks.
+ 96     ORG        0b1_1010_000                            // 0xD8
+ 97   // TODO
+ 98 
+ 99 // OpLoadI, 0xD =&gt; 0xE8 address.  3+4 = 7 Ticks
+100   ORG      0b1_1101_000                          // 0xE8
+101   // TODO
+102 
+103 // OpStoreI 0xE, =&gt; 0xf8 address. Ticks 3+3
+104   ORG      0b1_1110_000                          // 0xF0
+105   // TODO
+106 
+107 // OpUnused 0xF, =&gt; 0xf8 address. ?forever?
+108   ORG      0b1_1111_000                          // 0xF8
+109   // TODO
+110 
+111 // OpAddI 0xB, =&gt; 0xf8 address. Ticks 3+5
+112   ORG      0b1_1011_000                          // 0xd8
+113   // TODO
+114 
+115 // OpJumpI 0xCxxx, =&gt; 0xE0
+116   ORG      0b1_1100_000                          // 0xE0
+117   // TODO
+118 
+119 
+120 // OpSkip[XXXX] --- OpSkipLt0, OpSkipEq0, OpSkipGt0: 3+3
+121     ORG        0b1_1000_000
+122   // TODO
+123 
+124     ORG        0b01_0000_00                                        // 0x40
+125   // TODO
+126     
+127     ORG        0b01_0100_00                                        // 0x50
+128   // TODO
+129     
+130     ORG        0b01_1000_00                                        // 0x60
+131   // TODO
+132 
+133   ORG       0b0010_0000                                // 0x20 (no skip)
+134   // TODO
+135 
+136   ORG       0b0010_0010                                // 0x22 (skip)
+137   // TODO
+138 
+139 
+140 
+141 __end__
+142 
+...
+   
+// Lines removed for this section of homework - see ./final.m2
+    
+</code></pre>
+
+<p>You can bring up the emulator at
+<a href="http://www.2c-why.com">http://www.2c-why.com</a></p>
+
+<p>First take the file and change &lsquo;STR&rsquo; (on line 32) with your name to your name.  This is important
+because of how the assembled files are stored on the server.</p>
+
+<p>Lines 2 to 18 - Have the decleration for all the liens that you can turn on and off.  If you do not
+turn a line on it is off.  For example, on line 29 McJmp_7 is turned on.  This means that McJmp_0 to
+McJmp_6 are off.</p>
+
+<p>Every register ( PC, IR, AC etc - has a set of common lines.  Not all of them are available in
+this emulation.  The Lines are:
+- Ld  Load the register from its inputs
+- Inc  Increment the register
+- Clr  Set the register to 0
+- Out  Output the values from the register
+Most of the registers are 16 bit registers.  The exception is the Microcode_PC is only 8 bits.</p>
+
+<p>Some of the registers have special lines:
+- IsZero - all all the values in the register 0 (on the Result register)
+- Out_To_ALU - output data from the AC to the ALU (A) side.</p>
+
+<p>The special hardware that makes all of this work is the &ldquo;hand_out&rdquo; that isolates 12 bits from the
+IR register and puts that onto the buss.  The most significant 4 bits are set to 0.  To do this
+you have to turn on the output from the IR at the same time.  Line 29 above has this.</p>
+
+<p>At the same time Line 29 also loads the Microcode_PC register.  The way this works is that the
+set of input to the Mux/Decodeer is</p>
+
+<table>
+<thead>
+<tr>
+<th>Bit</th>
+<th>Loaded With</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>7</td>
+<td>1 from turning on McJmp_7</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>From IR : Bit 15</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>From IR : Bit 14</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>From IR : Bit 13</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>From IR : Bit 12</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>0 from McJmp_2 - not turned on</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>0 from McJmp_1 - not turned on</td>
+</tr>
+
+<tr>
+<td>0</td>
+<td>0 from McJmp_0 - not turned on</td>
+</tr>
+</tbody>
+</table>
+
+<p>This is the set of inputs that is sen on the &ldquo;11&rdquo; input to the Mux/Decoder.  Then the mux
+has it&rsquo;s &ldquo;11&rdquo; input sent to its output.</p>
+
+<p>For example: A load instruction from address with a hand of 3 is 0x1003.  The bits 15..12
+in the instuction are 0x1, or 0b0001 so&hellip;:</p>
+
+<table>
+<thead>
+<tr>
+<th>Bit</th>
+<th>Loaded With</th>
+<th>Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>7</td>
+<td>1 from turning on McJmp_7</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>From IR : Bit 15</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>From IR : Bit 14</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>From IR : Bit 13</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>From IR : Bit 12</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>0 from McJmp_2 - not turned on</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>0 from McJmp_1 - not turned on</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>0</td>
+<td>0 from McJmp_0 - not turned on</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+<p>In Binary this is 0b1000_1000 or in Hex 0x88.  This is the value that is loaded into the Microcode_PC.
+This takes us to adress 0x88 for the next microcode instruction and that is on line 44 in the code.</p>
+
+<p>Another example with the Halt instruction.  It is 0x7000 so the binary for it is 0b_0111_0000_0000_0000.
+The Instruction is 0x7 or 0x0111.</p>
+
+<table>
+<thead>
+<tr>
+<th>Bit</th>
+<th>Loaded With</th>
+<th>Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>7</td>
+<td>1 from turning on McJmp_7</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>From IR : Bit 15</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>From IR : Bit 14</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>From IR : Bit 13</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>From IR : Bit 12</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>0 from McJmp_2 - not turned on</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>0 from McJmp_1 - not turned on</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>0</td>
+<td>0 from McJmp_0 - not turned on</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+<p>This is a 0x1011_1000 or a 0xB8 address.</p>
+
+<p>The code has all the locations set for the primary jumps from decoding the instructions.  This is the
+primary decode of the instructions.  One instruction has a secondary decode.  That is the Skipcond set
+of 3 instructions.  OpSkipLt0, OpSkipEq0, OpSkipGt0.  These instructions will jump to<br />
+0b1_1000_000 or 0xC0.   After the primary decode a secondary decode with the Mux/Decoder set to &ldquo;10&rdquo;
+has to happen.  In this case the lines are set so that:</p>
+
+<table>
+<thead>
+<tr>
+<th>Bit</th>
+<th>Loaded With</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>7</td>
+<td>1 from turning on McJmp_7</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>1 from turning on McJmp_6</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>From IR : Bit 11</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>From IR : Bit 10</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>From IR : Bit  9</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>From IR : Bit  8</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>0 from McJmp_1 - not turned on</td>
+</tr>
+
+<tr>
+<td>0</td>
+<td>0 from McJmp_0 - not turned on</td>
+</tr>
+</tbody>
+</table>
+
+<p>Notice that you can set McJmp_7 and McJmp_6 to the most significant 2 bits of the destination address.
+It is <em>important</em> that you do not send the secondary jump to the same location as other addresses that
+are  already used.  In my implementation of the microcode I left McJmp_7 as a 0 and set McJmp_6 to
+a 1.  The locations for the instructions on lines 131 to 135 reflect this.  With this assumption
+and these 4 lines we can then have a decode of the SkipEq instructions 0x8400 with:</p>
+
+<table>
+<thead>
+<tr>
+<th>Bit</th>
+<th>Loaded With</th>
+<th>Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>7</td>
+<td>1 from turning on McJmp_7</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>1 from turning on McJmp_6</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>From IR : Bit 11</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>From IR : Bit 10</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>From IR : Bit  9</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>From IR : Bit  8</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>0 from McJmp_1 - not turned on</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>0</td>
+<td>0 from McJmp_0 - not turned on</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+<p>This takes us to an address of 0b01_0100_00 or 0x50.  This is on line  127.</p>
+
+<p>At that point we need to skip an instruction if the condition is matched.  The &ldquo;Is Zero&rdquo; output from
+the Result register is hooked to the decoder mux.  Set the mux to &ldquo;10&rdquo; and Load the Microcode_PC register.
+The key is that the other inputs to the &ldquo;10&rdquo; mux are:</p>
+
+<table>
+<thead>
+<tr>
+<th>Bit</th>
+<th>Loaded With</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>7</td>
+<td>1 from turning on McJmp_7</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>1 from turning on McJmp_6</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>1 from turning on McJmp_5</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>1 from turning on McJmp_4</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>1 from turning on McJmp_3</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>1 from turning on McJmp_2</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Is Zero</td>
+</tr>
+
+<tr>
+<td>0</td>
+<td>0 from McJmp_0 - not turned on</td>
+</tr>
+</tbody>
+</table>
+
+<p>This allows us to jump to some other address when &ldquo;Is Zero&rdquo; is 0 or 1.</p>
+
+<p>We can also jump to any address we want to.  Set the Mux to &ldquo;00&rdquo; and ALL the McJmp_XXXX are connected to the
+mux.  This is a GOTO operation.</p>
+
+<table>
+<thead>
+<tr>
+<th>Bit</th>
+<th>Loaded With</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>7</td>
+<td>1 from turning on McJmp_7</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>1 from turning on McJmp_6</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>1 from turning on McJmp_5</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>1 from turning on McJmp_4</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>1 from turning on McJmp_3</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>1 from turning on McJmp_2</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>1 from turning on McJmp_1</td>
+</tr>
+
+<tr>
+<td>0</td>
+<td>1 from turning on McJmp_0</td>
+</tr>
+</tbody>
+</table>
+
+<p>The way that I implemented the Halt instruction is turning on the is_halted line (imprtant) and the doing a jump
+back to the current microcode location forever in a loop.</p>
+
+<h2>The ALU</h2>
+
+<p>Our ALU has 4 control inputs:</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">i3</th>
+<th align="center">i2</th>
+<th align="center">i1</th>
+<th align="center">i0</th>
+<th align="center">Used</th>
+<th align="left">Action Taken</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">*</td>
+<td align="left">2s Compliment</td>
+</tr>
+
+<tr>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">*</td>
+<td align="left">Increment by 1, ac + 1 -&gt; Result</td>
+</tr>
+
+<tr>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center"></td>
+<td align="left">Decrement by 1, 2s compliment, result = ac - 1</td>
+</tr>
+
+<tr>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">*</td>
+<td align="left">Add: result = ac + bus (mdr usually)</td>
+</tr>
+
+<tr>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">*</td>
+<td align="left">Sub: subtract A - B</td>
+</tr>
+
+<tr>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center"></td>
+<td align="left">A &gt;&gt; B - Arithmetic - fills with MSB</td>
+</tr>
+
+<tr>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">*</td>
+<td align="left">A == B - if A == B, result &lt;- 1</td>
+</tr>
+
+<tr>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center"></td>
+<td align="left">Compliment: Toggle each bit in result = ^ac</td>
+</tr>
+
+<tr>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">9 *</td>
+<td align="left">1 if AC less than 0, 2s compliment</td>
+</tr>
+
+<tr>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">A *</td>
+<td align="left">1 if AC greater than 0, 2s compliment</td>
+</tr>
+
+<tr>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">B</td>
+<td align="left">A and B</td>
+</tr>
+
+<tr>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">C</td>
+<td align="left">A or B</td>
+</tr>
+
+<tr>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">D</td>
+<td align="left">A xor B</td>
+</tr>
+
+<tr>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">E</td>
+<td align="left">A &gt;&gt; B - logical - 0 fill   - Shift Right</td>
+</tr>
+
+<tr>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">F</td>
+<td align="left">A &lt;&lt; B - logical - 0 fill   - Shift Left</td>
+</tr>
+</tbody>
+</table>
+
+<p>You will ned to set the ALU to do some of the operations.</p>
+
+<p>For example:  To do the ADD instruction you need to turn on the <code>id_ac_Out_to_ALU</code>.
+This is to get the data from the AC to the A side of the ALU.  You need to turn on the <code>id_mdr_Out</code>
+so that the B side of the alu has the other side of the add operation.  Then turn on
+<code>id_ALU_Ctl</code> and <code>id_ALU_Ctl_2</code>.  The other ALU signals should be 0.  Turn on the Result LD signal
+so that it will load data into the register.  This is <code>id_result_Ld</code>
+Don&rsquo;t forget to <code>id_Microcode_PC_Inc</code> so that you go to the next Microcode Instruction!.</p>
+
+<p>At the beginning of each instruction it is important to turn on the <code>set_execute</code> line.
+This tells the emulator that you have left the &ldquo;fetch&rdquo; part of the instruction and are now
+running the body of the instruction.  At the last step in the instruction you need to
+<code>ins_end</code> and <code>id_Microcode_PC_Clr</code>.          The <code>ins_end</code> will tell the emulator that
+you have finished an instruction.  The <code>id_Microcode_PC_Clr</code> will clear the Microcode PC
+so that you start the next fetch of the next instruction.</p>
+
+<p>All of the instruction lines are case sensitive.  <code>id_ac_Ld</code> is not the same as
+<code>id_AC_ld</code> and will not work.</p>
+
+<h2>Example Assemble (on your system)</h2>
+
+<p>You can download and use the microcode assembler at the command line.</p>
+
+<pre><code>$ mcasm --in microcode-file.m2 --out hex-file.hex --upload
+</code></pre>
+
+<p>The upload flag tells the assembler to automatically upload the hex file to the sever.
+You have to connected to the web to do this.  At the end it will output a long hex
+value.  You need to cut and paste this into the <a href="http://www.2c-why.com">http://www.2c-why.com</a> application to
+tell it to load your code in the emulator.</p>
+
+<h2>Example Assemble online</h2>
+
+<p>In a similar fusion you can use the command line assembler to assemble your MARIE
+instructions and create a .hex file for them.</p>
+
+<pre><code>$ asm --in marie.mas --out marie.hex --upload
+</code></pre>
+
+<p>You will need a current (updated) version of the assemblers if you are going to use
+them at the command line.  Note the &ldquo;upload&rdquo;.  This will also output a large hex
+number that identifies your code.</p>
+
+<h2>2 Kinds of Assembly</h2>
+
+<p>The microcode has 2 different kinds of assembled hex code.  The MARIE instructions that
+get loaded into main memory and the microcode instructions that get loaded into the
+microcode memory.</p>
+
+<p>The web front end has both of the assemblers bit into it.  You can cut/paste your code
+into the web front end and assemble code online.   These are the bottom two buttons on the left.</p>
+
+<h2>Implement Add Instruction</h2>
+
+<p>For this homework implement the Add, Subt, Store, Jump and Clear instructions.
+Turn in your micocode file.  Also verify that these instructions work with test cases.</p>
+
+<h2>Notes</h2>
+
+<p>The ./final.m2 file has tables in it with useful information after the <strong>end</strong> .
+The <strong>end</strong> is the end of the code and the rest of the file is all just comments.</p>
+
+<h1>Copyright</h1>
+
+<p>Copyright &copy; University of Wyoming, 2020.</p>
+
+</div>
+
