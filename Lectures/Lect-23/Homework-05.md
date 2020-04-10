@@ -387,8 +387,8 @@ into the web front end and assemble code online.   These are the bottom two butt
 
 ## Implement Add Instruction
 
-For this homework implement the Add, Subt, Store, Jump and Clear instructions.
-Turn in your micocode file.  Also verify that these instructions work with test cases.
+For this homework implement the Add, Subt, JnS, Jump and Clear instructions.
+Turn in your microcode file.  Also verify that these instructions work with test cases.
 
 
 ## Notes
