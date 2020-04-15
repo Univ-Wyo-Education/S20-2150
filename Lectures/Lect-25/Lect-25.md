@@ -1,5 +1,21 @@
 # Lecture 25 - System Software
 
+## Videos
+
+[https://youtu.be/SOgFnj-yXdA - Lect-25-cli-pt1.mp4](https://youtu.be/SOgFnj-yXdA)<br>
+[https://youtu.be/jw5hanTW1W0 - Lect-25-cli-pt2.mp4](https://youtu.be/jw5hanTW1W0)<br>
+[https://youtu.be/X1qYt-xFhzg - Lect-25-cli-pt3.mp4](https://youtu.be/X1qYt-xFhzg)<br>
+[https://youtu.be/Zj5n6uguqTA - Lect-25-cli-pt4.mp4](https://youtu.be/Zj5n6uguqTA)<br>
+[https://youtu.be/Pplu3ZJM6PI - Lect-25-pt5-cli.mp4](https://youtu.be/Pplu3ZJM6PI)<br>
+
+From Amazon S3 - for download (same as youtube videos)
+
+[http://uw-s20-2015.s3.amazonaws.com/Lect-25-cli-pt1.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-25-cli-pt1.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-25-cli-pt2.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-25-cli-pt2.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-25-cli-pt3.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-25-cli-pt3.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-25-cli-pt4.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-25-cli-pt4.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-25-pt5-cli.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-25-pt5-cli.mp4)<br>
+
 ## Software and the Integrated Development Environment (IDE)
 
 There are lots of "IDE"s - like Eclipse for Java and PyCharm for Python.
