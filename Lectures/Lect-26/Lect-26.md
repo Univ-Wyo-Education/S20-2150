@@ -2,6 +2,21 @@
 
 ## Videos
 
+[https://youtu.be/e8-vSbrHd_8 - Lect-26-2150-pt1.mp4](https://youtu.be/e8-vSbrHd_8)<br>
+[https://youtu.be/PSIrGiWvWHg - Lect-26-2150-pt2.mp4](https://youtu.be/PSIrGiWvWHg)<br>
+[https://youtu.be/Gvo0-6umdKY - Lect-26-2150-pt3.mp4](https://youtu.be/Gvo0-6umdKY)<br>
+[https://youtu.be/Qp_DgH6Py_4 - Lect-26-2150-pt4.mp4](https://youtu.be/Qp_DgH6Py_4)<br>
+[https://youtu.be/_I3zcSE4P_c - Lect-26-2150-pt5.mp4](https://youtu.be/_I3zcSE4P_c)<br>
+[https://youtu.be/vSMKOvXOIyc - Lect-26-2150-pt6-Microcode-Notes1.mp4](https://youtu.be/vSMKOvXOIyc)<br>
+
+From Amazon S3 - for download (same as youtube videos)
+
+[http://uw-s20-2015.s3.amazonaws.com/Lect-26-2150-pt1.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-26-2150-pt1.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-26-2150-pt2.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-26-2150-pt2.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-26-2150-pt3.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-26-2150-pt3.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-26-2150-pt4.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-26-2150-pt4.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-26-2150-pt5.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-26-2150-pt5.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-26-2150-pt6-Microcode-Notes1.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-26-2150-pt6-Microcode-Notes1.mp4)<br>
 
 # relative and absolute paths
 
