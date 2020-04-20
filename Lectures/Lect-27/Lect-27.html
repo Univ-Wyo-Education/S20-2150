@@ -1,0 +1,1230 @@
+<style>
+@font-face {
+	font-family: octicons-link;
+	src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	line-height: 1.5;
+	color: #24292e;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-size: 16px;
+	line-height: 1.5;
+	word-wrap: break-word;
+}
+
+.markdown-body .pl-c {
+	color: #6a737d;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+	color: #005cc5;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+	color: #6f42c1;
+}
+
+.markdown-body .pl-smi,
+.markdown-body .pl-s .pl-s1 {
+	color: #24292e;
+}
+
+.markdown-body .pl-ent {
+	color: #22863a;
+}
+
+.markdown-body .pl-k {
+	color: #d73a49;
+}
+
+.markdown-body .pl-s,
+.markdown-body .pl-pds,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sre,
+.markdown-body .pl-sr .pl-sra {
+	color: #032f62;
+}
+
+.markdown-body .pl-v,
+.markdown-body .pl-smw {
+	color: #e36209;
+}
+
+.markdown-body .pl-bu {
+	color: #b31d28;
+}
+
+.markdown-body .pl-ii {
+	color: #fafbfc;
+	background-color: #b31d28;
+}
+
+.markdown-body .pl-c2 {
+	color: #fafbfc;
+	background-color: #d73a49;
+}
+
+.markdown-body .pl-c2::before {
+	content: "^M";
+}
+
+.markdown-body .pl-sr .pl-cce {
+	font-weight: bold;
+	color: #22863a;
+}
+
+.markdown-body .pl-ml {
+	color: #735c0f;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+	font-weight: bold;
+	color: #005cc5;
+}
+
+.markdown-body .pl-mi {
+	font-style: italic;
+	color: #24292e;
+}
+
+.markdown-body .pl-mb {
+	font-weight: bold;
+	color: #24292e;
+}
+
+.markdown-body .pl-md {
+	color: #b31d28;
+	background-color: #ffeef0;
+}
+
+.markdown-body .pl-mi1 {
+	color: #22863a;
+	background-color: #f0fff4;
+}
+
+.markdown-body .pl-mc {
+	color: #e36209;
+	background-color: #ffebda;
+}
+
+.markdown-body .pl-mi2 {
+	color: #f6f8fa;
+	background-color: #005cc5;
+}
+
+.markdown-body .pl-mdr {
+	font-weight: bold;
+	color: #6f42c1;
+}
+
+.markdown-body .pl-ba {
+	color: #586069;
+}
+
+.markdown-body .pl-sg {
+	color: #959da5;
+}
+
+.markdown-body .pl-corl {
+	text-decoration: underline;
+	color: #032f62;
+}
+
+.markdown-body .octicon {
+	display: inline-block;
+	vertical-align: text-top;
+	fill: currentColor;
+}
+
+.markdown-body a {
+	background-color: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+	outline-width: 0;
+}
+
+.markdown-body strong {
+	font-weight: inherit;
+}
+
+.markdown-body strong {
+	font-weight: bolder;
+}
+
+.markdown-body h1 {
+	font-size: 2em;
+	margin: 0.67em 0;
+}
+
+.markdown-body img {
+	border-style: none;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+	font-family: monospace, monospace;
+	font-size: 1em;
+}
+
+.markdown-body hr {
+	box-sizing: content-box;
+	height: 0;
+	overflow: visible;
+}
+
+.markdown-body input {
+	font: inherit;
+	margin: 0;
+}
+
+.markdown-body input {
+	overflow: visible;
+}
+
+.markdown-body [type="checkbox"] {
+	box-sizing: border-box;
+	padding: 0;
+}
+
+.markdown-body * {
+	box-sizing: border-box;
+}
+
+.markdown-body input {
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+}
+
+.markdown-body a {
+	color: #0366d6;
+	text-decoration: none;
+}
+
+.markdown-body a:hover {
+	text-decoration: underline;
+}
+
+.markdown-body strong {
+	font-weight: 600;
+}
+
+.markdown-body hr {
+	height: 0;
+	margin: 15px 0;
+	overflow: hidden;
+	background: transparent;
+	border: 0;
+	border-bottom: 1px solid #dfe2e5;
+}
+
+.markdown-body hr::before {
+	display: table;
+	content: "";
+}
+
+.markdown-body hr::after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+.markdown-body table {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.markdown-body td,
+.markdown-body th {
+	padding: 0;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body h1 {
+	font-size: 32px;
+	font-weight: 600;
+}
+
+.markdown-body h2 {
+	font-size: 24px;
+	font-weight: 600;
+}
+
+.markdown-body h3 {
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.markdown-body h4 {
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.markdown-body h5 {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.markdown-body h6 {
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.markdown-body p {
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+
+.markdown-body blockquote {
+	margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+	x-list-style-type: lower-roman;
+	  list-style-type: decimal;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+	list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+	margin-left: 0;
+}
+
+.markdown-body code {
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	font-size: 12px;
+}
+
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 0;
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	font-size: 12px;
+}
+
+.markdown-body .octicon {
+	vertical-align: text-bottom;
+}
+
+.markdown-body .pl-0 {
+	padding-left: 0 !important;
+}
+
+.markdown-body .pl-1 {
+	padding-left: 4px !important;
+}
+
+.markdown-body .pl-2 {
+	padding-left: 8px !important;
+}
+
+.markdown-body .pl-3 {
+	padding-left: 16px !important;
+}
+
+.markdown-body .pl-4 {
+	padding-left: 24px !important;
+}
+
+.markdown-body .pl-5 {
+	padding-left: 32px !important;
+}
+
+.markdown-body .pl-6 {
+	padding-left: 40px !important;
+}
+
+.markdown-body::before {
+	display: table;
+	content: "";
+}
+
+.markdown-body::after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+.markdown-body>*:first-child {
+	margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+	margin-bottom: 0 !important;
+}
+
+.markdown-body a:not([href]) {
+	color: inherit;
+	text-decoration: none;
+}
+
+.markdown-body .anchor {
+	float: left;
+	padding-right: 4px;
+	margin-left: -20px;
+	line-height: 1;
+}
+
+.markdown-body .anchor:focus {
+	outline: none;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 16px;
+}
+
+.markdown-body hr {
+	height: 0.25em;
+	padding: 0;
+	margin: 24px 0;
+	background-color: #e1e4e8;
+	border: 0;
+}
+
+.markdown-body blockquote {
+	padding: 0 1em;
+	color: #6a737d;
+	border-left: 0.25em solid #dfe2e5;
+}
+
+.markdown-body blockquote>:first-child {
+	margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+	margin-bottom: 0;
+}
+
+.markdown-body kbd {
+	display: inline-block;
+	padding: 3px 5px;
+	font-size: 11px;
+	line-height: 10px;
+	color: #444d56;
+	vertical-align: middle;
+	background-color: #fafbfc;
+	border: solid 1px #c6cbd1;
+	border-bottom-color: #959da5;
+	border-radius: 3px;
+	box-shadow: inset 0 -1px 0 #959da5;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	margin-top: 24px;
+	margin-bottom: 16px;
+	font-weight: 600;
+	line-height: 1.25;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+	color: #1b1f23;
+	vertical-align: middle;
+	visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+	text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+	visibility: visible;
+}
+
+.markdown-body h1 {
+	padding-bottom: 0.3em;
+	font-size: 2em;
+	border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h2 {
+	padding-bottom: 0.3em;
+	font-size: 1.5em;
+	border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h3 {
+	font-size: 1.25em;
+}
+
+.markdown-body h4 {
+	font-size: 1em;
+}
+
+.markdown-body h5 {
+	font-size: 0.875em;
+}
+
+.markdown-body h6 {
+	font-size: 0.85em;
+	color: #6a737d;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body li {
+	word-wrap: break-all;
+}
+
+.markdown-body li>p {
+	margin-top: 16px;
+}
+
+.markdown-body li+li {
+	margin-top: 0.25em;
+}
+
+.markdown-body dl {
+	padding: 0;
+}
+
+.markdown-body dl dt {
+	padding: 0;
+	margin-top: 16px;
+	font-size: 1em;
+	font-style: italic;
+	font-weight: 600;
+}
+
+.markdown-body dl dd {
+	padding: 0 16px;
+	margin-bottom: 16px;
+}
+
+.markdown-body table {
+	display: block;
+	width: 100%;
+	overflow: auto;
+}
+
+.markdown-body table th {
+	font-weight: 600;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+	padding: 6px 13px;
+	border: 1px solid #dfe2e5;
+}
+
+.markdown-body table tr {
+	background-color: #fff;
+	border-top: 1px solid #c6cbd1;
+}
+
+.markdown-body table tr:nth-child(2n) {
+	background-color: #f6f8fa;
+}
+
+.markdown-body img {
+	max-width: 100%;
+	box-sizing: content-box;
+	background-color: #fff;
+}
+
+.markdown-body img[align=right] {
+	padding-left: 20px;
+}
+
+.markdown-body img[align=left] {
+	padding-right: 20px;
+}
+
+.markdown-body code {
+	padding: 0.2em 0.4em;
+	margin: 0;
+	font-size: 85%;
+	background-color: rgba(27,31,35,0.05);
+	border-radius: 3px;
+}
+
+.markdown-body pre {
+	word-wrap: normal;
+}
+
+.markdown-body pre>code {
+	padding: 0;
+	margin: 0;
+	font-size: 100%;
+	word-break: normal;
+	white-space: pre;
+	background: transparent;
+	border: 0;
+}
+
+.markdown-body .highlight {
+	margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre {
+	margin-bottom: 0;
+	word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+	padding: 16px;
+	overflow: auto;
+	font-size: 85%;
+	line-height: 1.45;
+	background-color: #f6f8fa;
+	border-radius: 3px;
+}
+
+.markdown-body pre code {
+	display: inline;
+	max-width: auto;
+	padding: 0;
+	margin: 0;
+	overflow: visible;
+	line-height: inherit;
+	word-wrap: normal;
+	background-color: transparent;
+	border: 0;
+}
+
+.markdown-body .full-commit .btn-outline:not(:disabled):hover {
+	color: #005cc5;
+	border-color: #005cc5;
+}
+
+.markdown-body kbd {
+	display: inline-block;
+	padding: 3px 5px;
+	font: 11px "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	line-height: 10px;
+	color: #444d56;
+	vertical-align: middle;
+	background-color: #fafbfc;
+	border: solid 1px #d1d5da;
+	border-bottom-color: #c6cbd1;
+	border-radius: 3px;
+	box-shadow: inset 0 -1px 0 #c6cbd1;
+}
+
+.markdown-body :checked+.radio-label {
+	position: relative;
+	z-index: 1;
+	border-color: #0366d6;
+}
+
+.markdown-body .task-list-item {
+	list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+	margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+	margin: 0 0.2em 0.25em -1.6em;
+	vertical-align: middle;
+}
+
+.markdown-body hr {
+	border-bottom-color: #eee;
+}
+
+</style>
+<style>
+ol {
+    display: block;
+    list-style-type: decimal;
+}
+.pagebreak { page-break-before: always; }
+.half { height: 200px; }
+</style>
+
+<div class="markdown-body">
+
+<h1>Lecture 27 - Editing with VI / VIM</h1>
+
+<h2>Videos</h2>
+
+<p><a href="https://youtu.be/AYa1WNgevNI">https://youtu.be/AYa1WNgevNI - Lect-27-2150-pt1-vim-editor.mp4</a><br>
+<a href="https://youtu.be/VY1P0ERl2sU">https://youtu.be/VY1P0ERl2sU - Lect-27-2150-vim.mp4</a><br>
+<a href="https://youtu.be/pkTHyctg_uQ">https://youtu.be/pkTHyctg_uQ - Lect-27-2150-vim2.mp4</a><br>
+<a href="https://youtu.be/9lAbZx44qaU">https://youtu.be/9lAbZx44qaU - Lect-27-2150-vim3.mp4</a><br>
+<a href="https://youtu.be/QHvdJbbL4fk">https://youtu.be/QHvdJbbL4fk - Lect-27-2150-pt2.mp4</a><br>
+<a href="https://youtu.be/ndmtnOSzeT8">https://youtu.be/ndmtnOSzeT8 - Lect-27-2150-pt3-vim.mp4</a><br></p>
+
+<p>From Amazon S3 - for download (same as youtube videos)</p>
+
+<p><a href="http://uw-s20-2015.s3.amazonaws.com/Lect-27-2150-pt1-vim-editor.mp4">http://uw-s20-2015.s3.amazonaws.com/Lect-27-2150-pt1-vim-editor.mp4</a><br>
+<a href="http://uw-s20-2015.s3.amazonaws.com/Lect-27-2150-vim.mp4">http://uw-s20-2015.s3.amazonaws.com/Lect-27-2150-vim.mp4</a><br>
+<a href="http://uw-s20-2015.s3.amazonaws.com/Lect-27-2150-vim2.mp4">http://uw-s20-2015.s3.amazonaws.com/Lect-27-2150-vim2.mp4</a><br>
+<a href="http://uw-s20-2015.s3.amazonaws.com/Lect-27-2150-vim3.mp4">http://uw-s20-2015.s3.amazonaws.com/Lect-27-2150-vim3.mp4</a><br>
+<a href="http://uw-s20-2015.s3.amazonaws.com/Lect-27-2150-pt2.mp4">http://uw-s20-2015.s3.amazonaws.com/Lect-27-2150-pt2.mp4</a><br>
+<a href="http://uw-s20-2015.s3.amazonaws.com/Lect-27-2150-pt3-vim.mp4">http://uw-s20-2015.s3.amazonaws.com/Lect-27-2150-pt3-vim.mp4</a><br></p>
+
+<h1>On Vi / Vim</h1>
+
+<p>First there is an on-line tutorial - it is actually very good.</p>
+
+<p><a href="https://www.openvim.com/">https://www.openvim.com/</a></p>
+
+<p>Go and do the tutorial.</p>
+
+<p>Vi is a modal editor.  There is an &ldquo;insert&rdquo; mode and an &ldquo;edit&rdquo; mode.  Many commands for
+editing only work in &ldquo;edit&rdquo; mode.  Also there is an &ldquo;ex&rdquo; command line mode.</p>
+
+<p>Vi Has a newer more powerful cousin, Vim - that stands for VI Improved.</p>
+
+<h2>Why Vim - part 1</h2>
+
+<p>First it is a super powerful editor.  It can be found on virtually all computers.  I have used it on IBM OS/380 Host, on Supercomputers, on
+Mac / Windows / Linux, on my router running a MIPS processor, on my thermostat on the wall.  It works all the time.  You can edit files
+that are huge and deal with them.</p>
+
+<p>Second - People that use it make more money.</p>
+
+<p>Third - it will make you more productive.  Every time you edit and touch the mouse you are loosing your hand position on the keyboard.
+VIM is designed to allow you to edit and touch type.  Yes you can use the mouse for some stuff - but most stuff is based on you
+keeping your hands in a touch-type position.  VIM is an editor superficially bayed out for touch typing.  A question you should ask
+yourself is if you have ever seen a concert pianist hunt-ant peck for the keys?  No&hellip; And you should not be hunting and pecking
+either.   Most if not all the other editors (with the exception of Emacs) are mousey-hunt-and-peck editors.</p>
+
+<h2>Vim Installation</h2>
+
+<p>Installation of VIM - Windows systems won&rsquo;t come with VI - you will need to install it.
+There is a good guide for installing it at: <a href="https://www.instructables.com/id/Install-and-Write-First-Text-File-Using-Vim-on-Win/">https://www.instructables.com/id/Install-and-Write-First-Text-File-Using-Vim-on-Win/</a></p>
+
+<p>On the Mac a version of &ldquo;vi&rdquo; is pre-installed.  Usually I upgrade this to MacVim.   MacVim is the GUI version of VIM.  There is also the
+command line version of vim.  MacVim first.  <a href="https://macvim-dev.github.io/macvim/">https://macvim-dev.github.io/macvim/</a>.  For the
+command line I use &ldquo;brew&rdquo; the package manager.  You can install brew at: <a href="https://brew.sh/">https://brew.sh/</a>.  Then to install the
+command line version of vim - at the Terminal (You can find the terminal in Applications/Utilities):</p>
+
+<pre><code>$ brew install vim
+$ brew link vim
+</code></pre>
+
+<p>On Linux a minimal version of vim is pre-installed on most distributions.  A full version of vim may require removing the minimal
+venison and installing the full version.  A good example of instructions for doing this is
+<a href="https://www.simplified.guide/ubuntu/install-vim">https://www.simplified.guide/ubuntu/install-vim</a></p>
+
+<p>On Ubuntu:</p>
+
+<pre><code>$ sudo apt remove --assume-yes vim-tiny
+$ sudo apt update
+$ sudo apt install --assume-yes vim
+</code></pre>
+
+<p>You need to go and install VIM on your system.</p>
+
+<h2>Why Vim - part 2</h2>
+
+<h3>Example 1</h3>
+
+<p>Let&rsquo;s say I have a list of tables in a database that I need to turn into just a list of the table names in a JSON input file.
+The example file is in ex1.orig.txt and the final is in ex1.json.  Both of these files are in the Lect-27 directory.</p>
+
+<p>Let me demo how to use vim to transform this into the final form.</p>
+
+<h3>Example 2</h3>
+
+<p>Editing big files.</p>
+
+<p>Also note that the &ldquo;big&rdquo; file was on a remote server that is actually in Texas.  I logged in with SSH to the server and
+it works - to edit stuff.   The server has no GUI at all.</p>
+
+<h3>Example 3</h3>
+
+<p>It works on &ldquo;tiny&rdquo; hardware.   Let&rsquo;s login to my router.</p>
+
+<h2>Edit a file</h2>
+
+<pre><code>$ vi file1 file2
+</code></pre>
+
+<p>To save the file after modification either &ldquo;:wq&rdquo; or ZZ.</p>
+
+<p>To abandon changes - &ldquo;:q!&rdquo;</p>
+
+<h2>Modal Editing.</h2>
+
+<p>VIM is a modal editor.  It is not WYSIWYG - what you see is what you get.  GUI&rsquo;s try to be as WYSIWYG as possible.
+VIM is not a use-it without learning it tool.   You have to learn to use VIM.  It takes time and effort.
+After 30+ years I am still learning new commands in VIM - and I already know thousands of commands.</p>
+
+<p>When you start you are in command mode.  To insert you use an  &lsquo;i&rsquo; for insert before or an &lsquo;a&rsquo; to append after
+the current character.  When you are done inserting you use a ESC (escape) key to get from insert mode to edit
+mode.</p>
+
+<p>If you want to use a &ldquo;ex&rdquo; command you type &lsquo;:&rsquo; (colon) to get to the EX editor prompt mode.  This appears at the
+bottom left.  To search in command mode you type a &lsquo;/&rsquo; and the regular expression pattern that you want to search
+for.  You can search UP in the document with a &lsquo;?&rsquo; and the pattern.  To get to the next occurrence of the pattern
+you use the &lsquo;n&rsquo; key.</p>
+
+<p>To turn on line numbers &ldquo;:set nu&rdquo; and enter - to turn them off &ldquo;:set nonu&rdquo; and enter.  You can set permanent
+defaults in the ~/.vimrc file.</p>
+
+<p>If you want all the fancy code-completion stuff - like an IDE - there is a VIM IDE for most languages.</p>
+
+<p>Commands in EX are prefixed with the line range that they apply to.  So with line numbers on you can say</p>
+
+<pre><code>:3,38
+</code></pre>
+
+<p>That would be the line numbers from 3 to 38.</p>
+
+<pre><code>:3,38s/aaa/bbb/g
+</code></pre>
+
+<p>Change all the aaa&rsquo;s to bbb - and do all of them across each line - that is the  &lsquo;g&rsquo; global at the end.
+If you want to be prompted for a yes/no for each one then add a &lsquo;c&rsquo;.</p>
+
+<pre><code>:3,38s/aaa/bbb/gc
+</code></pre>
+
+<p>There are 2 special line numbers &lsquo;.&rsquo; - the current line and &lsquo;$&rsquo; the last line in the file.  You can do
+computations on the line numbes.</p>
+
+<pre><code>1,$-2s/aaa/bbb/
+</code></pre>
+
+<p>The <code>$-2</code> says subtract 2 from the last line in the file.</p>
+
+<p>The pattern <code>aaa</code> is a regular expression.  So I can say, <code>s/^[^|]*|//</code>.</p>
+
+<p>This is find all the strings that start at the beginning of the line, the 1st <code>^</code>.  Then match any
+character except <code>|</code> - that is the <code>[^|]</code> and do a string of as many as possible of this, <code>[^|]*</code>
+followed by <code>|</code> and replace it with the empty string.</p>
+
+<h2>Frequently-Used Commands</h2>
+
+<p>If you just use the bare bones set of commands - then you miss out on the opportunity to be more productive.
+I like productive - that means less time typing and more time skiing.</p>
+
+<p>To this end learn at least some of these other frequently-used vi commands:</p>
+
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>h</code></td>
+<td>move cursor one character to left</td>
+</tr>
+
+<tr>
+<td><code>j</code></td>
+<td>move cursor one line down</td>
+</tr>
+
+<tr>
+<td><code>k</code></td>
+<td>move cursor one line up</td>
+</tr>
+
+<tr>
+<td><code>l</code></td>
+<td>move cursor one character to right</td>
+</tr>
+
+<tr>
+<td><code>+</code></td>
+<td>move to the next line at the beginning</td>
+</tr>
+
+<tr>
+<td><code>o</code></td>
+<td>open up a new line to enter stuff on.</td>
+</tr>
+
+<tr>
+<td><code>w</code></td>
+<td>move cursor one word to right</td>
+</tr>
+
+<tr>
+<td><code>b</code></td>
+<td>move cursor one word to left</td>
+</tr>
+
+<tr>
+<td><code>0</code></td>
+<td>move cursor to beginning of line</td>
+</tr>
+
+<tr>
+<td><code>$</code></td>
+<td>move cursor to end of line</td>
+</tr>
+
+<tr>
+<td><code>nG</code></td>
+<td>move cursor to line n, 120G for example.</td>
+</tr>
+
+<tr>
+<td><code>*</code></td>
+<td>match the word you are on and move to next one.</td>
+</tr>
+
+<tr>
+<td><code>control-f</code></td>
+<td>scroll forward one screen</td>
+</tr>
+
+<tr>
+<td><code>control-b</code></td>
+<td>scroll backward one screen</td>
+</tr>
+
+<tr>
+<td><code>control-d</code></td>
+<td>scroll forward one half screen</td>
+</tr>
+
+<tr>
+<td><code>control-u</code></td>
+<td>scroll backward one half screen</td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td><code>i</code></td>
+<td>insert to left of current cursor position</td>
+</tr>
+
+<tr>
+<td></td>
+<td>Exit insert moded with ESC - Escape Character.</td>
+</tr>
+
+<tr>
+<td><code>a</code></td>
+<td>append to right of current cursor position</td>
+</tr>
+
+<tr>
+<td></td>
+<td>Exit insert moded with ESC - Escape Character.</td>
+</tr>
+
+<tr>
+<td><code>dw</code></td>
+<td>delete current word (end with ESC)</td>
+</tr>
+
+<tr>
+<td><code>cw</code></td>
+<td>change current word (end with ESC)</td>
+</tr>
+
+<tr>
+<td><code>r</code></td>
+<td>change current character</td>
+</tr>
+
+<tr>
+<td><code>~</code></td>
+<td>change case (upper-, lower-) of current character</td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td><code>dd</code></td>
+<td>delete current line</td>
+</tr>
+
+<tr>
+<td><code>Xdd</code></td>
+<td>delete X lines, so 3dd deletes 3 lines.</td>
+</tr>
+
+<tr>
+<td><code>D</code></td>
+<td>delete portion of current line to right of the cursor</td>
+</tr>
+
+<tr>
+<td><code>x</code></td>
+<td>delete current character</td>
+</tr>
+
+<tr>
+<td><code>mA</code></td>
+<td>mark current position - line - can use A..Z marks</td>
+</tr>
+
+<tr>
+<td><code>d'a</code></td>
+<td>delete everything from the marked position to here</td>
+</tr>
+
+<tr>
+<td><code>'a</code></td>
+<td>go back to the marked position</td>
+</tr>
+
+<tr>
+<td><code>p</code></td>
+<td>dump out at current place your last deletion</td>
+</tr>
+
+<tr>
+<td><code>fX</code></td>
+<td>move to the next F character.</td>
+</tr>
+
+<tr>
+<td><code>dfX</code></td>
+<td>delete from the current position to next F</td>
+</tr>
+
+<tr>
+<td><code>dw</code></td>
+<td>delete from the current position next word.</td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td><code>u</code></td>
+<td>undo the last command</td>
+</tr>
+
+<tr>
+<td><code>.</code></td>
+<td>repeat the last command</td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td><code>J</code></td>
+<td>combine (``join&rdquo;) next line with this one</td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td><code>:w</code></td>
+<td>write file to disk, stay in vi</td>
+</tr>
+
+<tr>
+<td><code>:q!</code></td>
+<td>quit VI, do not write file to disk,</td>
+</tr>
+
+<tr>
+<td><code>ZZ</code></td>
+<td>write file to disk, quit vi</td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td><code>:r filename</code></td>
+<td>read in a copy of the specified file to the current</td>
+</tr>
+
+<tr>
+<td></td>
+<td>buffer</td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td><code>:A,Bw file</code></td>
+<td>write a section out to a new file. From line A to B</td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td><code>/string</code></td>
+<td>search forward for string (end with Enter)</td>
+</tr>
+
+<tr>
+<td><code>?string</code></td>
+<td>search backward for string (end with Enter)</td>
+</tr>
+
+<tr>
+<td><code>n</code></td>
+<td>repeat the last search (``next search&rdquo;)</td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td><code>:s/s1/s2</code></td>
+<td>replace (&ldquo;substitute&rdquo;) (the first) s1 in line by s2</td>
+</tr>
+
+<tr>
+<td><code>:A,Bs/s1/s2/g</code></td>
+<td>replace all instances of s1 in the line range A,B</td>
+</tr>
+
+<tr>
+<td></td>
+<td>by s2 (A,B is where A and B are</td>
+</tr>
+
+<tr>
+<td></td>
+<td>either explicit line numbers, or . (current line)</td>
+</tr>
+
+<tr>
+<td></td>
+<td>or $ (last line) or by marks that you have placed.</td>
+</tr>
+
+<tr>
+<td><code>%</code></td>
+<td>go to the &ldquo;mate,&rdquo; if one exists, of this parenthesis</td>
+</tr>
+
+<tr>
+<td></td>
+<td>or brace or bracket (very useful for programmers!)</td>
+</tr>
+</tbody>
+</table>
+
+<p>All of the `:&rsquo; commands end with your hitting the Enter key. (By the way, these
+are called &ldquo;ex&rdquo; commands, after the name of the simpler editor from which vi is
+descended.)</p>
+
+<p>The a command, which puts text to the right of the cursor, does put you in
+insert-text mode, just like the i command does.</p>
+
+<p>By the way, if you need to insert a control character while in append/insert
+mode, hit control-v first. For example, to insert control-g into the file being
+edited, type control-v then control-g.</p>
+
+<p>One of vi&rsquo;s advantages is easy cursor movement. Since the keys h,j,k,l are
+adjacent and easily accessible with the fingers of your right hand, you can
+quickly reach them to move the cursor, instead of fumbling around for the arrow
+keys as with many other editors (though they can be used in vi too). You will
+find that this use of h,j,k,l become second nature to you very quickly, very
+much increasing your speed, efficiency and enjoyment of text editing.</p>
+
+<p>Many of the commands can be prefixed by a number. For example, 3dd means to
+delete (consecutive) three lines, starting with the current one. As an another
+example, 4cw will delete the next four words.</p>
+
+<p>The p command can be used for &ldquo;cut-and-paste&rdquo; and copy operations. For example,
+to move three lines from place A to place B: 1. Move the cursor to A. 2. Type
+3dd. 3. Move the cursor to B. 4. Type p.</p>
+
+<p>The same steps can be used to copy text, except that p must be used twice, the
+first time being immediately after Step 2 (to put back the text just deleted).
+Note that you can do operations like cut-and-paste, cursor movement, and so on,
+much more easily using a mouse. This requires a GUI version of vi, which we will
+discuss later in this document.</p>
+
+</div>
+
