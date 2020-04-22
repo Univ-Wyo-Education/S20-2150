@@ -1,0 +1,3 @@
+#!/bin/bash
+
+grep '<row' $1 | sed -E 's/^.*DisplayName="//' | sed -E 's/".*$//' | get-length | tee ,tmp1 | sort -n | tee ,tmp2 | uniq -c >$2
