@@ -3,6 +3,17 @@
 
 # Videos
 
+[https://youtu.be/wQqYHh3caac - Lect-29-2150-pt1-git.mp4](https://youtu.be/wQqYHh3caac)<br>
+[https://youtu.be/3hK4NNyrKMM - Lect-29-git-pt2.mp4](https://youtu.be/3hK4NNyrKMM)<br>
+[https://youtu.be/-rAUbxzXUrg - Lect-29-git-pt3.mp4](https://youtu.be/-rAUbxzXUrg)<br>
+[https://youtu.be/lqfAjbypH08 - Lect-29-git-pt4.mp4](https://youtu.be/lqfAjbypH08)<br>
+
+From Amazon S3 - for download (same as youtube videos)
+
+[http://uw-s20-2015.s3.amazonaws.com/Lect-29-2150-pt1-git.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-29-2150-pt1-git.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-29-git-pt2.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-29-git-pt2.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-29-git-pt3.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-29-git-pt3.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-29-git-pt4.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-29-git-pt4.mp4)<br>
 
 # Git
 
@@ -13,8 +24,6 @@ Reference:
 1. [https://www.atlassian.com/git/tutorials/using-branches](https://www.atlassian.com/git/tutorials/using-branches)
 1. [https://www.atlassian.com/git/tutorials/using-branches/git-checkout](https://www.atlassian.com/git/tutorials/using-branches/git-checkout)
 1. [https://www.atlassian.com/git/tutorials/using-branches/git-merge](https://www.atlassian.com/git/tutorials/using-branches/git-merge)
-
-We talked a little bit about a "pure functional" data structure underlying modern compilers.
 
 git is a source code control system.  This means that it keeps copies of files that you
 can use in a project.  When you make a change it keeps the differences between the changes.
