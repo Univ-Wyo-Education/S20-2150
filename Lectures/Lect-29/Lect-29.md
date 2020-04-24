@@ -1,5 +1,19 @@
 # Lecture 29 - Git - a very important software tool
 
+
+# Videos
+
+
+# Git
+
+
+Reference: 
+
+1. [https://www.atlassian.com/git/tutorials/learn-git-with-bitbucket-cloud](https://www.atlassian.com/git/tutorials/learn-git-with-bitbucket-cloud)
+1. [https://www.atlassian.com/git/tutorials/using-branches](https://www.atlassian.com/git/tutorials/using-branches)
+1. [https://www.atlassian.com/git/tutorials/using-branches/git-checkout](https://www.atlassian.com/git/tutorials/using-branches/git-checkout)
+1. [https://www.atlassian.com/git/tutorials/using-branches/git-merge](https://www.atlassian.com/git/tutorials/using-branches/git-merge)
+
 We talked a little bit about a "pure functional" data structure underlying modern compilers.
 
 git is a source code control system.  This means that it keeps copies of files that you
@@ -46,11 +60,11 @@ So... Without further adieu....
 
 To create your own git repository - you don't need anybody else - you need a copy of git installed.
 
-xyzzy - Windows
+Install Info: [https://git-scm.com/book/en/v2/Getting-Started-Installing-Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
-xyzzy - mac
+Install for Windows: [https://git-scm.com/download/win](https://git-scm.com/download/win)
 
-xyzzy - linux
+Install for Mac - May already be installed: [https://www.atlassian.com/git/tutorials/install-git](https://www.atlassian.com/git/tutorials/install-git)
 
 Now that you have it let's create a "project" called "sample-01"
 
@@ -290,11 +304,124 @@ gitlab.com - but I use both).
 
 Sign into github.com - it should look something like:
 
-![github01.png](github01.png)
+<img src="github01.png" style="border: 2px solid black" alt="New button to create project">
 
 then click on the green button that says "New" on the upper left.
 
-![github02.png](github02.png)
+<img src="github02.png" style="border: 2px solid black" alt="Create github project">
 
 
+this will give you a page with instructions on how to send your code to github.
+
+<img src="github03.png" style="border: 2px solid black" alt="Push Code to Github">
+
+We want the middle set.
+
+```
+$ git remote add origin git@github.com:Univ-Wyo-Education/sample-01.git
+$ git push -u origin master
+```
+
+You will need to reface "Univ-Wyo-Education" with your user name.  Also
+depending on how you are logging into github the stuff after "origin" will
+be different.
+
+This should produce some output that looks similar to:
+
+```
+Enumerating objects: 13, done.
+Counting objects: 100% (13/13), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (13/13), 1.07 KiB | 548.00 KiB/s, done.
+Total 13 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), done.
+To github.com:Univ-Wyo-Education/sample-01.git
+ * [new branch]      master -> master
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+```
+
+The "[new branch]..." stuff indicates that it pushed your files to github.com.
+
+If this is your first time working with a "public repository" then 
+let's give a big shout - "Yea!".  You have created work and published it to
+the world!
+
+Let's modify a file, create a version tag and push that to github.com.
+
+First let's modify the README.md and put some manful info in it.
+Include your name - and that this is a sample to learn git.
+
+```
+$ vi README.md
+$ git add README.md
+$ git commit -m "Provide content in README.md"
+$ git push origin master
+```
+
+Now let's create a version tag.
+
+```
+$ git tag v0.0.1
+$ git push origin v0.0.1
+```
+
+You now have a "tagged"  version that is published with a readme!.
+
+
+You can also create a branch and the push the branch.
+
+(Hint - this is basically what you need to do for the homework)
+
+```
+$ git checkout -b hw-branch
+$ vi 2nd-file
+$ git add 2nd-file
+$ git commit 
+$ git push origin hw-branch
+```
+
+
+## Git Command Overview
+
+Looking through my history this is 98.1% of the git commands that I have used for the last 7 years.  
+There are other git commands - like re-writing history - or setting up multiple named git origins.
+You just don't use them very often.
+These are the ones that will get you from beginner to using git as an "expert".  At to using a GUI - I have used a GUI 4 times in 7 years to do 3-way diffs (not in the 98.1%)
+I use git every single day - after vim and command (cd/cat/head/tail/ls/mv/rm/bash/zsh etc) line it is the most used "tool" that I have.
+
+### Basics
+- git help <command>: get help for a git command
+- git init: creates a new git repo, with data stored in the .git directory
+- git add <filename>: adds files to staging area
+- git commit: creates a new commit
+- git status: tells you what’s going on
+
+### Write good commit messages!
+- git checkout <revision>: updates HEAD and current branch
+- git log: shows a flattened log of history
+- git log --all --graph --decorate: visualizes history as a DAG
+- git diff <filename>: show differences since the last commit
+- git diff <revision> <filename>: shows differences in a file between snapshots
+
+### Branching and merging
+- git branch: shows branches
+- git checkout -b <name>: creates a branch and switches to it same as git branch <name>; git checkout <name>
+- git merge <revision>: merges into current branch
+- git mergetool: use a fancy tool to help resolve merge conflicts
+- git rebase: rebase set of patches onto a new base
+
+### Remotes
+- git push <remote> <local branch>:<remote branch>: send objects to remote, and update remote reference
+- git fetch: retrieve objects/references from a remote
+- git pull: same as git fetch; git merge
+- git clone: download repository from remote
+- git remote: list remotes
+- git remote add <name> <url>: add a remote
+- git branch --set-upstream-to=<remote>/<remote branch>: set up correspondence between local and remote branch
+
+### Undo
+- git commit --amend: edit a commit’s contents/message
+- git reset HEAD <file>: unstage a file
+- git checkout -- <file>: discard changes
 
