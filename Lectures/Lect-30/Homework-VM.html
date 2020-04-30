@@ -753,8 +753,8 @@ the output from the sample program.</p>
 <p>Mac or Linux (in some directory where you have your Dockerfile):</p>
 
 <pre><code>$ docker pull python
-$ docker xyzzy
-$ docker 
+$ docker build -t my-python-app .
+$ docker run -it --rm --name my-running-app my-python-app
 </code></pre>
 
 <p>Windows</p>
@@ -763,8 +763,8 @@ $ docker
 C:\&gt; cd my-docker
 C:\&gt; copy C:\Downloads\Dockerfile .
 C:\my-docker\&gt; docker pull python
-C:\my-docker\&gt; docker xyzzy
-C:\my-docker\&gt; docker xyzzy
+C:\my-docker\&gt; docker build -t my-python-app .
+C:\my-docker\&gt; docker run -it --rm --name my-running-app my-python-app
 # echo &quot;You are at the shell in the container&quot;
 </code></pre>
 

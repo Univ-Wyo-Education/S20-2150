@@ -44,8 +44,8 @@ Mac or Linux (in some directory where you have your Dockerfile):
 
 ```
 $ docker pull python
-$ docker xyzzy
-$ docker 
+$ docker build -t my-python-app .
+$ docker run -it --rm --name my-running-app my-python-app
 ```
 
 Windows
@@ -55,7 +55,7 @@ C:\> mkdir my-docker
 C:\> cd my-docker
 C:\> copy C:\Downloads\Dockerfile .
 C:\my-docker\> docker pull python
-C:\my-docker\> docker xyzzy
-C:\my-docker\> docker xyzzy
+C:\my-docker\> docker build -t my-python-app .
+C:\my-docker\> docker run -it --rm --name my-running-app my-python-app
 # echo "You are at the shell in the container"
 ```
