@@ -17,6 +17,13 @@ typedef struct TableStruct {
 	ColumnData **Columns;
 } TableData;
 
+// -----------------------------------------------------------------------------
+TableData *TabData;
+int db1 = 0;
+int nTabData = 0;
+int test1 = 0;
+int test2 = 0;
+
 /*
 ### Table: user
 
@@ -28,6 +35,7 @@ typedef struct TableStruct {
 | password_enc | text        |       | encrypted password for user                     |
 */
 
+// -----------------------------------------------------------------------------
 int strprefix ( char *s, char *prefix) {
 	if ( strlen(s) > strlen(prefix)
 		&& strncmp ( s, prefix, strlen(prefix) ) == 0 ) {
@@ -36,6 +44,7 @@ int strprefix ( char *s, char *prefix) {
 	return 0;
 }
 
+// -----------------------------------------------------------------------------
 void trimSpaces ( char *line, char *tmp ) {
 	while ( *line != '\0' && ( *line == ' ' || *line == '\t' ) ) {
 		line++;
@@ -49,7 +58,9 @@ void trimSpaces ( char *line, char *tmp ) {
 	}
 }
 
-// Skip over 4 | to get to the comment.  Continue to next |.  Trim leading/trailing spaces.
+// -----------------------------------------------------------------------------
+// Skip over 4 | to get to the comment.  Continue to next |.  Trim 
+// leading/trailing spaces.
 void getCom ( char *line, char *com ) {
 	com[0] = '\0';		// Assume empty.
 	int sl = strlen(line);
@@ -76,6 +87,7 @@ void getCom ( char *line, char *com ) {
 	strcpy ( com, tmp );
 }
 
+// -----------------------------------------------------------------------------
 void trimNL ( char *line ) {
 	int n = strlen(line);
 	if ( n > 0 ) {
@@ -85,7 +97,9 @@ void trimNL ( char *line ) {
 	}
 }
 
-void appendCol ( TableData *TabData, int pos, char *col, char *typ, char *ind, char *com ) {
+// -----------------------------------------------------------------------------
+void appendCol ( TableData *TabData, int pos, char *col, char *typ, char *ind,
+char *com ) {
 	ColumnData *x = (ColumnData *)malloc ( sizeof(ColumnData) );
 	x->ColumnName = strdup(col);
 	x->ColumnType = strdup(typ);
@@ -93,10 +107,12 @@ void appendCol ( TableData *TabData, int pos, char *col, char *typ, char *ind, c
 	x->ColumnComment = strdup(com);
 	int colNo = TabData[pos].nColumns;
 	if ( colNo == 0 || TabData[pos].Columns == NULL ) {
-		TabData[pos].Columns = (ColumnData **)malloc ( sizeof ( ColumnData * ) * 10 );
+		TabData[pos].Columns = (ColumnData **)malloc (
+			sizeof ( ColumnData * ) * 10 );
 		TabData[pos].nAlloc = 10;
 	} else if ( colNo > 0 && TabData[pos].nAlloc < (colNo+1) ) {
-		TabData[pos].Columns = (ColumnData **)realloc ( TabData[pos].Columns, sizeof ( ColumnData * ) * (10+TabData[pos].nAlloc) );
+		TabData[pos].Columns = (ColumnData **)realloc ( TabData[pos].Columns,
+			sizeof ( ColumnData * ) * (10+TabData[pos].nAlloc) );
 		TabData[pos].nAlloc += 10;
 	}
 	TabData[pos].Columns[colNo] = x;
@@ -104,10 +120,8 @@ void appendCol ( TableData *TabData, int pos, char *col, char *typ, char *ind, c
 }
 	
 
-TableData *TabData;
-int db1 = 0;
-int nTabData = 0;
 
+// -----------------------------------------------------------------------------
 int read_data(char *fn, int pos, TableData *TabData) {
 	char line[1024];
 	FILE *fp;
@@ -143,7 +157,9 @@ int read_data(char *fn, int pos, TableData *TabData) {
 				ind[0] = '\0';
 			}
 			getCom ( line, com );
-			if ( db1 ) printf ( "n=%d col ->%s<- typ ->%s<- ind ->%s<- j2 ->%s<- com ->%s<-\n", n, col, typ, ind, j2, com );
+			if ( db1 )
+				printf ( "n=%d col ->%s<- typ ->%s<- ind ->%s<- j2 ->%s<- com ->%s<-\n",
+					n, col, typ, ind, j2, com );
 			appendCol ( TabData, pos, col, typ, ind, com );
 		}
 	}
@@ -151,13 +167,14 @@ int read_data(char *fn, int pos, TableData *TabData) {
 	nTabData++;
 	return 1;
 }
-
-
+ 
+// -----------------------------------------------------------------------------
 char *QuoteIt ( char *txt, char *buf ) {
 	sprintf ( buf, "\"%s\"", txt );
 	return buf;
 }
 
+// -----------------------------------------------------------------------------
 char *genType( char *ColumnType, char *ColumnIndex, char *buf ) {
 	if ( strcmp ( ColumnIndex, "PK" ) == 0 && strcmp ( ColumnType, "uuid" ) == 0 ) {
 		sprintf ( buf, "uuid DEFAULT uuid_generate_v4() not null primary key" );
@@ -166,7 +183,7 @@ char *genType( char *ColumnType, char *ColumnIndex, char *buf ) {
 	return ColumnType;
 }
 
-// -------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 void gen_table() {
 	char buf[1024];
 	char buf2[1024];
@@ -178,15 +195,17 @@ void gen_table() {
 			if ( ! ( cn+1 < TabData[i].nColumns ) ) {
 				comma = "";
 			}
-			printf ( "\t%-12s\t%s%s\n", QuoteIt(TabData[i].Columns[cn]->ColumnName,buf),
-				genType( TabData[i].Columns[cn]->ColumnType, TabData[i].Columns[cn]->ColumnIndex, buf2), comma );
+			printf ( "\t%-12s\t%s%s\n",
+				QuoteIt(TabData[i].Columns[cn]->ColumnName,buf),
+				genType( TabData[i].Columns[cn]->ColumnType,
+					TabData[i].Columns[cn]->ColumnIndex, buf2), comma );
 		}
 		printf ( "\n);\n\n" );
 	}
 }
 
 
-// -------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 void gen_index() {
 	char buf[1024];
 	int nu = 1;
@@ -195,17 +214,21 @@ void gen_index() {
 	for ( int i = 0; i < nTabData; i++ ) {
 		for ( int cn = 0; cn < TabData[i].nColumns; cn++ ) {
 			if ( strcmp ( TabData[i].Columns[cn]->ColumnIndex, "UK" ) == 0 ) {
-				printf ( "CREATE UNIQUE INDEX \"%s_%d_uk\" on \"%s\" ( %s );\n" , TabData[i].TableName, nu++, TabData[i].TableName, QuoteIt(TabData[i].Columns[cn]->ColumnName,buf) );
+				printf ( "CREATE UNIQUE INDEX \"%s_%d_uk\" on \"%s\" ( %s );\n",
+					TabData[i].TableName, nu++, TabData[i].TableName,
+					QuoteIt(TabData[i].Columns[cn]->ColumnName,buf) );
 			}
 			if ( strcmp ( TabData[i].Columns[cn]->ColumnIndex, "P" ) == 0 ) {
-				printf ( "CREATE INDEX \"%s_%d\" on \"%s\" ( %s );\n" , TabData[i].TableName, np++, TabData[i].TableName, QuoteIt(TabData[i].Columns[cn]->ColumnName,buf) );
+				printf ( "CREATE INDEX \"%s_%d\" on \"%s\" ( %s );\n",
+					TabData[i].TableName, np++, TabData[i].TableName,
+					QuoteIt(TabData[i].Columns[cn]->ColumnName,buf) );
 			}
 		}
 	}
 	printf ( "\n" );
 }
 
-// -------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 void gen_comments() {
 	for ( int i = 0; i < nTabData; i++ ) {
 		for ( int cn = 0; cn < TabData[i].nColumns; cn++ ) {
@@ -220,11 +243,8 @@ void gen_comments() {
 	printf ( "\n" );
 }
 
-// -------------------------------------------------------------------------------------------------------------------
-int test1 = 0;
-int test2 = 0;
 
-// -------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 int main ( int argc, char *argv[] ) {
 	// fprintf ( stderr, "AT: %d\n", __LINE__ );
 	TabData = (TableData *)malloc( sizeof(TableData) * 10 );
@@ -255,11 +275,11 @@ int main ( int argc, char *argv[] ) {
 
 		strcpy ( buf, "abc " );
 		trimSpaces ( buf, tmp );
-		printf ( "trimSpaces 1 ->%s<-\n", tmp );
+		printf ( "trimSpaces 2 ->%s<-\n", tmp );
 
 		strcpy ( buf, " " );
 		trimSpaces ( buf, tmp );
-		printf ( "trimSpaces 1 ->%s<-\n", tmp );
+		printf ( "trimSpaces 3 ->%s<-\n", tmp );
 	}
 
 	read_data("table.md", 0, TabData);
