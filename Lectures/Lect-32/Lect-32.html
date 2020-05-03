@@ -1,0 +1,1098 @@
+<style>
+@font-face {
+	font-family: octicons-link;
+	src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	line-height: 1.5;
+	color: #24292e;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-size: 16px;
+	line-height: 1.5;
+	word-wrap: break-word;
+}
+
+.markdown-body .pl-c {
+	color: #6a737d;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+	color: #005cc5;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+	color: #6f42c1;
+}
+
+.markdown-body .pl-smi,
+.markdown-body .pl-s .pl-s1 {
+	color: #24292e;
+}
+
+.markdown-body .pl-ent {
+	color: #22863a;
+}
+
+.markdown-body .pl-k {
+	color: #d73a49;
+}
+
+.markdown-body .pl-s,
+.markdown-body .pl-pds,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sre,
+.markdown-body .pl-sr .pl-sra {
+	color: #032f62;
+}
+
+.markdown-body .pl-v,
+.markdown-body .pl-smw {
+	color: #e36209;
+}
+
+.markdown-body .pl-bu {
+	color: #b31d28;
+}
+
+.markdown-body .pl-ii {
+	color: #fafbfc;
+	background-color: #b31d28;
+}
+
+.markdown-body .pl-c2 {
+	color: #fafbfc;
+	background-color: #d73a49;
+}
+
+.markdown-body .pl-c2::before {
+	content: "^M";
+}
+
+.markdown-body .pl-sr .pl-cce {
+	font-weight: bold;
+	color: #22863a;
+}
+
+.markdown-body .pl-ml {
+	color: #735c0f;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+	font-weight: bold;
+	color: #005cc5;
+}
+
+.markdown-body .pl-mi {
+	font-style: italic;
+	color: #24292e;
+}
+
+.markdown-body .pl-mb {
+	font-weight: bold;
+	color: #24292e;
+}
+
+.markdown-body .pl-md {
+	color: #b31d28;
+	background-color: #ffeef0;
+}
+
+.markdown-body .pl-mi1 {
+	color: #22863a;
+	background-color: #f0fff4;
+}
+
+.markdown-body .pl-mc {
+	color: #e36209;
+	background-color: #ffebda;
+}
+
+.markdown-body .pl-mi2 {
+	color: #f6f8fa;
+	background-color: #005cc5;
+}
+
+.markdown-body .pl-mdr {
+	font-weight: bold;
+	color: #6f42c1;
+}
+
+.markdown-body .pl-ba {
+	color: #586069;
+}
+
+.markdown-body .pl-sg {
+	color: #959da5;
+}
+
+.markdown-body .pl-corl {
+	text-decoration: underline;
+	color: #032f62;
+}
+
+.markdown-body .octicon {
+	display: inline-block;
+	vertical-align: text-top;
+	fill: currentColor;
+}
+
+.markdown-body a {
+	background-color: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+	outline-width: 0;
+}
+
+.markdown-body strong {
+	font-weight: inherit;
+}
+
+.markdown-body strong {
+	font-weight: bolder;
+}
+
+.markdown-body h1 {
+	font-size: 2em;
+	margin: 0.67em 0;
+}
+
+.markdown-body img {
+	border-style: none;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+	font-family: monospace, monospace;
+	font-size: 1em;
+}
+
+.markdown-body hr {
+	box-sizing: content-box;
+	height: 0;
+	overflow: visible;
+}
+
+.markdown-body input {
+	font: inherit;
+	margin: 0;
+}
+
+.markdown-body input {
+	overflow: visible;
+}
+
+.markdown-body [type="checkbox"] {
+	box-sizing: border-box;
+	padding: 0;
+}
+
+.markdown-body * {
+	box-sizing: border-box;
+}
+
+.markdown-body input {
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+}
+
+.markdown-body a {
+	color: #0366d6;
+	text-decoration: none;
+}
+
+.markdown-body a:hover {
+	text-decoration: underline;
+}
+
+.markdown-body strong {
+	font-weight: 600;
+}
+
+.markdown-body hr {
+	height: 0;
+	margin: 15px 0;
+	overflow: hidden;
+	background: transparent;
+	border: 0;
+	border-bottom: 1px solid #dfe2e5;
+}
+
+.markdown-body hr::before {
+	display: table;
+	content: "";
+}
+
+.markdown-body hr::after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+.markdown-body table {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.markdown-body td,
+.markdown-body th {
+	padding: 0;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body h1 {
+	font-size: 32px;
+	font-weight: 600;
+}
+
+.markdown-body h2 {
+	font-size: 24px;
+	font-weight: 600;
+}
+
+.markdown-body h3 {
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.markdown-body h4 {
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.markdown-body h5 {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.markdown-body h6 {
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.markdown-body p {
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+
+.markdown-body blockquote {
+	margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+	x-list-style-type: lower-roman;
+	  list-style-type: decimal;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+	list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+	margin-left: 0;
+}
+
+.markdown-body code {
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	font-size: 12px;
+}
+
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 0;
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	font-size: 12px;
+}
+
+.markdown-body .octicon {
+	vertical-align: text-bottom;
+}
+
+.markdown-body .pl-0 {
+	padding-left: 0 !important;
+}
+
+.markdown-body .pl-1 {
+	padding-left: 4px !important;
+}
+
+.markdown-body .pl-2 {
+	padding-left: 8px !important;
+}
+
+.markdown-body .pl-3 {
+	padding-left: 16px !important;
+}
+
+.markdown-body .pl-4 {
+	padding-left: 24px !important;
+}
+
+.markdown-body .pl-5 {
+	padding-left: 32px !important;
+}
+
+.markdown-body .pl-6 {
+	padding-left: 40px !important;
+}
+
+.markdown-body::before {
+	display: table;
+	content: "";
+}
+
+.markdown-body::after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+.markdown-body>*:first-child {
+	margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+	margin-bottom: 0 !important;
+}
+
+.markdown-body a:not([href]) {
+	color: inherit;
+	text-decoration: none;
+}
+
+.markdown-body .anchor {
+	float: left;
+	padding-right: 4px;
+	margin-left: -20px;
+	line-height: 1;
+}
+
+.markdown-body .anchor:focus {
+	outline: none;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 16px;
+}
+
+.markdown-body hr {
+	height: 0.25em;
+	padding: 0;
+	margin: 24px 0;
+	background-color: #e1e4e8;
+	border: 0;
+}
+
+.markdown-body blockquote {
+	padding: 0 1em;
+	color: #6a737d;
+	border-left: 0.25em solid #dfe2e5;
+}
+
+.markdown-body blockquote>:first-child {
+	margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+	margin-bottom: 0;
+}
+
+.markdown-body kbd {
+	display: inline-block;
+	padding: 3px 5px;
+	font-size: 11px;
+	line-height: 10px;
+	color: #444d56;
+	vertical-align: middle;
+	background-color: #fafbfc;
+	border: solid 1px #c6cbd1;
+	border-bottom-color: #959da5;
+	border-radius: 3px;
+	box-shadow: inset 0 -1px 0 #959da5;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	margin-top: 24px;
+	margin-bottom: 16px;
+	font-weight: 600;
+	line-height: 1.25;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+	color: #1b1f23;
+	vertical-align: middle;
+	visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+	text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+	visibility: visible;
+}
+
+.markdown-body h1 {
+	padding-bottom: 0.3em;
+	font-size: 2em;
+	border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h2 {
+	padding-bottom: 0.3em;
+	font-size: 1.5em;
+	border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h3 {
+	font-size: 1.25em;
+}
+
+.markdown-body h4 {
+	font-size: 1em;
+}
+
+.markdown-body h5 {
+	font-size: 0.875em;
+}
+
+.markdown-body h6 {
+	font-size: 0.85em;
+	color: #6a737d;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body li {
+	word-wrap: break-all;
+}
+
+.markdown-body li>p {
+	margin-top: 16px;
+}
+
+.markdown-body li+li {
+	margin-top: 0.25em;
+}
+
+.markdown-body dl {
+	padding: 0;
+}
+
+.markdown-body dl dt {
+	padding: 0;
+	margin-top: 16px;
+	font-size: 1em;
+	font-style: italic;
+	font-weight: 600;
+}
+
+.markdown-body dl dd {
+	padding: 0 16px;
+	margin-bottom: 16px;
+}
+
+.markdown-body table {
+	display: block;
+	width: 100%;
+	overflow: auto;
+}
+
+.markdown-body table th {
+	font-weight: 600;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+	padding: 6px 13px;
+	border: 1px solid #dfe2e5;
+}
+
+.markdown-body table tr {
+	background-color: #fff;
+	border-top: 1px solid #c6cbd1;
+}
+
+.markdown-body table tr:nth-child(2n) {
+	background-color: #f6f8fa;
+}
+
+.markdown-body img {
+	max-width: 100%;
+	box-sizing: content-box;
+	background-color: #fff;
+}
+
+.markdown-body img[align=right] {
+	padding-left: 20px;
+}
+
+.markdown-body img[align=left] {
+	padding-right: 20px;
+}
+
+.markdown-body code {
+	padding: 0.2em 0.4em;
+	margin: 0;
+	font-size: 85%;
+	background-color: rgba(27,31,35,0.05);
+	border-radius: 3px;
+}
+
+.markdown-body pre {
+	word-wrap: normal;
+}
+
+.markdown-body pre>code {
+	padding: 0;
+	margin: 0;
+	font-size: 100%;
+	word-break: normal;
+	white-space: pre;
+	background: transparent;
+	border: 0;
+}
+
+.markdown-body .highlight {
+	margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre {
+	margin-bottom: 0;
+	word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+	padding: 16px;
+	overflow: auto;
+	font-size: 85%;
+	line-height: 1.45;
+	background-color: #f6f8fa;
+	border-radius: 3px;
+}
+
+.markdown-body pre code {
+	display: inline;
+	max-width: auto;
+	padding: 0;
+	margin: 0;
+	overflow: visible;
+	line-height: inherit;
+	word-wrap: normal;
+	background-color: transparent;
+	border: 0;
+}
+
+.markdown-body .full-commit .btn-outline:not(:disabled):hover {
+	color: #005cc5;
+	border-color: #005cc5;
+}
+
+.markdown-body kbd {
+	display: inline-block;
+	padding: 3px 5px;
+	font: 11px "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	line-height: 10px;
+	color: #444d56;
+	vertical-align: middle;
+	background-color: #fafbfc;
+	border: solid 1px #d1d5da;
+	border-bottom-color: #c6cbd1;
+	border-radius: 3px;
+	box-shadow: inset 0 -1px 0 #c6cbd1;
+}
+
+.markdown-body :checked+.radio-label {
+	position: relative;
+	z-index: 1;
+	border-color: #0366d6;
+}
+
+.markdown-body .task-list-item {
+	list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+	margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+	margin: 0 0.2em 0.25em -1.6em;
+	vertical-align: middle;
+}
+
+.markdown-body hr {
+	border-bottom-color: #eee;
+}
+
+</style>
+<style>
+ol {
+    display: block;
+    list-style-type: decimal;
+}
+.pagebreak { page-break-before: always; }
+.half { height: 200px; }
+</style>
+
+<div class="markdown-body">
+
+<h1>Lecture 32 - More on Command Line</h1>
+
+<h2>Videos</h2>
+
+<p><a href="https://youtu.be/IDBUcCCGu5k">https://youtu.be/IDBUcCCGu5k - Lect-32-pt1-more-cli.mp4</a><br>
+<a href="https://youtu.be/6gmXcDmmxnU">https://youtu.be/6gmXcDmmxnU - Lect-32-pt2-links-symbolic-links.mp4</a><br>
+<a href="https://youtu.be/ZB3ieCtHbxQ">https://youtu.be/ZB3ieCtHbxQ - Lect-32-pt3.mp4</a><br></p>
+
+<p>From Amazon S3 - for download (same as youtube videos)</p>
+
+<p><a href="http://uw-s20-2015.s3.amazonaws.com/Lect-32-pt1-more-cli.mp4">http://uw-s20-2015.s3.amazonaws.com/Lect-32-pt1-more-cli.mp4</a><br>
+<a href="http://uw-s20-2015.s3.amazonaws.com/Lect-32-pt2-links-symbolic-links.mp4">http://uw-s20-2015.s3.amazonaws.com/Lect-32-pt2-links-symbolic-links.mp4</a><br>
+<a href="http://uw-s20-2015.s3.amazonaws.com/Lect-32-pt3.mp4">http://uw-s20-2015.s3.amazonaws.com/Lect-32-pt3.mp4</a><br></p>
+
+<h2>Shell Aliases</h2>
+
+<p>Beyond just writing scripts the shell provides a &ldquo;macro&rdquo; like capability that is called &ldquo;aliases&rdquo;.  This allows you to type in a command and
+replace it with a different string.</p>
+
+<p>The most common alias is usually already set up.  It is:</p>
+
+<pre><code>$ alias ll=&quot;ls -lh&quot;
+</code></pre>
+
+<p>This allows you to type</p>
+
+<pre><code>$ ll
+</code></pre>
+
+<p>the &ldquo;ll&rdquo; is replaced with the &ldquo;ls -lh&rdquo; and you get a &ldquo;long human&rdquo; listing of a directory.</p>
+
+<p>Aliases are useful for making short-hand visions of commands that you often use.</p>
+
+<p>Setting them up:</p>
+
+<pre><code>$ alias alias_name=&quot;command_to_alias arg1 arg2&quot;
+</code></pre>
+
+<p>Some common examples:</p>
+
+<pre><code>alias gs=&quot;git status&quot;
+alias gc=&quot;git commit&quot;
+alias mk=&quot;make&quot;
+</code></pre>
+
+<p>Some that I use to prevent typo problems</p>
+
+<pre><code>alias cd..=&quot;cd ..&quot;
+</code></pre>
+
+<p>If you want to ignore the alias, the prefix your command with a backslash ( <code>\</code> ).  Example, you have an alias for &lsquo;ls&rsquo; that you want to ignore:</p>
+
+<pre><code>\ls
+</code></pre>
+
+<p>Will ignore the alias and just run the &lsquo;ls&rsquo; command.</p>
+
+<p>You can see the alias definition with:</p>
+
+<pre><code>$ alias ls
+</code></pre>
+
+<p>How to setup your aliases and other stuff automatically?</p>
+
+<h1>Answer: Dotfiles</h1>
+
+<p>Most programs that need configuration (zsh, bash, vim etc) read files in your home directory
+at startup.  These are generally called &ldquo;.&rdquo; files because they start with a dot.</p>
+
+<p>The Dotfiles system stared by accident.</p>
+
+<p>Let&rsquo;s start with .vimrc - the &ldquo;RC&rdquo; part of the mame is for &ldquo;Run Command&rdquo; and comes from
+Minix - the predecessor to Unix.  In that system if you had a script that you wanted to
+run it had to end in &ldquo;rc&rdquo;.</p>
+
+<p>Let&rsquo;s say you want to turn on line numbers every time you use VIM.  You can add a file
+in your home directory called <code>.vimrc</code> with the command in it and when vim starts it will
+see the file and run the commands.</p>
+
+<p>So put</p>
+
+<pre><code>:set nu
+</code></pre>
+
+<p>In the file and you get line numbers!</p>
+
+<p>You also want to set some aliases and your path.  For bash the &ldquo;.&rdquo; files are <code>.bashrc</code>, <code>.profile</code>
+and <code>.bash_profile</code>.   Why?  Again it is historical.   The &ldquo;sh&rdquo; shell - the parent of &ldquo;ksh&rdquo; - lead
+to the development of the &ldquo;Bourn Again Shell&rdquo; - bash.  &ldquo;sh&rdquo; ran <code>.profile</code>.  Usually your best
+guess is to try <code>.bashrc</code> - and then if that fails to do some poking.   Add an &ldquo;echo&rdquo; command to
+each and try again - and see which one is getting run.</p>
+
+<p>So in the correct file, let&rsquo;s say <code>.bashrc</code> - you put your &ldquo;alias&rdquo; commands.</p>
+
+<pre><code>alias gs=&quot;git status&quot;
+</code></pre>
+
+<p>I also like to setup variables in the <code>.bashrc</code> to directories where I am working:</p>
+
+<pre><code>export uw=/Users/pschlump/go/src/github.com/Univ-Wyo-Education
+</code></pre>
+
+<p>This allows me to quickly change to that directory with:</p>
+
+<pre><code>$ cd $uw/*2150
+</code></pre>
+
+<p>To get to the path for this class.  The <code>$uw</code> uses the variable, then pattern match to
+the exact path for the 2150 class.</p>
+
+<p>SSH uses <code>~/.ssh</code> directory and the <code>~/.ssh/config</code> file to do its setup.</p>
+
+<p>GIT uses <code>/.gitconfig</code>.</p>
+
+<p>These files are usually text fails - but some care should be taken in editing them.
+I usually make a backup of each file before I edit it in a <code>~/.bak</code> directory.</p>
+
+<p>The best way to keep track of your dotfiles is to use git.</p>
+
+<p>I have a git project called &ldquo;DotFiles&rdquo; and I keep the originals for all my DotFiles in that.
+Then I use symbolic links to my home directory so that programs can find the files.</p>
+
+<p>Because my DotFiles contain &ldquo;secrets&rdquo; I don&rsquo;t put this out on github.com - I use a fully
+encrypted private repository for this.  See <a href="https://github.com/mozilla/sops">https://github.com/mozilla/sops</a></p>
+
+<h2>Symbolic Links / Hard Links</h2>
+
+<p>The Unix/Linux file system provides a powerful facility that is not in Windows at all.
+This is called Links - In Unix a file is an name with an i-node number.   The i-node
+is the place where the data for the file is stored.   So file names only point to
+a file - they are not the actual data.   You can have more than one &ldquo;name&rdquo; for a file.</p>
+
+<pre><code>$ vi bob
+$ ln bob jane
+$ cat jane
+$ ls -li bob jane
+</code></pre>
+
+<p>The space for files is re-claimed when the number of references to the file drops to 0.
+Having a file &ldquo;open&rdquo; also counts as a reference.  This is one way to create temporary
+files that only exists during the run of a program and grantee that the space gets
+cleaned up at the end.  You open the file, then remove it.  As long as you keep it open
+the file&rsquo;s storage will continue to exist.</p>
+
+<p>These links are called &ldquo;hard&rdquo; links and can only be applied to &ldquo;files&rdquo; not directories.</p>
+
+<p>You can have as many names for a file as you want.  Hard links can not span across
+volumes - so this is per-disk-volume.</p>
+
+<p>This is why removing a file in Unix is called &ldquo;unlink&rdquo;.</p>
+
+<p>The second way to have a link is a &ldquo;symbolic link&rdquo;.  A symbolic link is a file system
+alias.  When you open the file the replacement location is used.  That keeps happening
+until you get to a link that points to nothing - or to a file.  (This means that you
+can have symbolic links to symbolic links to symbolic links.  The bad side of this is
+that you can have circular references!  The good side is that you can have links to
+things that you can not have hard links to.     Also you can have directory links
+that are &ldquo;up&rdquo; and cause some programs that follow them to go into infinite loops.</p>
+
+<p>So pitfalls aside&hellip; How to crate symbolic links.</p>
+
+<pre><code>$ ls -li
+$ ln -s bob tim
+$ ls -li
+$ cat tim
+</code></pre>
+
+<p>The &ldquo;-s&rdquo; says create a symbolic link.  IT is &ldquo;from&rdquo; &ldquo;to&rdquo; in order.</p>
+
+<p>You can create symbolic links that don&rsquo;t point to anything.</p>
+
+<pre><code>$ ls -li
+$ ln -s abc def
+$ ls -li
+</code></pre>
+
+<p>Then create the file</p>
+
+<pre><code>$ vi abc
+$ ls -li
+</code></pre>
+
+<p>A more robust example</p>
+
+<pre><code>$ ls -l ~/.vimrc
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>lrwxr-xr-x  1 pschlump  staff  15 May  1 04:27 /Users/pschlump/.vimrc -&gt; DotFiles/.vimrc
+</code></pre>
+
+<h2>Getting stuff to work across Machines - Portability of Scripts</h2>
+
+<p>Sooner or later you want to set stuff up for different machines.
+You work on a Mac and Deploy to a Linux Boxes name &ldquo;peach&rdquo; and &ldquo;tomato&rdquo;.
+At the same time you want to copy scripts and only have 1 source for them.</p>
+
+<pre><code>hn=$(hostname)
+echo $hn
+if [[ &quot;$hn&quot; == &quot;peach&quot; ]]; then
+	{do_something}
+fi
+if [[ &quot;$hn&quot; == &quot;tomato&quot; ]]; then
+	{do_something}
+fi
+</code></pre>
+
+<p>or you want to do a different thing between Linux setup an Mac</p>
+
+<pre><code>if [[ &quot;$(uname)&quot; == &quot;Linux&quot; ]]; then
+	{do_something}
+fi
+if [[ &quot;$(uname)&quot; == &quot;Darwin&quot; ]]; then
+	{do_something}
+fi
+</code></pre>
+
+<h2>Password-less Login to Remote Machines</h2>
+
+<p>We talked about SSH and using it to login to remote machines.  The password login system by default in SSH is a strong
+authentication system based on Secure Remote Passwords - much better than most login systems.  However it still requires
+that you enter a password for each login.  This is far from a seamless login.  What SSH will not do is let you put the
+password in a file and use that to login.  So you can&rsquo;t automate a password-based login.  It is not considered safe.</p>
+
+<p>SSH has an alternative that is &ldquo;safe&rdquo; and reliable.  This is based on the use of public/private keys and a digital
+signature.</p>
+
+<p>The Effect:</p>
+
+<pre><code>$ ssh pschlump@192.168.0.27
+</code></pre>
+
+<p>output:</p>
+
+<pre><code>Welcome to Ubuntu 20.04 LTS (GNU/Linux 5.4.0-28-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+ * Ubuntu 20.04 LTS is out, raising the bar on performance, security,
+   and optimisation for Intel, AMD, Nvidia, ARM64 and Z15 as well as
+   AWS, Azure and Google Cloud.
+
+     https://ubuntu.com/blog/ubuntu-20-04-lts-arrives
+
+
+0 updates can be installed immediately.
+0 of these updates are security updates.
+
+Your Hardware Enablement Stack (HWE) is supported until April 2025.
+Last login: Thu Apr 30 08:40:40 2020 from 192.168.0.44
+</code></pre>
+
+<p>There was no prompt for a password.  It just did it.</p>
+
+<p>What just happened.</p>
+
+<ol>
+<li>Ssh on the calling end - talked to the destination.  It asked the question what form of attestation do you need?</li>
+<li>The destination said A) Public/Private Key Pair, B) Password Authentication.</li>
+<li>The sending end said, I have a &ldquo;proof&rdquo; of who I am - based on signing this data with my Private Key.</li>
+<li>The destination took the signature - and said - yes I can verify that key with your public key.  Good to go!</li>
+</ol>
+
+<p>If the P/P key had failed, then a password prompt would have been issued and the sending end would have tried that.</p>
+
+<p>To set this up you first need to generate a key pair.  (Well you may first need to install ssh, if you need that then)</p>
+
+<pre><code>$ sudo apt-get update
+$ sudo apt-get install ssh -y
+</code></pre>
+
+<p>Then Generate the key pair:</p>
+
+<pre><code>ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_ed25519
+</code></pre>
+
+<p>When it asks you for a passphrase just hit enter twice.  You should see some output that looks like:</p>
+
+<pre><code>Generating public/private ed25519 key pair.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/pschlump/.ssh/id_ed25519
+Your public key has been saved in /home/pschlump/.ssh/id_ed25519.pub
+The key fingerprint is:
+SHA256:CXJnF7XtOgj0SIHfuENUe1Ga6gfE3Ekun1jmz39jqGo pschlump@ub04
+The key's randomart image is:
++--[ED25519 256]--+
+|       ...o.+..  |
+|      . .+ * B   |
+|    . oo=oB @ .  |
+|     o *+*.X o   |
+|       .S.= + .  |
+|        oo o +   |
+|         .o + +  |
+|   oB    E . o +.|
+|        ..... . +|
++----[SHA256]-----+
+</code></pre>
+
+<p>This will generate 2 files in your ~/.ssh directory called id_ed25519 and id_25519.pub</p>
+
+<p>Keep the id_ed25519 private - it is your private key!  Don&rsquo;t Loose it - Don&rsquo;t share it!</p>
+
+<pre><code>$ ls ~/.ssh
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>authorized_keys  id_ed25519  id_ed25519.pub  id_rsa  id_rsa.pub  known_hosts
+</code></pre>
+
+<p>Now you need to copy the <code>~/.ssh/id_ed25519.pub</code> file to the destination system that you want to login to.</p>
+
+<pre><code>$ scp ~/.ssh/id_ed25519.pub pschlump@192.168.0.199:/tmp
+</code></pre>
+
+<p>Now login to the destination - you will get prompted for a password this one last time.</p>
+
+<pre><code>$ ssh pschlump@192.168.0.199
+</code></pre>
+
+<p>You need to add the contents of the <code>/tmp/id_ed25519.pub</code> to the <code>./.ssh/authorized_keys</code> file.  If you do not have this then
+create the .ssh directory and create an authorized_keys file.  Also you need to set permissions correctly for SSH to use the
+data.</p>
+
+<pre><code>$ mkdir -p .ssh
+$ cat /tmp/id_ed25519.pub &gt;&gt;.ssh/authorized_keys
+$ chmod 0600 .ssh/authorized_keys
+$ chmod 0700 .ssh
+$ rm /tmp/id_ed25519.pub
+</code></pre>
+
+<p>The first command <code>mkdir -p .ssh</code> will crate the .ssh directory if you do not already have it.</p>
+
+<p>The 2nd command has <code>&gt;&gt;</code> in it to append or create the file.   This will take the data in <code>/tmp/id_ed25519.pub</code> and
+append it to the <code>~/.ssh/authorized_keys</code> file.</p>
+
+<p>Then set permissions on the file - SSH will only use the file if nobody else can read it.  The permissions are in 3 groups of 3 - each one with an on/off bit.
+So you can specify them in octal.  The 1st set is the owner - this says that you have read/write for the owner and none for anybody else.</p>
+
+<p>Then set permissions on the .ssh directory.  This gives read/write/X=search for the directory to only the owner - you.</p>
+
+<p>Now cleanup and remove the /tmp file.</p>
+
+<p>Logout - and try the login again.  This time you should not get prompted for a password.</p>
+
+<p>If you are trying to set this up - there are other options that you may need, and you may want to use the &lsquo;ssh-copy-id&rsquo; command.</p>
+
+<p>Another powerful command that uses &lsquo;ssh&rsquo; is &lsquo;rsync&rsquo; - it allows for copying entire trees of files to remote systems and will do it with
+a minimum amount of network traffic - only copying the files that have chained - been added - or been deleted.  Usually you will need
+to setup the password-less SSH login first to use &lsquo;rsync&rsquo;.</p>
+
+<p>SSH also provides a facility for a thing called &ldquo;port&rdquo; forwarding.  These are also called SSH tunnels.</p>
+
+<p>Let&rsquo;s say that your company has a fire-wall - and you are working from home.  You need to access a server inside the firewall.
+If you were at work you would just run your program.  Suppose the server at work is on the computer &ldquo;peach&rdquo; at address 192.168.0.199 (at work)
+and it is using port 5432.  Port 5432 is blocked by the firewall.  You cant directly access it.</p>
+
+<p>You can use SSH to create a &ldquo;tunnel&rdquo;.</p>
+
+<p>A tunnel is a way to forward all the traffic from your computer to a remote system via SSH.  In this example I will setup a local port 6543 that
+forwards to the remote systems 5432 port.</p>
+
+<pre><code>$ ssh -L localhost:6543:192.168.0.199:5432 pschlump@uwyo.edu
+</code></pre>
+
+<p>The <code>localhost:6543</code> is my local system.  The &lsquo;<code>192.168.0.199:5432</code> port is the port to direct this to on the remote system.</p>
+
+<p>Then I use port 6543 on my local system and all the traffic is sent back and forth to the remote system.</p>
+
+<p>If you use this on a frequent basis you can configure this is the <code>~/.ssh/config</code> file.</p>
+
+<pre><code>    User pschlump
+    HostName uwyo.edu
+    Port 22
+    IdentityFile ~/.ssh/id_ed25519
+    LocalForward localhost:6543 192.168.0.199:5432
+</code></pre>
+
+<h1>Copyright</h1>
+
+<p>Copyright &copy; University of Wyoming, 2020.</p>
+
+</div>
+
