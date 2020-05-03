@@ -3,19 +3,7 @@
 #include <string.h>
 #include <errno.h>
 
-typedef struct ColumnStruct {
-	char *ColumnName;
-	char *ColumnType;
-	char *ColumnIndex;
-	char *ColumnComment;
-} ColumnData;
-
-typedef struct TableStruct {
-	char *TableName;
-	int nColumns;
-	int nAlloc;
-	ColumnData **Columns;
-} TableData;
+#include "gen_user.h"
 
 // -----------------------------------------------------------------------------
 TableData *TabData;
@@ -23,6 +11,7 @@ int db1 = 0;
 int nTabData = 0;
 int test1 = 0;
 int test2 = 0;
+
 
 /*
 ### Table: user
@@ -282,10 +271,14 @@ int main ( int argc, char *argv[] ) {
 		printf ( "trimSpaces 3 ->%s<-\n", tmp );
 	}
 
-	read_data("table.md", 0, TabData);
+	for ( int ii = 1; ii < argc; ii++ ) {
+		read_data(argv[ii], ii-1, TabData);
+	}
+
 	gen_table();
 	gen_comments();
 	gen_index();
+
 	return 0;
 }
 

@@ -102,6 +102,19 @@ aaa.o: aaa.c aaa.h
 
 Also works.
 
+Webpack is an example of a node.js build system.  It lacks any manful dependency checking.
+if you want to dependency check - then you have to build that into the code.
+
+Ant - is a Java dependency system.  Again it requires writing Java code and is missing
+any clear dependency analysis.  There are a number of dependency add-on's for Ant.
+One of the reason that Java builds take so long is because things like and tend to
+rebuild all sorts of stuff that they probably don't need to rebuild.
+
+Go has an internal dependency system.  It is a fully modern compiler and Go keeps
+a tree of all of the pre-compiled functions that you have already compiled.  This
+extensive tree will only rebuild what you need to rebuild when a function changes.
+Quite often you can re-compile and rebuild a 1,000,000 line program in under 2 
+seconds.
 
 ## 2000s book - Pragmatic Programmer and Don't Repeat Yourself = DRY
 
@@ -129,23 +142,87 @@ the row of the table.
 
 Let's build a "meta program" that reads in the table above and converts that into all of these.
 
-First the makefile, make2.mk
+First the makefile, gen_user.mk
 
 ```
-all: user.sql user_crud.c
+all: user_table.sql 
 
-user.sql : table.md gen_user
+user_table.sql : user_table.md gen_user
+	./gen_user user_table.md  >user_table.sql
 
-gen_user: gen_user.c user_info.h	
+gen_user: gen_user.o 
 
-gen_user.c: gen_user.c gen_user.h
-
-xyzzy
+gen_user.o: gen_user.c gen_user.h
 
 ```
 
+now when we type "make" it bulds and runs this program
 
-## Building your own tools
+```
+$ make -f gen_user.mk
+```
+
+And we can take a look at the output:
+
+```
+
+DROP TABLE if exists "user";
+
+CREATE TABLE "user" (
+	"id"        	uuid DEFAULT uuid_generate_v4() not null primary key,
+	"username"  	text,
+	"real_name" 	text,
+	"password_enc"	text,
+	"password_enc"	text
+
+);
+
+COMMENT ON COLUMN "user"."id" IS 'Unique generated ID for this tables row';
+COMMENT ON COLUMN "user"."username" IS 'the name of the user (usually an email address)';
+COMMENT ON COLUMN "user"."real_name" IS 'persons name';
+COMMENT ON COLUMN "user"."password_enc" IS 'encrypted password for user';
+
+CREATE UNIQUE INDEX "user_1_uk" on "user" ( "username" );
+CREATE INDEX "user_1" on "user" ( "real_name" );
+
+```
+
+Similarly we can write a program that will use the same data to build all sorts of
+table-related stuff (Including the C code to access the table!)
+
+Now if we have 1000 or 5000 tables (yes database schemas have that kind of numbers.
+An insurance company that I am working with has a schema with 11241 tables)
+We can put the definition into a directory - and use this tool and a makefile
+to process all of the tables into all the chunks of code that we need to build 
+the foundation of a project.   The last time I worked at a phone company we did
+this and generated over 6,000,000 lines of code for 27 different projects directly
+from the table definitions.
+
+## Continuous Integration
+
+Wouldn't it be nice if when we changed code it automatically did a bunch of tests
+to tell us if our change broke anything.  If we had tests for all the existing
+stuff in the code then we could just re-run the test.
+
+In modern development environments this kind of auto-testing is basally required.
+Not only that but there is an entire set of systems called Continuous Integration
+when every time you check in a new change to the code the existing tests all get
+run - this is done before the code you check in can get combined with the "master"
+branch.  
+
+Good examples of this include CircleCI, TravisCI and gitlab.com has its own 
+"Git Actions" or "GitHub Actions" system so that you can run either their system or add your own
+Continuous Integration system.
+
+You set up a specification file and every change to the code runs the set of tests.
+
+Tests usually come in a set of "flavors":
+
+1. Unit tests - these are developed by the developer to test small chunks of code in isolation.
+2. Integration tests - these usually test large integrated chunks of the system.  For example if you have an application with an Application Programming Interface (API) then tests that run the entire API with the Database and Servers all at once would be an Integration Test.
+3. Regression test - a test that checks that specific fixes to defects stay fixed.
+4. Quality Assurance tests - These often test an entire application running with a "mocked" database.  An example of this is "mocha" tests for a front end.  You use  a simulated browser and a complete back end and run a set of tests.
+
 
 ## DevOps - Tools and Dev replacement for ID and Operations
 

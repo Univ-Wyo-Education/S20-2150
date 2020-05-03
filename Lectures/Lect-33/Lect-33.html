@@ -1,0 +1,972 @@
+<style>
+@font-face {
+	font-family: octicons-link;
+	src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	line-height: 1.5;
+	color: #24292e;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-size: 16px;
+	line-height: 1.5;
+	word-wrap: break-word;
+}
+
+.markdown-body .pl-c {
+	color: #6a737d;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+	color: #005cc5;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+	color: #6f42c1;
+}
+
+.markdown-body .pl-smi,
+.markdown-body .pl-s .pl-s1 {
+	color: #24292e;
+}
+
+.markdown-body .pl-ent {
+	color: #22863a;
+}
+
+.markdown-body .pl-k {
+	color: #d73a49;
+}
+
+.markdown-body .pl-s,
+.markdown-body .pl-pds,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sre,
+.markdown-body .pl-sr .pl-sra {
+	color: #032f62;
+}
+
+.markdown-body .pl-v,
+.markdown-body .pl-smw {
+	color: #e36209;
+}
+
+.markdown-body .pl-bu {
+	color: #b31d28;
+}
+
+.markdown-body .pl-ii {
+	color: #fafbfc;
+	background-color: #b31d28;
+}
+
+.markdown-body .pl-c2 {
+	color: #fafbfc;
+	background-color: #d73a49;
+}
+
+.markdown-body .pl-c2::before {
+	content: "^M";
+}
+
+.markdown-body .pl-sr .pl-cce {
+	font-weight: bold;
+	color: #22863a;
+}
+
+.markdown-body .pl-ml {
+	color: #735c0f;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+	font-weight: bold;
+	color: #005cc5;
+}
+
+.markdown-body .pl-mi {
+	font-style: italic;
+	color: #24292e;
+}
+
+.markdown-body .pl-mb {
+	font-weight: bold;
+	color: #24292e;
+}
+
+.markdown-body .pl-md {
+	color: #b31d28;
+	background-color: #ffeef0;
+}
+
+.markdown-body .pl-mi1 {
+	color: #22863a;
+	background-color: #f0fff4;
+}
+
+.markdown-body .pl-mc {
+	color: #e36209;
+	background-color: #ffebda;
+}
+
+.markdown-body .pl-mi2 {
+	color: #f6f8fa;
+	background-color: #005cc5;
+}
+
+.markdown-body .pl-mdr {
+	font-weight: bold;
+	color: #6f42c1;
+}
+
+.markdown-body .pl-ba {
+	color: #586069;
+}
+
+.markdown-body .pl-sg {
+	color: #959da5;
+}
+
+.markdown-body .pl-corl {
+	text-decoration: underline;
+	color: #032f62;
+}
+
+.markdown-body .octicon {
+	display: inline-block;
+	vertical-align: text-top;
+	fill: currentColor;
+}
+
+.markdown-body a {
+	background-color: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+	outline-width: 0;
+}
+
+.markdown-body strong {
+	font-weight: inherit;
+}
+
+.markdown-body strong {
+	font-weight: bolder;
+}
+
+.markdown-body h1 {
+	font-size: 2em;
+	margin: 0.67em 0;
+}
+
+.markdown-body img {
+	border-style: none;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+	font-family: monospace, monospace;
+	font-size: 1em;
+}
+
+.markdown-body hr {
+	box-sizing: content-box;
+	height: 0;
+	overflow: visible;
+}
+
+.markdown-body input {
+	font: inherit;
+	margin: 0;
+}
+
+.markdown-body input {
+	overflow: visible;
+}
+
+.markdown-body [type="checkbox"] {
+	box-sizing: border-box;
+	padding: 0;
+}
+
+.markdown-body * {
+	box-sizing: border-box;
+}
+
+.markdown-body input {
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+}
+
+.markdown-body a {
+	color: #0366d6;
+	text-decoration: none;
+}
+
+.markdown-body a:hover {
+	text-decoration: underline;
+}
+
+.markdown-body strong {
+	font-weight: 600;
+}
+
+.markdown-body hr {
+	height: 0;
+	margin: 15px 0;
+	overflow: hidden;
+	background: transparent;
+	border: 0;
+	border-bottom: 1px solid #dfe2e5;
+}
+
+.markdown-body hr::before {
+	display: table;
+	content: "";
+}
+
+.markdown-body hr::after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+.markdown-body table {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.markdown-body td,
+.markdown-body th {
+	padding: 0;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body h1 {
+	font-size: 32px;
+	font-weight: 600;
+}
+
+.markdown-body h2 {
+	font-size: 24px;
+	font-weight: 600;
+}
+
+.markdown-body h3 {
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.markdown-body h4 {
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.markdown-body h5 {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.markdown-body h6 {
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.markdown-body p {
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+
+.markdown-body blockquote {
+	margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+	x-list-style-type: lower-roman;
+	  list-style-type: decimal;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+	list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+	margin-left: 0;
+}
+
+.markdown-body code {
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	font-size: 12px;
+}
+
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 0;
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	font-size: 12px;
+}
+
+.markdown-body .octicon {
+	vertical-align: text-bottom;
+}
+
+.markdown-body .pl-0 {
+	padding-left: 0 !important;
+}
+
+.markdown-body .pl-1 {
+	padding-left: 4px !important;
+}
+
+.markdown-body .pl-2 {
+	padding-left: 8px !important;
+}
+
+.markdown-body .pl-3 {
+	padding-left: 16px !important;
+}
+
+.markdown-body .pl-4 {
+	padding-left: 24px !important;
+}
+
+.markdown-body .pl-5 {
+	padding-left: 32px !important;
+}
+
+.markdown-body .pl-6 {
+	padding-left: 40px !important;
+}
+
+.markdown-body::before {
+	display: table;
+	content: "";
+}
+
+.markdown-body::after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+.markdown-body>*:first-child {
+	margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+	margin-bottom: 0 !important;
+}
+
+.markdown-body a:not([href]) {
+	color: inherit;
+	text-decoration: none;
+}
+
+.markdown-body .anchor {
+	float: left;
+	padding-right: 4px;
+	margin-left: -20px;
+	line-height: 1;
+}
+
+.markdown-body .anchor:focus {
+	outline: none;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 16px;
+}
+
+.markdown-body hr {
+	height: 0.25em;
+	padding: 0;
+	margin: 24px 0;
+	background-color: #e1e4e8;
+	border: 0;
+}
+
+.markdown-body blockquote {
+	padding: 0 1em;
+	color: #6a737d;
+	border-left: 0.25em solid #dfe2e5;
+}
+
+.markdown-body blockquote>:first-child {
+	margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+	margin-bottom: 0;
+}
+
+.markdown-body kbd {
+	display: inline-block;
+	padding: 3px 5px;
+	font-size: 11px;
+	line-height: 10px;
+	color: #444d56;
+	vertical-align: middle;
+	background-color: #fafbfc;
+	border: solid 1px #c6cbd1;
+	border-bottom-color: #959da5;
+	border-radius: 3px;
+	box-shadow: inset 0 -1px 0 #959da5;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	margin-top: 24px;
+	margin-bottom: 16px;
+	font-weight: 600;
+	line-height: 1.25;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+	color: #1b1f23;
+	vertical-align: middle;
+	visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+	text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+	visibility: visible;
+}
+
+.markdown-body h1 {
+	padding-bottom: 0.3em;
+	font-size: 2em;
+	border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h2 {
+	padding-bottom: 0.3em;
+	font-size: 1.5em;
+	border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h3 {
+	font-size: 1.25em;
+}
+
+.markdown-body h4 {
+	font-size: 1em;
+}
+
+.markdown-body h5 {
+	font-size: 0.875em;
+}
+
+.markdown-body h6 {
+	font-size: 0.85em;
+	color: #6a737d;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body li {
+	word-wrap: break-all;
+}
+
+.markdown-body li>p {
+	margin-top: 16px;
+}
+
+.markdown-body li+li {
+	margin-top: 0.25em;
+}
+
+.markdown-body dl {
+	padding: 0;
+}
+
+.markdown-body dl dt {
+	padding: 0;
+	margin-top: 16px;
+	font-size: 1em;
+	font-style: italic;
+	font-weight: 600;
+}
+
+.markdown-body dl dd {
+	padding: 0 16px;
+	margin-bottom: 16px;
+}
+
+.markdown-body table {
+	display: block;
+	width: 100%;
+	overflow: auto;
+}
+
+.markdown-body table th {
+	font-weight: 600;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+	padding: 6px 13px;
+	border: 1px solid #dfe2e5;
+}
+
+.markdown-body table tr {
+	background-color: #fff;
+	border-top: 1px solid #c6cbd1;
+}
+
+.markdown-body table tr:nth-child(2n) {
+	background-color: #f6f8fa;
+}
+
+.markdown-body img {
+	max-width: 100%;
+	box-sizing: content-box;
+	background-color: #fff;
+}
+
+.markdown-body img[align=right] {
+	padding-left: 20px;
+}
+
+.markdown-body img[align=left] {
+	padding-right: 20px;
+}
+
+.markdown-body code {
+	padding: 0.2em 0.4em;
+	margin: 0;
+	font-size: 85%;
+	background-color: rgba(27,31,35,0.05);
+	border-radius: 3px;
+}
+
+.markdown-body pre {
+	word-wrap: normal;
+}
+
+.markdown-body pre>code {
+	padding: 0;
+	margin: 0;
+	font-size: 100%;
+	word-break: normal;
+	white-space: pre;
+	background: transparent;
+	border: 0;
+}
+
+.markdown-body .highlight {
+	margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre {
+	margin-bottom: 0;
+	word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+	padding: 16px;
+	overflow: auto;
+	font-size: 85%;
+	line-height: 1.45;
+	background-color: #f6f8fa;
+	border-radius: 3px;
+}
+
+.markdown-body pre code {
+	display: inline;
+	max-width: auto;
+	padding: 0;
+	margin: 0;
+	overflow: visible;
+	line-height: inherit;
+	word-wrap: normal;
+	background-color: transparent;
+	border: 0;
+}
+
+.markdown-body .full-commit .btn-outline:not(:disabled):hover {
+	color: #005cc5;
+	border-color: #005cc5;
+}
+
+.markdown-body kbd {
+	display: inline-block;
+	padding: 3px 5px;
+	font: 11px "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	line-height: 10px;
+	color: #444d56;
+	vertical-align: middle;
+	background-color: #fafbfc;
+	border: solid 1px #d1d5da;
+	border-bottom-color: #c6cbd1;
+	border-radius: 3px;
+	box-shadow: inset 0 -1px 0 #c6cbd1;
+}
+
+.markdown-body :checked+.radio-label {
+	position: relative;
+	z-index: 1;
+	border-color: #0366d6;
+}
+
+.markdown-body .task-list-item {
+	list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+	margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+	margin: 0 0.2em 0.25em -1.6em;
+	vertical-align: middle;
+}
+
+.markdown-body hr {
+	border-bottom-color: #eee;
+}
+
+</style>
+<style>
+ol {
+    display: block;
+    list-style-type: decimal;
+}
+.pagebreak { page-break-before: always; }
+.half { height: 200px; }
+</style>
+
+<div class="markdown-body">
+
+<h1>Lecture 33 - Meta Programming</h1>
+
+<h2>Videos</h2>
+
+<h2>make and other build tools</h2>
+
+<p>These days there are a plethora of &ldquo;build&rdquo; tools - most of them do not do as much as <code>make</code>.
+<code>make</code> uses the observation that the output of a process will usually be later in time than
+the set of inputs.  So if you have:</p>
+
+<pre><code>an_output: Input1 Input2 Inpute3 ... InputN
+	Do-Dometing
+</code></pre>
+
+<p>then you can decide when to do the <code>Do-Domehing</code> when you have an error in the ordering
+of the output is build from the input.  This can get quite complex when there are a
+lot of inputs!</p>
+
+<p>This can also get quite tedious when you have to track and manage the inputs and how
+they get built.</p>
+
+<p>Skipping the dependency tree - means full re-builds.  Docker is notorious for the time
+it takes to do full rebuilds.  Basically by skipping this rule it oworks like this:</p>
+
+<ol>
+<li>You are good - 1 sec</li>
+<li>You are good - 2 sec</li>
+<li>You are good - 1 sec</li>
+<li>You are good - 3 sec</li>
+<li>You are good - 5 sec</li>
+<li>You are good  - 1 sec</li>
+<li>Oops - full rebuild and start over - 30 mints</li>
+</ol>
+
+<p>Other systems that tend to ignore this like, &ldquo;maven&rdquo; and &ldquo;eclipse&rdquo; are notorious for
+builds that take <sup>1</sup>&frasl;<sub>2</sub> hour to an hour on a large system.</p>
+
+<p>So how dose <code>&quot;make</code>&rdquo; work internally - there is a system called a &ldquo;topological sort&rdquo;
+that allows it to figure out complex dependency trees.  Other systems like Excel
+and Haskell use this also to figure out how to run stuff in order.</p>
+
+<p>So &hellip; <code>&quot;make</code>&ldquo;</p>
+
+<p>By default <code>make</code> uses the file &ldquo;Makefile&rdquo; or &ldquo;makefile&rdquo; or you can specify a &ldquo;-f&rdquo; option
+to get a different file.</p>
+
+<p>The basic structure is :</p>
+
+<pre><code>
+default_rule_name:  Dependency1 Dependency2
+	Command Line Stuff to run for this rule
+
+
+Dependency1: DependsOn1 DependsOn2
+	Do Something
+
+Dependency2:
+	Do Something 1
+	Do Something 2
+	Do Something 3
+
+</code></pre>
+
+<p>So if I have a program <code>aaa.c</code> and it includes the file <code>aaa.h</code> - but we just want to compile to an
+object file, then we want this to link with <code>bbb.c</code> (the main program)</p>
+
+<pre><code>
+all: bbb
+
+bbb: bbb.o aaa.o
+	cc -o bbb aaa.o bbb.o 
+
+bbb.o: bbb.c aaa.h
+	cc -c -o bbb.o bbb.c
+
+aaa.o: aaa.c aaa.h
+	cc -c -o aaa.o aaa.c
+
+
+</code></pre>
+
+<p><code>make</code> will also stop when there is an error reported from a command.</p>
+
+<p>Let&rsquo;s put a syntax error into <code>aaa.c</code> and see what happens.</p>
+
+<p><code>make</code> also has  a large set of default rules (the default rules can be extended also).</p>
+
+<p>So&hellip; <code>make1.mk</code></p>
+
+<pre><code>all: bbb
+
+bbb: bbb.o aaa.o
+	cc -o bbb aaa.o bbb.o 
+
+bbb.o: bbb.c aaa.h
+aaa.o: aaa.c aaa.h
+
+</code></pre>
+
+<p>Also works.</p>
+
+<p>Webpack is an example of a node.js build system.  It lacks any manful dependency checking.
+if you want to dependency check - then you have to build that into the code.</p>
+
+<p>Ant - is a Java dependency system.  Again it requires writing Java code and is missing
+any clear dependency analysis.  There are a number of dependency add-on&rsquo;s for Ant.
+One of the reason that Java builds take so long is because things like and tend to
+rebuild all sorts of stuff that they probably don&rsquo;t need to rebuild.</p>
+
+<p>Go has an internal dependency system.  It is a fully modern compiler and Go keeps
+a tree of all of the pre-compiled functions that you have already compiled.  This
+extensive tree will only rebuild what you need to rebuild when a function changes.
+Quite often you can re-compile and rebuild a 1,000,000 line program in under 2
+seconds.</p>
+
+<h2>2000s book - Pragmatic Programmer and Don&rsquo;t Repeat Yourself = DRY</h2>
+
+<p>The &ldquo;Pragmatic Programmer&rdquo; inspired the creation of languages like Ruby and Python.
+This principal, DRY, is the most important one in the boot (Lot&rsquo;s of stuff in the
+book is really good - event 20 years later!</p>
+
+<p>Let&rsquo;s take a look at a build system for a database table.</p>
+
+<p>A table in a database is a collection of rows with data types.  Let&rsquo;s say this is
+a &ldquo;user&rdquo; table - it has username and password and the persons real name.</p>
+
+<h3>Table: user</h3>
+
+<table>
+<thead>
+<tr>
+<th>Column Name</th>
+<th>Column Type</th>
+<th>Index</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>id</td>
+<td>uuid</td>
+<td>PK</td>
+<td>Unique generated ID for this tables row</td>
+</tr>
+
+<tr>
+<td>username</td>
+<td>text</td>
+<td>UK</td>
+<td>the name of the user (usually an email address)</td>
+</tr>
+
+<tr>
+<td>real_name</td>
+<td>text</td>
+<td>P</td>
+<td>persons name</td>
+</tr>
+
+<tr>
+<td>password_enc</td>
+<td>text</td>
+<td></td>
+<td>encrypted password for user</td>
+</tr>
+</tbody>
+</table>
+
+<p>What we need is the SQL command to create the table,  the indexes for the table, and the comments on the table
+and the sample query, and the code that performs select, update, delete, insert on
+the row of the table.</p>
+
+<p>Let&rsquo;s build a &ldquo;meta program&rdquo; that reads in the table above and converts that into all of these.</p>
+
+<p>First the makefile, gen_user.mk</p>
+
+<pre><code>all: user_table.sql 
+
+user_table.sql : user_table.md gen_user
+	./gen_user user_table.md  &gt;user_table.sql
+
+gen_user: gen_user.o 
+
+gen_user.o: gen_user.c gen_user.h
+
+</code></pre>
+
+<p>now when we type &ldquo;make&rdquo; it bulds and runs this program</p>
+
+<pre><code>$ make -f gen_user.mk
+</code></pre>
+
+<p>And we can take a look at the output:</p>
+
+<pre><code>
+DROP TABLE if exists &quot;user&quot;;
+
+CREATE TABLE &quot;user&quot; (
+	&quot;id&quot;        	uuid DEFAULT uuid_generate_v4() not null primary key,
+	&quot;username&quot;  	text,
+	&quot;real_name&quot; 	text,
+	&quot;password_enc&quot;	text,
+	&quot;password_enc&quot;	text
+
+);
+
+COMMENT ON COLUMN &quot;user&quot;.&quot;id&quot; IS 'Unique generated ID for this tables row';
+COMMENT ON COLUMN &quot;user&quot;.&quot;username&quot; IS 'the name of the user (usually an email address)';
+COMMENT ON COLUMN &quot;user&quot;.&quot;real_name&quot; IS 'persons name';
+COMMENT ON COLUMN &quot;user&quot;.&quot;password_enc&quot; IS 'encrypted password for user';
+
+CREATE UNIQUE INDEX &quot;user_1_uk&quot; on &quot;user&quot; ( &quot;username&quot; );
+CREATE INDEX &quot;user_1&quot; on &quot;user&quot; ( &quot;real_name&quot; );
+
+</code></pre>
+
+<p>Similarly we can write a program that will use the same data to build all sorts of
+table-related stuff (Including the C code to access the table!)</p>
+
+<p>Now if we have 1000 or 5000 tables (yes database schemas have that kind of numbers.
+An insurance company that I am working with has a schema with 11241 tables)
+We can put the definition into a directory - and use this tool and a makefile
+to process all of the tables into all the chunks of code that we need to build
+the foundation of a project.   The last time I worked at a phone company we did
+this and generated over 6,000,000 lines of code for 27 different projects directly
+from the table definitions.</p>
+
+<h2>Continuous Integration</h2>
+
+<p>Wouldn&rsquo;t it be nice if when we changed code it automatically did a bunch of tests
+to tell us if our change broke anything.  If we had tests for all the existing
+stuff in the code then we could just re-run the test.</p>
+
+<p>In modern development environments this kind of auto-testing is basally required.
+Not only that but there is an entire set of systems called Continuous Integration
+when every time you check in a new change to the code the existing tests all get
+run - this is done before the code you check in can get combined with the &ldquo;master&rdquo;
+branch.</p>
+
+<p>Good examples of this include CircleCI, TravisCI and gitlab.com has its own
+&ldquo;Git Actions&rdquo; or &ldquo;GitHub Actions&rdquo; system so that you can run either their system or add your own
+Continuous Integration system.</p>
+
+<p>You set up a specification file and every change to the code runs the set of tests.</p>
+
+<p>Tests usually come in a set of &ldquo;flavors&rdquo;:</p>
+
+<ol>
+<li>Unit tests - these are developed by the developer to test small chunks of code in isolation.</li>
+<li>Integration tests - these usually test large integrated chunks of the system.  For example if you have an application with an Application Programming Interface (API) then tests that run the entire API with the Database and Servers all at once would be an Integration Test.</li>
+<li>Regression test - a test that checks that specific fixes to defects stay fixed.</li>
+<li>Quality Assurance tests - These often test an entire application running with a &ldquo;mocked&rdquo; database.  An example of this is &ldquo;mocha&rdquo; tests for a front end.  You use  a simulated browser and a complete back end and run a set of tests.</li>
+</ol>
+
+<h2>DevOps - Tools and Dev replacement for ID and Operations</h2>
+
+<p>DevOps brings rigger via testing to the entire process of system administration.  It also brings
+scale.</p>
+
+</div>
+
