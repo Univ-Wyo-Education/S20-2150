@@ -165,7 +165,7 @@ You can bring up the emulator at
 First take the file and change 'STR' (on line 32) with your name to your name.  This is important
 because of how the assembled files are stored on the server.
 
-Lines 2 to 18 - Have the decleration for all the liens that you can turn on and off.  If you do not
+Lines 2 to 18 - Have the declaration for all the liens that you can turn on and off.  If you do not
 turn a line on it is off.  For example, on line 29 McJmp_7 is turned on.  This means that McJmp_0 to
 McJmp_6 are off.
 

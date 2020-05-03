@@ -377,8 +377,30 @@ $ git push origin v0.0.1
 
 You now have a "tagged"  version that is published with a readme!.
 
-
 You can also create a branch and the push the branch.
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
 
 (Hint - this is basically what you need to do for the homework)
 

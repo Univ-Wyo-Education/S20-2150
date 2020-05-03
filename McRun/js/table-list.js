@@ -166,12 +166,21 @@ function submitRunForm() {
 	// console.log ( x_data );
 
 
+	// xyzzy - should be combined into 1 server side 
+	//	Inputs -- really really should be a "POST" call!
+	//		form_data
+	//		put_id
+	//		-> file_name for form to run
+	//		-> file_name for data to run it with
+	//		-> /api/v1/run-poi - run the actual XLS form.
+	// 	ss.go: func HandleSaveDataToFile(www http.ResponseWriter, req *http.Request) {
+	//
 	$.ajax({
 		type: 'GET',
 		url: "/api/v2/save-data-to-file",
 		data: {
 			"_ran_": ( Math.random() * 10000000 ) % 10000000,
-			"data": JSON.stringify(x_data),
+			"data": JSON.stringify(x_data),			// xyzzy - form_data
 		},
 		success: function (data) {
 
@@ -184,7 +193,7 @@ function submitRunForm() {
 				url: "/api/v2/id-to-fn-documents",
 				data: {
 					"_ran_": ( Math.random() * 10000000 ) % 10000000,
-					"id": $("#put-id").val(),
+					"id": $("#put-id").val(),			// xyzzy - put-id - id of form to run or id of XLS to run
 				},
 				success: function (data) {
 					console.log ( "success AJAX - on run of form", data );
