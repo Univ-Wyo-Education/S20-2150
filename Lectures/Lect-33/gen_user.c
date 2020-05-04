@@ -235,6 +235,7 @@ void gen_comments() {
 
 // -----------------------------------------------------------------------------
 int main ( int argc, char *argv[] ) {
+
 	// fprintf ( stderr, "AT: %d\n", __LINE__ );
 	TabData = (TableData *)malloc( sizeof(TableData) * 10 );
 	for ( int i = 0; i < 10; i++ ) {

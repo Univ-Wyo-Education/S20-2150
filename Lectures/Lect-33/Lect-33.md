@@ -1,7 +1,28 @@
 # Lecture 33 - Meta Programming
 
+Only 3 lectures left (including this one).  I appreciate each and every one of
+you and all the effort that you have put in - especially through the 2nd half
+of this class.
+
+Friday there will be a "review" for the final.  The Final will be easy - multiple 
+choice - mostly based on the Microcode machine and the lectures we have been 
+having on using tools and system programming.
+
+There is a nice article on the web on the architecture behind QEMU, KVM and
+virtual machines. Please go and read it.
+[https://binarydebt.wordpress.com/2018/10/14/intel-virtualisation-how-vt-x-kvm-and-qemu-work-together/](https://binarydebt.wordpress.com/2018/10/14/intel-virtualisation-how-vt-x-kvm-and-qemu-work-together/)
+
 ## Videos
 
+[https://youtu.be/VfpPLTKQTyw - Lect-33-2150-pt1-meta-programming-make.mp4](https://youtu.be/VfpPLTKQTyw)<br>
+[https://youtu.be/8qI-fHSZe_I - Lect-33-2150-pt2-meta-programming-DRY.mp4](https://youtu.be/8qI-fHSZe_I)<br>
+[https://youtu.be/TWOgg_yj9q8 - Lect-33-2150-pt3-meta-programming-Continuous-Integration.mp4](https://youtu.be/TWOgg_yj9q8)<br>
+
+From Amazon S3 - for download (same as youtube videos)
+
+[http://uw-s20-2015.s3.amazonaws.com/Lect-33-2150-pt1-meta-programming-make.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-33-2150-pt1-meta-programming-make.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-33-2150-pt2-meta-programming-DRY.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-33-2150-pt2-meta-programming-DRY.mp4)<br>
+[http://uw-s20-2015.s3.amazonaws.com/Lect-33-2150-pt3-meta-programming-Continuous-Integration.mp4](http://uw-s20-2015.s3.amazonaws.com/Lect-33-2150-pt3-meta-programming-Continuous-Integration.mp4)<br>
 
 ## make and other build tools
 
@@ -198,6 +219,15 @@ the foundation of a project.   The last time I worked at a phone company we did
 this and generated over 6,000,000 lines of code for 27 different projects directly
 from the table definitions.
 
+With the phone company I had a directory with all the table definitions in it.
+I used "ls" to put that list into a file, then awk to find all the table definitions (There were other files like stored-procedures).
+The list of tables then went into a automatically generated Makefile, with the commands to build the tools and
+run them.
+With an updated Makefile I ran a set of programs on the table definitions to produce code.
+
+Yes - the process was Makefile - run ls - run awk - generate Makefile - run Make (as a tool)
+to compile and build output files.
+
 ## Continuous Integration
 
 Wouldn't it be nice if when we changed code it automatically did a bunch of tests
@@ -229,4 +259,33 @@ Tests usually come in a set of "flavors":
 DevOps brings rigger via testing to the entire process of system administration.  It also brings
 scale.
 
+
+## Most Important Meta-Programming tools
+
+Compilers!  Take a formally specified language - convert it into assembly language, use an
+assembler to build it into a binary file, link binary files together into an executable!
+
+Compilers started out in the 1950's with Fortran and Cobol.  Both of those languages are
+still in use today - with many additions and modifications to the languages.  There are better
+languages for some stuff but these are still very good for certain applications.  If you go and
+get a mortgage for a house your process will include Cobol programs at a bank!  The CERN colder
+runs on Fortran!
+
+The 2nd most important are databases.  PostgreSQL, Redis, MongoDB and other tools that store and allow
+us to get access to data are the back end behind most modern computer applications.  The first
+database was the IMS - Information Management System  - developed by IBM for the NASA Saturn V
+mum missions.   Today there are specialized databases like Googles Spanner system that is a
+high speed distributed - world scale - database that uses atomic clocks in multiple data centers
+around the world to synchronized data!
+
+If you want to learn about Google Spanner - up close and personal and PostgreSQL - next fall 
+I am teaching a database class where we will implement a clone of MongoDB to run on Spanner 
+and PostgreSQL as back ends.   We will use Redis as a high-speed cache for temporary data.
+
+
+
+
+# Copyright
+
+Copyright (C) University of Wyoming, 2020.
 
