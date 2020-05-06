@@ -712,6 +712,20 @@ ol {
 
 <h2>Videos</h2>
 
+<p><a href="https://youtu.be/EEdrW-P7kXc">https://youtu.be/EEdrW-P7kXc - Lect-34-pt1-debuging.mp4</a><br>
+<a href="https://youtu.be/BQDaOq3x1cc">https://youtu.be/BQDaOq3x1cc - Lect-34-pt2-debuging.mp4</a><br>
+<a href="https://youtu.be/RFn-kSJbJOA">https://youtu.be/RFn-kSJbJOA - Lect-34-pt3-visualization.mp4</a><br>
+<a href="https://youtu.be/mJPUrVMQLkg">https://youtu.be/mJPUrVMQLkg - Lect-34-pt4-system-calls-web-debuging.mp4</a><br>
+<a href="https://youtu.be/EKEVAD8fq5M">https://youtu.be/EKEVAD8fq5M - Lect-34-2150-pt5-profiling.mp4</a><br></p>
+
+<p>From Amazon S3 - for download (same as youtube videos)</p>
+
+<p><a href="http://uw-s20-2015.s3.amazonaws.com/Lect-34-pt1-debuging.mp4">http://uw-s20-2015.s3.amazonaws.com/Lect-34-pt1-debuging.mp4</a><br>
+<a href="http://uw-s20-2015.s3.amazonaws.com/Lect-34-pt2-debuging.mp4">http://uw-s20-2015.s3.amazonaws.com/Lect-34-pt2-debuging.mp4</a><br>
+<a href="http://uw-s20-2015.s3.amazonaws.com/Lect-34-pt3-visualization.mp4">http://uw-s20-2015.s3.amazonaws.com/Lect-34-pt3-visualization.mp4</a><br>
+<a href="http://uw-s20-2015.s3.amazonaws.com/Lect-34-pt4-system-calls-web-debuging.mp4">http://uw-s20-2015.s3.amazonaws.com/Lect-34-pt4-system-calls-web-debuging.mp4</a><br>
+<a href="http://uw-s20-2015.s3.amazonaws.com/Lect-34-2150-pt5-profiling.mp4">http://uw-s20-2015.s3.amazonaws.com/Lect-34-2150-pt5-profiling.mp4</a><br></p>
+
 <h2>Debugging and Profiling Code</h2>
 
 <p>So what is debuting - debuting is taking your code and making it
@@ -901,6 +915,130 @@ kernel!</p>
 </tr>
 </tbody>
 </table>
+
+<h3>Tracing System Calls</h3>
+
+<p>Sometimes you need to poke into code that you did not create.  There are specialized tools for this.
+One way is to look at the system calls that the code is using.  dtrace(Linux) and strace(Mac) are
+good for this.</p>
+
+<p>Linux</p>
+
+<pre><code>sudo strace -e lstat ls -l &gt; /dev/null
+</code></pre>
+
+<p>On macOS</p>
+
+<pre><code>sudo dtruss -t lstat64_extended ls -l &gt; /dev/null
+</code></pre>
+
+<p>Another way is to poke into what the network is doing.</p>
+
+<p>Look at the network packets to figure out the issue in your program.
+Use tcpdump and Wireshark are network packet analyzers that let you read the contents of network packets and filter them based on different criteria.
+Also using a &ldquo;proxy&rdquo; that lets you dig into network communication can be very valuable.</p>
+
+<h3>Web Development</h3>
+
+<p>The Chrome/Firefox developer tools are very useful.</p>
+
+<p>You can bring them up by right clicking (or control click) and you get a popup menu.
+Try &ldquo;inspect&rdquo; or &ldquo;console&rdquo;.</p>
+
+<p>Look at: Source code - HTML/CSS/JS source code of any website.</p>
+
+<p>Live HTML, CSS, JS modification - Change the website content, styles and behavior to your tastes.</p>
+
+<p>The console gives you a &ldquo;Live&rdquo; JavaScript (Ecma-262-Script) console. You can print out stuff, run stuff etc.</p>
+
+<p>The network tab shows you the network communication and timing.</p>
+
+<p>The &ldquo;application&rdquo; tab has cookies and local storage.</p>
+
+<h2>Profiling</h2>
+
+<h3>Time based profiling</h3>
+
+<p>This is really how much CPU time a program uses.  This is the most common form of profiling.
+Sometimes you will need to look at other things like memory usage or network usage.<br />
+The two common types are tracing - where the profiler watches where the code runs
+and counts it and sampling - where the profiler looks at where the code is periodically
+and then counts that location.</p>
+
+<p>Most languages have some sort of a profiler either built in or as a part of the IDE
+that you are using.  In python there is a command line based profiler that I will give
+a quick demo of.  It is called cProfile and returns the amount of time per function
+call.</p>
+
+<p>Using a simple chunk of code:</p>
+
+<pre><code>import sys, re
+
+def grep(pattern, file):
+    with open(file, 'r') as f:
+        print(file)
+        for i, line in enumerate(f.readlines()):
+            pattern = re.compile(pattern)
+            match = pattern.search(line)
+            if match is not None:
+                print(&quot;{}: {}&quot;.format(i, line), end=&quot;&quot;)
+
+if __name__ == '__main__':
+    times = int(sys.argv[1])
+    pattern = sys.argv[2]
+    for i in range(times):
+        for file in sys.argv[3:]:
+            grep(pattern, file)
+</code></pre>
+
+<p>we run</p>
+
+<pre><code>$ python -m cProfile -s tottime grep.py 1000 '^(import|\s*def)[^,]*$' *.py
+
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code> 227401 function calls (227382 primitive calls) in 0.178 seconds
+
+   Ordered by: internal time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     2000    0.040    0.000    0.046    0.000 {built-in method io.open}
+    41000    0.031    0.000    0.040    0.000 re.py:271(_compile)
+     2000    0.029    0.000    0.175    0.000 grep.py:7(grep)
+    41000    0.020    0.000    0.020    0.000 {method 'search' of 're.Pattern' objects}
+     2000    0.018    0.000    0.023    0.000 {method 'readlines' of '_io._IOBase' objects}
+     2000    0.010    0.000    0.010    0.000 {built-in method builtins.print}
+    80050    0.009    0.000    0.009    0.000 {built-in method builtins.isinstance}
+    41000    0.008    0.000    0.048    0.000 re.py:232(compile)
+        1    0.003    0.003    0.178    0.178 grep.py:5(&lt;module&gt;)
+     4000    0.003    0.000    0.005    0.000 codecs.py:319(decode)
+     2000    0.002    0.000    0.002    0.000 {built-in method _locale.nl_langinfo}
+     4000    0.002    0.000    0.002    0.000 {built-in method _codecs.utf_8_decode}
+     2000    0.002    0.000    0.004    0.000 _bootlocale.py:33(getpreferredencoding)
+     2000    0.001    0.000    0.002    0.000 codecs.py:309(__init__)
+     2000    0.001    0.000    0.001    0.000 codecs.py:260(__init__)
+      3/1    0.000    0.000    0.000    0.000 sre_parse.py:475(_parse)
+      6/1    0.000    0.000    0.000    0.000 sre_compile.py:71(_compile)
+       44    0.000    0.000    0.000    0.000 sre_parse.py:164(__getitem__)
+      7/2    0.000    0.000    0.000    0.000 sre_parse.py:174(getwidth)
+       22    0.000    0.000    0.000    0.000 sre_parse.py:233(__next)
+      2/1    0.000    0.000    0.000    0.000 sre_parse.py:417(_parse_sub)
+        1    0.000    0.000    0.000    0.000 sre_compile.py:759(compile)
+[Omitted Lines - lots of stuff called that will have any effect]
+</code></pre>
+
+<p>This kind of output can be hard to visualize.  For this reason this can be converted into a &ldquo;flame graph&rdquo;
+that shows where most of the time is spent.  This is an example:</p>
+
+<p><img src="cpu-mysql-crop-500.png" alt="cpu-mysql-crop-500.png" /></p>
+
+<p>Flame Graph See: <a href="http://www.brendangregg.com/flamegraphs.html">http://www.brendangregg.com/flamegraphs.html</a>.</p>
+
+<h1>Copyright</h1>
+
+<p>Copyright &copy; University of Wyoming, 2020.</p>
 
 </div>
 
