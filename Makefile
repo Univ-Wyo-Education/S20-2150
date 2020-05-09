@@ -1,4 +1,5 @@
-all: README.html syllabus.html midterm-review.html
+
+all: README.html syllabus.html midterm-review.html final-1.html
 
 FR=./Lectures/Lect-01
 
@@ -28,4 +29,11 @@ midterm-review.html: midterm-review.md
 	mv /tmp/midterm-review.html ./midterm-review.html
 	go run re-val.go midterm-review.html >midterm-review.v1.html
 	mv midterm-review.v1.html midterm-review.html
+
+final-1.html: final-1.md
+	markdown-cli --input=./final-1.md --output=final-1.html
+	cat ${FR}/css/pre ${FR}/css/markdown.css ${FR}/css/post ./md.css ${FR}/css/hpre final-1.html ${FR}/css/hpost >/tmp/final-1.html
+	mv /tmp/final-1.html ./final-1.html
+	go run re-val.go final-1.html >final-1.v1.html
+	mv final-1.v1.html final-1.html 
 

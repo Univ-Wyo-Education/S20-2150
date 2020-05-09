@@ -256,3 +256,6 @@ during the semester. Class could be canceled or assignments due dates changed.
 # Copyright
 
 Copyright (C) University of Wyoming, 2019-2020.
+
+Potions of the notes and lectures are based on: [https://missing.csail.mit.edu/](https://missing.csail.mit.edu/) - an MIT course that is open source.
+
